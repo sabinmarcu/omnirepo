@@ -5,6 +5,7 @@
   "dependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
+    "@commitlint/prompt-cli": "^17.3.0",
     "@moonrepo/cli": "^0.20.0",
     "@sabinmarcu/commitlint-config-workspaces": "workspace:^",
     "@sabinmarcu/eslint-config": "workspace:*",
