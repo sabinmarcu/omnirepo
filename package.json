@@ -5,7 +5,6 @@
   "dependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
-    "@commitlint/prompt-cli": "^17.3.0",
     "@moonrepo/cli": "^0.20.0",
     "@sabinmarcu/commitlint-config-workspaces": "workspace:^",
     "@sabinmarcu/eslint-config": "workspace:*",
@@ -23,8 +22,12 @@
     "build:eslint": "yarn moon run eslint-config:build"
   },
   "devDependencies": {
+    "@commitlint/cz-commitlint": "^17.3.0",
     "@types/eslint": "^8.4.10",
-    "@types/jest": "^29.2.4"
+    "@types/inquirer": "^8",
+    "@types/jest": "^29.2.4",
+    "commitizen": "^4.2.6",
+    "inquirer": "8"
   },
   "workspaces": [
     "./utils/*",
