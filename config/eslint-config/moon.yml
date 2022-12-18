@@ -1,6 +1,5 @@
 project:
-  name: "@sabinmarcu/eslint-config"
-  alias: eslint-config
+  name: eslint-config
   description: Personal ESLint configuration
   channel: '#config'
   maintainers:
