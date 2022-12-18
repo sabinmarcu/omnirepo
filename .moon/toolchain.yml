@@ -4,8 +4,6 @@ node:
   packageManager: 'yarn'
   yarn:
     version: '3.3.0'
-    plugins: 
-      - 'typescript'
   addEnginesConstraint: true
   aliasPackageNames: 'name-and-scope'
   dedupeOnLockfileChange: true
