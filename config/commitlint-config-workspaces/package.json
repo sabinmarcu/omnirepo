@@ -1,0 +1,36 @@
+{
+  "name": "@sabinmarcu/commitlint-config-workspaces",
+  "version": "1.0.0",
+  "main": "./cjs/index.cjs",
+  "types": "./cjs/index.d.ts",
+  "module": "./esm/index.mjs",
+  "type": "module",
+  "exports": {
+    ".": {
+      "require": "./cjs/index.cjs",
+      "import": "./esm/index.mjs"
+    },
+    "./*": {
+      "require": "./cjs/*.cjs",
+      "import": "./esm/*.mjs"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./esm/*"
+      ]
+    }
+  },
+  "packageManager": "yarn@3.3.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "build": {
+    "preset": "../../.config/build.config.ts"
+  },
+  "dependencies": {
+    "@sabinmarcu/utils-repo": "workspace:*",
+    "type-fest": "^3.4.0"
+  }
+}

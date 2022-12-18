@@ -33,8 +33,13 @@ tasks:
     inputs: 
       - '@globs(sources)'
       - '@files(buildConfig)'
+    cache: false
+    options:
+      runInCI: false
 
   lint: 
     command: 'eslint'
+    deps:
+      - eslint-config:build
     inputs: 
       - '@globs(sources)'

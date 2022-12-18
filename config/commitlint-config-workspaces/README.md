@@ -1,0 +1,1 @@
+# @sabinmarcu/commitlint-config-workspaces

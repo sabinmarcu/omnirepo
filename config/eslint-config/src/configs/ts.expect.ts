@@ -18,6 +18,7 @@ const config = {
       rules: {
         '@typescript-eslint/no-unused-vars': 0,
         'max-len': 0,
+        '@typescript-eslint/naming-convention': 0,
       },
     },
   ],

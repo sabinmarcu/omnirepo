@@ -1289,9 +1289,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sabinmarcu/eslint-config@workspace:*, @sabinmarcu/eslint-config@workspace:packages/eslint-config":
+"@sabinmarcu/commitlint-config-workspaces@workspace:^, @sabinmarcu/commitlint-config-workspaces@workspace:config/commitlint-config-workspaces":
   version: 0.0.0-use.local
-  resolution: "@sabinmarcu/eslint-config@workspace:packages/eslint-config"
+  resolution: "@sabinmarcu/commitlint-config-workspaces@workspace:config/commitlint-config-workspaces"
+  dependencies:
+    "@sabinmarcu/utils-repo": "workspace:*"
+    type-fest: ^3.4.0
+  languageName: unknown
+  linkType: soft
+
+"@sabinmarcu/eslint-config@workspace:*, @sabinmarcu/eslint-config@workspace:config/eslint-config":
+  version: 0.0.0-use.local
+  resolution: "@sabinmarcu/eslint-config@workspace:config/eslint-config"
   dependencies:
     "@babel/eslint-parser": ^7.19.1
     "@babel/plugin-syntax-import-assertions": ^7.20.0
@@ -1309,6 +1318,28 @@ __metadata:
     eslint-plugin-react: ^7.31.9
     eslint-plugin-storybook: ^0.6.7
     glob: ^8.0.3
+  languageName: unknown
+  linkType: soft
+
+"@sabinmarcu/utils-fs@workspace:*, @sabinmarcu/utils-fs@workspace:utils/utils-fs":
+  version: 0.0.0-use.local
+  resolution: "@sabinmarcu/utils-fs@workspace:utils/utils-fs"
+  dependencies:
+    type-fest: ^3.4.0
+  languageName: unknown
+  linkType: soft
+
+"@sabinmarcu/utils-repo@workspace:*, @sabinmarcu/utils-repo@workspace:utils/utils-repo":
+  version: 0.0.0-use.local
+  resolution: "@sabinmarcu/utils-repo@workspace:utils/utils-repo"
+  dependencies:
+    "@sabinmarcu/utils-fs": "workspace:*"
+    "@types/glob": ^8
+    "@types/ramda": ^0
+    glob: ^8.0.3
+    moize: ^6.1.4
+    ramda: ^0.28.0
+    type-fest: ^3.4.0
   languageName: unknown
   linkType: soft
 
@@ -1439,6 +1470,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/glob@npm:^8":
+  version: 8.0.0
+  resolution: "@types/glob@npm:8.0.0"
+  dependencies:
+    "@types/minimatch": "*"
+    "@types/node": "*"
+  checksum: 1817b05f5a8aed851d102a65b5e926d5c777bef927ea62b36d635860eef5364f2046bb5a692d135b6f2b28f34e4a9d44ade9396122c0845bcc7636d35f624747
+  languageName: node
+  linkType: hard
+
 "@types/graceful-fs@npm:^4.1.3":
   version: 4.1.5
   resolution: "@types/graceful-fs@npm:4.1.5"
@@ -1497,6 +1538,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/minimatch@npm:*":
+  version: 5.1.2
+  resolution: "@types/minimatch@npm:5.1.2"
+  checksum: 0391a282860c7cb6fe262c12b99564732401bdaa5e395bee9ca323c312c1a0f45efbf34dce974682036e857db59a5c9b1da522f3d6055aeead7097264c8705a8
+  languageName: node
+  linkType: hard
+
 "@types/minimist@npm:^1.2.0":
   version: 1.2.2
   resolution: "@types/minimist@npm:1.2.2"
@@ -1536,6 +1584,15 @@ __metadata:
   version: 2.7.1
   resolution: "@types/prettier@npm:2.7.1"
   checksum: 5e3f58e229d6c73b5f5cae2e8f96c1c4a5b5805f83459e17a045ba8e96152b1d38e86b63e3172fb159dac923388699660862b75b2d37e54220805f0e691e26f1
+  languageName: node
+  linkType: hard
+
+"@types/ramda@npm:^0":
+  version: 0.28.20
+  resolution: "@types/ramda@npm:0.28.20"
+  dependencies:
+    ts-toolbelt: ^6.15.1
+  checksum: 02c1e958a09724079acd975aefd2e9ae1327097f941c661ca596e2a8e16df3bd0f0755a16ab378eeb562d8624d7614a3159de2a0129e7d8522a2d79699390818
   languageName: node
   linkType: hard
 
@@ -3449,6 +3506,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fast-equals@npm:^3.0.1":
+  version: 3.0.3
+  resolution: "fast-equals@npm:3.0.3"
+  checksum: e7ac0ae5a10289c773f75654ced22563837336bde7ebb595b7d238a20b77008a821c1ca3526a50e96fe0662ced7454cf99b7488bb64506463a4f4729c523ac4c
+  languageName: node
+  linkType: hard
+
 "fast-glob@npm:^3.2.11, fast-glob@npm:^3.2.9":
   version: 3.2.12
   resolution: "fast-glob@npm:3.2.12"
@@ -5263,6 +5327,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"micro-memoize@npm:^4.0.11":
+  version: 4.0.14
+  resolution: "micro-memoize@npm:4.0.14"
+  checksum: 9a1c236c3e626b9a0cf323cd7ede18f972fd4474f1bcdea8e1340d9a49a1fee629f60d35baa2df8ba0d880230886d92587525d4b9c9dc14100cc39545506e1b9
+  languageName: node
+  linkType: hard
+
 "micromatch@npm:^4.0.4":
   version: 4.0.5
   resolution: "micromatch@npm:4.0.5"
@@ -5411,7 +5482,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mkdist@npm:^1.0.0":
+"mkdist@npm:1.0.0":
   version: 1.0.0
   resolution: "mkdist@npm:1.0.0"
   dependencies:
@@ -5436,6 +5507,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mkdist@patch:mkdist@npm%3A1.0.0#./.yarn/patches/mkdist-npm-1.0.0-ae21d37d50.patch::locator=omnirepo%40workspace%3A.":
+  version: 1.0.0
+  resolution: "mkdist@patch:mkdist@npm%3A1.0.0#./.yarn/patches/mkdist-npm-1.0.0-ae21d37d50.patch::version=1.0.0&hash=ecb4a4&locator=omnirepo%40workspace%3A."
+  dependencies:
+    defu: ^6.1.1
+    esbuild: ^0.15.13
+    fs-extra: ^10.1.0
+    globby: ^13.1.2
+    jiti: ^1.16.0
+    mri: ^1.2.0
+    pathe: ^1.0.0
+  peerDependencies:
+    sass: ^1.56.1
+    typescript: ">=4.8.4"
+  peerDependenciesMeta:
+    sass:
+      optional: true
+    typescript:
+      optional: true
+  bin:
+    mkdist: dist/cli.cjs
+  checksum: 543555c78dde5a644fac965784681cf1a718b09536c41951ca225a0e6d61defdc67fef7f6dd1f7c53406ef82c37800a09aedfc38fb55f1ccb4eca2a7c49c553a
+  languageName: node
+  linkType: hard
+
 "mlly@npm:^1.0.0":
   version: 1.0.0
   resolution: "mlly@npm:1.0.0"
@@ -5445,6 +5541,16 @@ __metadata:
     pkg-types: ^1.0.0
     ufo: ^1.0.0
   checksum: e9d8809a836f407fb0604f46ca12fd1671cb95a71fef35ba6af57022c75eb7555dcad3ed5524f6c53fdf1280ed35739837c7306c0e0201371943737091dde429
+  languageName: node
+  linkType: hard
+
+"moize@npm:^6.1.4":
+  version: 6.1.4
+  resolution: "moize@npm:6.1.4"
+  dependencies:
+    fast-equals: ^3.0.1
+    micro-memoize: ^4.0.11
+  checksum: 2f37abed0f882493c943ea728046f3a67ce7c55106cd6befdbf241519317ecf811674d6e53eb3f55087850cc11bc94ac62eae00477e9acbb00a39503c721d0a9
   languageName: node
   linkType: hard
 
@@ -5677,6 +5783,7 @@ __metadata:
     "@commitlint/cli": ^17.3.0
     "@commitlint/config-conventional": ^17.3.0
     "@moonrepo/cli": ^0.20.0
+    "@sabinmarcu/commitlint-config-workspaces": "workspace:^"
     "@sabinmarcu/eslint-config": "workspace:*"
     "@types/eslint": ^8.4.10
     "@types/jest": ^29.2.4
@@ -5976,6 +6083,13 @@ __metadata:
   version: 4.0.1
   resolution: "quick-lru@npm:4.0.1"
   checksum: bea46e1abfaa07023e047d3cf1716a06172c4947886c053ede5c50321893711577cb6119360f810cc3ffcd70c4d7db4069c3cee876b358ceff8596e062bd1154
+  languageName: node
+  linkType: hard
+
+"ramda@npm:^0.28.0":
+  version: 0.28.0
+  resolution: "ramda@npm:0.28.0"
+  checksum: 44ea6e5010bba70151b6a92d8114a91915e8b5a16105cce65fae58c9d7386b812c429645e35f21141d7087568550ce383bc10ee1a65cdec951f4b69ea457e6a4
   languageName: node
   linkType: hard
 
@@ -6804,6 +6918,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ts-toolbelt@npm:^6.15.1":
+  version: 6.15.5
+  resolution: "ts-toolbelt@npm:6.15.5"
+  checksum: 24ad00cfd9ce735c76c873a9b1347eac475b94e39ebbdf100c9019dce88dd5f4babed52884cf82bb456a38c28edd0099ab6f704b84b2e5e034852b618472c1f3
+  languageName: node
+  linkType: hard
+
 "tsconfig-paths@npm:^3.14.1":
   version: 3.14.1
   resolution: "tsconfig-paths@npm:3.14.1"
@@ -6889,6 +7010,13 @@ __metadata:
   version: 0.8.1
   resolution: "type-fest@npm:0.8.1"
   checksum: d61c4b2eba24009033ae4500d7d818a94fd6d1b481a8111612ee141400d5f1db46f199c014766b9fa9b31a6a7374d96fc748c6d688a78a3ce5a33123839becb7
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "type-fest@npm:3.4.0"
+  checksum: 37e8559f07778b6a24a1d01f285d9b6904537cfde49f6231f080f146c6ff753ea12a9163bcbe8e9bcd24f72529cf4d3baf69874b9a6e1d2da47046c41e4567f6
   languageName: node
   linkType: hard
 

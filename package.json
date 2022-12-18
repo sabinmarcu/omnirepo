@@ -6,6 +6,7 @@
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
     "@moonrepo/cli": "^0.20.0",
+    "@sabinmarcu/commitlint-config-workspaces": "workspace:^",
     "@sabinmarcu/eslint-config": "workspace:*",
     "eslint": "^8.30.0",
     "husky": "^8.0.2",
@@ -16,16 +17,22 @@
   },
   "scripts": {
     "moon": "$(yarn bin moon)",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "lint": "yarn moon run :lint",
+    "build:eslint": "yarn moon run eslint-config:build"
   },
   "devDependencies": {
     "@types/eslint": "^8.4.10",
     "@types/jest": "^29.2.4"
   },
   "workspaces": [
-    "./packages/*"
+    "./utils/*",
+    "./config/*"
   ],
   "engines": {
     "node": "18.12.0"
+  },
+  "resolutions": {
+    "mkdist@^1.0.0": "patch:mkdist@npm%3A1.0.0#./.yarn/patches/mkdist-npm-1.0.0-ae21d37d50.patch"
   }
 }

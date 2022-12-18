@@ -1,0 +1,13 @@
+project:
+  name: "@sabinmarcu/utils-repo"
+  alias: utils-repo
+  description: Repository Utils
+  channel: '#utils'
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+
+language: typescript
+type: library
+dependsOn:
+  - utils-fs

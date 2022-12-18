@@ -1,0 +1,11 @@
+project:
+  name: "@sabinmarcu/utils-fs"
+  alias: utils-fs
+  description: Filesystem Utils
+  channel: '#utils'
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+
+language: typescript
+type: library
