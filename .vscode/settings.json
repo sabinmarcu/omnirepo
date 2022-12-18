@@ -1,7 +1,7 @@
 {
   "yaml.schemas": {
     "file:///Users/sabinmarcu/.vscode/extensions/atlassian.atlascode-2.10.12/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml",
-    "http://json.schemasore.org/github-workflow": ".github/workflows/*.{yml,yaml}",
+    "http://json.schemastore.org/github-workflow": ".github/workflows/*.{yml,yaml}",
     "http://json.schemastore.org/github-action": ".github/action.{yml,yaml}",
     "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json": "package.yml",
     "https://raw.githubusercontent.com/sabinmarcu/tscmono/staging/packages/config/schemas/workspace.json": [
