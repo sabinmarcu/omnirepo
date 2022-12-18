@@ -1,8 +1,8 @@
 project:
   name: "@sabinmarcu/eslint-config"
   alias: eslint-config
-  description: Moon ESLint configuration
-  channel: '#eslint-config'
+  description: Personal ESLint configuration
+  channel: '#config'
   maintainers:
     - Sabin Marcu
   owner: Sabin Marcu
