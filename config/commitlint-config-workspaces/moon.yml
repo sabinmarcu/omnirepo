@@ -1,5 +1,5 @@
 project:
-  name: "@sabinmarcu/commitlint-config-workspaces"
+  name: commitlint-config-workspaces
   description: Commitlint workspace config
   channel: '#config'
   maintainers:
