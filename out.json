@@ -1,0 +1,221 @@
+{
+  "projects": [
+    {
+      "alias": "@sabinmarcu/eslint-config",
+      "config": {
+        "dependsOn": [],
+        "fileGroups": {},
+        "language": "typescript",
+        "project": {
+          "name": "eslint-config",
+          "description": "Moon ESLint configuration",
+          "owner": "Sabin Marcu",
+          "maintainers": [
+            "Sabin Marcu"
+          ],
+          "channel": "#eslint-config"
+        },
+        "tasks": {},
+        "toolchain": {
+          "node": null,
+          "typescript": true
+        },
+        "type": "library",
+        "workspace": {
+          "inheritedTasks": {
+            "exclude": null,
+            "include": null,
+            "rename": null
+          }
+        }
+      },
+      "dependencies": {},
+      "fileGroups": {
+        "buildConfig": {
+          "files": [
+            "/.config/build.config.ts"
+          ],
+          "id": "buildConfig"
+        },
+        "configs": {
+          "files": [
+            "*.{js,json}"
+          ],
+          "id": "configs"
+        },
+        "sources": {
+          "files": [
+            "src/**/*"
+          ],
+          "id": "sources"
+        },
+        "tests": {
+          "files": [
+            "src/**/*.spec.*"
+          ],
+          "id": "tests"
+        }
+      },
+      "id": "eslint",
+      "language": "typescript",
+      "root": "/Users/sabinmarcu/Projects/omnirepo/packages/eslint-config",
+      "source": "packages/eslint-config",
+      "tasks": {
+        "build": {
+          "args": [],
+          "command": "unbuild",
+          "deps": [],
+          "env": {},
+          "id": "build",
+          "inputs": [
+            "@globs(sources)",
+            "@files(buildConfig)",
+            "package.json",
+            "/.moon/project.yml",
+            "/.moon/toolchain.yml",
+            "/.moon/workspace.yml"
+          ],
+          "inputGlobs": [
+            "/Users/sabinmarcu/Projects/omnirepo/packages/eslint-config/src/**/*"
+          ],
+          "inputPaths": [
+            "/Users/sabinmarcu/Projects/omnirepo/.config/build.config.ts",
+            "/Users/sabinmarcu/Projects/omnirepo/.moon/project.yml",
+            "/Users/sabinmarcu/Projects/omnirepo/.moon/toolchain.yml",
+            "/Users/sabinmarcu/Projects/omnirepo/.moon/workspace.yml",
+            "/Users/sabinmarcu/Projects/omnirepo/packages/eslint-config/package.json"
+          ],
+          "inputVars": [],
+          "options": {
+            "affectedFiles": false,
+            "cache": true,
+            "envFile": null,
+            "mergeArgs": "append",
+            "mergeDeps": "append",
+            "mergeEnv": "append",
+            "mergeInputs": "append",
+            "mergeOutputs": "append",
+            "outputStyle": null,
+            "retryCount": 0,
+            "runDepsInParallel": true,
+            "runInCi": true,
+            "runFromWorkspaceRoot": false
+          },
+          "outputs": [
+            "esm",
+            "cjs"
+          ],
+          "outputPaths": [
+            "/Users/sabinmarcu/Projects/omnirepo/packages/eslint-config/esm",
+            "/Users/sabinmarcu/Projects/omnirepo/packages/eslint-config/cjs"
+          ],
+          "platform": "node",
+          "target": "eslint:build",
+          "type": "build"
+        },
+        "lint": {
+          "args": [],
+          "command": "eslint",
+          "deps": [],
+          "env": {},
+          "id": "lint",
+          "inputs": [
+            "@globs(sources)",
+            "package.json",
+            "/.moon/project.yml",
+            "/.moon/toolchain.yml",
+            "/.moon/workspace.yml"
+          ],
+          "inputGlobs": [
+            "/Users/sabinmarcu/Projects/omnirepo/packages/eslint-config/src/**/*"
+          ],
+          "inputPaths": [
+            "/Users/sabinmarcu/Projects/omnirepo/.moon/project.yml",
+            "/Users/sabinmarcu/Projects/omnirepo/.moon/toolchain.yml",
+            "/Users/sabinmarcu/Projects/omnirepo/.moon/workspace.yml",
+            "/Users/sabinmarcu/Projects/omnirepo/packages/eslint-config/package.json"
+          ],
+          "inputVars": [],
+          "options": {
+            "affectedFiles": false,
+            "cache": true,
+            "envFile": null,
+            "mergeArgs": "append",
+            "mergeDeps": "append",
+            "mergeEnv": "append",
+            "mergeInputs": "append",
+            "mergeOutputs": "append",
+            "outputStyle": null,
+            "retryCount": 0,
+            "runDepsInParallel": true,
+            "runInCi": true,
+            "runFromWorkspaceRoot": false
+          },
+          "outputs": [],
+          "outputPaths": [],
+          "platform": "node",
+          "target": "eslint:lint",
+          "type": "test"
+        },
+        "stub": {
+          "args": [
+            "--stub"
+          ],
+          "command": "unbuild",
+          "deps": [],
+          "env": {},
+          "id": "stub",
+          "inputs": [
+            "@globs(sources)",
+            "@files(buildConfig)",
+            "package.json",
+            "/.moon/project.yml",
+            "/.moon/toolchain.yml",
+            "/.moon/workspace.yml"
+          ],
+          "inputGlobs": [
+            "/Users/sabinmarcu/Projects/omnirepo/packages/eslint-config/src/**/*"
+          ],
+          "inputPaths": [
+            "/Users/sabinmarcu/Projects/omnirepo/.config/build.config.ts",
+            "/Users/sabinmarcu/Projects/omnirepo/.moon/project.yml",
+            "/Users/sabinmarcu/Projects/omnirepo/.moon/toolchain.yml",
+            "/Users/sabinmarcu/Projects/omnirepo/.moon/workspace.yml",
+            "/Users/sabinmarcu/Projects/omnirepo/packages/eslint-config/package.json"
+          ],
+          "inputVars": [],
+          "options": {
+            "affectedFiles": false,
+            "cache": true,
+            "envFile": null,
+            "mergeArgs": "append",
+            "mergeDeps": "append",
+            "mergeEnv": "append",
+            "mergeInputs": "append",
+            "mergeOutputs": "append",
+            "outputStyle": null,
+            "retryCount": 0,
+            "runDepsInParallel": true,
+            "runInCi": true,
+            "runFromWorkspaceRoot": false
+          },
+          "outputs": [],
+          "outputPaths": [],
+          "platform": "node",
+          "target": "eslint:stub",
+          "type": "test"
+        }
+      },
+      "type": "library"
+    }
+  ],
+  "options": {
+    "alias": null,
+    "affected": false,
+    "id": null,
+    "language": null,
+    "source": null,
+    "tasks": null,
+    "type_of": null
+  }
+}
