@@ -1,0 +1,40 @@
+# https://moonrepo.dev/docs/config/global-project
+$schema: 'https://moonrepo.dev/schemas/global-project.json'
+
+fileGroups:
+  configs:
+    - '*.{js,json}'
+
+  sources:
+    - 'src/**/*'
+
+  buildConfig:
+    - '/.config/build.config.ts'
+
+  tests:
+    - 'src/**/*.spec.*'
+
+tasks:
+  build: 
+    command: 'unbuild'
+    deps: 
+      - '^:build'
+    inputs: 
+      - '@globs(sources)'
+      - '@files(buildConfig)'
+    outputs: 
+      - esm
+      - cjs
+
+  stub:
+    command: 'unbuild --stub'
+    deps: 
+      - '^:stub'
+    inputs: 
+      - '@globs(sources)'
+      - '@files(buildConfig)'
+
+  lint: 
+    command: 'eslint'
+    inputs: 
+      - '@globs(sources)'

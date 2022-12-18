@@ -1,0 +1,24 @@
+$schema: 'https://moonrepo.dev/schemas/toolchain.json'
+node:
+  version: '18.12.0'
+  packageManager: 'yarn'
+  yarn:
+    version: '3.3.0'
+    plugins: 
+      - 'typescript'
+  addEnginesConstraint: true
+  aliasPackageNames: 'name-and-scope'
+  dedupeOnLockfileChange: true
+  dependencyVersionFormat: workspace
+  inferTasksFromScripts: false
+  syncProjectWorkspaceDependencies: true
+  syncVersionManagerConfig: 'nvm'
+
+typescript:
+  createMissingConfig: true
+  projectConfigFileName: 'tsconfig.json'
+  rootConfigFileName: 'tsconfig.json'
+  rootOptionsConfigFileName: 'tsconfig.base.json'
+  routeOutDirToCache: false
+  syncProjectReferences: true
+  syncProjectReferencesToPaths: true

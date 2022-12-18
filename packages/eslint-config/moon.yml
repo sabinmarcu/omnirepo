@@ -1,0 +1,10 @@
+language: typescript
+type: library
+
+project:
+  name: eslint-config
+  description: Moon ESLint configuration
+  channel: '#eslint-config'
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu

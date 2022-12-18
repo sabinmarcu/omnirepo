@@ -1,0 +1,24 @@
+{
+  "yaml.schemas": {
+    "file:///Users/sabinmarcu/.vscode/extensions/atlassian.atlascode-2.10.12/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml",
+    "http://json.schemasore.org/github-workflow": ".github/workflows/*.{yml,yaml}",
+    "http://json.schemastore.org/github-action": ".github/action.{yml,yaml}",
+    "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json": "package.yml",
+    "https://raw.githubusercontent.com/sabinmarcu/tscmono/staging/packages/config/schemas/workspace.json": [
+      ".tscmonorc.yml"
+    ],
+    "https://raw.githubusercontent.com/sabinmarcu/tscmono/staging/packages/config/schemas/root.json": [
+      "/.tscmonorc.yml",
+      "file:///Users/sabinmarcu/Projects/omnirepo/config/eslint-config/.tscmonorc.yml"
+    ],
+    "https://moonrepo.dev/schemas/global-project.json": ".moon/project.yml",
+    "https://moonrepo.dev/schemas/toolchain.json": ".moon/toolchain.yml",
+    "https://moonrepo.dev/schemas/workspace.json": ".moon/workspace.yml",
+    "https://raw.githubusercontent.com/moonrepo/moon/master/website/static/schemas/project.json": "moon.yml",
+    "http://yarnpkg.com/configuration/yarnrc.json": ".yarnrc.yml"
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "cSpell.words": [
+    "nodenext"
+  ]
+}

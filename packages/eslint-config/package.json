@@ -1,0 +1,49 @@
+{
+  "name": "@sabinmarcu/eslint-config",
+  "version": "1.0.0",
+  "main": "./cjs/index.cjs",
+  "types": "./cjs/index.d.ts",
+  "module": "./esm/index.mjs",
+  "type": "module",
+  "exports": {
+    ".": {
+      "require": "./cjs/index.cjs",
+      "import": "./esm/index.mjs"
+    },
+    "./*": {
+      "require": "./cjs/*.cjs",
+      "import": "./esm/*.mjs"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./esm/*"
+      ]
+    }
+  },
+  "packageManager": "yarn@3.3.0",
+  "dependencies": {
+    "@babel/eslint-parser": "^7.19.1",
+    "@babel/plugin-syntax-import-assertions": "^7.20.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint-config-airbnb": "^18.0.4",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-import-resolver-typescript": "^3.5.2",
+    "eslint-plugin-expect-type": "^0.2.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-modules-newlines": "^0.0.7",
+    "eslint-plugin-react": "^7.31.9",
+    "eslint-plugin-storybook": "^0.6.7",
+    "glob": "^8.0.3"
+  },
+  "devDependencies": {
+    "@types/eslint": "^8.4.10"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
