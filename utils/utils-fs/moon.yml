@@ -1,6 +1,5 @@
 project:
-  name: "@sabinmarcu/utils-fs"
-  alias: utils-fs
+  name: utils-fs
   description: Filesystem Utils
   channel: '#utils'
   maintainers:
