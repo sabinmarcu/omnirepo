@@ -1,6 +1,5 @@
 project:
-  name: "@sabinmarcu/utils-repo"
-  alias: utils-repo
+  name: utils-repo
   description: Repository Utils
   channel: '#utils'
   maintainers:
