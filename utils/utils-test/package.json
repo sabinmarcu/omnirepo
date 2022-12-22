@@ -40,5 +40,8 @@
   "devDependencies": {
     "@types/glob": "^8",
     "@types/ramda": "^0"
+  },
+  "tscmono": {
+    "preset": "lib"
   }
 }

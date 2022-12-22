@@ -51,5 +51,8 @@
   },
   "build": {
     "preset": "../../.config/build.config.ts"
+  },
+  "tscmono": {
+    "preset": "lib"
   }
 }

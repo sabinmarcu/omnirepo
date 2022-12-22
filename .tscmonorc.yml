@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/sabinmarcu/tscmono/staging/packages/config/schemas/root.json
+baseConfig: "./.config/tsconfig.base.json"
+mode: loose
+defaultFileMode: default
+generatePaths: true
+presets: 
+  lib: 
+    include: 
+      - "**/*"
