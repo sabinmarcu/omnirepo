@@ -13,6 +13,7 @@ tasks:
     type: "system"
     inputs: []
     options: 
+      cache: false
       runInCI: false
 
   eslint: 

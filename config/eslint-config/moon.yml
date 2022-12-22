@@ -12,7 +12,7 @@ type: library
 workspace:
   inheritedTasks: 
     exclude:
-      - stub
+      - dev
   
 dependsOn:
   - '@sabinmarcu/utils-test'

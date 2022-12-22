@@ -31,9 +31,7 @@ tasks:
       - package.json
     outputs: 
       - package.json
-    cache: false
-    options:
-      runInCI: false
+    local: true
 
   build: 
     command: 'unbuild'
