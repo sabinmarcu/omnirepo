@@ -1,14 +1,14 @@
-import moize from 'moize';
-
 const fix = (returnValue) => returnValue;
 
-const memo = fix;
+export const mock = (moize) => {
+  const memo = fix;
 
-const functionKeys = Object.keys(moize)
-  .filter((key) => typeof moize[key] === 'function');
+  const functionKeys = Object.keys(moize)
+    .filter((key) => typeof moize[key] === 'function');
 
-for (const key of functionKeys) {
-  memo[key] = fix;
-}
+  for (const key of functionKeys) {
+    memo[key] = fix;
+  }
 
-export default () => memo;
+  return memo;
+};
