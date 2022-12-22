@@ -2,7 +2,11 @@ import {
   setupFsMockAll,
 } from '@sabinmarcu/utils-test';
 
-import { predicate } from './packageJson';
+import {
+  testSync,
+  test as testAsync,
+  predicate,
+} from './packageJson';
 
 import compileFixtures from './__mocks__/packageJson';
 
@@ -12,6 +16,11 @@ jest.mock('node:fs', jest.requireActual('@sabinmarcu/utils-test').mockFs);
 jest.mock('node:fs/promises', jest.requireActual('@sabinmarcu/utils-test').mockFsPromises);
 
 describe('predicates.packageJson', () => {
+  describe('testSync', () => {
+    it('should be a function', () => {
+      expect(typeof testSync).toBe('function');
+    });
+  });
   describe('sync', () => {
     it('should be a function', () => {
       expect(typeof predicate.sync).toBe('function');
@@ -28,6 +37,11 @@ describe('predicates.packageJson', () => {
         });
       },
     );
+  });
+  describe('test', () => {
+    it('should be a function', () => {
+      expect(typeof testAsync).toBe('function');
+    });
   });
   describe('async', () => {
     it('should be a function', () => {

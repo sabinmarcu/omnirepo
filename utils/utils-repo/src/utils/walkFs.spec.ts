@@ -1,9 +1,18 @@
 import compileFixtures from './__mocks__';
-import { walker } from './walkFs';
+import {
+  walker,
+  walkFs,
+  walkFsSync,
+} from './walkFs';
 
 const fixtures = compileFixtures();
 
 describe('walker', () => {
+  describe('walkFsSync', () => {
+    it('should be a function', () => {
+      expect(walkFsSync).toBeInstanceOf(Function);
+    });
+  });
   describe('sync', () => {
     it('should be a function', () => {
       expect(walker.sync).toBeInstanceOf(Function);
@@ -25,6 +34,11 @@ describe('walker', () => {
         }
       },
     );
+  });
+  describe('walkFs', () => {
+    it('should be a function', () => {
+      expect(walkFs).toBeInstanceOf(Function);
+    });
   });
   describe('async', () => {
     it('should be a function', () => {

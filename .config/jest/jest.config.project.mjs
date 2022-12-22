@@ -31,7 +31,10 @@ const setupFiles = (await globPromised(
 ));
 
 const generateFromPath = (
+  /** @type {string} */
   configPath,
+  // eslint-disable-next-line max-len
+  /** @type {(options: { relativePath: string, rootRelativePath: string }) => import('jest').Config} */
   extra,
 ) => {
   const relativePath = path.relative(

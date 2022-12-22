@@ -7,7 +7,7 @@ import type {
   PathWalkerFunctionAsync,
   PathWalkerProcessFunction,
 } from '../types';
-import { fsRoot } from './constants';
+import { fsRoot } from '../constants';
 
 /**
  * Walk the filesystem up from a path, checking each path against a predicate (async)

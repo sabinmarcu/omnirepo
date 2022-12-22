@@ -2,7 +2,11 @@ import {
   setupFsMockAll,
   vol,
 } from '@sabinmarcu/utils-test';
-import { resolver as getWorkspacesNames } from './names';
+import {
+  resolver as getWorkspacesNames,
+  getWorkspacesNames as getWorkspacesNamesAsync,
+  getWorkspacesNamesSync,
+} from './names';
 
 import compileFixtures from './__mocks__';
 
@@ -24,6 +28,11 @@ jest.mock('glob', () => {
 
 describe('getWorkspaces.paths', () => {
   describe('sync', () => {
+    describe('getWorkspacesNamesSync', () => {
+      it('should be a function', () => {
+        expect(typeof getWorkspacesNamesSync).toBe('function');
+      });
+    });
     it('should be a function', () => {
       expect(typeof getWorkspacesNames.sync).toBe('function');
     });
@@ -45,6 +54,11 @@ describe('getWorkspaces.paths', () => {
         }
       },
     );
+  });
+  describe('getWorkspacesNames', () => {
+    it('should be a function', () => {
+      expect(typeof getWorkspacesNamesAsync).toBe('function');
+    });
   });
   describe('async', () => {
     it('should be a function', () => {
