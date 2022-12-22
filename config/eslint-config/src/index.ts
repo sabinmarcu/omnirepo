@@ -23,6 +23,7 @@ const config = {
     './configs/ts.expect',
     './configs/module',
     './configs/stories',
+    './configs/jest',
     './configs/overrides',
   ].map((path) => require.resolve(path + extension)),
 } satisfies Config;
