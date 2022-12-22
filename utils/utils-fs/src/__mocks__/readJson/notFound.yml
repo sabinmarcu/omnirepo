@@ -1,0 +1,7 @@
+setup: 
+  './file.json': &output |
+    {
+      "foo": "bar"
+    }
+input: ./nope
+error: File not found

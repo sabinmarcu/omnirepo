@@ -30,8 +30,6 @@
     "preset": "../../.config/build.config.ts"
   },
   "dependencies": {
-    "@sabinmarcu/utils-fs": "workspace:*",
-    "@sabinmarcu/utils-path": "workspace:*",
     "glob": "^8.0.3",
     "memfs": "^3.4.12",
     "moize": "^6.1.4",

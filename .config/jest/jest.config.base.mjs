@@ -6,6 +6,21 @@ const config = {
   transform: {
     '^.+\\.(m|c)?(t|j)sx?$': '@swc/jest',
   },
+  moduleFileExtensions: [
+    'js',
+    'cjs',
+    'mjs',
+    'jsx',
+    'ts',
+    'cts',
+    'mts',
+    'tsx',
+    'json',
+    'node',
+    'json',
+    'yml',
+    'yaml',
+  ],
 };
 
 export {

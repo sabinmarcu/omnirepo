@@ -21,7 +21,7 @@
       "DOM"
     ],
     "jsx": "react-jsx",
-    "module": "NodeNext",
+    "module": "ES2022",
     "target": "ES2022"
   },
   "exclude": [

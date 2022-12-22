@@ -1,0 +1,8 @@
+setup: 
+  './file.json': &output |
+    {
+      "foo": "bar"
+    }
+input: ./file.json
+expected: 
+  foo: bar
