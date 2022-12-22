@@ -1,11 +1,11 @@
 import path from 'node:path';
 import type {
-  PathPredicateFn,
-  PathPredicateFnAsync,
+  PathPredicateFunction,
+  PathPredicateFunctionAsync,
   PathWalker,
-  PathWalkerFn,
-  PathWalkerFnAsync,
-  PathWalkerProcessFunc,
+  PathWalkerFunction,
+  PathWalkerFunctionAsync,
+  PathWalkerProcessFunction,
 } from '../types';
 import { fsRoot } from './constants';
 
@@ -18,8 +18,8 @@ import { fsRoot } from './constants';
  */
 export const walkFs = (async <T = string>(
   pathToCheck: string,
-  predicate: PathPredicateFnAsync,
-  process?: PathWalkerProcessFunc<T>,
+  predicate: PathPredicateFunctionAsync,
+  process?: PathWalkerProcessFunction<T>,
 ): Promise<T | string> => {
   if (pathToCheck === fsRoot) {
     throw new Error('Reached root, no match found');
@@ -34,7 +34,7 @@ export const walkFs = (async <T = string>(
     path.dirname(pathToCheck),
     predicate,
   );
-}) satisfies PathWalkerFnAsync;
+}) satisfies PathWalkerFunctionAsync;
 
 /**
  * Walk the filesystem up from a path, checking each path against a predicate
@@ -45,8 +45,8 @@ export const walkFs = (async <T = string>(
  */
 export const walkFsSync = (<T = string>(
   pathToCheck: string,
-  predicate: PathPredicateFn,
-  process?: PathWalkerProcessFunc<T>,
+  predicate: PathPredicateFunction,
+  process?: PathWalkerProcessFunction<T>,
 ): T | string => {
   if (pathToCheck === fsRoot) {
     throw new Error('Reached root, no match found');
@@ -61,7 +61,7 @@ export const walkFsSync = (<T = string>(
     path.dirname(pathToCheck),
     predicate,
   );
-}) satisfies PathWalkerFn;
+}) satisfies PathWalkerFunction;
 
 export const walker = {
   async: walkFs,

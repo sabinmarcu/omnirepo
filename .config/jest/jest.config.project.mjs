@@ -1,24 +1,37 @@
 // @ts-check
 
-import path from 'path';
-import fs from 'fs';
+import path from 'node:path';
+import fs from 'node:fs';
+import util from 'node:util';
+import glob from 'glob';
+import url from 'node:url';
 import { config } from './jest.config.base.mjs';
 
-const rootDir = (await import('url')).fileURLToPath(
+const rootDirectory = url.fileURLToPath(
+  new URL('../../', import.meta.url),
+);
+
+const configDirectory = url.fileURLToPath(
   new URL('.', import.meta.url),
 );
+
+const globPromised = util.promisify(glob);
+const setupFiles = (await globPromised(
+  'setupFiles/**/*',
+  { cwd: configDirectory },
+)).map((file) => path.resolve(configDirectory, file));
 
 const generateFromPath = (
   configPath,
 ) => {
   const relativePath = path.relative(
-    rootDir,
+    rootDirectory,
     configPath,
   );
 
   const rootRelativePath = path.relative(
     configPath,
-    rootDir,
+    rootDirectory,
   );
 
   const { name } = JSON.parse(
@@ -31,6 +44,7 @@ const generateFromPath = (
   /** @type {import('jest').Config} */
   const packageConfig = {
     ...config,
+    setupFiles,
     roots: [
       `<rootDir>/${relativePath}`,
     ],
@@ -46,5 +60,7 @@ const generateFromPath = (
 
 export {
   generateFromPath,
-  config,
+
 };
+
+export { config } from './jest.config.base.mjs';

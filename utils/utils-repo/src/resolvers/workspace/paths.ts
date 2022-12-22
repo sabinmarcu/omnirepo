@@ -22,13 +22,14 @@ export const getWorkspacesPaths = moize.promise(async (
   if (!workspacesList) {
     throw new Error('No workspaces found');
   }
-  const packageJsonList = (await Promise.all(
+  const packageJsonListMap = await Promise.all(
     workspacesList.map(
       (workspace) => globPromised(
         path.join(workspace, 'package.json'),
       ),
     ),
-  )).flat();
+  );
+  const packageJsonList = packageJsonListMap.flat();
   return packageJsonList.map((it) => it.replace(/\/package\.json$/, ''));
 });
 
@@ -46,10 +47,10 @@ export const getWorkspacesPathsSync = moize((
   if (!workspacesList) {
     throw new Error('No workspaces found');
   }
-  const packageJsonList = workspacesList.map(
+  const packageJsonList = workspacesList.flatMap(
     (workspace) => glob.sync(
       path.join(workspace, 'package.json'),
     ),
-  ).flat();
+  );
   return packageJsonList.map((it) => it.replace(/\/package\.json$/, ''));
 });

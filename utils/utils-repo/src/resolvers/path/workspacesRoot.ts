@@ -10,8 +10,8 @@ import {
 } from './packageJson';
 import type {
   PathResolver,
-  PathResolverFn,
-  PathResolverFnAsync,
+  PathResolverFunction,
+  PathResolverFunctionAsync,
 } from '../../types';
 
 /**
@@ -25,7 +25,7 @@ export const resolveSync = moize(((
   const packageJson = resolvePackageJsonSync(path);
   const contents = readJsonSync<PackageJson>(packageJson);
   return contents.workspaces;
-}) satisfies PathResolverFn<PackageJson['workspaces']>);
+}) satisfies PathResolverFunction<PackageJson['workspaces']>);
 
 /**
  * Resolve a path to the workspaces field of a package.json
@@ -39,7 +39,7 @@ export const resolve = moize.promise((async (
   const packageJson = await resolvePackageJson(path);
   const contents = await readJson<PackageJson>(packageJson);
   return contents.workspaces;
-}) satisfies PathResolverFnAsync<PackageJson['workspaces']>);
+}) satisfies PathResolverFunctionAsync<PackageJson['workspaces']>);
 
 export const resolver = {
   sync: resolveSync,

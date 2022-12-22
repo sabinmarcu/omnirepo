@@ -9,8 +9,8 @@ import {
 } from '../resolvers/path/git';
 import type {
   PathPredicate,
-  PathPredicateFn,
-  PathPredicateFnAsync,
+  PathPredicateFunction,
+  PathPredicateFunctionAsync,
 } from '../types';
 
 /**
@@ -22,7 +22,7 @@ export const testSync = moize(((
   path: string,
 ) => existsSync(
   resolveSync(path),
-)) satisfies PathPredicateFn);
+)) satisfies PathPredicateFunction);
 
 /**
  * Determine if a path is a git root (async)
@@ -33,7 +33,7 @@ export const test = moize.promise((async (
   path: string,
 ) => exists(
   await resolve(path),
-)) satisfies PathPredicateFnAsync);
+)) satisfies PathPredicateFunctionAsync);
 
 /**
  * Resolver set for git roots

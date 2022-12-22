@@ -1,10 +1,10 @@
-const pkg = require('./package.json');
+const packageJson = require('./package.json');
 
-const files = pkg.workspaces.map(
+const files = packageJson.workspaces.map(
   (workspace) => `${workspace}/src/**/!(*.spec).{ts,tsx}`,
 );
 
-const tests = pkg.workspaces.map(
+const tests = packageJson.workspaces.map(
   (workspace) => `${workspace}/src/**/!(*.type).spec.{ts,tsx}`,
 );
 
