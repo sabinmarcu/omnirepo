@@ -13,4 +13,11 @@ export default () => ({
   files,
   tests,
   autoDetect: true,
+  filesWithNoCoverageCalculated: [
+    'config/eslint-config/src/configs/**/*',
+    '**/index.ts',
+    '**/types.ts',
+    '**/constants.ts',
+    '**/*.d.ts',
+  ],
 });

@@ -7,7 +7,7 @@ const projects = packageJson.workspaces.map(
 );
 
 const coverageCollection = packageJson.workspaces.map(
-  (workspace) => `<rootDir>/${workspace}/src/**/!(index).{ts,tsx}`,
+  (workspace) => `<rootDir>/${workspace}/src/**/*.{ts,tsx}`,
 );
 
 const config = {
