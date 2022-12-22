@@ -4,7 +4,7 @@ import {
   PROJECTS_EMPTY,
   PROJECTS_NOT_ARRAY,
   PROJECTS_NOT_STRINGS,
-} from './generateImportResolver.js';
+} from './generateImportResolver';
 
 describe('generateImportResolver', () => {
   it('should be a function', () => {
