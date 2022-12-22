@@ -32,6 +32,7 @@ const setupFiles = (await globPromised(
 
 const generateFromPath = (
   configPath,
+  extra,
 ) => {
   const relativePath = path.relative(
     rootDirectory,
@@ -62,6 +63,7 @@ const generateFromPath = (
     ],
     displayName: name,
     rootDir: rootRelativePath,
+    ...(extra?.({ rootRelativePath, relativePath })),
   };
 
   return packageConfig;
