@@ -1,0 +1,8 @@
+setup:
+  /:
+    packages:
+input:
+  rootDirectory: '/'
+  workspaces: 
+    - packages/*
+output: [] 

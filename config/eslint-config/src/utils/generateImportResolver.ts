@@ -10,7 +10,7 @@ export const generateImportResolver = (
     throw new Error(NO_PROJECTS_ERROR);
   }
   if (!Array.isArray(projects)) {
-    throw new Error(PROJECTS_NOT_ARRAY);
+    throw new TypeError(PROJECTS_NOT_ARRAY);
   }
   if (projects.length === 0) {
     throw new Error(PROJECTS_EMPTY);

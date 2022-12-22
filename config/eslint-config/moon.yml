@@ -14,3 +14,5 @@ workspace:
     exclude:
       - stub
   
+dependsOn:
+  - '@sabinmarcu/utils-test'

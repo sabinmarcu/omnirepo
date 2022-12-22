@@ -3,18 +3,19 @@ import fs from 'node:fs';
 import glob from 'glob';
 
 export const generateTsProjects = (
-  rootDir: string,
+  rootDirectory: string,
   workspaces: string[],
 ) => {
   const tsConfigPaths = [
     '.',
     ...workspaces,
-  ].map(
+  ].flatMap(
     (workspace) => {
-      const globPath = path.resolve(rootDir, workspace, 'tsconfig.json');
-      return glob.sync(globPath);
+      const globPath = path.resolve(rootDirectory, workspace, 'tsconfig.json');
+      const results = glob.sync(globPath, { cwd: rootDirectory });
+      return results;
     },
-  ).flat();
+  );
   const validPackages = tsConfigPaths.filter(
     (config) => fs.existsSync(
       path.resolve(
@@ -26,7 +27,7 @@ export const generateTsProjects = (
     ),
   );
   const tsProjects = validPackages.map(
-    (config) => path.relative(rootDir, config),
+    (config) => path.relative(rootDirectory, config),
   );
   return tsProjects;
 };
