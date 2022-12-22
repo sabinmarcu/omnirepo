@@ -15,11 +15,20 @@ const configDirectory = url.fileURLToPath(
   new URL('.', import.meta.url),
 );
 
+const configRelativePath = path.relative(
+  rootDirectory,
+  configDirectory,
+);
+
 const globPromised = util.promisify(glob);
 const setupFiles = (await globPromised(
   'setupFiles/**/*',
   { cwd: configDirectory },
-)).map((file) => path.resolve(configDirectory, file));
+)).map((file) => path.join(
+  '<rootDir>',
+  configRelativePath,
+  file,
+));
 
 const generateFromPath = (
   configPath,

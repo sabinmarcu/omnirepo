@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import url from 'node:url';
 import yaml from 'yaml';
-import { toPath } from '@sabinmarcu/utils-path';
 import { createRequire } from 'node:module';
 
 export type FixtureBase = { name: string };
@@ -44,10 +44,12 @@ const getParsers = <T extends unknown>() => ({
  * @returns {T[]} Array of fixtures
  */
 export const compileFixtures = <T extends unknown>(
-  inputCwd: string,
+  inputCwd: string | URL,
   excludes: (string | RegExp)[] = [],
 ): Fixture<T>[] => {
-  const cwd = toPath(inputCwd);
+  const cwd = (inputCwd instanceof URL)
+    ? url.fileURLToPath(inputCwd)
+    : inputCwd;
   if (!fs.existsSync(cwd)) {
     throw new Error(`cwd ${cwd} does not exist`);
   }

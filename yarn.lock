@@ -1377,11 +1377,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/utils-fs@workspace:utils/utils-fs"
   dependencies:
+    "@sabinmarcu/utils-test": "workspace:*"
     type-fest: ^3.4.0
   languageName: unknown
   linkType: soft
 
-"@sabinmarcu/utils-path@workspace:*, @sabinmarcu/utils-path@workspace:utils/utils-path":
+"@sabinmarcu/utils-path@workspace:utils/utils-path":
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/utils-path@workspace:utils/utils-path"
   dependencies:
@@ -1403,12 +1404,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@sabinmarcu/utils-test@workspace:utils/utils-test":
+"@sabinmarcu/utils-test@workspace:*, @sabinmarcu/utils-test@workspace:utils/utils-test":
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/utils-test@workspace:utils/utils-test"
   dependencies:
-    "@sabinmarcu/utils-fs": "workspace:*"
-    "@sabinmarcu/utils-path": "workspace:*"
     "@types/glob": ^8
     "@types/ramda": ^0
     glob: ^8.0.3

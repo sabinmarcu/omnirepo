@@ -8,6 +8,3 @@ project:
 
 language: typescript
 type: library
-dependsOn:
-  - utils-path
-  - utils-fs

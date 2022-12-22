@@ -12,7 +12,7 @@ import {
 export const readJson = async <T>(
   path: string,
 ): Promise<T> => {
-  if (!exists(path)) {
+  if (!await exists(path)) {
     throw new Error(`File not found: ${path}`);
   }
   const contents = await fsPromises.readFile(path, 'utf8');

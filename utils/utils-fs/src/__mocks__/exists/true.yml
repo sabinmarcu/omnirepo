@@ -1,0 +1,4 @@
+setup: 
+  './path': content
+input: ./path
+expected: true

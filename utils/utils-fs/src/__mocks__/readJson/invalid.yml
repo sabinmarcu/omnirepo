@@ -1,0 +1,7 @@
+setup: 
+  './file.json': &output |
+    {
+      "foo": "bar
+    }
+input: ./file.json
+error: Failed to parse JSON
