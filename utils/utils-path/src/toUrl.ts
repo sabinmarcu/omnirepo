@@ -7,5 +7,5 @@ export const toUrl = (
   if (path instanceof URL) {
     return path;
   }
-  return url;
+  return url.pathToFileURL(path);
 };
