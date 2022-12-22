@@ -30,6 +30,7 @@
     "preset": "../../.config/build.config.ts"
   },
   "dependencies": {
+    "@sabinmarcu/utils-test": "workspace:*",
     "type-fest": "^3.4.0"
   },
   "devDependencies": {

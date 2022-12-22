@@ -1,0 +1,31 @@
+setup: 
+  /path:
+    package.json: |
+      {
+        "workspaces": {
+          "packages": [
+            "packages/*"
+          ]
+        }
+      }
+    packages: 
+      /a: 
+        package.json: |
+          {
+            "name": "a"
+          }
+      /b: 
+        package.json: |
+          {
+            "name": "b"
+          }
+input: /path
+paths: 
+  - packages/a
+  - packages/b
+names: 
+  - a
+  - b
+map: 
+  a: packages/a
+  b: packages/b

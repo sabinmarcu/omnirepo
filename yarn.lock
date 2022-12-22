@@ -1415,6 +1415,7 @@ __metadata:
   resolution: "@sabinmarcu/utils-repo@workspace:utils/utils-repo"
   dependencies:
     "@sabinmarcu/utils-fs": "workspace:*"
+    "@sabinmarcu/utils-test": "workspace:*"
     "@types/glob": ^8
     "@types/ramda": ^0
     glob: ^8.0.3

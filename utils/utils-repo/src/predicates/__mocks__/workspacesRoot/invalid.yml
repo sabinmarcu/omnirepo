@@ -1,0 +1,7 @@
+setup: 
+  /package.json: |
+    {
+      "name": "no workspaces"
+    }
+input: /
+output: false 
