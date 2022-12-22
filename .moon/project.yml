@@ -15,10 +15,43 @@ fileGroups:
     - 'src/**/*.spec.*'
 
 tasks:
+  init:
+    command: 'echo "Initializing project..."'
+    type: 'system'
+    deps: 
+      - eslint-config:build
+      - commitlint-config-workspaces:build
+    cache: false
+    options: 
+      runInCI: false
+    
+  devExports: 
+    command: '../../scripts/exports.js'
+    args:
+      - --dev
+    inputs:
+      - package.json
+    outputs: 
+      - package.json
+    cache: false
+    options:
+      runInCI: false
+
+  fixExports: 
+    command: '../../scripts/exports.js'
+    inputs:
+      - package.json
+    outputs: 
+      - package.json
+    cache: false
+    options:
+      runInCI: false
+
   build: 
     command: 'unbuild'
     deps: 
       - '^:build'
+      - '~:fixExports'
     inputs: 
       - '@globs(sources)'
       - '@files(buildConfig)'
@@ -26,10 +59,11 @@ tasks:
       - esm
       - cjs
 
-  stub:
+  dev:
     command: 'unbuild --stub'
     deps: 
-      - '^:stub'
+      - '^:dev'
+      - '~:devExports'
     inputs: 
       - '@globs(sources)'
       - '@files(buildConfig)'
