@@ -15,6 +15,7 @@ describe('generateImportResolver', () => {
   });
   describe.each([
     { input: undefined, error: NO_PROJECTS_ERROR },
+    // eslint-disable-next-line unicorn/no-null
     { input: null, error: NO_PROJECTS_ERROR },
     { input: 1, error: PROJECTS_NOT_ARRAY },
     { input: [], error: PROJECTS_EMPTY },
