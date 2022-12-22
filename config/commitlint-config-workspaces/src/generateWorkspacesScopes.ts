@@ -1,14 +1,14 @@
-import { getWorkspacesNamesSync } from '@sabinmarcu/utils-repo';
+import { getWorkspacesNames } from '@sabinmarcu/utils-repo';
 
 export const generateWorkspacesScopes = (
   path = process.cwd(),
   withAliases = true,
 ) => {
-  const names = getWorkspacesNamesSync(path);
+  const names = getWorkspacesNames.sync(path);
   if (!withAliases) {
     return names;
   }
-  return names.map(
+  return names.flatMap(
     (name) => {
       const [,maybeScope, maybeName] = name.match(/(@[^/]+\/)?(.*)/)!;
       if (maybeScope) {
@@ -16,5 +16,5 @@ export const generateWorkspacesScopes = (
       }
       return name;
     },
-  ).flat().filter(Boolean);
+  ).filter(Boolean);
 };

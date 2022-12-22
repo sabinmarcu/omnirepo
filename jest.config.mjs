@@ -7,13 +7,18 @@ const projects = packageJson.workspaces.map(
 );
 
 const coverageCollection = packageJson.workspaces.map(
-  (workspace) => `<rootDir>/${workspace}/src/**/*.{ts,tsx}`,
+  (workspace) => `<rootDir>/${workspace}/src/**/!(index).{ts,tsx}`,
 );
 
+/** @type {import('jest').Config} */
 const config = {
   projects,
   coverageDirectory: '<rootDir>/coverage/',
   collectCoverageFrom: coverageCollection,
+  coveragePathIgnorePatterns: [
+    'node_modules',
+    '<rootDir>/utils/utils-test/src',
+  ],
   moduleDirectories: [
     'node_modules',
   ],

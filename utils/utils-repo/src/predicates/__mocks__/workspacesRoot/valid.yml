@@ -1,0 +1,10 @@
+setup: 
+  /package.json: |
+    {
+      "name": "workspaces",
+      "workspaces": [
+        "packages/*"
+      ]
+    }
+input: /
+output: true 

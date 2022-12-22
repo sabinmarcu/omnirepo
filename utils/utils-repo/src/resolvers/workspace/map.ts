@@ -1,26 +1,34 @@
 import { zipObj } from 'ramda';
 import moize from 'moize';
 import {
-  getWorkspacesPaths,
-  getWorkspacesPathsSync,
+  resolver as getWorkspacesPaths,
 } from './paths';
 import {
-  getWorkspacesNames,
-  getWorkspacesNamesSync,
+  resolver as getWorkspacesNames,
 } from './names';
+import type {
+  PathResolver,
+  PathResolverFunction,
+  PathResolverFunctionAsync,
+} from '../../types';
 
 export const getWorkspacesMap = moize.promise(async (
   from: string,
 ) => {
-  const paths = await getWorkspacesPaths(from);
-  const names = await getWorkspacesNames(from);
+  const paths = await getWorkspacesPaths.async(from);
+  const names = await getWorkspacesNames.async(from);
   return zipObj(names, paths);
-});
+}) as PathResolverFunctionAsync<Record<string, string>>;
 
 export const getWorkspacesMapSync = moize((
   from: string,
 ) => {
-  const paths = getWorkspacesPathsSync(from);
-  const names = getWorkspacesNamesSync(from);
+  const paths = getWorkspacesPaths.sync(from);
+  const names = getWorkspacesNames.sync(from);
   return zipObj(names, paths);
-});
+}) as PathResolverFunction<Record<string, string>>;
+
+export const resolver = {
+  async: getWorkspacesMap,
+  sync: getWorkspacesMapSync,
+} satisfies PathResolver<Record<string, string>>;

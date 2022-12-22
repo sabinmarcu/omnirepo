@@ -1,0 +1,4 @@
+setup: 
+  /package.json: true
+input: /
+output: true 

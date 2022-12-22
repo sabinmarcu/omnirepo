@@ -10,3 +10,4 @@ language: typescript
 type: library
 dependsOn:
   - utils-fs
+  - utils-test

@@ -1,0 +1,4 @@
+setup: 
+  /.gits: true
+input: /
+output: false 
