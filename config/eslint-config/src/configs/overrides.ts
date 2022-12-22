@@ -9,6 +9,8 @@ const config = {
         '*.ts',
         '*.tsx',
         '*.js',
+        '*.cjs',
+        '*.mjs',
         '*.jsx',
       ],
       plugins: [
@@ -33,15 +35,20 @@ const config = {
         },
       },
       rules: {
+        // Newlines
         'modules-newlines/import-declaration-newline': 'error',
         'modules-newlines/export-declaration-newline': 'error',
-        'global-require': 0,
-        'import/no-extraneous-dependencies': 0,
+
+        // Overrides for Airbnb
         'import/prefer-default-export': 0,
         'react/react-in-jsx-scope': 0,
         'react/prop-types': 0,
         'react/require-default-props': 0,
         'react/jsx-props-no-spreading': 0,
+        'no-restricted-syntax': 0,
+
+        // Overrides for unicorn
+        'unicorn/filename-case': ['error', { case: 'camelCase' }],
       },
     },
     {

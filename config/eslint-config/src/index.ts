@@ -5,7 +5,7 @@ import type {
 let extension: string = '';
 try {
   extension = __filename.split('.').pop()!;
-} catch (e) {
+} catch {
   // @ts-ignore
   extension = import.meta.url.split('.').pop()!;
 } finally {
@@ -14,6 +14,7 @@ try {
 
 const config = {
   extends: [
+    './configs/unicorn',
     './configs/js',
     './configs/jsx',
     './configs/ts',
@@ -24,10 +25,6 @@ const config = {
     './configs/stories',
     './configs/overrides',
   ].map((path) => require.resolve(path + extension)),
-  rules: {
-    '@next/next/no-html-link-for-pages': 'off',
-    'react/jsx-key': 'off',
-  },
 } satisfies Config;
 
 module.exports = config;
