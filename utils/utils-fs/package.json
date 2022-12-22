@@ -1,18 +1,18 @@
 {
   "name": "@sabinmarcu/utils-fs",
   "version": "1.0.0",
-  "main": "./cjs/index.ts",
+  "main": "./cjs/index.cjs",
   "types": "./cjs/index.d.ts",
-  "module": "./esm/index.ts",
+  "module": "./esm/index.mjs",
   "type": "module",
   "exports": {
     ".": {
-      "require": "./cjs/index.ts",
-      "import": "./esm/index.ts"
+      "require": "./cjs/index.cjs",
+      "import": "./esm/index.mjs"
     },
     "./*": {
-      "require": "./cjs/*.ts",
-      "import": "./esm/*.ts"
+      "require": "./cjs/*.cjs",
+      "import": "./esm/*.mjs"
     }
   },
   "typesVersions": {
