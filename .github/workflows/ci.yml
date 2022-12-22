@@ -34,12 +34,6 @@ jobs:
       - name: Run Coverage
         run: 'yarn moon run :coverage'
 
-      - name: Store Coverage as Artefact
-        uses: 'actions/upload-artifact@v2'
-        with:
-          name: 'coverage'
-          path: 'coverage'
-
       - name: Upload coverage reports to Codecov with GitHub Action
         uses: codecov/codecov-action@v3
         with: 
