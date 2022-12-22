@@ -1,8 +1,8 @@
 // @ts-check
 
-const path = require('node:path');
-const fs = require('node:fs');
-const minimist = require('minimist');
+import path from 'node:path';
+import fs from 'node:fs';
+import minimist from 'minimist';
 
 const {
   dev,
@@ -17,10 +17,10 @@ const {
   },
 );
 
-const workDir = process.cwd();
+const workDirectory = process.cwd();
 
-const packageJsonPath = path.join(workDir, 'package.json');
-const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+const packageJsonPath = path.join(workDirectory, 'package.json');
+const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
 const extensionsMapping = dev
   ? {
     cjs: '.ts',
@@ -56,12 +56,12 @@ const fixedPackageJson = {
 };
 
 if (dryRun) {
-  // eslint-disable-next-line no-console
+  // eslint-disable-next-line no-console, unicorn/no-null
   console.dir(fixedPackageJson, { depth: null });
 } else {
   fs.writeFileSync(
     packageJsonPath,
     JSON.stringify(fixedPackageJson, undefined, 2),
-    'utf-8',
+    'utf8',
   );
 }

@@ -38,7 +38,9 @@
     "eslint-plugin-modules-newlines": "^0.0.7",
     "eslint-plugin-react": "^7.31.9",
     "eslint-plugin-storybook": "^0.6.7",
-    "glob": "^8.0.3"
+    "eslint-plugin-unicorn": "^45.0.2",
+    "glob": "^8.0.3",
+    "ts-deepmerge": "^5.0.0"
   },
   "devDependencies": {
     "@types/eslint": "^8.4.10"

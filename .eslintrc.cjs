@@ -2,9 +2,9 @@
 
 const { generateTsProjects } = require('@sabinmarcu/eslint-config/utils/generateTsProjects');
 const { generateImportResolver } = require('@sabinmarcu/eslint-config/utils/generateImportResolver');
-const pkg = require('./package.json');
+const packageJson = require('./package.json');
 
-const tsProjects = generateTsProjects(__dirname, pkg.workspaces);
+const tsProjects = generateTsProjects(__dirname, packageJson.workspaces);
 
 /** @type import('eslint').Linter.Config */
 const config = {
