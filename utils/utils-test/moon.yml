@@ -1,0 +1,13 @@
+project:
+  name: utils-test
+  description: Testing Utils
+  channel: '#utils'
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+
+language: typescript
+type: library
+dependsOn:
+  - utils-path
+  - utils-fs
