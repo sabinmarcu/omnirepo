@@ -50,8 +50,8 @@ tasks:
   build: 
     command: 'unbuild'
     deps: 
-      - '^:build'
       - '~:fixExports'
+      - '^:build'
     inputs: 
       - '@globs(sources)'
       - '@files(buildConfig)'
@@ -62,8 +62,8 @@ tasks:
   dev:
     command: 'unbuild --stub'
     deps: 
-      - '^:dev'
       - '~:devExports'
+      - '^:dev'
     inputs: 
       - '@globs(sources)'
       - '@files(buildConfig)'
@@ -75,5 +75,24 @@ tasks:
     command: 'eslint'
     deps:
       - eslint-config:build
+    inputs: 
+      - '@globs(sources)'
+
+  test: 
+    command: 'jest'
+    args: 
+      - --passWithNoTests
+    deps:
+      - '~:build'
+    inputs: 
+      - '@globs(sources)'
+
+  coverage: 
+    command: 'jest'
+    args: 
+      - --passWithNoTests
+      - --coverage
+    deps:
+      - '^:build'
     inputs: 
       - '@globs(sources)'
