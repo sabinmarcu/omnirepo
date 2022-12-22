@@ -1,6 +1,6 @@
 import {
   generateFromPath,
-} from '../../jest.config.base.mjs';
+} from '../../jest.config.project.mjs';
 
 export default generateFromPath(
   (await import('url')).fileURLToPath(
