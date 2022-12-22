@@ -9,13 +9,11 @@ $schema: 'https://moonrepo.dev/schemas/workspace.json'
 # path to the project folder as the map value. File paths are relative from the workspace root,
 # and cannot reference projects located outside the workspace boundary.
 projects:
-  - utils/*
-  - config/*
-  # 'eslint-config': './config/eslint-config'
-  # 'utils-fs': './utils/fs'
-  # 'utils-repo': './utils/repo'
-  # 'commitlint-config': './config/commitlint-config-workspaces'
-
+  globs: 
+    - utils/*
+    - config/*
+  sources: 
+    root: .
 
 # Configures the version control system to utilize within the workspace. A VCS
 # is required for determining touched (added, modified, etc) files, calculating file hashes,

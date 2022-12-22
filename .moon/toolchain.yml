@@ -15,8 +15,8 @@ node:
 typescript:
   createMissingConfig: true
   projectConfigFileName: 'tsconfig.json'
-  rootConfigFileName: 'tsconfig.json'
-  rootOptionsConfigFileName: 'tsconfig.base.json'
+  rootConfigFileName: 'tsconfig.root.json'
+  rootOptionsConfigFileName: '.config/tsconfig.base.json'
   routeOutDirToCache: false
   syncProjectReferences: true
   syncProjectReferencesToPaths: true

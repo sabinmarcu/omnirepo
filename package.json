@@ -18,12 +18,12 @@
     "unbuild": "^1.0.2"
   },
   "scripts": {
-    "moon": "$(yarn bin moon)",
-    "postinstall": "husky install",
+    "coverage": "jest --coverage",
+    "dev": "yarn moon run :dev",
     "lint": "yarn moon run :lint",
-    "test": "yarn moon run :test",
-    "coverage": "jest --projects --coverage",
-    "dev": "yarn moon run :dev"
+    "moon": "$(yarn bin moon)",
+    "postinstall": "husky install && moon run :init",
+    "test": "yarn moon run :test"
   },
   "devDependencies": {
     "@commitlint/cz-commitlint": "^17.3.0",
