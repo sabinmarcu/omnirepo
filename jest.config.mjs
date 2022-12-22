@@ -1,12 +1,12 @@
 // @ts-check
 
-import pkg from './package.json' assert { type: "json" };
+import packageJson from './package.json' assert { type: "json" };
 
-const projects = pkg.workspaces.map(
+const projects = packageJson.workspaces.map(
   (workspace) => `<rootDir>/${workspace}/jest.config.{js,cjs,mjs}`,
 );
 
-const coverageCollection = pkg.workspaces.map(
+const coverageCollection = packageJson.workspaces.map(
   (workspace) => `<rootDir>/${workspace}/src/**/!(index).{ts,tsx}`,
 );
 

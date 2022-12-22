@@ -1,5 +1,5 @@
 {
-  "name": "@sabinmarcu/commitlint-config-workspaces",
+  "name": "@sabinmarcu/utils-path",
   "version": "1.0.0",
   "main": "./cjs/index.cjs",
   "types": "./cjs/index.d.ts",
@@ -30,7 +30,6 @@
     "preset": "../../.config/build.config.ts"
   },
   "dependencies": {
-    "@sabinmarcu/utils-repo": "workspace:*",
     "type-fest": "^3.4.0"
   }
 }

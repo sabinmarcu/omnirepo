@@ -18,10 +18,10 @@ export const readJson = async <T>(
   const contents = await fsPromises.readFile(path, 'utf8');
   try {
     return JSON.parse(contents);
-  } catch (e) {
+  } catch (error) {
     throw new Error(
       `Failed to parse JSON file: ${path}`,
-      { cause: e },
+      { cause: error },
     );
   }
 };
@@ -40,10 +40,10 @@ export const readJsonSync = <T>(
   const contents = fs.readFileSync(path, 'utf8');
   try {
     return JSON.parse(contents);
-  } catch (e) {
+  } catch (error) {
     throw new Error(
       `Failed to parse JSON file: ${path}`,
-      { cause: e },
+      { cause: error },
     );
   }
 };

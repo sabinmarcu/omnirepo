@@ -42,6 +42,32 @@ tasks:
       - '~:rootCleanup'
     options:
       runDepsInParallel: false
+
+  eslint: 
+    command: 'eslint'
+    inputs: []
+    local: true
+    deps: 
+      - eslint-config:build
+      - rootCleanup
+    options:
+      runDepsInParallel: false
+
+  clean: 
+    command: "find"
+    args: 
+      - .
+      - -iname
+      - tsconfig.json
+      - -not
+      - -path
+      - \"./node_modules/*\"
+      - -exec
+      - rm
+      - -rf
+      - "{}"
+      - +;
+    local: true
     
 language: bash
 type: unknown
