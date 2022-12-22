@@ -25,6 +25,12 @@ jobs:
       - name: Run CI Tasks
         run: 'yarn moon ci'
 
+      - name: Report Moon CI Status
+        uses: 'moonrepo/run-report-action@v1'
+        if: success() || failure()
+        with:
+          access-token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Run Coverage
         run: 'yarn moon run :coverage'
 
@@ -40,8 +46,3 @@ jobs:
           directory: coverage
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
-
-      - uses: 'moonrepo/run-report-action@v1'
-        if: success() || failure()
-        with:
-          access-token: ${{ secrets.GITHUB_TOKEN }}
