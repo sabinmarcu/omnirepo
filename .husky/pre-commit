@@ -2,5 +2,4 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 yarn moon run :lint :test --affected --status=staged
-yarn constraints --fix
 yarn constraints

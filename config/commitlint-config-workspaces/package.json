@@ -32,5 +32,8 @@
   "dependencies": {
     "@sabinmarcu/utils-repo": "workspace:*",
     "type-fest": "^3.4.0"
+  },
+  "tscmono": {
+    "preset": "lib"
   }
 }

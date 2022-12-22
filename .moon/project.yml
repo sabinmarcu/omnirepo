@@ -50,6 +50,8 @@ tasks:
   dev:
     command: 'unbuild --stub'
     deps: 
+      - 'root:init'
+      - 'root:tsconfig'
       - '~:devExports'
       - '^:dev'
     inputs: 

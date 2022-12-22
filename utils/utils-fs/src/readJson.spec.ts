@@ -1,6 +1,5 @@
 import {
   setupFsMockAll,
-  resetFsMock,
   compileFixtures,
 } from '@sabinmarcu/utils-test';
 import {
@@ -24,7 +23,6 @@ jest.mock('node:fs', jest.requireActual('@sabinmarcu/utils-test').mockFs);
 jest.mock('node:fs/promises', jest.requireActual('@sabinmarcu/utils-test').mockFsPromises);
 
 describe('readJson', () => {
-  afterEach(resetFsMock);
   describe.each(fixtures)(
     '$name',
     ({ setup, input, ...outcome }) => {
@@ -45,7 +43,6 @@ describe('readJson', () => {
 });
 
 describe('readJsonSync', () => {
-  afterEach(resetFsMock);
   describe.each(fixtures)(
     '$name',
     ({ setup, input, ...outcome }) => {

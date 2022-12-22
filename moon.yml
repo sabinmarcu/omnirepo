@@ -1,11 +1,5 @@
 tasks: 
-  rootCleanup: 
-    command: 'rm -f tsconfig.json'
-    type: 'system'
-    local: true
-    inputs: []
-  
-  rootInit:
+  init: 
     command: noop
     type: 'system'
     deps: 
@@ -14,34 +8,12 @@ tasks:
     inputs: []
     local: true
 
-  init: 
-    command: noop
-    type: 'system'
-    inputs: []
-    local: true
-    deps: 
-      - '~:rootInit'
-      - '~:rootCleanup'
-    options:
-      runDepsInParallel: false
-
-  rootCoverage: 
+  coverage: 
     command: "yarn coverage"
     type: "system"
     inputs: []
     options: 
       runInCI: false
-
-  coverage: 
-    command: noop
-    type: 'system'
-    inputs: []
-    local: true
-    deps: 
-      - '~:rootCoverage'
-      - '~:rootCleanup'
-    options:
-      runDepsInParallel: false
 
   eslint: 
     command: 'eslint'
@@ -49,7 +21,6 @@ tasks:
     local: true
     deps: 
       - eslint-config:build
-      - rootCleanup
     options:
       runDepsInParallel: false
 
@@ -67,6 +38,11 @@ tasks:
       - -rf
       - "{}"
       - +;
+    local: true
+
+  tsconfig:
+    command: tscmono
+    inputs: []
     local: true
     
 language: bash

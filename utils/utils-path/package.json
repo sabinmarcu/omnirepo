@@ -31,5 +31,8 @@
   },
   "dependencies": {
     "type-fest": "^3.4.0"
+  },
+  "tscmono": {
+    "preset": "lib"
   }
 }
