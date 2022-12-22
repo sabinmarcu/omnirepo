@@ -1,6 +1,5 @@
 // @ts-check
 
-import { config as defaultConfig } from './jest.config.base.mjs';
 import pkg from './package.json' assert { type: "json" };
 
 const projects = pkg.workspaces.map(
@@ -12,7 +11,6 @@ const coverageCollection = pkg.workspaces.map(
 );
 
 const config = {
-  ...defaultConfig,
   projects,
   coverageDirectory: '<rootDir>/coverage/',
   collectCoverageFrom: coverageCollection,

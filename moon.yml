@@ -1,0 +1,51 @@
+tasks: 
+  rootCleanup: 
+    command: 'rm -f tsconfig.json'
+    type: 'system'
+    local: true
+    inputs: []
+  
+  rootInit:
+    command: noop
+    type: 'system'
+    deps: 
+      - eslint-config:build
+      - commitlint-config-workspaces:build
+    inputs: []
+    local: true
+
+  init: 
+    command: noop
+    type: 'system'
+    inputs: []
+    local: true
+    deps: 
+      - '~:rootInit'
+      - '~:rootCleanup'
+    options:
+      runDepsInParallel: false
+
+  rootCoverage: 
+    command: "yarn coverage"
+    type: "system"
+    inputs: []
+    options: 
+      runInCI: false
+
+  coverage: 
+    command: noop
+    type: 'system'
+    inputs: []
+    local: true
+    deps: 
+      - '~:rootCoverage'
+      - '~:rootCleanup'
+    options:
+      runDepsInParallel: false
+    
+language: bash
+type: unknown
+
+workspace:
+  inheritedTasks:
+    include: []
