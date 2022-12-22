@@ -2,7 +2,11 @@ import {
   setupFsMockAll,
   vol,
 } from '@sabinmarcu/utils-test';
-import { resolver as getWorkspacesMap } from './map';
+import {
+  resolver as getWorkspacesMap,
+  getWorkspacesMap as getWorkspacesMapAsync,
+  getWorkspacesMapSync,
+} from './map';
 
 import compileFixtures from './__mocks__';
 
@@ -23,6 +27,11 @@ jest.mock('glob', () => {
 });
 
 describe('getWorkspaces.paths', () => {
+  describe('getWorkspacesMapSync', () => {
+    it('should be a function', () => {
+      expect(typeof getWorkspacesMapSync).toBe('function');
+    });
+  });
   describe('sync', () => {
     it('should be a function', () => {
       expect(typeof getWorkspacesMap.sync).toBe('function');
@@ -45,6 +54,11 @@ describe('getWorkspaces.paths', () => {
         }
       },
     );
+  });
+  describe('getWorkspacesMap', () => {
+    it('should be a function', () => {
+      expect(typeof getWorkspacesMapAsync).toBe('function');
+    });
   });
   describe('async', () => {
     it('should be a function', () => {
