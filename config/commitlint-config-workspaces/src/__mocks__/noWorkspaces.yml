@@ -1,0 +1,22 @@
+setup: 
+  /path: 
+    package.json: |
+      {
+      }
+    packages:
+      /package-a:
+        package.json: |
+          {
+            "name": "package-a",
+            "version": "1.0.0"
+          }
+      /package-b:
+        package.json: |
+          {
+            "name": "package-b",
+            "version": "1.0.0"
+          }
+input:
+  path: /path
+  withAliases: false
+error: No workspaces found

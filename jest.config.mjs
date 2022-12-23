@@ -14,10 +14,9 @@ const coverageCollection = packageJson.workspaces.map(
 const config = {
   projects,
   coverageDirectory: '<rootDir>/coverage/',
-  collectCoverageFrom: coverageCollection,
-  coveragePathIgnorePatterns: [
-    'node_modules',
-    '<rootDir>/utils/utils-test/src',
+  collectCoverageFrom: [
+    ...coverageCollection,
+    '!<rootDir>/utils/utils-test/**/*',
   ],
   moduleDirectories: [
     'node_modules',

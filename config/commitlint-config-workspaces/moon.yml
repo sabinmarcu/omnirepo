@@ -16,3 +16,4 @@ workspace:
   
 dependsOn:
   - utils-repo
+  - utils-test

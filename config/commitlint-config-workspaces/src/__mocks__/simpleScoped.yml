@@ -1,0 +1,27 @@
+setup: 
+  /path: 
+    package.json: |
+      {
+        "workspaces": [
+          "packages/*"
+        ]
+      }
+    packages:
+      /package-a:
+        package.json: |
+          {
+            "name": "@something/package-a",
+            "version": "1.0.0"
+          }
+      /package-b:
+        package.json: |
+          {
+            "name": "@else/package-b",
+            "version": "1.0.0"
+          }
+input:
+  path: /path
+  withAliases: false
+scopes: 
+  - "@something/package-a"
+  - "@else/package-b"
