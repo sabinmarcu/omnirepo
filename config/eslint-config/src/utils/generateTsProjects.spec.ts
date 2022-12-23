@@ -20,14 +20,9 @@ const fixtures = compileFixtures<ExistsFixtures>(
 
 jest.mock('node:fs', jest.requireActual('@sabinmarcu/utils-test').mockFs);
 jest.mock('node:fs/promises', jest.requireActual('@sabinmarcu/utils-test').mockFsPromises);
-jest.mock('glob', () => {
-  const glob = jest.requireActual('glob');
-  const mockedGlob = {} as any;
-  mockedGlob.sync = (pattern: string, options: any) => (
-    glob.sync(pattern, { ...options, fs: vol })
-  );
-  return mockedGlob;
-});
+jest.mock('glob', () => (
+  jest.requireActual('@sabinmarcu/utils-test').mockGlob(vol, jest.requireActual('glob'))
+));
 
 describe('generateTsProjects', () => {
   it('should be a function', () => {

@@ -14,17 +14,9 @@ const fixtures = compileFixtures();
 
 jest.mock('node:fs', jest.requireActual('@sabinmarcu/utils-test').mockFs);
 jest.mock('node:fs/promises', jest.requireActual('@sabinmarcu/utils-test').mockFsPromises);
-jest.mock('glob', () => {
-  const glob = jest.requireActual('glob');
-  const mockGlob = (pattern: string, options: any, callback: any) => (
-    glob(pattern, { ...options, fs: vol }, callback)
-  );
-  const mockGlobSync = (pattern: string, options: any) => (
-    glob.sync(pattern, { ...options, fs: vol })
-  );
-  mockGlob.sync = mockGlobSync;
-  return mockGlob;
-});
+jest.mock('glob', () => (
+  jest.requireActual('@sabinmarcu/utils-test').mockGlob(vol, jest.requireActual('glob'))
+));
 
 describe('getWorkspaces.paths', () => {
   describe('getWorkspacesMapSync', () => {
