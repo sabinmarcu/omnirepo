@@ -1,5 +1,5 @@
 {
-  "name": "@sabinmarcu/utils-test",
+  "name": "@sabinmarcu/commitlint-config-workspaces",
   "version": "1.0.0",
   "main": "./cjs/index.cjs",
   "types": "./cjs/index.d.ts",
@@ -27,19 +27,14 @@
     "access": "public"
   },
   "build": {
-    "preset": "../../.config/build.config.ts"
+    "preset": "../../../.config/build.config.ts"
   },
   "dependencies": {
-    "glob": "^8.0.3",
-    "memfs": "^3.4.12",
-    "moize": "^6.1.4",
-    "ramda": "^0.28.0",
-    "type-fest": "^3.4.0",
-    "yaml": "^2.2.0"
+    "@sabinmarcu/utils-repo": "workspace:*",
+    "type-fest": "^3.4.0"
   },
   "devDependencies": {
-    "@types/glob": "^8",
-    "@types/ramda": "^0"
+    "@sabinmarcu/utils-test": "workspace:*"
   },
   "tscmono": {
     "preset": "lib"

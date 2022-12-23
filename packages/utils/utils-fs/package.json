@@ -1,5 +1,5 @@
 {
-  "name": "@sabinmarcu/utils-path",
+  "name": "@sabinmarcu/utils-fs",
   "version": "1.0.0",
   "main": "./cjs/index.cjs",
   "types": "./cjs/index.d.ts",
@@ -27,10 +27,13 @@
     "access": "public"
   },
   "build": {
-    "preset": "../../.config/build.config.ts"
+    "preset": "../../../.config/build.config.ts"
   },
   "dependencies": {
     "type-fest": "^3.4.0"
+  },
+  "devDependencies": {
+    "@sabinmarcu/utils-test": "workspace:*"
   },
   "tscmono": {
     "preset": "lib"

@@ -1,5 +1,5 @@
 {
-  "name": "@sabinmarcu/utils-repo",
+  "name": "@sabinmarcu/utils-path",
   "version": "1.0.0",
   "main": "./cjs/index.cjs",
   "types": "./cjs/index.d.ts",
@@ -27,19 +27,10 @@
     "access": "public"
   },
   "build": {
-    "preset": "../../.config/build.config.ts"
+    "preset": "../../../.config/build.config.ts"
   },
   "dependencies": {
-    "@sabinmarcu/utils-fs": "workspace:*",
-    "glob": "^8.0.3",
-    "moize": "^6.1.4",
-    "ramda": "^0.28.0",
     "type-fest": "^3.4.0"
-  },
-  "devDependencies": {
-    "@sabinmarcu/utils-test": "workspace:*",
-    "@types/glob": "^8",
-    "@types/ramda": "^0"
   },
   "tscmono": {
     "preset": "lib"

@@ -1,6 +1,8 @@
+// @ts-check
+
 import {
   generateFromPath,
-} from '../../.config/jest/jest.config.project.mjs';
+} from '../../../.config/jest/jest.config.project.mjs';
 
 export default generateFromPath(
   (await import('node:url')).fileURLToPath(
@@ -9,8 +11,7 @@ export default generateFromPath(
   ({ relativePath }) => ({
     coveragePathIgnorePatterns: [
       'node_modules',
-      `<rootDir>/${relativePath}/src/configs`,
-      `<rootDir>/${relativePath}/src/index.ts`,
+      `<rootDir>/${relativePath}/src/constants`,
     ],
   }),
 );
