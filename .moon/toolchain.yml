@@ -9,7 +9,7 @@ node:
   dedupeOnLockfileChange: true
   dependencyVersionFormat: workspace
   inferTasksFromScripts: false
-  syncProjectWorkspaceDependencies: true
+  syncProjectWorkspaceDependencies: false
   syncVersionManagerConfig: 'nvm'
 
 typescript:
