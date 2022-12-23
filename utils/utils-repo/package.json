@@ -31,7 +31,6 @@
   },
   "dependencies": {
     "@sabinmarcu/utils-fs": "workspace:*",
-    "@sabinmarcu/utils-test": "workspace:*",
     "glob": "^8.0.3",
     "moize": "^6.1.4",
     "ramda": "^0.28.0",

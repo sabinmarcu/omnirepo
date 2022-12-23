@@ -31,7 +31,6 @@
   },
   "dependencies": {
     "@sabinmarcu/utils-repo": "workspace:*",
-    "@sabinmarcu/utils-test": "workspace:*",
     "type-fest": "^3.4.0"
   },
   "devDependencies": {
