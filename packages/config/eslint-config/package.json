@@ -50,7 +50,7 @@
     "access": "public"
   },
   "build": {
-    "preset": "../../.config/build.config.ts"
+    "preset": "../../../.config/build.config.ts"
   },
   "tscmono": {
     "preset": "lib"

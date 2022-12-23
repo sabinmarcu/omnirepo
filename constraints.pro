@@ -27,7 +27,7 @@ gen_enforced_field(WorkspaceCwd, 'exports.["./*"].import', './esm/*.mjs') :-
   \+ workspace_ident(WorkspaceCwd, 'root').
 
 % Make sure all packages have the correct build configuration
-gen_enforced_field(WorkspaceCwd, 'build.preset', '../../.config/build.config.ts') :-
+gen_enforced_field(WorkspaceCwd, 'build.preset', '../../../.config/build.config.ts') :-
   \+ workspace_ident(WorkspaceCwd, 'root').
 
 % Make sure all packages have a correct tscmono configuration
