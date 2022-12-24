@@ -16,6 +16,7 @@
     "preserveSymlinks": true,
     "skipLibCheck": true,
     "strict": true,
+    "resolveJsonModule": true,
     "lib": [
       "ES2022",
       "DOM"
