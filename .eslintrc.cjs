@@ -6,7 +6,7 @@ const packageJson = require('./package.json');
 
 const tsProjects = generateTsProjects(__dirname, packageJson.workspaces);
 
-/** @type import('eslint').Linter.Config */
+/** @type import('eslint').Linter.Config<any> */
 const config = {
   root: true,
   extends: ['@sabinmarcu'],
@@ -14,6 +14,14 @@ const config = {
     project: tsProjects,
   },
   ...generateImportResolver(tsProjects),
+  overrides: [
+    {
+      files: ['**/*Command.(m|c)(t|j)sx?'],
+      rules: {
+        'unicorn/filename-case': 'pascal-case',
+      },
+    },
+  ],
 };
 
 module.exports = config;

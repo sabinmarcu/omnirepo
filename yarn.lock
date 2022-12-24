@@ -1394,6 +1394,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@sabinmarcu/omnicli@workspace:^, @sabinmarcu/omnicli@workspace:packages/cli/omnicli":
+  version: 0.0.0-use.local
+  resolution: "@sabinmarcu/omnicli@workspace:packages/cli/omnicli"
+  dependencies:
+    "@sabinmarcu/utils-repo": "workspace:^"
+    "@types/glob": ^8
+    "@types/ramda": ^0
+    clipanion: ^3.2.0-rc.14
+    glob: ^8.0.3
+    jiti: ^1.16.0
+    memfs: ^3.4.12
+    moize: ^6.1.4
+    ramda: ^0.28.0
+    typanion: ^3.12.1
+    type-fest: ^3.4.0
+    yaml: ^2.2.0
+  bin:
+    omnicli: ./bin/omnicli.js
+  languageName: unknown
+  linkType: soft
+
 "@sabinmarcu/utils-fs@workspace:*, @sabinmarcu/utils-fs@workspace:packages/utils/utils-fs":
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/utils-fs@workspace:packages/utils/utils-fs"
@@ -1411,7 +1432,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@sabinmarcu/utils-repo@workspace:*, @sabinmarcu/utils-repo@workspace:packages/utils/utils-repo":
+"@sabinmarcu/utils-repo@workspace:*, @sabinmarcu/utils-repo@workspace:^, @sabinmarcu/utils-repo@workspace:packages/utils/utils-repo":
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/utils-repo@workspace:packages/utils/utils-repo"
   dependencies:
@@ -2776,6 +2797,17 @@ __metadata:
   version: 2.6.2
   resolution: "clipanion@npm:2.6.2"
   checksum: 7a1dfc8c9ae70362fc12a8d148827b584f598c9f983143a847b33a84ec8a8c3a51e5888131a3e9847cddfa38096d17a38ced870ee2fd4bef5babb971ec198287
+  languageName: node
+  linkType: hard
+
+"clipanion@npm:^3.2.0-rc.14":
+  version: 3.2.0-rc.14
+  resolution: "clipanion@npm:3.2.0-rc.14"
+  dependencies:
+    typanion: ^3.8.0
+  peerDependencies:
+    typanion: "*"
+  checksum: 0bedf6c70d8f3f986fe105ba4a2182cf8d398201ed639095927ceef5d50f370ee2bb7e14239be2b5ddcf3dc8f3b72a1666d67e903ee405fcddf1f378a4704c54
   languageName: node
   linkType: hard
 
@@ -7589,6 +7621,7 @@ __metadata:
     "@moonrepo/cli": ^0.20.0
     "@sabinmarcu/commitlint-config-workspaces": "workspace:*"
     "@sabinmarcu/eslint-config": "workspace:*"
+    "@sabinmarcu/omnicli": "workspace:^"
     "@sabinmarcu/utils-test": "workspace:*"
     "@swc/core": ^1.3.24
     "@swc/jest": ^0.2.24
@@ -8332,6 +8365,13 @@ __metadata:
   peerDependencies:
     typescript: ">=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta"
   checksum: 1843f4c1b2e0f975e08c4c21caa4af4f7f65a12ac1b81b3b8489366826259323feb3fc7a243123453d2d1a02314205a7634e048d4a8009921da19f99755cdc48
+  languageName: node
+  linkType: hard
+
+"typanion@npm:^3.12.1, typanion@npm:^3.8.0":
+  version: 3.12.1
+  resolution: "typanion@npm:3.12.1"
+  checksum: a2e26fa216f8a1dbd2ffbaacb75b1e2dc042a0356e9702fba05a968cad95d9f661b24e37f6c6d8c3adad2c8582c99fca4826ff26a2d07cd2ae617ea87e6187eb
   languageName: node
   linkType: hard
 

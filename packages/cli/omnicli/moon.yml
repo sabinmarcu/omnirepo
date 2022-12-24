@@ -1,0 +1,10 @@
+project:
+  name: omnicli
+  description: CLI For managing omnirepo
+  channel: '#cli'
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+
+language: typescript
+type: tool
