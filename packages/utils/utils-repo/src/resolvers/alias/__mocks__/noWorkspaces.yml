@@ -1,0 +1,18 @@
+setup: 
+  /path:
+    package.json: |
+      {
+      }
+    packages: 
+      /a: 
+        package.json: |
+          {
+            "name": "a"
+          }
+      /b: 
+        package.json: |
+          {
+            "name": "b"
+          }
+input: /path
+error: No workspaces found
