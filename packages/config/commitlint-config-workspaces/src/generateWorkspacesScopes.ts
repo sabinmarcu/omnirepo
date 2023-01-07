@@ -1,20 +1,14 @@
-import { getWorkspacesNames } from '@sabinmarcu/utils-repo';
+import {
+  getAliasesNames,
+  getWorkspacesNames,
+} from '@sabinmarcu/utils-repo';
 
 export const generateWorkspacesScopes = (
   path = process.cwd(),
   withAliases = true,
 ) => {
-  const names = getWorkspacesNames.sync(path);
   if (!withAliases) {
-    return names;
+    return getWorkspacesNames.sync(path);
   }
-  return names.flatMap(
-    (name) => {
-      const [,maybeScope, maybeName] = name.match(/(@[^/]+\/)?(.*)/)!;
-      if (maybeScope) {
-        return [maybeName, name];
-      }
-      return name;
-    },
-  ).filter(Boolean);
+  return getAliasesNames.sync(path);
 };
