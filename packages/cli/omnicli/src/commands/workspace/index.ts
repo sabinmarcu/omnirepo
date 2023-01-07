@@ -1,0 +1,1 @@
+export { WorkspaceCommand } from './WorkspaceCommand';
