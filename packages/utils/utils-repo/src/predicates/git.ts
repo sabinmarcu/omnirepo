@@ -1,7 +1,7 @@
 import {
   exists,
   existsSync,
-} from '@sabinmarcu/utils-fs';
+} from '@sabinmarcu/utils-fs/index';
 import moize from 'moize';
 import {
   resolve,

@@ -7,13 +7,18 @@
   "type": "module",
   "exports": {
     ".": {
-      "require": "./cjs/index.cjs",
-      "import": "./esm/index.mjs"
+      "import": "./esm/index.mjs",
+      "require": "./cjs/index.cjs"
+    },
+    "./src/*": {
+      "import": "./src/*",
+      "require": "./src/*"
     },
     "./*": {
-      "require": "./cjs/*.cjs",
-      "import": "./esm/*.mjs"
-    }
+      "import": "./esm/*.mjs",
+      "require": "./cjs/*.cjs"
+    },
+    "./package.json": "./package.json"
   },
   "typesVersions": {
     "*": {
