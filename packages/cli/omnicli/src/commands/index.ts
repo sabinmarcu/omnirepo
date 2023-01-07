@@ -1,11 +1,11 @@
 import { Builtins } from 'clipanion';
 import { HelloCommand } from './HelloCommand';
-import { ListPackagesCommand } from './packages/ListCommand';
 
+import { FixExportsCommand } from './fixExports';
 export const commands = [
   Builtins.DefinitionsCommand,
   Builtins.HelpCommand,
   Builtins.VersionCommand,
   HelloCommand,
-  ListPackagesCommand,
+  FixExportsCommand,
 ];
