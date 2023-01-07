@@ -16,9 +16,12 @@ const config = {
   ...generateImportResolver(tsProjects),
   overrides: [
     {
-      files: ['**/*Command.(m|c)(t|j)sx?'],
+      files: ['**/*Command.?(m|c)ts?(x)'],
       rules: {
-        'unicorn/filename-case': 'pascal-case',
+        'unicorn/filename-case': [
+          'error',
+          { case: 'pascalCase' },
+        ],
       },
     },
   ],
