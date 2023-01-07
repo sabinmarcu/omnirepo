@@ -1,11 +1,12 @@
 import { Cli } from 'clipanion';
 import path from 'node:path';
+import { compileContext } from './features';
 import { commands } from './commands/index';
 
 import {
   name,
   version,
-// @ts-ignore
+  // @ts-ignore
 } from '../package.json';
 
 const [node, app, ...rest] = process.argv;
@@ -20,4 +21,4 @@ for (const command of commands) {
   cli.register(command);
 }
 
-cli.runExit(rest);
+cli.runExit(rest, compileContext());

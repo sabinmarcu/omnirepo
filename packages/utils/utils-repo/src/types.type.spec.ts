@@ -40,4 +40,4 @@ type _PathWalkerSync = PathWalker['sync'];
 //    ^? type _PathWalkerSync = PathWalkerOverload<string>
 
 type _PathWalkerAsync = PathWalker['async'];
-//    ^? type _PathWalkerAsync = (path: string, predicate: (path: string) => Promise<boolean>, process?: PathWalkerProcessFunc<string> | undefined) => Promise<string>
+//    ^? type _PathWalkerAsync = (path: string, predicate: (path: string) => Promise<boolean>, process?: PathWalkerProcessFunction<string> | undefined) => Promise<string>
