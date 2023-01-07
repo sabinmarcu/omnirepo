@@ -21,6 +21,10 @@ gen_enforced_field(WorkspaceCwd, 'exports.["."].require', './cjs/index.cjs') :-
   \+ workspace_ident(WorkspaceCwd, 'root').
 gen_enforced_field(WorkspaceCwd, 'exports.["."].import', './esm/index.mjs') :-
   \+ workspace_ident(WorkspaceCwd, 'root').
+gen_enforced_field(WorkspaceCwd, 'exports.["./src/*"].require', './src/*') :-
+  \+ workspace_ident(WorkspaceCwd, 'root').
+gen_enforced_field(WorkspaceCwd, 'exports.["./src/*"].import', './src/*') :-
+  \+ workspace_ident(WorkspaceCwd, 'root').
 gen_enforced_field(WorkspaceCwd, 'exports.["./*"].require', './cjs/*.cjs') :-
   \+ workspace_ident(WorkspaceCwd, 'root').
 gen_enforced_field(WorkspaceCwd, 'exports.["./*"].import', './esm/*.mjs') :-

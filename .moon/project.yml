@@ -16,7 +16,7 @@ fileGroups:
 
 tasks:
   devExports: 
-    command: '../../scripts/exports.js'
+    command: 'omni fixExports'
     args:
       - --dev
     inputs:
@@ -26,7 +26,7 @@ tasks:
     local: true
 
   fixExports: 
-    command: '../../scripts/exports.js'
+    command: 'omni fixExports'
     inputs:
       - package.json
     outputs: 
