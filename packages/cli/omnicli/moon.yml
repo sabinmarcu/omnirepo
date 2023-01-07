@@ -8,3 +8,11 @@ project:
 
 language: typescript
 type: tool
+
+dependsOn: 
+  - utils-fs
+  - utils-repo
+
+workspace: 
+  inheritedTasks:
+    include: []
