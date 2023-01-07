@@ -23,11 +23,11 @@ export class HelloCommand extends Command {
       [
         'A basic example',
         '$0 my-command',
-      ], 
+      ],
       [
         'A second example',
         '$0 my-command --with-parameter',
-      ]
+      ],
     ],
   });
 
