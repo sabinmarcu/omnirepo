@@ -1,7 +1,9 @@
 #!/usr/bin/env node
+/* eslint-disable import/extensions */
 
 const url = await import('node:url');
 const { default: jiti } = (await import('jiti'));
+const { transform } = await import('../bin-src/transform.mjs');
 
 let filename = '';
 try {
@@ -18,4 +20,7 @@ const toPath = (path) => url.fileURLToPath(
   ),
 );
 
-jiti(toPath('../src'))('./cli.ts');
+jiti(toPath('../src'), {
+  sourceMaps: true,
+  transform,
+})('./cli.ts');
