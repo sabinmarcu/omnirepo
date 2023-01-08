@@ -5,7 +5,7 @@ import {
 import { getAliasesMap } from '@sabinmarcu/utils-repo';
 import type { ContextWithCwd } from '../../features';
 import {
-  isValidSubcommand,
+  matchSubcommand,
 } from '../workspaceCommands';
 
 export class WorkspaceCommand extends Command<ContextWithCwd> {
@@ -13,15 +13,12 @@ export class WorkspaceCommand extends Command<ContextWithCwd> {
 
   workspaceName = Option.String();
 
-  commandName = Option.String();
-
   rest = Option.Proxy();
 
   async execute() {
     const {
       context,
       workspaceName,
-      commandName,
       rest,
       cli,
     } = this;
@@ -34,14 +31,15 @@ export class WorkspaceCommand extends Command<ContextWithCwd> {
       throw new Error('Workspace not found');
     }
 
-    if (!isValidSubcommand(commandName)) {
-      throw new Error('Invalid subcommand');
-    }
+    const [commandPath, commandArguments] = matchSubcommand(rest);
+    console.log({
+      workspaceName, commandPath, commandArguments, rest,
+    });
 
     cli.run([
-      commandName,
+      ...commandPath,
       workspacePath,
-      ...rest,
+      ...commandArguments,
     ]);
   }
 }
