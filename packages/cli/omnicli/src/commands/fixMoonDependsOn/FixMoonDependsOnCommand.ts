@@ -15,7 +15,7 @@ import type { ContextWithCwd } from '../../features';
 import { OmnicliCommand } from '../../features';
 
 export class FixMoonDependsOnCommand extends OmnicliCommand<ContextWithCwd> {
-  static readonlyPaths = [['fixMoonDependsOn']];
+  static readonlyPaths = [['fix', 'moon', 'dependsOn']];
 
   workspacePath = Option.String({ required: false });
 

@@ -11,7 +11,7 @@ import { OmnicliCommand } from '../../features';
 import { fixPathMapping } from './utils/fixPathMapping';
 
 export class FixExportsCommand extends OmnicliCommand<ContextWithCwd> {
-  static readonlyPaths = [['fixExports']];
+  static readonlyPaths = [['fix', 'exports']];
 
   workspacePath = Option.String({ required: false });
 
