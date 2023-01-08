@@ -32,9 +32,6 @@ export class WorkspaceCommand extends Command<ContextWithCwd> {
     }
 
     const [commandPath, commandArguments] = matchSubcommand(rest);
-    console.log({
-      workspaceName, commandPath, commandArguments, rest,
-    });
 
     cli.run([
       ...commandPath,
