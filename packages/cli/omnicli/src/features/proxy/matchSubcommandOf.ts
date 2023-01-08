@@ -1,7 +1,8 @@
 import moize from 'moize';
 import type { SubcommandType } from '../command/types';
 import { matchPath } from '../paths/matchPath';
-import { compileSubcommandsMap } from './compileSubcommandsMap';
+import { unpackSinglePath } from '../paths/unpackSinglePath';
+import type { MapOfSubcommandsList } from './types';
 
 export const matchSubcommandOf = moize(
   <
@@ -9,7 +10,6 @@ export const matchSubcommandOf = moize(
   >(
     subcommands: Subcommands,
   ) => {
-    const subcommandsMap = compileSubcommandsMap(subcommands);
     const subcommandsPaths = subcommands.map((subcommand) => subcommand.readonlyPaths);
     return (subcommandArguments: readonly string[]) => {
       const matches = subcommandsPaths.map(
@@ -17,13 +17,13 @@ export const matchSubcommandOf = moize(
           const result = matchPath(set, subcommandArguments);
           return result;
         },
-      ).filter(Boolean) as any as [keyof typeof subcommandsMap, string[]][];
+      ).filter(Boolean) as any as [keyof MapOfSubcommandsList<Subcommands>, string[]][];
       if (matches.length !== 1) {
         throw new Error(`Unknown command: ${subcommandArguments.join(' ')}`);
       }
       const [[subcommand, rest]] = matches;
       return [
-        subcommandsMap[subcommand],
+        unpackSinglePath(subcommand),
         rest,
       ] as const;
     };
