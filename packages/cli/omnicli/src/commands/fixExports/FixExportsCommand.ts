@@ -5,6 +5,10 @@ import {
 import path from 'node:path';
 import type { PackageJson } from 'type-fest';
 import fs from 'node:fs/promises';
+import {
+  manifestOf,
+  resolveManifest,
+} from '@sabinmarcu/utils-repo';
 import type { ContextWithCwd } from '../../features';
 import { OmnicliCommand } from '../../features';
 import { fixPathMapping } from './utils/fixPathMapping';
@@ -38,8 +42,8 @@ export class FixExportsCommand extends OmnicliCommand<ContextWithCwd> {
     const localWorkspacePath = workspacePath ?? context.cwd;
 
     const fixPath = fixPathMapping(extensionsMapping);
-    const packageJsonPath = path.join(localWorkspacePath, 'package.json');
-    const packageJson = await readJson<PackageJson>(packageJsonPath);
+    const packageJsonPath = await resolveManifest.sync(localWorkspacePath);
+    const packageJson = await manifestOf(localWorkspacePath);
 
     const fixedPackageJson = {
       ...packageJson,
