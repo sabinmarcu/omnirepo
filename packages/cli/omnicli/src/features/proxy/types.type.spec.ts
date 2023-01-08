@@ -21,6 +21,9 @@ type KVSubcommandsListTest = KVSubcommandsList<typeof testSubcommands>;
 //       } | {
 //           item: typeof Test2;
 //           paths: "test2" | "test3";
+//       } | {
+//           item: typeof Test3;
+//           paths: "test4" | "test5:test6";
 //       }
 
 type FindKVTest1 = FindKV<typeof testSubcommands, 'test1'>;
@@ -34,4 +37,6 @@ type MapOfSubcommandsListTest = MapOfSubcommandsList<typeof testSubcommands>;
 //           test1: typeof Test1;
 //           test2: typeof Test2;
 //           test3: typeof Test2;
+//           test4: typeof Test3;
+//           "test5:test6": typeof Test3;
 //       }

@@ -2,8 +2,8 @@ import moize from 'moize';
 import type {
   MapOfSubcommandsList,
 } from './types';
-import { getSinglePathsOf } from '../paths';
 import type { SubcommandType } from '../command/types';
+import { getSinglePathsOf } from '../paths/getSinglePathsOf';
 
 export const compileSubcommandsMap = moize(
   <
@@ -13,9 +13,9 @@ export const compileSubcommandsMap = moize(
   ): MapOfSubcommandsList<Subcommands> => (
     Object.fromEntries(
       subcommands.flatMap((subcommand) => {
-        const singlePaths = getSinglePathsOf(subcommand.paths || []) as any[];
-        return singlePaths.map((singlePath) => [singlePath, subcommand]);
+        const paths = getSinglePathsOf(subcommand.readonlyPaths);
+        return paths.map((path) => [path, subcommand]);
       }),
-    )
+    ) as any
   ),
 );

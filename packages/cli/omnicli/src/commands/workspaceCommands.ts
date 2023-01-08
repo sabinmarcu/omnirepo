@@ -5,6 +5,7 @@ import {
   isSubcommandOf,
 } from '../features';
 import { FixMoonDependsOnCommand } from './fixMoonDependsOn/FixMoonDependsOnCommand';
+import { matchSubcommandOf } from '../features/proxy/matchSubcommandOf';
 
 export const subcommands = [
   FixExportsCommand,
@@ -13,3 +14,4 @@ export const subcommands = [
 
 export const subcommandsMap = compileSubcommandsMap(subcommands);
 export const isValidSubcommand = isSubcommandOf(subcommands);
+export const matchSubcommand = matchSubcommandOf(subcommands);
