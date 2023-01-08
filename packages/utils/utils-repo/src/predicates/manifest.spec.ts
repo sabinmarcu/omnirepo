@@ -6,16 +6,16 @@ import {
   testSync,
   test as testAsync,
   predicate,
-} from './packageJson';
+} from './manifest';
 
-import compileFixtures from './__mocks__/packageJson';
+import compileFixtures from './__mocks__/manifest';
 
 const fixtures = compileFixtures();
 
 jest.mock('node:fs', jest.requireActual('@sabinmarcu/utils-test').mockFs);
 jest.mock('node:fs/promises', jest.requireActual('@sabinmarcu/utils-test').mockFsPromises);
 
-describe('predicates.packageJson', () => {
+describe('predicates.manifest', () => {
   describe('testSync', () => {
     it('should be a function', () => {
       expect(typeof testSync).toBe('function');
