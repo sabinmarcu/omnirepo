@@ -4,10 +4,12 @@ import {
   compileSubcommandsMap,
   isSubcommandOf,
 } from '../features';
+import { FixMoonDependsOnCommand } from './fixMoonDependsOn/FixMoonDependsOnCommand';
 
 export const subcommands = [
   FixExportsCommand,
-] satisfies SubcommandType[];
+  FixMoonDependsOnCommand,
+]satisfies SubcommandType[];
 
 export const subcommandsMap = compileSubcommandsMap(subcommands);
 export const isValidSubcommand = isSubcommandOf(subcommands);

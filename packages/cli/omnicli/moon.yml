@@ -1,18 +1,15 @@
 project:
   name: omnicli
   description: CLI For managing omnirepo
-  channel: '#cli'
+  channel: "#cli"
   maintainers:
     - Sabin Marcu
   owner: Sabin Marcu
-
 language: typescript
 type: tool
-
-dependsOn: 
-  - utils-fs
-  - utils-repo
-
-workspace: 
+workspace:
   inheritedTasks:
     include: []
+dependsOn:
+  - "@sabinmarcu/utils-fs"
+  - "@sabinmarcu/utils-repo"

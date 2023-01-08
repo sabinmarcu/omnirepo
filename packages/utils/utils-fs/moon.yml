@@ -1,13 +1,11 @@
 project:
   name: utils-fs
   description: Filesystem Utils
-  channel: '#utils'
+  channel: "#utils"
   maintainers:
     - Sabin Marcu
   owner: Sabin Marcu
-
 language: typescript
 type: library
-
 dependsOn:
-  - utils-test
+  - "@sabinmarcu/utils-test"

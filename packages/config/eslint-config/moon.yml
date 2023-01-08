@@ -1,18 +1,15 @@
 project:
   name: eslint-config
   description: Personal ESLint configuration
-  channel: '#config'
+  channel: "#config"
   maintainers:
     - Sabin Marcu
   owner: Sabin Marcu
-
 language: typescript
 type: library
-
 workspace:
-  inheritedTasks: 
+  inheritedTasks:
     exclude:
       - dev
-  
 dependsOn:
-  - '@sabinmarcu/utils-test'
+  - "@sabinmarcu/utils-test"
