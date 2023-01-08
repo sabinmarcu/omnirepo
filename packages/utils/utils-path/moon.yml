@@ -1,10 +1,10 @@
 project:
   name: utils-path
   description: Path Utils
-  channel: '#utils'
+  channel: "#utils"
   maintainers:
     - Sabin Marcu
   owner: Sabin Marcu
-
 language: typescript
 type: library
+dependsOn: []

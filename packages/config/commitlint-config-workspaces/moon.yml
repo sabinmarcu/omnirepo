@@ -1,19 +1,16 @@
 project:
   name: commitlint-config-workspaces
   description: Commitlint workspace config
-  channel: '#config'
+  channel: "#config"
   maintainers:
     - Sabin Marcu
   owner: Sabin Marcu
-
 language: typescript
 type: library
-
 workspace:
-  inheritedTasks: 
+  inheritedTasks:
     exclude:
       - dev
-  
 dependsOn:
-  - utils-repo
-  - utils-test
+  - "@sabinmarcu/utils-repo"
+  - "@sabinmarcu/utils-test"
