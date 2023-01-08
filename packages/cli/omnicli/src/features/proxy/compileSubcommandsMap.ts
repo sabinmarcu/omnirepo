@@ -13,7 +13,7 @@ export const compileSubcommandsMap = moize(
   ): MapOfSubcommandsList<Subcommands> => (
     Object.fromEntries(
       subcommands.flatMap((subcommand) => {
-        const paths = getSinglePathsOf(subcommand.readonlyPaths);
+        const paths = getSinglePathsOf(subcommand.readonlyPaths) as string[];
         return paths.map((path) => [path, subcommand]);
       }),
     ) as any
