@@ -49,6 +49,7 @@ const config = {
 
         // Overrides for unicorn
         'unicorn/filename-case': ['error', { case: 'camelCase' }],
+        'unicorn/no-useless-undefined': 0,
       },
     },
     {
