@@ -1,3 +1,4 @@
+import { singlePathSeparator } from './constants';
 import type {
   ReadonlyPaths,
   SinglePathOf,
@@ -11,5 +12,5 @@ export const getSinglePathOf = <
   if (path.length === 1) {
     return path[0] as any;
   }
-  return undefined as any;
+  return path.join(singlePathSeparator) as SinglePathOf<Path>;
 };

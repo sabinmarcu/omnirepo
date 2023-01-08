@@ -25,8 +25,14 @@ describe('isSubcommandOf', () => {
     it('should return true for test3', () => {
       expect(isValidSubcommand('test3')).toBe(true);
     });
-    it('should return false for test4', () => {
-      expect(isValidSubcommand('test4')).toBe(false);
+    it('should return true for test4', () => {
+      expect(isValidSubcommand('test4')).toBe(true);
+    });
+    it('should return false for test5', () => {
+      expect(isValidSubcommand('test5')).toBe(false);
+    });
+    it('should return true for test5:test6', () => {
+      expect(isValidSubcommand('test5:test6')).toBe(true);
     });
   });
 });
