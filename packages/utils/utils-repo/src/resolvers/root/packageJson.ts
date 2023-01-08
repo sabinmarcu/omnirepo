@@ -1,7 +1,7 @@
 import moize from 'moize';
 import { 
   predicate as testPath
-} from '../../predicates/packageJson';
+} from '../../predicates/manifest';
 import type {
   PathResolver,
   PathResolverFunction,

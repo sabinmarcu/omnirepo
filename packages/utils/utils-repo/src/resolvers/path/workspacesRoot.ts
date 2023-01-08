@@ -7,7 +7,7 @@ import moize from 'moize';
 import {
   resolve as resolvePackageJson,
   resolveSync as resolvePackageJsonSync,
-} from './packageJson';
+} from './manifest';
 import type {
   PathResolver,
   PathResolverFunction,

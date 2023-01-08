@@ -6,7 +6,7 @@ import {
 import {
   test as testPackage,
   testSync as testPackageSync,
-} from './packageJson';
+} from './manifest';
 import type {
   PathPredicate,
   PathPredicateFunction,

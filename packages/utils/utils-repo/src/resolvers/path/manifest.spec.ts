@@ -1,7 +1,7 @@
 import path from 'node:path';
-import { resolver } from './packageJson';
+import { resolver } from './manifest';
 
-describe('resolver.packageJson', () => {
+describe('resolver.manifest', () => {
   const testCases = [
     { input: 'foo', output: './foo/package.json' },
     { input: 'foo/bar', output: './foo/bar/package.json' },
