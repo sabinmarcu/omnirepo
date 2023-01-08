@@ -1,7 +1,4 @@
 import { testSubcommands } from '../__mocks__/list';
-import { Test1 } from '../__mocks__/test1';
-import { Test2 } from '../__mocks__/test2';
-import { Test3 } from '../__mocks__/test3';
 import { matchSubcommandOf } from './matchSubcommandOf';
 
 describe('matchSubcommandOf', () => {
@@ -24,7 +21,7 @@ describe('matchSubcommandOf', () => {
       { input: ['test1', 'some', 'stuff'], output: [['test1'], ['some', 'stuff']] },
       { input: ['test2', 'some', 'stuff'], output: [['test2'], ['some', 'stuff']] },
       { input: ['test3', 'some', 'stuff'], output: [['test3'], ['some', 'stuff']] },
-      { input: ['test4', 'some', 'stuff'], output: ['test4', ['some', 'stuff']] },
+      { input: ['test4', 'some', 'stuff'], output: [['test4'], ['some', 'stuff']] },
       { input: ['test5', 'some', 'stuff'], error: true },
       { input: ['test5', 'test6'], output: [['test5', 'test6'], []] },
       { input: ['test5', 'test6', 'some', 'stuff'], output: [['test5', 'test6'], ['some', 'stuff']] },
