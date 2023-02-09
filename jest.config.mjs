@@ -1,14 +1,10 @@
 // @ts-check
 
-import packageJson from './package.json' assert { type: "json" };
-
-const projects = packageJson.workspaces.map(
-  (workspace) => `<rootDir>/${workspace}/jest.config.{js,cjs,mjs}`,
-);
-
-const coverageCollection = packageJson.workspaces.map(
-  (workspace) => `<rootDir>/${workspace}/src/**/!(index).{ts,tsx}`,
-);
+import {
+  projects,
+  coverageCollection,
+  coverageExcludes,
+} from './jest.options.mjs';
 
 /** @type {import('jest').Config} */
 const config = {
@@ -16,7 +12,7 @@ const config = {
   coverageDirectory: '<rootDir>/coverage/',
   collectCoverageFrom: [
     ...coverageCollection,
-    '!<rootDir>/utils/utils-test/**/*',
+    ...coverageExcludes,
   ],
   moduleDirectories: [
     'node_modules',
