@@ -22,6 +22,12 @@ jobs:
       - name: Install Dependencies
         run: 'yarn install --immutable'
 
+      - name: Save Yarn Cache
+        uses: actions/upload-artifact@v2
+        with:
+          name: yarn-cache
+          path: .yarn
+
       - name: Run CI Tasks
         run: 'yarn moon ci'
 
@@ -30,6 +36,40 @@ jobs:
         if: success() || failure()
         with:
           access-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Save Built Files
+        uses: actions/upload-artifact@v2
+        with:
+          name: built-repo
+          path: packages
+
+  coverage: 
+    name: 'Coverage'
+    runs-on: 'ubuntu-latest'
+    needs: ci
+    steps:
+      - name: Checkout Repo
+        uses: 'actions/checkout@v3'
+
+      - name: Setup Environment
+        uses: 'actions/setup-node@v3'
+        with:
+          cache: 'yarn'
+
+      - name: Download Yarn Cache
+        uses: actions/download-artifact@v2
+        with:
+          name: yarn-cache
+          path: .yarn
+
+      - name: Install Dependencies
+        run: 'yarn install --immutable'
+
+      - name: Download Built Files
+        uses: actions/download-artifact@v2
+        with:
+          name: built-repo
+          path: packages
 
       - name: Run Coverage
         run: 'yarn coverage'
