@@ -62,14 +62,14 @@ jobs:
           name: yarn-cache
           path: .yarn
 
-      - name: Install Dependencies
-        run: 'yarn install --immutable'
-
       - name: Download Built Files
         uses: actions/download-artifact@v2
         with:
           name: built-repo
           path: packages
+
+      - name: Install Dependencies
+        run: 'yarn install --immutable'
 
       - name: Run Coverage
         run: 'yarn coverage'
