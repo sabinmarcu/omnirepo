@@ -5,6 +5,7 @@
   "types": "./cjs/index.d.ts",
   "module": "./esm/index.mjs",
   "type": "module",
+  "private": true,
   "exports": {
     ".": {
       "import": "./esm/index.mjs",
@@ -31,9 +32,6 @@
     "omni": "./bin/omnicli.js"
   },
   "packageManager": "yarn@3.3.0",
-  "publishConfig": {
-    "access": "public"
-  },
   "build": {
     "preset": "../../../.config/build.config.ts"
   },
