@@ -8,4 +8,4 @@ project:
 language: typescript
 type: library
 dependsOn:
-  - "@sabinmarcu/utils-test"
+  - utils-test

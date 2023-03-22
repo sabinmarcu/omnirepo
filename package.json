@@ -1,11 +1,11 @@
 {
   "name": "root",
-  "packageManager": "yarn@3.3.0",
+  "packageManager": "yarn@3.5.0",
   "type": "module",
   "dependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
-    "@moonrepo/cli": "^0.20.0",
+    "@moonrepo/cli": "^0.26.5",
     "@sabinmarcu/commitlint-config-workspaces": "workspace:*",
     "@sabinmarcu/eslint-config": "workspace:*",
     "@sabinmarcu/omnicli": "workspace:*",

@@ -12,5 +12,5 @@ workspace:
     exclude:
       - dev
 dependsOn:
-  - "@sabinmarcu/utils-repo"
-  - "@sabinmarcu/utils-test"
+  - utils-repo
+  - utils-test
