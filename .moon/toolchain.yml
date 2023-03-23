@@ -1,9 +1,9 @@
 $schema: 'https://moonrepo.dev/schemas/toolchain.json'
 node:
-  version: '18.12.0'
+  version: '18.15.0'
   packageManager: 'yarn'
   yarn:
-    version: '3.3.0'
+    version: '3.5.0'
   addEnginesConstraint: true
   aliasPackageNames: 'name-and-scope'
   dedupeOnLockfileChange: true

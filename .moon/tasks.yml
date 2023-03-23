@@ -1,5 +1,4 @@
-# https://moonrepo.dev/docs/config/global-project
-$schema: 'https://moonrepo.dev/schemas/global-project.json'
+$schema: 'https://moonrepo.dev/schemas/tasks.json'
 
 fileGroups:
   configs:

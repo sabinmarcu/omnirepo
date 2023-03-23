@@ -12,4 +12,4 @@ workspace:
     exclude:
       - dev
 dependsOn:
-  - "@sabinmarcu/utils-test"
+  - utils-test

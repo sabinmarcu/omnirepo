@@ -8,5 +8,5 @@ project:
 language: typescript
 type: library
 dependsOn:
-  - "@sabinmarcu/utils-fs"
-  - "@sabinmarcu/utils-test"
+  - utils-fs
+  - utils-test
