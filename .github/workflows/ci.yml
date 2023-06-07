@@ -9,7 +9,7 @@ jobs:
   ci:
     name: 'CI'
     runs-on: 'ubuntu-latest'
-    outpus: 
+    outputs: 
       has_versioning: ${{ steps.check_versioning.outputs.files_exists }}
     steps:
       - name: Checkout Repo
