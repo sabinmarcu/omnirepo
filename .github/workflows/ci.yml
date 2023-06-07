@@ -30,6 +30,9 @@ jobs:
 
       - name: Run CI Tasks
         run: 'yarn moon ci'
+        env:
+          MOONBASE_SECRET_KEY: ${{ secrets.MOONBASE_SECRET_KEY }}
+          MOONBASE_ACCESS_KEY: ${{ secrets.MOONBASE_ACCESS_KEY }}
 
       - name: Report Moon CI Status
         uses: 'moonrepo/run-report-action@v1'
