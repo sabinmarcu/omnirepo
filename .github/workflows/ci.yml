@@ -36,7 +36,7 @@ jobs:
           access-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Save Built Files
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: built-repo
           path: packages
@@ -57,7 +57,7 @@ jobs:
           cache: 'yarn'
 
       - name: Download Built Files
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: built-repo
           path: packages
