@@ -23,12 +23,6 @@ jobs:
       - name: Install Dependencies
         run: 'yarn install --immutable'
 
-      - name: Save Yarn Cache
-        uses: actions/upload-artifact@v2
-        with:
-          name: yarn-cache
-          path: .yarn
-
       - name: Run CI Tasks
         run: 'yarn moon ci'
         env:
@@ -59,12 +53,6 @@ jobs:
         uses: 'actions/setup-node@v3'
         with:
           cache: 'yarn'
-
-      - name: Download Yarn Cache
-        uses: actions/download-artifact@v2
-        with:
-          name: yarn-cache
-          path: .yarn
 
       - name: Download Built Files
         uses: actions/download-artifact@v2
