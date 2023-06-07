@@ -1,8 +1,10 @@
 name: 'CI Pipeline'
+
 on:
   push:
   pull_request:
   workflow_dispatch: 
+
 jobs:
   ci:
     name: 'CI'
@@ -60,7 +62,7 @@ jobs:
         if: steps.check_versioning.outputs.files_exists == 'true'
 
       - name: Run setup
-        run: 'yarn moon run :build --affected'
+        run: 'yarn moon run :build'
         if: steps.check_versioning.outputs.files_exists == 'true'
 
 
@@ -83,7 +85,7 @@ jobs:
         run: 'yarn install --immutable'
 
       - name: Run setup
-        run: 'yarn moon run :build --affected'
+        run: 'yarn moon run :build'
 
       - name: Run Coverage
         run: 'yarn coverage'
