@@ -41,6 +41,44 @@ jobs:
           name: built-repo
           path: packages
 
+  versioning: 
+    name: "Versioning"
+    runs-on: 'ubuntu-latest'
+    needs: ci
+    steps:
+      - name: Checkout Repo
+        uses: 'actions/checkout@v3'
+        with: 
+          fetch-depth: 0
+
+      - name: "Check if versioning is required"
+        uses: andstor/file-existence-action@v2
+        id: check_versioning
+        with:
+          files: ".yarn/versions/*"
+
+      - name: Setup Environment
+        uses: 'actions/setup-node@v3'
+        with:
+          cache: 'yarn'
+        if: steps.check_versioning.outputs.files_exists == 'true'
+
+      - name: Download Built Files
+        uses: actions/download-artifact@v3
+        with:
+          name: built-repo
+          path: packages
+        if: steps.check_versioning.outputs.files_exists == 'true'
+
+      - name: Install Dependencies
+        run: 'yarn install --immutable'
+        if: steps.check_versioning.outputs.files_exists == 'true'
+
+      - name: Run setup
+        run: 'yarn moon run root:init'
+        if: steps.check_versioning.outputs.files_exists == 'true'
+
+
   coverage: 
     name: 'Coverage'
     runs-on: 'ubuntu-latest'
