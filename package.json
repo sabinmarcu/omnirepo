@@ -5,7 +5,7 @@
   "dependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
-    "@moonrepo/cli": "^0.26.5",
+    "@moonrepo/cli": "^1.7.2",
     "@sabinmarcu/commitlint-config-workspaces": "workspace:*",
     "@sabinmarcu/eslint-config": "workspace:*",
     "@sabinmarcu/omnicli": "workspace:*",
@@ -48,7 +48,7 @@
     "./packages/*/*"
   ],
   "engines": {
-    "node": "18.12.0"
+    "node": "18.15.0"
   },
   "resolutions": {
     "mkdist@^1.0.0": "patch:mkdist@npm%3A1.0.0#./.yarn/patches/mkdist-npm-1.0.0-ae21d37d50.patch"

@@ -38,7 +38,8 @@ tasks:
       - package.json
     outputs: 
       - package.json
-    local: true
+    options: 
+      cache: false
 
   build: 
     command: 'unbuild'

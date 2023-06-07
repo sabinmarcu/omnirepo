@@ -1,7 +1,6 @@
 tasks: 
   init: 
     command: noop
-    type: 'system'
     deps: 
       - eslint-config:build
       - commitlint-config-workspaces:build
@@ -10,7 +9,6 @@ tasks:
 
   coverage: 
     command: "yarn coverage"
-    type: "system"
     inputs: []
     options: 
       cache: false
