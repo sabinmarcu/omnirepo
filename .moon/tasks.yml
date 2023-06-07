@@ -43,6 +43,7 @@ tasks:
 
   build: 
     command: 'unbuild'
+    type: build
     deps: 
       - '~:fixExports'
       - '^:build'
@@ -67,6 +68,7 @@ tasks:
 
   lint: 
     command: 'eslint'
+    type: test
     deps:
       - eslint-config:build
     inputs: 
@@ -74,6 +76,7 @@ tasks:
 
   test: 
     command: 'jest'
+    type: test
     args: 
       - --passWithNoTests
     deps:
