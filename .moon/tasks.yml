@@ -85,7 +85,7 @@ tasks:
       - '@globs(sources)'
 
   publish:
-    command: 'yarn npm publish'
+    command: 'yarn npm publish --tolerate-republish'
     deps:
       - "~:build"
     inputs: 

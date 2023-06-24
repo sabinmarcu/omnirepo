@@ -68,7 +68,7 @@ jobs:
         run: 'yarn version apply --all'
 
       - name: Publish packages
-        run: 'yarn moon run :publish --affected'
+        run: 'yarn moon run :publish'
 
       - name: Save Versioning
         uses: stefanzweifel/git-auto-commit-action@v4
