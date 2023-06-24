@@ -1,2 +1,2 @@
-declined:
-  - "@sabinmarcu/omnicli"
+releases:
+  "@sabinmarcu/omnicli": patch
