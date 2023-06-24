@@ -2,6 +2,8 @@ name: 'CI Pipeline'
 
 on:
   push:
+    branches:
+      - master
   pull_request:
   workflow_dispatch: 
 
@@ -17,7 +19,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: "Check if versioning is required"
+      - name: "Check if versioning is requested"
         uses: andstor/file-existence-action@v2
         id: check_versioning
         with:
@@ -62,8 +64,19 @@ jobs:
       - name: Install Dependencies
         run: 'yarn install --immutable'
 
-      - name: Run setup
-        run: 'yarn moon run :build'
+      - name: Run versioning
+        run: 'yarn version apply --all'
+
+      - name: Publish packages
+        run: 'moon run :publish --affected'
+        env:
+          YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Save Versioning
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with: 
+          commit_message: "chore(ci): Automatic Versioning"
+          commit_options: '--signoff'
 
 
   coverage: 

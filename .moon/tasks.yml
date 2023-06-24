@@ -83,3 +83,12 @@ tasks:
       - '~:build'
     inputs: 
       - '@globs(sources)'
+
+  publish:
+    command: 'yarn npm publish'
+    deps:
+      - "~:build"
+    inputs: 
+      - '@globs(sources)'
+    options: 
+      runInCI: false
