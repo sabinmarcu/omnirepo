@@ -69,8 +69,6 @@ jobs:
 
       - name: Publish packages
         run: 'moon run :publish --affected'
-        env:
-          YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Save Versioning
         uses: stefanzweifel/git-auto-commit-action@v4
