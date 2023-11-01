@@ -3,7 +3,7 @@ node:
   version: '18.15.0'
   packageManager: 'yarn'
   yarn:
-    version: '3.5.0'
+    version: '4.0.1'
   addEnginesConstraint: true
   aliasPackageNames: 'name-and-scope'
   dedupeOnLockfileChange: true

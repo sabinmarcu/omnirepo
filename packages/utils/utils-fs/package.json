@@ -42,5 +42,12 @@
   },
   "tscmono": {
     "preset": "lib"
+  },
+  "typeVersions": {
+    "*": {
+      "*": [
+        "./esm/*"
+      ]
+    }
   }
 }
