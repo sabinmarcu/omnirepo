@@ -1556,9 +1556,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sabinmarcu/commitlint-config-workspaces@workspace:*, @sabinmarcu/commitlint-config-workspaces@workspace:packages/config/commitlint-config-workspaces":
+"@sabinmarcu/commitlint-config-workspaces@workspace:*, @sabinmarcu/commitlint-config-workspaces@workspace:packages/personal/commitlint-config-workspaces":
   version: 0.0.0-use.local
-  resolution: "@sabinmarcu/commitlint-config-workspaces@workspace:packages/config/commitlint-config-workspaces"
+  resolution: "@sabinmarcu/commitlint-config-workspaces@workspace:packages/personal/commitlint-config-workspaces"
   dependencies:
     "@sabinmarcu/utils-repo": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
@@ -1566,9 +1566,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@sabinmarcu/eslint-config@workspace:*, @sabinmarcu/eslint-config@workspace:packages/config/eslint-config":
+"@sabinmarcu/eslint-config@workspace:*, @sabinmarcu/eslint-config@workspace:packages/personal/eslint-config":
   version: 0.0.0-use.local
-  resolution: "@sabinmarcu/eslint-config@workspace:packages/config/eslint-config"
+  resolution: "@sabinmarcu/eslint-config@workspace:packages/personal/eslint-config"
   dependencies:
     "@babel/eslint-parser": "npm:^7.19.1"
     "@babel/plugin-syntax-import-assertions": "npm:^7.20.0"
@@ -1592,9 +1592,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@sabinmarcu/omnicli@workspace:*, @sabinmarcu/omnicli@workspace:packages/cli/omnicli":
+"@sabinmarcu/omnicli@workspace:*, @sabinmarcu/omnicli@workspace:packages/repo/omnicli":
   version: 0.0.0-use.local
-  resolution: "@sabinmarcu/omnicli@workspace:packages/cli/omnicli"
+  resolution: "@sabinmarcu/omnicli@workspace:packages/repo/omnicli"
   dependencies:
     "@babel/plugin-proposal-decorators": "npm:*"
     "@babel/plugin-proposal-export-namespace-from": "npm:*"
@@ -1624,26 +1624,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@sabinmarcu/utils-fs@workspace:*, @sabinmarcu/utils-fs@workspace:packages/utils/utils-fs":
+"@sabinmarcu/utils-fs@workspace:*, @sabinmarcu/utils-fs@workspace:packages/libs/utils-fs":
   version: 0.0.0-use.local
-  resolution: "@sabinmarcu/utils-fs@workspace:packages/utils/utils-fs"
+  resolution: "@sabinmarcu/utils-fs@workspace:packages/libs/utils-fs"
   dependencies:
     "@sabinmarcu/utils-test": "workspace:*"
     type-fest: "npm:^3.4.0"
   languageName: unknown
   linkType: soft
 
-"@sabinmarcu/utils-path@workspace:packages/utils/utils-path":
+"@sabinmarcu/utils-path@workspace:packages/libs/utils-path":
   version: 0.0.0-use.local
-  resolution: "@sabinmarcu/utils-path@workspace:packages/utils/utils-path"
+  resolution: "@sabinmarcu/utils-path@workspace:packages/libs/utils-path"
   dependencies:
     type-fest: "npm:^3.4.0"
   languageName: unknown
   linkType: soft
 
-"@sabinmarcu/utils-repo@workspace:*, @sabinmarcu/utils-repo@workspace:packages/utils/utils-repo":
+"@sabinmarcu/utils-repo@workspace:*, @sabinmarcu/utils-repo@workspace:packages/libs/utils-repo":
   version: 0.0.0-use.local
-  resolution: "@sabinmarcu/utils-repo@workspace:packages/utils/utils-repo"
+  resolution: "@sabinmarcu/utils-repo@workspace:packages/libs/utils-repo"
   dependencies:
     "@sabinmarcu/utils-fs": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
@@ -1656,9 +1656,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@sabinmarcu/utils-test@workspace:*, @sabinmarcu/utils-test@workspace:packages/utils/utils-test":
+"@sabinmarcu/utils-test@workspace:*, @sabinmarcu/utils-test@workspace:packages/libs/utils-test":
   version: 0.0.0-use.local
-  resolution: "@sabinmarcu/utils-test@workspace:packages/utils/utils-test"
+  resolution: "@sabinmarcu/utils-test@workspace:packages/libs/utils-test"
   dependencies:
     "@types/glob": "npm:^8"
     "@types/ramda": "npm:^0"
