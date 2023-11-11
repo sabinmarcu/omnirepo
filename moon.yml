@@ -42,7 +42,6 @@ tasks:
   tsconfig:
     command: tscmono
     inputs: []
-    local: true
     
 language: bash
 type: unknown
