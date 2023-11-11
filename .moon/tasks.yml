@@ -37,6 +37,7 @@ tasks:
     command: 'unbuild'
     type: build
     deps: 
+      - 'root:tsconfig'
       - '~:fixExports'
       - '^:build'
     inputs: 
