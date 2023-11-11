@@ -7,4 +7,3 @@ project:
   owner: Sabin Marcu
 language: typescript
 type: library
-dependsOn: []

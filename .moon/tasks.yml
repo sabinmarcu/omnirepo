@@ -14,14 +14,6 @@ fileGroups:
     - 'src/**/*.spec.*'
 
 tasks:
-  fixDependsOn:
-    command: 'omni fix moon dependsOn'
-    inputs: 
-      - package.json
-    outputs:
-      - moon.yml
-    local: true
-
   devExports: 
     command: 'omni fix exports'
     args:

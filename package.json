@@ -5,11 +5,7 @@
   "dependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
-    "@moonrepo/cli": "^1.7.2",
-    "@sabinmarcu/commitlint-config-workspaces": "workspace:*",
-    "@sabinmarcu/eslint-config": "workspace:*",
-    "@sabinmarcu/omnicli": "workspace:*",
-    "@sabinmarcu/utils-test": "workspace:*",
+    "@moonrepo/cli": "^1.16.1",
     "@swc/core": "^1.3.24",
     "@swc/jest": "^0.2.24",
     "@tscmono/cli": "^0.2.2",
