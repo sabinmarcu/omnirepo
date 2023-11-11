@@ -1,8 +1,12 @@
 import { coverageExcludes } from './jest.options.mjs';
 import packageJson from './package.json' assert { type: 'json' };
 
-const files = packageJson.workspaces.map(
-  (workspace) => `${workspace}/src/**/!(*.spec).{ts,tsx,yml,yaml,js,json,cjs,mjs,jsx,mts,cts}`,
+const files = packageJson.workspaces.flatMap(
+  (workspace) => [
+    `${workspace}/src/**/!(*.spec).{ts,tsx,yml,yaml,js,json,cjs,mjs,jsx,mts,cts}`,
+    `${workspace}/package.json`,
+    `${workspace}/tsconfig.json`,
+  ],
 );
 
 const tests = packageJson.workspaces.map(
@@ -17,6 +21,11 @@ export default () => ({
   name: 'omniRepo',
   files,
   tests,
-  autoDetect: true,
+  autoDetect: ['jest'],
   filesWithNoCoverageCalculated,
+  runAllTestsWhenNoAffectedTests: true,
+  runAllTestsInAffectedTestFile: true,
+  testFramework: {
+    config: './jest.config.mjs',
+  },
 });
