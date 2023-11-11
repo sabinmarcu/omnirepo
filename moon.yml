@@ -24,7 +24,7 @@ tasks:
       runDepsInParallel: false
 
   clean: 
-    command: "find"
+    command: "/usr/bin/find"
     args: 
       - .
       - -iname
