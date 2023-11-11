@@ -11,5 +11,8 @@ workspace:
   inheritedTasks:
     exclude:
       - dev
-dependsOn:
-  - utils-test
+tasks: 
+  build: 
+    deps: []
+    options:
+      mergeDeps: replace

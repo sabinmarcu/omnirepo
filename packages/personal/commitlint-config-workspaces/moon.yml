@@ -11,6 +11,3 @@ workspace:
   inheritedTasks:
     exclude:
       - dev
-dependsOn:
-  - utils-repo
-  - utils-test

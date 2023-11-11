@@ -7,6 +7,3 @@ project:
   owner: Sabin Marcu
 language: typescript
 type: library
-dependsOn:
-  - utils-fs
-  - utils-test
