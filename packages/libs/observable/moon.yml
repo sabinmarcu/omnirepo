@@ -1,0 +1,9 @@
+project:
+  name: observable
+  description: Minimalist observable implementation
+  channel: "#libs"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: library
