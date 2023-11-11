@@ -50,7 +50,7 @@ async function ensureWorkspaceProtocol({ Yarn }) {
  *
  * @param {Context} context
  */
-function enforceConsistentDependenciesAcrossTheProject({ Yarn }) {
+async function enforceConsistentDependenciesAcrossTheProject({ Yarn }) {
   for (const dependency of Yarn.dependencies()) {
     if (dependency.type === 'peerDependencies') {
       continue;
