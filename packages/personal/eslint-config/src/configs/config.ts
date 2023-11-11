@@ -16,6 +16,7 @@ const config = {
         'import/no-extraneous-dependencies': 0,
         'unicorn/prefer-module': 0,
         'unicorn/no-await-expression-member': 0,
+        'import/extension': 0,
       },
     },
   ],
