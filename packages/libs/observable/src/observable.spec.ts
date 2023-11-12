@@ -1,6 +1,7 @@
 import {
   isObservable,
   observable,
+  testObservableKeys,
 } from './observable';
 import type {
   Observable,
@@ -26,10 +27,7 @@ describe('observable', () => {
     });
     it('should have the proper keys', () => {
       const obs = observable(noop);
-      expect(Object.keys(obs)).toEqual([
-        'value',
-        'subscribe',
-      ]);
+      expect(Object.keys(obs)).toEqual(testObservableKeys);
     });
     it('should have the correct value type', () => {
       const obs = observable(({ next }) => { next(1); });
@@ -54,15 +52,12 @@ describe('observable', () => {
     let subscription: Subscription | undefined;
     const initialValue = 42;
 
-    beforeAll(() => {
+    beforeEach(() => {
       obs = observable(({ next, complete, error }) => {
         nextFunction = next;
         completeFunction = complete;
         errorFunction = error;
       });
-    });
-
-    beforeEach(() => {
       nextFunction(initialValue);
     });
 
@@ -97,6 +92,20 @@ describe('observable', () => {
       errorFunction(new Error('test'));
       expect(error).toHaveBeenCalledWith(new Error('test'));
     });
+
+    it('should stop propagation after complete', () => {
+      const next = jest.fn();
+      const complete = jest.fn();
+      subscription = obs.subscribe({ complete, next });
+      expect(complete).not.toHaveBeenCalled();
+      expect(next).toHaveBeenCalledTimes(1);
+      completeFunction();
+      expect(complete).toHaveBeenCalledTimes(1);
+      expect(next).toHaveBeenCalledTimes(1);
+      nextFunction(1);
+      expect(complete).toHaveBeenCalledTimes(1);
+      expect(next).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('observable.from', () => {
@@ -115,6 +124,55 @@ describe('observable', () => {
       expect(returnedValue).toBe(undefined);
       observable.from(value).subscribe({ next: (v) => { returnedValue = v; } });
       expect(returnedValue).toBe(value);
+    });
+  });
+
+  describe('observable.filter', () => {
+    let obs: Observable<number>;
+    let nextFunction: ObserverController<number>['next'];
+    const initialValue = 42;
+
+    beforeAll(() => {
+      obs = observable(({ next }) => {
+        nextFunction = next;
+      });
+    });
+
+    beforeEach(() => {
+      nextFunction(initialValue);
+    });
+
+    it('should be a function', () => {
+      expect(typeof obs.filter).toBe('function');
+    });
+
+    it('should have one argument', () => {
+      expect(obs.filter.length).toBe(1);
+    });
+
+    describe('filtering by even', () => {
+      let filteredObs: Observable<number>;
+      beforeEach(() => {
+        filteredObs = obs.filter((v) => v % 2 === 0);
+      });
+
+      it('should initially have the correct value', () => {
+        expect(filteredObs.value).toBe(initialValue);
+      });
+
+      it('should allow the next even value to be registered', () => {
+        const nextValue = 420;
+        expect(filteredObs.value).toBe(initialValue);
+        nextFunction(nextValue);
+        expect(filteredObs.value).toBe(nextValue);
+      });
+
+      it('should not allow the next odd value to be registered', () => {
+        const nextValue = 69;
+        expect(filteredObs.value).toBe(initialValue);
+        nextFunction(nextValue);
+        expect(filteredObs.value).toBe(initialValue);
+      });
     });
   });
 });
