@@ -1,13 +1,9 @@
 import type {
-  LastOf,
-  MapObservablesToProjectionParameters,
   Observable,
   ObservableFilter,
+  ObservableMap,
   Observer,
-  Operator,
-  OutputOfOperator,
   Subject,
-  ValidOperatorSet,
 } from './types';
 
 type ObserverTest = Observer<number>;
@@ -32,7 +28,7 @@ type ObservableTestValue = ObservableTest['value'];
 type SubjectTest = Subject<number>;
 
 type SubjectTestKeys = keyof SubjectTest;
-//    ^? type SubjectTestKeys = keyof Observer<number> | keyof Observable<number>
+//    ^? type SubjectTestKeys = "subscribe" | "value" | keyof Observer<number> | "filter" | "map"
 
 type SubjectTestSubscribe = SubjectTest['subscribe'];
 //   ^? type SubjectTestSubscribe = (observer: Observer<number>) => Subscription
@@ -51,3 +47,6 @@ type SubjectTestValue = SubjectTest['value'];
 
 type ObservableFilterTest = ObservableFilter<ObservableTest>;
 //    ^? type ObservableFilterTest = (filter: (input: ObservableTest) => boolean) => Observable<ObservableTest>
+
+type ObservableMapTest = ObservableMap<ObservableTest>;
+//    ^? type ObservableMapTest = <R>(map: (input: ObservableTest) => R) => Observable<R>
