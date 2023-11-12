@@ -108,26 +108,7 @@ describe('observable', () => {
     });
   });
 
-  describe('observable.from', () => {
-    it('should be a function', () => {
-      expect(typeof observable.from).toBe('function');
-    });
-    it('should have one argument', () => {
-      expect(observable.from.length).toBe(1);
-    });
-    it('should return an observable', () => {
-      expect(isObservable(observable.from(1))).toBe(true);
-    });
-    it('should return the given value', () => {
-      const value = 42;
-      let returnedValue: number | undefined;
-      expect(returnedValue).toBe(undefined);
-      observable.from(value).subscribe({ next: (v) => { returnedValue = v; } });
-      expect(returnedValue).toBe(value);
-    });
-  });
-
-  describe('observable.filter', () => {
+  describe('observable().filter', () => {
     let obs: Observable<number>;
     let nextFunction: ObserverController<number>['next'];
     const initialValue = 42;
@@ -176,7 +157,7 @@ describe('observable', () => {
     });
   });
 
-  describe('observable.map', () => {
+  describe('observable().map', () => {
     let obs: Observable<number>;
     let nextFunction: ObserverController<number>['next'];
     const initialValue = 42;
@@ -202,6 +183,71 @@ describe('observable', () => {
     it('should double the input', () => {
       const mappedObs = obs.map((v) => v * 2);
       expect(mappedObs.value).toBe(initialValue * 2);
+    });
+  });
+
+  describe('observable.from', () => {
+    it('should be a function', () => {
+      expect(typeof observable.from).toBe('function');
+    });
+    it('should have one argument', () => {
+      expect(observable.from.length).toBe(1);
+    });
+    it('should return an observable', () => {
+      expect(isObservable(observable.from(1))).toBe(true);
+    });
+    it('should return the given value', () => {
+      const value = 42;
+      let returnedValue: number | undefined;
+      expect(returnedValue).toBe(undefined);
+      observable.from(value).subscribe({ next: (v) => { returnedValue = v; } });
+      expect(returnedValue).toBe(value);
+    });
+  });
+
+  describe('observable.project', () => {
+    it('should be a function', () => {
+      expect(typeof observable.project).toBe('function');
+    });
+    it('should have one argument', () => {
+      expect(observable.project.length).toBe(1);
+    });
+    it('should return an observable', () => {
+      const obs = observable(noop);
+      expect(isObservable(observable.project(() => {}, obs))).toBe(true);
+    });
+    it('should project basic map', () => {
+      const obs = observable.from(42);
+      expect(observable.project((v) => v * 2, obs).value).toBe(84);
+    });
+    it('should project basic addition', () => {
+      const a = observable.from(5);
+      const b = observable.from(7);
+      expect(observable.project((x, y) => x + y, a, b).value).toBe(12);
+    });
+    it('should project a mix of numbers and strings', () => {
+      const valueObs = observable.from(5);
+      const prefixObs = observable.from('The value is ');
+      expect(
+        observable.project(
+          (value, prefix) => prefix + value,
+          valueObs,
+          prefixObs,
+        ).value,
+      ).toBe('The value is 5');
+    });
+    it('should react to observable updates', () => {
+      let nextFunction: ObserverController<number>['next'];
+      const initialValue = 42;
+      const obs = observable<number>(({ next }) => {
+        nextFunction = next;
+        next(42);
+      });
+      const mappedObs = observable.project((v) => v * 2, obs);
+      expect(mappedObs.value).toBe(initialValue * 2);
+      // @ts-ignore
+      nextFunction(69);
+      expect(mappedObs.value).toBe(69 * 2);
     });
   });
 
