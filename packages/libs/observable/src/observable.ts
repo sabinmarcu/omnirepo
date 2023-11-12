@@ -7,6 +7,7 @@ import type {
   ObservableSubscriberStore,
   RawObservable,
   ObserverController,
+  ObservableProjection,
 } from './types';
 
 export const testObservableKeys = ['subscribe', 'filter', 'map', 'value'];
@@ -46,10 +47,14 @@ export const makeController = <T>(
   } satisfies ObserverController<T>;
 };
 
+export const observableValueStore = <T>(
+  input?: ObservableValueStore<T>,
+) => (input ?? { value: undefined } as ObservableValueStore<T>);
+
 export const observable = <T>(
   source: ObservableDispatch<T>,
 ): Observable<T> => {
-  const valueStore: ObservableValueStore<T> = { value: undefined } as ObservableValueStore<T>;
+  const valueStore: ObservableValueStore<T> = observableValueStore<T>();
   const subscribersStore = new Set<Observer<T>>() satisfies ObservableSubscriberStore<T>;
 
   const subscribe = (observer: Observer<T>): Subscription => {
@@ -112,8 +117,51 @@ export const observable = <T>(
     map,
   } satisfies Observable<T>;
 };
+/**
+ * Create a static observable (only has one initial value, does not change) from a given value
+ * @template T - Type of input observable
+ * @param value - The value to be converted into a static observable
+ */
+export const observableFrom = <T>(value: T) => observable<T>(({ next }) => next?.(value));
+observable.from = observableFrom;
 
-observable.from = <T>(value: T) => observable<T>(({ next }) => next?.(value));
+/**
+* Projedct a set of observables into a single observable based on a projection function
+ * @template Observables extends Observable<any>[] - Observables to be projected
+ * @template Result - Result of the projection
+ * @param input - Observables to be projected
+ * @param projection - The projection function
+ * @returns The result of the projection function applied to input
+ */
+export const projectObservables = <
+  Observables extends Observable<any>[],
+  Result,
+>(
+  projection: (...values: ObservableProjection<Observables>) => Result,
+  ...input: Observables
+) => {
+  const getProjectionValues = () => (
+    input.map(({ value }) => value) as ObservableProjection<Observables>
+  );
+
+  const projectionObservable = observable(({ next, error }) => {
+    const projectionValueStore = observableValueStore({
+      get value() {
+        const projectionValues = getProjectionValues();
+        const result = projection(...projectionValues);
+        return result;
+      },
+    });
+
+    const nextFunction = () => next(projectionValueStore.value);
+    for (const item of input) {
+      item.subscribe({ next: nextFunction, error });
+    }
+  }) satisfies Observable<Result>;
+
+  return projectionObservable;
+};
+observable.project = projectObservables;
 
 /**
  * Check if a given value is an Observer

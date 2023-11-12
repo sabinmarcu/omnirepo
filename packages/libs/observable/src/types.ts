@@ -36,3 +36,10 @@ export type Observable<T> =
     filter: ObservableFilter<T>;
     map: ObservableMap<T>;
   };
+
+export type ObservableProjection<
+  Observables extends Observable<any>[],
+> =
+  Observables extends [Observable<infer Current>, ...infer Rest extends Observable<any>[]]
+    ? [Current, ...ObservableProjection<Rest>]
+    : [];
