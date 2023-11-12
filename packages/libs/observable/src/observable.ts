@@ -9,7 +9,7 @@ import type {
   ObserverController,
 } from './types';
 
-export const testObservableKeys = ['subscribe', 'filter', 'value'];
+export const testObservableKeys = ['subscribe', 'filter', 'map', 'value'];
 
 export const makeControllerFunction = <T>(
   valueStore: ObservableValueStore<T>,
@@ -88,12 +88,28 @@ export const observable = <T>(
     return newObservable;
   };
 
+  const map = <R>(
+    mapFunction: (input: T) => R,
+  ) => {
+    const newObservable = observable<R>(
+      ({ next, complete, error }) => (
+        observableInstance.subscribe({
+          next: (value) => next(mapFunction(value)),
+          complete,
+          error,
+        })
+      ),
+    ) satisfies Observable<R>;
+    return newObservable;
+  };
+
   return {
     ...observableInstance,
     get value() {
       return valueStore.value;
     },
     filter,
+    map,
   } satisfies Observable<T>;
 };
 

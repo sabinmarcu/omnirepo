@@ -175,6 +175,65 @@ describe('observable', () => {
       });
     });
   });
+
+  describe('observable.map', () => {
+    let obs: Observable<number>;
+    let nextFunction: ObserverController<number>['next'];
+    const initialValue = 42;
+
+    beforeAll(() => {
+      obs = observable(({ next }) => {
+        nextFunction = next;
+      });
+    });
+
+    beforeEach(() => {
+      nextFunction(initialValue);
+    });
+
+    it('should be a function', () => {
+      expect(typeof obs.filter).toBe('function');
+    });
+
+    it('should have one argument', () => {
+      expect(obs.filter.length).toBe(1);
+    });
+
+    it('should double the input', () => {
+      const mappedObs = obs.map((v) => v * 2);
+      expect(mappedObs.value).toBe(initialValue * 2);
+    });
+  });
+
+  describe('complex operations', () => {
+    let obs: Observable<number>;
+    let nextFunction: ObserverController<number>['next'];
+    const initialValue = 69;
+
+    beforeAll(() => {
+      obs = observable(({ next }) => {
+        nextFunction = next;
+      });
+    });
+
+    beforeEach(() => {
+      nextFunction(initialValue);
+    });
+
+    it('should filter by even and then map to double', () => {
+      const spy = jest.fn();
+      const sub = obs.filter((v) => v % 2 === 1).map((v) => v * 2);
+      sub.subscribe({ next: spy });
+      expect(sub.value).toEqual(initialValue * 2);
+      expect(spy).toHaveBeenCalledTimes(1);
+      nextFunction(42);
+      expect(sub.value).toEqual(initialValue * 2);
+      expect(spy).toHaveBeenCalledTimes(1);
+      nextFunction(43);
+      expect(sub.value).toEqual(43 * 2);
+      expect(spy).toHaveBeenCalledTimes(2);
+    });
+  });
 });
 
 describe('isObservable', () => {

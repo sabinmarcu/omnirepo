@@ -25,3 +25,14 @@ export type ObservableFilter<T> = (
   filter: (input: T) => boolean
 ) => Observable<T>;
 
+export type ObservableMap<T> = <R>(
+  map: (input: T) => R
+) => Observable<R>;
+
+export type Observable<T> =
+  & RawObservable<T>
+  & {
+    get value(): T;
+    filter: ObservableFilter<T>;
+    map: ObservableMap<T>;
+  };
