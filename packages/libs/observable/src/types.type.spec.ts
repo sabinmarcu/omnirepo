@@ -48,3 +48,6 @@ type SubjectTestComplete = SubjectTest['complete'];
 
 type SubjectTestValue = SubjectTest['value'];
 //   ^? type SubjectTestValue = number
+
+type ObservableFilterTest = ObservableFilter<ObservableTest>;
+//    ^? type ObservableFilterTest = (filter: (input: ObservableTest) => boolean) => Observable<ObservableTest>
