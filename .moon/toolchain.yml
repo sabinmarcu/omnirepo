@@ -6,7 +6,7 @@ node:
     version: '4.0.1'
   addEnginesConstraint: true
   aliasPackageNames: 'name-and-scope'
-  dedupeOnLockfileChange: true
+  dedupeOnLockfileChange: false
   dependencyVersionFormat: workspace
   inferTasksFromScripts: false
   syncProjectWorkspaceDependencies: false
