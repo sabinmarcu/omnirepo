@@ -82,10 +82,10 @@ jobs:
           git_commit_gpgsign: true
 
       - name: Save Versioning
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v5
         with: 
           commit_message: "chore(ci): Automatic Versioning"
-          commit_options: '--no-verify --signoff'
+          commit_options: '--no-verify --signoff --gpg-sign'
           commit_user_name: ${{ steps.import-gpg.outputs.name }}
           commit_user_email: ${{ steps.import-gpg.outputs.email }}
           commit_author: "${{ steps.import-gpg.outputs.name }} <${{ steps.import-gpg.outputs.email }}>"
