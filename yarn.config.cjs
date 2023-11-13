@@ -56,6 +56,10 @@ async function enforceConsistentDependenciesAcrossTheProject({ Yarn }) {
       continue;
     }
 
+    if (Yarn.workspace({ ident: dependency.ident })) {
+      continue;
+    }
+
     for (const otherDependency of Yarn.dependencies({ ident: dependency.ident })) {
       if (otherDependency.type === 'peerDependencies') {
         continue;
