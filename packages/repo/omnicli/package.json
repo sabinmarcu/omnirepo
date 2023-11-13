@@ -1,6 +1,6 @@
 {
   "name": "@sabinmarcu/omnicli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./cjs/index.cjs",
   "types": "./cjs/index.d.ts",
   "module": "./esm/index.mjs",
