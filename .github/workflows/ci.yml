@@ -79,6 +79,7 @@ jobs:
           commit_options: '--no-verify --signoff'
           commit_user_name: CI Bot
           commit_user_email: sabinmarcu@gmail.com
+          commit_author: CI Bot <sabinmarcu@gmail.com>
 
 
   coverage: 
