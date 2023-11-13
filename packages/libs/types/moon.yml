@@ -8,6 +8,10 @@ project:
 language: typescript
 type: library
 tasks: 
+  dev: 
+    deps: []
+    options:
+      mergeDeps: replace
   build: 
     deps: []
     options:
