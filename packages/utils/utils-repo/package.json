@@ -38,10 +38,10 @@
     "@sabinmarcu/utils-fs": "workspace:*",
     "glob": "^8.0.3",
     "moize": "^6.1.4",
-    "ramda": "^0.28.0",
-    "type-fest": "^3.4.0"
+    "ramda": "^0.28.0"
   },
   "devDependencies": {
+    "@sabinmarcu/types": "workspace:*",
     "@sabinmarcu/utils-test": "workspace:*",
     "@types/glob": "^8",
     "@types/ramda": "^0"

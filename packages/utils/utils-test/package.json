@@ -39,10 +39,10 @@
     "memfs": "^3.4.12",
     "moize": "^6.1.4",
     "ramda": "^0.28.0",
-    "type-fest": "^3.4.0",
     "yaml": "^2.2.0"
   },
   "devDependencies": {
+    "@sabinmarcu/types": "workspace:*",
     "@types/glob": "^8",
     "@types/ramda": "^0"
   },

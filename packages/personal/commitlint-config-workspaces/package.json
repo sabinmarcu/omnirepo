@@ -35,10 +35,10 @@
     "preset": "../../../.config/build.config.ts"
   },
   "dependencies": {
-    "@sabinmarcu/utils-repo": "workspace:*",
-    "type-fest": "^3.4.0"
+    "@sabinmarcu/utils-repo": "workspace:*"
   },
   "devDependencies": {
+    "@sabinmarcu/types": "workspace:*",
     "@sabinmarcu/utils-test": "workspace:*"
   },
   "tscmono": {

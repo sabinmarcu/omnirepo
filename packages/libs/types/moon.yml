@@ -1,0 +1,14 @@
+project:
+  name: types
+  description: Types Library
+  channel: "#utils"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: library
+tasks: 
+  build: 
+    deps: []
+    options:
+      mergeDeps: replace
