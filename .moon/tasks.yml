@@ -59,6 +59,9 @@ tasks:
       - '@files(buildConfig)'
     local: true
 
+  clean:
+    command: 'rm -rf esm cjs tsconfig.json'
+
   lint: 
     command: 'eslint'
     type: test

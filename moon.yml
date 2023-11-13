@@ -23,22 +23,6 @@ tasks:
     options:
       runDepsInParallel: false
 
-  clean: 
-    command: "/usr/bin/find"
-    args: 
-      - .
-      - -iname
-      - tsconfig.json
-      - -not
-      - -path
-      - \"./node_modules/*\"
-      - -exec
-      - rm
-      - -rf
-      - "{}"
-      - +;
-    local: true
-
   tsconfig:
     command: tscmono
     inputs: []
