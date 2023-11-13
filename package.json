@@ -21,7 +21,7 @@
     "mkdist": "^1.0.0",
     "moize": "^6.1.4",
     "typescript": "^5.2.2",
-    "unbuild": "^1.0.2"
+    "unbuild": "^1.0.0"
   },
   "scripts": {
     "coverage": "jest --coverage",
