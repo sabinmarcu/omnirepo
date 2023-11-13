@@ -27,6 +27,13 @@ const FIELD_UPDATE_MAP = {
   'build.preset': '../../../.config/build.config.ts',
   'tscmono.preset': 'lib',
 };
+const REQUIRED_WORKSPACE_IGNORE_LIST = new Set(['root']);
+const REQUIRED_WORKSPACE_DEPENDENCIES = {
+  devDependencies: [
+    '@sabinmarcu/types',
+    '@sabinmarcu/utils-test',
+  ],
+};
 
 /**
  * Ensure that all workspace dependencies are using workspace protocol
@@ -80,8 +87,31 @@ async function ensureFieldConsistency({ Yarn }) {
     if (FIELD_IGNORE_LIST.has(`${workspace.ident}`)) {
       continue;
     }
+
     for (const [field, value] of Object.entries(FIELD_UPDATE_MAP)) {
       workspace.set(field, value);
+    }
+  }
+}
+
+/**
+ * Ensure required dependencies for all packages
+ *
+ * @param {Context} context
+ */
+async function ensureRequiredDependencies({ Yarn }) {
+  for (const workspace of Yarn.workspaces()) {
+    if (REQUIRED_WORKSPACE_IGNORE_LIST.has(`${workspace.ident}`)) {
+      continue;
+    }
+
+    for (const [type, dependencies] of Object.entries(REQUIRED_WORKSPACE_DEPENDENCIES)) {
+      for (const dependency of dependencies) {
+        if (workspace.ident === dependency) {
+          continue;
+        }
+        workspace.set(`${type}.${dependency}`, WORKSPACE_PROTOCOL_RANGE);
+      }
     }
   }
 }
@@ -95,6 +125,7 @@ async function constraints(context) {
   await ensureWorkspaceProtocol(context);
   await enforceConsistentDependenciesAcrossTheProject(context);
   await ensureFieldConsistency(context);
+  await ensureRequiredDependencies(context);
 }
 
 module.exports = defineConfig({
