@@ -19,11 +19,11 @@ const config = {
     './configs/jsx',
     './configs/ts',
     './configs/tsx',
-    './configs/config',
     './configs/ts.expect',
     './configs/module',
     './configs/stories',
     './configs/jest',
+    './configs/config',
     './configs/overrides',
   ].map((path) => require.resolve(path + extension)),
 } satisfies Config;
