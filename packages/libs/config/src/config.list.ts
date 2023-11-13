@@ -5,8 +5,8 @@ import {
 } from '@sabinmarcu/observable';
 import type {
   ConfigListParameters,
-  TypeOfConfigParameters,
   SimpleConfigFunction,
+  ConfigObservablesFromParameters,
 } from './types';
 
 export const projectListInput = <
@@ -22,23 +22,23 @@ export const projectListInput = <
         : observable.from(input),
     );
   }
-  return outputs as TypeOfConfigParameters<Parameters>;
+  return outputs as ConfigObservablesFromParameters<Parameters>;
 };
 
 export const simpleConfig: SimpleConfigFunction = (
   ...input
 ) => {
   const observables = projectListInput(...input);
-  const result = observable.project<[any], any>(
+  const result = observable.project(
     (...values) => {
-      for (const value in values.reverse()) {
+      for (const value of values.reverse()) {
         if (value !== undefined) {
           return value;
         }
       }
       return values[0];
     },
-    observables,
+    ...observables,
   );
   return result as any;
 };

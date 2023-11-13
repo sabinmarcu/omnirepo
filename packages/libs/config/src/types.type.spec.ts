@@ -9,8 +9,7 @@ import type {
   ConfigResult,
   ConfigListParametersCommonType,
   ConfigFunction,
-  ConfigMapParameter,
-  ConfigListParameters,
+  MapConfigMapParameterToObservables,
 } from './types';
 
 type TestConfigParameters = ConfigParameters;
@@ -18,31 +17,22 @@ type TestConfigParameters = ConfigParameters;
 
 const testConfigParametersMap = {
   first: 21,
-  second: 25,
-  third: observable.from(35),
   fourth: observable<number>(() => {}),
-  fifth: 42,
 } as const satisfies ConfigParameters;
 
 { testConfigParametersMap; }
 //           ^? const testConfigParametersMap: {
 //                  readonly first: 21;
-//                  readonly second: 25;
-//                  readonly third: Observable<35>;
 //                  readonly fourth: Observable<number>;
-//                  readonly fifth: 42;
 //              }
 
 const testConfigParametersList = [
   21,
-  25,
-  observable.from(35),
   observable<number>(() => {}),
-  42,
 ] as const satisfies ConfigParameters;
 
 { testConfigParametersList; }
-//           ^? const testConfigParametersList: readonly [21, 25, Observable<35>, Observable<number>, 42]
+//           ^? const testConfigParametersList: readonly [21, Observable<number>]
 
 const testConfigParametersFailMap = ({
   first: 41,
@@ -122,20 +112,17 @@ type UnknownObserverTestList = [
 type TestConfigObservablesFromParametersMap = ConfigObservablesFromParameters<typeof testConfigParametersMap>;
 //    ^? type TestConfigObservablesFromParametersMap = {
 //           readonly first: Observable<21>;
-//           readonly second: Observable<25>;
-//           readonly third: Observable<35>;
 //           readonly fourth: Observable<number>;
-//           readonly fifth: Observable<...>;
 //       }
 
 type TestConfigObservablesFromParametersList = ConfigObservablesFromParameters<typeof testConfigParametersList>;
-//    ^? type TestConfigObservablesFromParametersList = readonly [Observable<21>, Observable<25>, Observable<35>, Observable<number>, Observable<42>]
+//    ^? type TestConfigObservablesFromParametersList = readonly [Observable<21>, Observable<number>]
 
 type TestTypeOfConfigParametersRawMap = TypeOfConfigParameters<typeof testConfigParametersMap>;
 //    ^? type TestTypeOfConfigParametersRawMap = never
 
 type TestTypeOfConfigParametersRawList = TypeOfConfigParameters<typeof testConfigParametersList>;
-//    ^? type TestTypeOfConfigParametersRawList = 21 | 25 | Observable<35> | Observable<number> | 42
+//    ^? type TestTypeOfConfigParametersRawList = number
 
 type TestTypeOfConfigParametersRawFailMap = TypeOfConfigParameters<typeof testConfigParametersFailMap>;
 //    ^? type TestTypeOfConfigParametersRawFailMap = never
@@ -147,24 +134,24 @@ type TestTypeOfConfigParametersRawExactNumberMap = TypeOfConfigParameters<typeof
 //    ^? type TestTypeOfConfigParametersRawExactNumberMap = never
 
 type TestTypeOfConfigParametersRawExactNumberList = TypeOfConfigParameters<typeof testConfigParametersExactNumberList>;
-//    ^? type TestTypeOfConfigParametersRawExactNumberList = 35 | 41 | Observable<42>
+//    ^? type TestTypeOfConfigParametersRawExactNumberList = 41 | 42 | 35
 
 type TestTypeOfConfigParametersRawExactStringMap = TypeOfConfigParameters<typeof testConfigParametersExactStringMap>;
 //    ^? type TestTypeOfConfigParametersRawExactStringMap = never
 
 type TestTypeOfConfigParametersRawExactStringList = TypeOfConfigParameters<typeof testConfigParametersExactStringList>;
-//    ^? type TestTypeOfConfigParametersRawExactStringList = "awesome" | Observable<"stuff">
+//    ^? type TestTypeOfConfigParametersRawExactStringList = "stuff" | "awesome"
 
 type TestTypeOfConfigParametersUnknownObserverMap = TypeOfConfigParameters<UnknownObserverTestMap>;
 //      ^? type TestTypeOfConfigParametersUnknownObserverMap = never
 
 type TestTypeOfConfigParametersUnknownObserverList = TypeOfConfigParameters<UnknownObserverTestList>;
-//      ^? type TestTypeOfConfigParametersUnknownObserverList = 21 | Observable<number> | 42 | Observable<unknown> | 22
+//      ^? type TestTypeOfConfigParametersUnknownObserverList = unknown
 
 // --------------------------------------------------------------------------------------
 
 type TestConfigListParametersCommonTypeList = ConfigListParametersCommonType<typeof testConfigParametersList>;
-//    ^? type TestConfigListParametersCommonTypeList = never
+//    ^? type TestConfigListParametersCommonTypeList = number
 
 type TestConfigListParametersCommonTypeFailList = ConfigListParametersCommonType<typeof testConfigParametersFailList>;
 //    ^? type TestConfigListParametersCommonTypeFailList = never
@@ -173,67 +160,56 @@ type TestConfigListParametersCommonTypeExactNumberList = ConfigListParametersCom
 //    ^? type TestConfigListParametersCommonTypeExactNumberList = never
 
 type TestConfigListParametersCommonTypeExactStringList = ConfigListParametersCommonType<typeof testConfigParametersExactStringList>;
-//    ^? type TestConfigListParametersCommonTypeExactStringList = "awesome" & RawObservable<"stuff"> & {
-//           readonly value: "stuff";
-//           filter: ObservableFilter<"stuff">;
-//           map: ObservableMap<"stuff">;
-//       }
+//    ^? type TestConfigListParametersCommonTypeExactStringList = never
 
 type TestConfigListParametersCommonTypeUnknownObserverList = ConfigListParametersCommonType<UnknownObserverTestList>;
-//    ^? type TestConfigListParametersCommonTypeUnknownObserverList = never
+//    ^? type TestConfigListParametersCommonTypeUnknownObserverList = unknown
 
 // --------------------------------------------------------------------------------------
 
 type TestConsistentConfigParametersMap = ConsistentConfigParameters<typeof testConfigParametersMap>;
-//    ^? type TestConsistentConfigParametersMap = unknown
+//    ^? type TestConsistentConfigParametersMap = false
 
 type TestConsistentConfigParametersList = ConsistentConfigParameters<typeof testConfigParametersList>;
-//    ^? type TestConsistentConfigParametersList = never
+//    ^? type TestConsistentConfigParametersList = true
 
 type TestConsistentConfigParametersFailMap = ConsistentConfigParameters<typeof testConfigParametersFailMap>;
-//    ^? type TestConsistentConfigParametersFailMap = unknown
+//    ^? type TestConsistentConfigParametersFailMap = false
 
 type TestConsistentConfigParametersFailList = ConsistentConfigParameters<typeof testConfigParametersFailList>;
-//    ^? type TestConsistentConfigParametersFailList = never
+//    ^? type TestConsistentConfigParametersFailList = false
 
 type TestConsistentConfigParametersExactNumberMap = ConsistentConfigParameters<typeof testConfigParametersExactNumberMap>;
-//    ^? type TestConsistentConfigParametersExactNumberMap = unknown
+//    ^? type TestConsistentConfigParametersExactNumberMap = false
 
 type TestConsistentConfigParametersExactNumberList = ConsistentConfigParameters<typeof testConfigParametersExactNumberList>;
-//    ^? type TestConsistentConfigParametersExactNumberList = never
+//    ^? type TestConsistentConfigParametersExactNumberList = false
 
 type TestConsistentConfigParametersExactStringMap = ConsistentConfigParameters<typeof testConfigParametersExactStringMap>;
-//    ^? type TestConsistentConfigParametersExactStringMap = unknown
+//    ^? type TestConsistentConfigParametersExactStringMap = false
 
 type TestConsistentConfigParametersExactStringList = ConsistentConfigParameters<typeof testConfigParametersExactStringList>;
-//    ^? type TestConsistentConfigParametersExactStringList = unknown
+//    ^? type TestConsistentConfigParametersExactStringList = false
 
 type TestConsistentConfigParametersUnknownObserverMap = ConsistentConfigParameters<UnknownObserverTestMap>;
-//    ^? type TestConsistentConfigParametersUnknownObserverMap = unknown
+//    ^? type TestConsistentConfigParametersUnknownObserverMap = false
 
 type TestConsistentConfigParametersUnknownObserverList = ConsistentConfigParameters<UnknownObserverTestList>;
-//    ^? type TestConsistentConfigParametersUnknownObserverList = never
+//    ^? type TestConsistentConfigParametersUnknownObserverList = false
 
 // --------------------------------------------------------------------------------------
 
 type TestCheckParametersConsistencyOrErrorMap = CheckParametersConsistencyOrError<typeof testConfigParametersMap>;
 //    ^? type TestCheckParametersConsistencyOrErrorMap = {
-//           readonly first: 21;
-//           readonly second: 25;
-//           readonly third: Observable<35>;
-//           readonly fourth: Observable<number>;
-//           readonly fifth: 42;
-//       }
-
-type TestCheckParametersConsistencyOrErrorList = CheckParametersConsistencyOrError<typeof testConfigParametersList >;
-//    ^? type TestCheckParametersConsistencyOrErrorList = {
 //           [__TypeError__]: "Config input is not consistent";
 //       }
 
+type TestCheckParametersConsistencyOrErrorList = CheckParametersConsistencyOrError<typeof testConfigParametersList >;
+//    ^? type TestCheckParametersConsistencyOrErrorList = readonly [21, Observable<number>]
+
 type TestCheckParametersConsistencyOrErrorFailMap = CheckParametersConsistencyOrError<typeof testConfigParametersFailMap>;
 //    ^? type TestCheckParametersConsistencyOrErrorFailMap = {
-//           readonly first: 41;
-//           readonly second: "stuff";
+//           [__TypeError__]: "Config input is not consistent";
 //       }
 
 type TestCheckParametersConsistencyOrErrorFailList = CheckParametersConsistencyOrError<typeof testConfigParametersFailList>;
@@ -243,9 +219,7 @@ type TestCheckParametersConsistencyOrErrorFailList = CheckParametersConsistencyO
 
 type TestCheckParametersConsistencyOrErrorExactNumberMap = CheckParametersConsistencyOrError<typeof testConfigParametersExactNumberMap>;
 //    ^? type TestCheckParametersConsistencyOrErrorExactNumberMap = {
-//           readonly first: 41;
-//           readonly second: Observable<42>;
-//           readonly third: 35;
+//           [__TypeError__]: "Config input is not consistent";
 //       }
 
 type TestCheckParametersConsistencyOrErrorExactNumberList = CheckParametersConsistencyOrError<typeof testConfigParametersExactNumberList>;
@@ -255,20 +229,17 @@ type TestCheckParametersConsistencyOrErrorExactNumberList = CheckParametersConsi
 
 type TestCheckParametersConsistencyOrErrorExactStringMap = CheckParametersConsistencyOrError<typeof testConfigParametersExactStringMap>;
 //    ^? type TestCheckParametersConsistencyOrErrorExactStringMap = {
-//           readonly first: "awesome";
-//           readonly second: Observable<"stuff">;
+//           [__TypeError__]: "Config input is not consistent";
 //       }
 
 type TestCheckParametersConsistencyOrErrorExactStringList = CheckParametersConsistencyOrError<typeof testConfigParametersExactStringList>;
-//    ^? type TestCheckParametersConsistencyOrErrorExactStringList = readonly ["awesome", Observable<"stuff">]
+//    ^? type TestCheckParametersConsistencyOrErrorExactStringList = {
+//           [__TypeError__]: "Config input is not consistent";
+//       }
 
 type TestCheckParametersConsistencyOrErrorUnknownObserverMap = CheckParametersConsistencyOrError<UnknownObserverTestMap>;
 //    ^? type TestCheckParametersConsistencyOrErrorUnknownObserverMap = {
-//           first: 21;
-//           second: 42;
-//           third: Observable<number>;
-//           fourth: Observable<unknown>;
-//           fifth: 22;
+//           [__TypeError__]: "Config input is not consistent";
 //       }
 
 type TestCheckParametersConsistencyOrErrorUnknownObserverList = CheckParametersConsistencyOrError<UnknownObserverTestList>;
@@ -280,22 +251,15 @@ type TestCheckParametersConsistencyOrErrorUnknownObserverList = CheckParametersC
 
 type TestConfigResultMap = ConfigResult<typeof testConfigParametersMap>;
 //    ^? type TestConfigResultMap = {
-//           readonly first: 21;
-//           readonly second: 25;
-//           readonly third: 35;
-//           readonly fourth: number;
-//           readonly fifth: 42;
-//       }
-
-type TestConfigResultList = ConfigResult<typeof testConfigParametersList>;
-//    ^? type TestConfigResultList = {
 //           [__TypeError__]: "Config result cannot be derived from inconsistent input";
 //       }
 
+type TestConfigResultList = ConfigResult<typeof testConfigParametersList>;
+//    ^? type TestConfigResultList = number
+
 type TestConfigResultFailMap = ConfigResult<typeof testConfigParametersFailMap>;
 //    ^? type TestConfigResultFailMap = {
-//           readonly first: 41;
-//           readonly second: "stuff";
+//           [__TypeError__]: "Config result cannot be derived from inconsistent input";
 //       }
 
 type TestConfigResultFailList = ConfigResult<typeof testConfigParametersFailList>;
@@ -305,9 +269,7 @@ type TestConfigResultFailList = ConfigResult<typeof testConfigParametersFailList
 
 type TestConfigResultExactNumberMap = ConfigResult<typeof testConfigParametersExactNumberMap>;
 //    ^? type TestConfigResultExactNumberMap = {
-//           readonly first: 41;
-//           readonly second: 42;
-//           readonly third: 35;
+//           [__TypeError__]: "Config result cannot be derived from inconsistent input";
 //       }
 
 type TestConfigResultExactNumberList = ConfigResult<typeof testConfigParametersExactNumberList>;
@@ -317,24 +279,17 @@ type TestConfigResultExactNumberList = ConfigResult<typeof testConfigParametersE
 
 type TestConfigResultExactStringMap = ConfigResult<typeof testConfigParametersExactStringMap>;
 //    ^? type TestConfigResultExactStringMap = {
-//           readonly first: "awesome";
-//           readonly second: "stuff";
+//           [__TypeError__]: "Config result cannot be derived from inconsistent input";
 //       }
 
 type TestConfigResultExactStringList = ConfigResult<typeof testConfigParametersExactStringList>;
-//    ^? type TestConfigResultExactStringList = "awesome" & RawObservable<"stuff"> & {
-//           readonly value: "stuff";
-//           filter: ObservableFilter<"stuff">;
-//           map: ObservableMap<"stuff">;
+//    ^? type TestConfigResultExactStringList = {
+//           [__TypeError__]: "Config result cannot be derived from inconsistent input";
 //       }
 
 type TestConfigResultUnknownObserverMap = ConfigResult<UnknownObserverTestMap>;
 //    ^? type TestConfigResultUnknownObserverMap = {
-//           first: 21;
-//           second: 42;
-//           third: number;
-//           fourth: unknown;
-//           fifth: 22;
+//           [__TypeError__]: "Config result cannot be derived from inconsistent input";
 //       }
 
 type TestConfigResultUnknownObserverList = ConfigResult<UnknownObserverTestList>;
@@ -351,14 +306,11 @@ declare const config: ConfigFunction;
 const testConfigMap = config(testConfigParametersMap);
 //    ^? const testConfigMap: Observable<{
 //           readonly first: 21;
-//           readonly second: 25;
-//           readonly third: Observable<35>;
 //           readonly fourth: Observable<number>;
-//           readonly fifth: 42;
 //       }>
 
-const testConfigList = config(testConfigParametersList);
-//    ^? const testConfigList: Observable<readonly [21, 25, Observable<35>, Observable<number>, 42]>
+const testConfigList = config(...testConfigParametersList);
+//    ^? const testConfigList: Observable<number>
 
 const testConfigFailMap = config(testConfigParametersFailMap);
 //    ^? const testConfigFailMap: Observable<{
@@ -366,8 +318,8 @@ const testConfigFailMap = config(testConfigParametersFailMap);
 //           readonly second: "stuff";
 //       }>
 
-const testConfigFailList = config(testConfigParametersFailList);
-//    ^? const testConfigFailList: Observable<readonly [41, "stuff"]>
+const testConfigFailList = config(...testConfigParametersFailList);
+//    ^? const testConfigFailList: TypeError<"Config result cannot be derived from inconsistent input">
 
 const testConfigExactNumberMap = config(testConfigParametersExactNumberMap);
 //    ^? const testConfigExactNumberMap: Observable<{
@@ -376,8 +328,8 @@ const testConfigExactNumberMap = config(testConfigParametersExactNumberMap);
 //           readonly third: 35;
 //       }>
 
-const testConfigExactNumberList = config(testConfigParametersExactNumberList);
-//    ^? const testConfigExactNumberList: Observable<readonly [41, Observable<42>, 35]>
+const testConfigExactNumberList = config(...testConfigParametersExactNumberList);
+//    ^? const testConfigExactNumberList: TypeError<"Config result cannot be derived from inconsistent input">
 
 const testConfigExactStringMap = config(testConfigParametersExactStringMap);
 //    ^? const testConfigExactStringMap: Observable<{
@@ -385,8 +337,8 @@ const testConfigExactStringMap = config(testConfigParametersExactStringMap);
 //           readonly second: Observable<"stuff">;
 //       }>
 
-const testConfigExactStringList = config(testConfigParametersExactStringList);
-//    ^? const testConfigExactStringList: Observable<readonly ["awesome", Observable<"stuff">]>
+const testConfigExactStringList = config(...testConfigParametersExactStringList);
+//    ^? const testConfigExactStringList: TypeError<"Config result cannot be derived from inconsistent input">
 
 // TODO: Find a solution for this issue.
 // Required: config('a', 'b') should turn input params into 'never' to cause
@@ -395,3 +347,53 @@ const testConfigExactStringList = config(testConfigParametersExactStringList);
 // and hope the code crashes somewhere else. (ie: expecting a string, received TypeError)
 const testConfigExactStringListHardcoded = config('something', 'else');
 //    ^? const testConfigExactStringListHardcoded: TypeError<"Config result cannot be derived from inconsistent input">
+
+const testConfigOneObject = config({ test: 21 });
+//    ^? const testConfigOneObject: Observable<{
+//           readonly test: 21;
+//       }>
+
+// --------------------------------------------------------------------------------------
+
+type TestMapConfigMapParameterToObservablesMap = MapConfigMapParameterToObservables<typeof testConfigParametersMap>;
+//    ^? type TestMapConfigMapParameterToObservablesMap = (Observable<{
+//           readonly first: 21;
+//       }> | Observable<{
+//           fourth: number;
+//       }>)[]
+
+type TestMapConfigMapParameterToObservablesFailMap = MapConfigMapParameterToObservables<typeof testConfigParametersFailMap>;
+//    ^? type TestMapConfigMapParameterToObservablesFailMap = (Observable<{
+//           readonly first: 41;
+//       }> | Observable<{
+//           readonly second: "stuff";
+//       }>)[]
+
+type TestMapConfigMapParameterToObservablesExactNumberMap = MapConfigMapParameterToObservables<typeof testConfigParametersExactNumberMap>;
+//    ^? type TestMapConfigMapParameterToObservablesExactNumberMap = (Observable<{
+//           readonly first: 41;
+//       }> | Observable<{
+//           readonly third: 35;
+//       }> | Observable<{
+//           second: 42;
+//       }>)[]
+
+type TestMapConfigMapParameterToObservablesExactStringMap = MapConfigMapParameterToObservables<typeof testConfigParametersExactStringMap>;
+//    ^? type TestMapConfigMapParameterToObservablesExactStringMap = (Observable<{
+//           readonly first: "awesome";
+//       }> | Observable<{
+//           second: "stuff";
+//       }>)[]
+
+type TestMapConfigMapParameterToObservablesUnknownObserverMap = MapConfigMapParameterToObservables<UnknownObserverTestMap>;
+//    ^? type TestMapConfigMapParameterToObservablesUnknownObserverMap = (Observable<{
+//           first: 21;
+//       }> | Observable<{
+//           fourth: unknown;
+//       }> | Observable<{
+//           third: number;
+//       }> | Observable<{
+//           second: 42;
+//       }> | Observable<{
+//           fifth: 22;
+//       }>)[]

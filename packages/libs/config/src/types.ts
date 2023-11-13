@@ -1,23 +1,32 @@
 import type {
   Observable,
+  TypeOfObservableOrType,
 } from '@sabinmarcu/observable';
 import type {
   UnionToIntersection,
   IsKnown,
   TypeError,
-  BoolToUnknownNever,
-  IsUnknown,
 } from '@sabinmarcu/types';
 
 export type ConfigMapParameter = Readonly<Record<string, any>>;
 export type ConfigListParameters = Readonly<unknown[]>;
 export type ConfigParameters = ConfigMapParameter | ConfigListParameters;
 
+export type ObservableOf<T extends any> = T extends Observable<any>
+  ? T
+  : Observable<T>;
+
+export type MapConfigMapParameterKeyToObservable<
+  T extends ConfigMapParameter,
+  Key extends keyof T,
+> = T[Key] extends Observable<infer Value>
+  ? Observable<{ [key in Key]: Value }>
+  : Observable<{ [key in Key]: T[Key] }>;
+
 export type MapConfigMapParameterToObservables<T extends ConfigMapParameter> = {
-  [Key in keyof T]: T[Key] extends Observable<any>
-    ? T[Key]
-    : Observable<T[Key]>
-};
+  [Key in keyof T]: MapConfigMapParameterKeyToObservable<T, Key>
+}[keyof T][];
+
 export type MapConfigMapParameterToValues<T extends ConfigMapParameter> = {
   [Key in keyof T]: T[Key] extends Observable<infer Result>
     ? Result
@@ -26,7 +35,7 @@ export type MapConfigMapParameterToValues<T extends ConfigMapParameter> = {
 
 export type TypeOfConfigParameters<T extends ConfigParameters> =
   T extends ConfigListParameters
-    ? T[number]
+    ? TypeOfObservableOrType<T[number]>
     : never;
 
 export type ConfigListParametersCommonType<T extends ConfigListParameters> =
@@ -35,11 +44,11 @@ export type ConfigListParametersCommonType<T extends ConfigListParameters> =
 export type ConsistentConfigParameters<
   T extends ConfigParameters,
 > = T extends ConfigListParameters
-  ? BoolToUnknownNever<IsKnown<ConfigListParametersCommonType<T>>>
-  : unknown;
+  ? IsKnown<ConfigListParametersCommonType<T>>
+  : false;
 
 export type CheckParametersConsistencyOrError<T extends ConfigParameters> =
-  IsUnknown<ConsistentConfigParameters<T>> extends false
+  ConsistentConfigParameters<T> extends false
     ? TypeError<'Config input is not consistent'>
     : T;
 
@@ -50,7 +59,7 @@ export type ConfigObservablesFromParameters<Parameters extends ConfigParameters>
 };
 
 export type ConfigResult<T extends ConfigParameters> =
-  IsUnknown<ConsistentConfigParameters<T>> extends false
+  ConsistentConfigParameters<T> extends false
     ? TypeError<'Config result cannot be derived from inconsistent input'>
     : T extends ConfigListParameters
       ? ConfigListParametersCommonType<T>
@@ -68,7 +77,7 @@ export interface SimpleConfigFunction {
     Result = ConfigResult<T>,
   >(
     ...inputs: T
-  ): Result extends TypeError ? Result : Observable<Result & {}>;
+  ): Result extends TypeError ? Result : Observable<Result>;
 }
 
 export interface ConfigFunction extends SimpleConfigFunction, ComplexConfigFunction {}
