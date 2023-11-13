@@ -14,16 +14,6 @@ fileGroups:
     - 'src/**/*.spec.*'
 
 tasks:
-  devExports: 
-    command: 'omni fix exports'
-    args:
-      - --dev
-    inputs:
-      - package.json
-    outputs: 
-      - package.json
-    local: true
-
   fixExports: 
     command: 'omni fix exports'
     inputs:
@@ -37,8 +27,9 @@ tasks:
     command: 'unbuild'
     type: build
     deps: 
-      - 'root:tsconfig'
+      - 'root:init'
       - '~:fixExports'
+      - '~:clean'
       - '^:build'
     inputs: 
       - '@globs(sources)'
@@ -47,17 +38,54 @@ tasks:
       - esm
       - cjs
 
+  test: 
+    command: 'jest'
+    args: 
+      - --passWithNoTests
+    deps:
+      - '~:build'
+    inputs: 
+      - '@globs(sources)'
+
+  devExports: 
+    command: 'omni fix exports'
+    args:
+      - --dev
+    inputs:
+      - package.json
+    outputs: 
+      - package.json
+    options:
+      cache: false
+      runInCI: false
+
   dev:
     command: 'unbuild --stub'
     deps: 
       - 'root:init'
-      - 'root:tsconfig'
       - '~:devExports'
+      - '~:clean'
       - '^:dev'
     inputs: 
       - '@globs(sources)'
       - '@files(buildConfig)'
-    local: true
+    options:
+      cache: false
+      runInCI: false
+      persistent: false
+
+  testDev: 
+    command: 'jest'
+    type: test
+    args:
+      - --watch
+    deps:
+      - '~:dev'
+    inputs: 
+      - '@globs(sources)'
+    options:
+      cache: false
+      runInCI: false
 
   clean:
     command: rm -rf 
@@ -66,22 +94,13 @@ tasks:
       - cjs
     options: 
       cache: false
+      runInCI: false
 
   lint: 
     command: 'eslint'
     type: test
     deps:
       - eslint-config:build
-    inputs: 
-      - '@globs(sources)'
-
-  test: 
-    command: 'jest'
-    type: test
-    args: 
-      - --passWithNoTests
-    deps:
-      - '~:build'
     inputs: 
       - '@globs(sources)'
 

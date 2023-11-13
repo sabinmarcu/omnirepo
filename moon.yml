@@ -5,7 +5,9 @@ tasks:
       - eslint-config:build
       - commitlint-config-workspaces:build
     inputs: []
-    local: true
+    options: 
+      cache: false
+      runInCI: false
 
   coverage: 
     command: "yarn coverage"
@@ -40,6 +42,7 @@ tasks:
       - +;
     options:
       cache: false
+      runInCI: false
 
   tsconfig:
     command: yarn tscmono
