@@ -12,6 +12,7 @@ const config = {
   extends: ['@sabinmarcu'],
   parserOptions: {
     project: tsProjects,
+    EXPERIMENTAL_useSourceOfProjectReferenceRedirect: true,
   },
   ...generateImportResolver(tsProjects),
   overrides: [
