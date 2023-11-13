@@ -1,1 +1,1 @@
-# @sabinmarcu/utils-fs
+# @sabinmarcu/observable
