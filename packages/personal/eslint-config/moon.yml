@@ -16,3 +16,9 @@ tasks:
     deps: []
     options:
       mergeDeps: replace
+  test:
+    deps: 
+      - utils-test:build
+  testDev:
+    deps:
+      - utils-test:dev
