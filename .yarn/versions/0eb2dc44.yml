@@ -9,4 +9,5 @@ releases:
 
 declined:
   - "@sabinmarcu/observable"
+  - "@sabinmarcu/types"
   - "@sabinmarcu/omnicli"
