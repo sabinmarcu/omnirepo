@@ -21,14 +21,6 @@ export type Subject<T> =
   & Observable<T>
   & ObserverController<T>;
 
-export type ObservableFilter<T> = (
-  filter: (input: T) => boolean
-) => Observable<T>;
-
-export type ObservableMap<T> = <R>(
-  map: (input: T) => R
-) => Observable<R>;
-
 export type Observable<T> =
   & RawObservable<T>
   & {
@@ -37,10 +29,27 @@ export type Observable<T> =
     map: ObservableMap<T>;
   };
 
+export type PipedObservable<T> =
+  & Observable<T>
+  & Subscription;
+
+export type ObservableFilter<T> = (
+  filter: (input: T) => boolean
+) => PipedObservable<T>;
+
+export type ObservableMap<T> = <R>(
+  map: (input: T) => R
+) => PipedObservable<R>;
+
 export type TypeOfObservable<T extends Observable<any>> =
   T extends Observable<infer U>
-  ? U
-  : never;
+    ? U
+    : never;
+
+export type TypeOfObservableOrType<T extends any> =
+  T extends Observable<infer U>
+    ? U
+    : T;
 
 export type ObservableProjection<
   Observables extends Observable<any>[],
