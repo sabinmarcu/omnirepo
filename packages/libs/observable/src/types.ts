@@ -37,6 +37,11 @@ export type Observable<T> =
     map: ObservableMap<T>;
   };
 
+export type TypeOfObservable<T extends Observable<any>> =
+  T extends Observable<infer U>
+  ? U
+  : never;
+
 export type ObservableProjection<
   Observables extends Observable<any>[],
 > =
