@@ -1,0 +1,9 @@
+project:
+  name: config
+  description: Reactive config objects
+  channel: "#libs"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: library
