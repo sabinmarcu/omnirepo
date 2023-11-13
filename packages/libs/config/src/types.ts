@@ -45,7 +45,7 @@ export type ConsistentConfigParameters<
   T extends ConfigParameters,
 > = T extends ConfigListParameters
   ? IsKnown<ConfigListParametersCommonType<T>>
-  : false;
+  : true;
 
 export type CheckParametersConsistencyOrError<T extends ConfigParameters> =
   ConsistentConfigParameters<T> extends false
