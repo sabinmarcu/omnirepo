@@ -86,6 +86,7 @@ jobs:
         with: 
           commit_message: "chore(ci): Automatic Versioning"
           commit_options: '--no-verify --signoff --gpg-sign'
+          push_options: '--force'
           commit_user_name: ${{ steps.import-gpg.outputs.name }}
           commit_user_email: ${{ steps.import-gpg.outputs.email }}
           commit_author: "${{ steps.import-gpg.outputs.name }} <${{ steps.import-gpg.outputs.email }}>"
