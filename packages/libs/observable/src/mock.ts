@@ -33,6 +33,6 @@ export const mock = {
 };
 
 const hooked = false;
-if (afterEach && !hooked) {
+if (typeof afterEach === 'function' && !hooked) {
   afterEach(emptySubscriptionPool);
 }
