@@ -5,22 +5,22 @@ const testObservableNumber = observable.from(42);
 const testObservableString = observable.from('Value: ');
 
 const testObservableValue = testObservableNumber.value;
-//    ^? const testObservableValue: number
+//    ^? const testObservableValue: 42
 
 const testObservableSubscribe = testObservableNumber.subscribe;
-//    ^? const testObservableSubscribe: (observer: Observer<number>) => Subscription
+//    ^? const testObservableSubscribe: (observer: Observer<42>) => Subscription
 
 const testObservableSubscription = testObservableNumber.subscribe({} as any);
 //    ^? const testObservableSubscription: Subscription
 
 const testObservableFilter = testObservableNumber.filter;
-//    ^? const testObservableFilter: ObservableFilter<number>
+//    ^? const testObservableFilter: ObservableFilter<42>
 
 const testObservableMap = testObservableNumber.map;
-//    ^? const testObservableMap: ObservableMap<number>
+//    ^? const testObservableMap: ObservableMap<42>
 
 const testObservableFrom = observable.from(1);
-//    ^? const testObservableFrom: Observable<number>
+//    ^? const testObservableFrom: Observable<1>
 
 const testObservableProjection = observable.project(
   (prefix, value) => ({ prefix, value, result: `${prefix}${value}` }),
@@ -30,7 +30,7 @@ const testObservableProjection = observable.project(
 
 const testObservableProjectionValue = testObservableProjection.value;
 //    ^? const testObservableProjectionValue: {
-//           prefix: string;
-//           value: number;
+//           prefix: "Value: ";
+//           value: 42;
 //           result: string;
 //       }

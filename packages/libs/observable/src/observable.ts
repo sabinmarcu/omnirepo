@@ -1,3 +1,5 @@
+import { observableKeys } from './constants';
+import { addToSubscriptionPool } from './mock';
 import type {
   Observable,
   Observer,
@@ -8,9 +10,12 @@ import type {
   RawObservable,
   ObserverController,
   ObservableProjection,
+  PipedObservable,
 } from './types';
-
-export const testObservableKeys = ['subscribe', 'filter', 'map', 'value'];
+import {
+  extendObservable,
+  observableValueStore,
+} from './utils';
 
 export const makeControllerFunction = <T>(
   valueStore: ObservableValueStore<T>,
@@ -47,24 +52,26 @@ export const makeController = <T>(
   } satisfies ObserverController<T>;
 };
 
-export const observableValueStore = <T>(
-  input?: ObservableValueStore<T>,
-) => (input ?? { value: undefined } as ObservableValueStore<T>);
-
-export const observable = <const T>(
+export const observable = <T>(
   source: ObservableDispatch<T>,
+  initialValue?: T,
 ): Observable<T> => {
-  const valueStore: ObservableValueStore<T> = observableValueStore<T>();
+  const valueStore: ObservableValueStore<T> = observableValueStore<T>(
+    initialValue
+      ? { value: initialValue }
+      : undefined,
+  );
   const subscribersStore = new Set<Observer<T>>() satisfies ObservableSubscriberStore<T>;
 
   const subscribe = (observer: Observer<T>): Subscription => {
     subscribersStore.add(observer);
     observer.next?.(valueStore.value);
-    return {
+    const subscription = {
       unsubscribe: () => {
         subscribersStore.delete(observer);
       },
-    };
+    } satisfies Subscription;
+    return addToSubscriptionPool(subscription);
   };
 
   const sourceDispatcher = makeController<T>(valueStore, subscribersStore);
@@ -77,9 +84,10 @@ export const observable = <const T>(
   const filter = (
     filterFunction: (input: T) => boolean,
   ) => {
+    let subscription: Subscription;
     const newObservable = observable<T>(
-      ({ next, complete, error }) => (
-        observableInstance.subscribe({
+      ({ next, complete, error }) => {
+        subscription = observableInstance.subscribe({
           next: (value) => {
             if (filterFunction(value)) {
               next(value);
@@ -87,25 +95,36 @@ export const observable = <const T>(
           },
           complete,
           error,
-        })
-      ),
+        });
+      },
     ) satisfies Observable<T>;
-    return newObservable;
+    return extendObservable(
+      newObservable,
+      {
+        unsubscribe: () => subscription.unsubscribe(),
+      },
+    ) satisfies PipedObservable<T>;
   };
 
   const map = <R>(
     mapFunction: (input: T) => R,
   ) => {
+    let subscription: Subscription;
     const newObservable = observable<R>(
-      ({ next, complete, error }) => (
-        observableInstance.subscribe({
+      ({ next, complete, error }) => {
+        subscription = observableInstance.subscribe({
           next: (value) => next(mapFunction(value)),
           complete,
           error,
-        })
-      ),
+        });
+      },
     ) satisfies Observable<R>;
-    return newObservable;
+    return extendObservable(
+      newObservable,
+      {
+        unsubscribe: () => subscription.unsubscribe(),
+      },
+    ) satisfies PipedObservable<R>;
   };
 
   return {
@@ -144,6 +163,7 @@ export const projectObservables = <
     input.map(({ value }) => value) as ObservableProjection<Observables>
   );
 
+  const subscriptions: Subscription[] = [];
   const projectionObservable = observable(({ next, error }) => {
     const projectionValueStore = observableValueStore({
       get value() {
@@ -155,11 +175,22 @@ export const projectObservables = <
 
     const nextFunction = () => next(projectionValueStore.value);
     for (const item of input) {
-      item.subscribe({ next: nextFunction, error });
+      subscriptions.push(item.subscribe({ next: nextFunction, error }));
     }
   }) satisfies Observable<Result>;
 
-  return projectionObservable;
+  const subscription = {
+    unsubscribe: () => {
+      for (const item of subscriptions) {
+        item.unsubscribe();
+      }
+    },
+  } satisfies Subscription;
+
+  return extendObservable(
+    projectionObservable,
+    subscription,
+  ) satisfies PipedObservable<Result>;
 };
 observable.project = projectObservables;
 
@@ -170,6 +201,6 @@ observable.project = projectObservables;
 export const isObservable = <T = any>(value: any): value is Observable<T> => !!(
   value
   && typeof value === 'object'
-  && Object.keys(value).every((key) => testObservableKeys.includes(key))
+  && observableKeys.every((key) => key in value)
   && typeof value.subscribe === 'function'
 );
