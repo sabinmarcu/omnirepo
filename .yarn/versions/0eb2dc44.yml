@@ -1,5 +1,6 @@
 releases:
   "@sabinmarcu/commitlint-config-workspaces": patch
+  "@sabinmarcu/config": patch
   "@sabinmarcu/eslint-config": patch
   "@sabinmarcu/utils-fs": patch
   "@sabinmarcu/utils-path": patch
@@ -7,4 +8,5 @@ releases:
   "@sabinmarcu/utils-test": patch
 
 declined:
+  - "@sabinmarcu/observable"
   - "@sabinmarcu/omnicli"
