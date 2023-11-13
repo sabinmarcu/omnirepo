@@ -21,14 +21,23 @@ const configRelativePath = path.relative(
 );
 
 const globPromised = util.promisify(glob);
-const setupFiles = (await globPromised(
-  'setupFiles/**/*',
+
+/**
+ * Generate a list of setup files with given glob
+ * @param {string} inputGlob Glob to be checked against
+ * @returns Promise<string[]>
+ */
+const globSetupFiles = async (inputGlob) => (await globPromised(
+  inputGlob,
   { cwd: configDirectory },
 )).map((file) => path.join(
   '<rootDir>',
   configRelativePath,
   file,
 ));
+
+const setupFiles = await globSetupFiles('setupFiles/**/*');
+const setupFilesAfterEnv = await globSetupFiles('setupFilesAfterEnv/**/*');
 
 const generateFromPath = (
   /** @type {string} */
@@ -58,6 +67,7 @@ const generateFromPath = (
   const packageConfig = {
     ...config,
     setupFiles,
+    setupFilesAfterEnv,
     roots: [
       `<rootDir>/${relativePath}`,
     ],
