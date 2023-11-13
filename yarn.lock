@@ -1886,6 +1886,7 @@ __metadata:
   dependencies:
     "@babel/eslint-parser": "npm:^7.19.1"
     "@babel/plugin-syntax-import-assertions": "npm:^7.20.0"
+    "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
     "@types/eslint": "npm:^8.4.10"
     "@typescript-eslint/eslint-plugin": "npm:^6.10.0"
@@ -1930,6 +1931,7 @@ __metadata:
     "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-fs": "workspace:*"
     "@sabinmarcu/utils-repo": "workspace:*"
+    "@sabinmarcu/utils-test": "workspace:*"
     "@types/glob": "npm:^8"
     "@types/ramda": "npm:^0"
     babel-plugin-dynamic-import-node: "npm:*"
@@ -1970,6 +1972,7 @@ __metadata:
   resolution: "@sabinmarcu/utils-path@workspace:packages/utils/utils-path"
   dependencies:
     "@sabinmarcu/types": "workspace:*"
+    "@sabinmarcu/utils-test": "workspace:*"
   languageName: unknown
   linkType: soft
 
