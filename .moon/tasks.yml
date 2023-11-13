@@ -60,7 +60,12 @@ tasks:
     local: true
 
   clean:
-    command: 'rm -rf esm cjs tsconfig.json'
+    command: rm -rf 
+    args: 
+      - esm 
+      - cjs
+    options: 
+      cache: false
 
   lint: 
     command: 'eslint'

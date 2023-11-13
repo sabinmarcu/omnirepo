@@ -23,8 +23,26 @@ tasks:
     options:
       runDepsInParallel: false
 
+  clean: 
+    command: "/usr/bin/find"
+    args: 
+      - .
+      - -iname
+      - tsconfig.json
+      - -not
+      - -path
+      - ./node_modules/*
+      - -prune
+      - -exec
+      - rm
+      - -rf
+      - "{}"
+      - +;
+    options:
+      cache: false
+
   tsconfig:
-    command: tscmono
+    command: yarn tscmono
     inputs: []
     
 language: bash
