@@ -71,16 +71,23 @@ jobs:
         run: 'yarn moon run :publish'
         env:
           YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}          
+      
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
 
       - name: Save Versioning
         uses: stefanzweifel/git-auto-commit-action@v4
         with: 
           commit_message: "chore(ci): Automatic Versioning"
           commit_options: '--no-verify --signoff'
-          commit_user_name: CI Bot
-          commit_user_email: sabinmarcu@gmail.com
-          commit_author: CI Bot <sabinmarcu@gmail.com>
-
+          commit_user_name: ${{ steps.import-gpg.outputs.name }}
+          commit_user_email: ${{ steps.import-gpg.outputs.email }}
+          commit_author: "${{ steps.import-gpg.outputs.name }} <${{ steps.import-gpg.outputs.email }}>"
 
   coverage: 
     name: 'Coverage'
