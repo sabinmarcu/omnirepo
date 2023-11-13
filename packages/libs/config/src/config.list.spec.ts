@@ -1,8 +1,30 @@
 import {
   isObservable,
+  observable,
+  subject,
 } from '@sabinmarcu/observable';
-import { simpleConfig } from './config.list';
+import {
+  simpleConfig,
+  projectListInput,
+} from './config.list';
 import { generateSimpleTests } from './config.list.spec.partial';
+
+describe('projectListInput', () => {
+  it('should be a function', () => {
+    expect(projectListInput).toBeInstanceOf(Function);
+  });
+
+  it('should have no parameters (rest)', () => {
+    expect(projectListInput.length).toBe(0);
+  });
+
+  it('should return an array of observables', () => {
+    const result = projectListInput(1, 2, observable.from(5), subject(32));
+    expect(Array.isArray(result)).toBe(true);
+    expect(result.length).toBe(4);
+    expect(result.every((item) => isObservable(item))).toBe(true);
+  });
+});
 
 describe('simpleConfig', () => {
   it('should be a function', () => {

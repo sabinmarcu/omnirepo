@@ -27,6 +27,17 @@ export const generateSimpleTests = (config = simpleConfig) => {
     expect(next).toHaveBeenCalledWith(5);
   });
 
+  it('should fallback to undefined if all values are undefined', () => {
+    const result = config(
+      undefined,
+      observable.from(undefined),
+    ) as Observable<number>;
+    expect(result.value).toEqual(undefined);
+    const next = jest.fn();
+    result.subscribe({ next });
+    expect(next).toHaveBeenCalledWith(undefined);
+  });
+
   it('should properly react to subject changes', () => {
     const subject1 = subject(35);
     const subject2 = subject(21);
