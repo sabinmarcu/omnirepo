@@ -1864,9 +1864,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/commitlint-config-workspaces@workspace:packages/personal/commitlint-config-workspaces"
   dependencies:
+    "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-repo": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
-    type-fest: "npm:^3.4.0"
   languageName: unknown
   linkType: soft
 
@@ -1875,8 +1875,8 @@ __metadata:
   resolution: "@sabinmarcu/config@workspace:packages/libs/config"
   dependencies:
     "@sabinmarcu/observable": "workspace:*"
+    "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
-    type-fest: "npm:^3.4.0"
   languageName: unknown
   linkType: soft
 
@@ -1910,8 +1910,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/observable@workspace:packages/libs/observable"
   dependencies:
+    "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
-    type-fest: "npm:^3.4.0"
   languageName: unknown
   linkType: soft
 
@@ -1927,6 +1927,7 @@ __metadata:
     "@babel/plugin-transform-modules-commonjs": "npm:*"
     "@babel/plugin-transform-typescript": "npm:*"
     "@rnx-kit/babel-plugin-import-path-remapper": "npm:*"
+    "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-fs": "workspace:*"
     "@sabinmarcu/utils-repo": "workspace:*"
     "@types/glob": "npm:^8"
@@ -1940,10 +1941,18 @@ __metadata:
     moize: "npm:^6.1.4"
     ramda: "npm:^0.28.0"
     typanion: "npm:^3.12.1"
-    type-fest: "npm:^3.4.0"
     yaml: "npm:^2.2.0"
   bin:
     omni: ./bin/omnicli.js
+  languageName: unknown
+  linkType: soft
+
+"@sabinmarcu/types@workspace:*, @sabinmarcu/types@workspace:packages/libs/types":
+  version: 0.0.0-use.local
+  resolution: "@sabinmarcu/types@workspace:packages/libs/types"
+  dependencies:
+    "@sabinmarcu/utils-test": "workspace:*"
+    type-fest: "npm:^4.7.1"
   languageName: unknown
   linkType: soft
 
@@ -1951,8 +1960,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/utils-fs@workspace:packages/utils/utils-fs"
   dependencies:
+    "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
-    type-fest: "npm:^3.4.0"
   languageName: unknown
   linkType: soft
 
@@ -1960,7 +1969,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/utils-path@workspace:packages/utils/utils-path"
   dependencies:
-    type-fest: "npm:^3.4.0"
+    "@sabinmarcu/types": "workspace:*"
   languageName: unknown
   linkType: soft
 
@@ -1968,6 +1977,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/utils-repo@workspace:packages/utils/utils-repo"
   dependencies:
+    "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-fs": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
     "@types/glob": "npm:^8"
@@ -1975,7 +1985,6 @@ __metadata:
     glob: "npm:^8.0.3"
     moize: "npm:^6.1.4"
     ramda: "npm:^0.28.0"
-    type-fest: "npm:^3.4.0"
   languageName: unknown
   linkType: soft
 
@@ -1983,13 +1992,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/utils-test@workspace:packages/utils/utils-test"
   dependencies:
+    "@sabinmarcu/types": "workspace:*"
     "@types/glob": "npm:^8"
     "@types/ramda": "npm:^0"
     glob: "npm:^8.0.3"
     memfs: "npm:^3.4.12"
     moize: "npm:^6.1.4"
     ramda: "npm:^0.28.0"
-    type-fest: "npm:^3.4.0"
     yaml: "npm:^2.2.0"
   languageName: unknown
   linkType: soft
@@ -9412,10 +9421,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-fest@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "type-fest@npm:3.4.0"
-  checksum: 8c94c06a9be12123367a0987e03f9f8feeb798dadb6278208388faf6f7e03d25b66253cea57fb0ce8a66c2d2bef4d3f14d175d286db222ba17ea033f4885e76b
+"type-fest@npm:^4.7.1":
+  version: 4.7.1
+  resolution: "type-fest@npm:4.7.1"
+  checksum: ef21f317738080d71d8603a65bd7136e1e0246980b407e9fe6b4c35cc239b712dd737b06c391e7cde8213d8a733449930b6cc5a3417324b90dddeb84fa167629
   languageName: node
   linkType: hard
 
