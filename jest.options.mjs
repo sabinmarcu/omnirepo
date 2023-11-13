@@ -9,6 +9,7 @@ export const coverageCollection = packageJson.workspaces.map(
 );
 
 export const coverageExcludes = [
+  '!<rootDir>/packages/libs/types/**/*',
   '!<rootDir>/packages/utils/utils-test/**/*',
   '!<rootDir>/packages/personal/eslint-config/src/configs/**/*',
   '!<rootDir>/packages/repo/omnicli/src/commands/**/*',
@@ -20,4 +21,6 @@ export const coverageExcludes = [
   '!<rootDir>/**/constants.ts',
   '!<rootDir>/**/*.d.ts',
   '!<rootDir>/**/__mocks__/**/*',
+  '!<rootDir>/**/*.spec.partial.*',
+  '!<rootDir>/**/mock.*',
 ];
