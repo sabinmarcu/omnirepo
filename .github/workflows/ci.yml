@@ -77,6 +77,8 @@ jobs:
         with: 
           commit_message: "chore(ci): Automatic Versioning"
           commit_options: '--no-verify --signoff'
+          commit_user_name: CI Bot
+          commit_user_email: sabinmarcu@gmail.com
 
 
   coverage: 
