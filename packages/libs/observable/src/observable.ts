@@ -51,7 +51,7 @@ export const observableValueStore = <T>(
   input?: ObservableValueStore<T>,
 ) => (input ?? { value: undefined } as ObservableValueStore<T>);
 
-export const observable = <T>(
+export const observable = <const T>(
   source: ObservableDispatch<T>,
 ): Observable<T> => {
   const valueStore: ObservableValueStore<T> = observableValueStore<T>();
@@ -122,7 +122,7 @@ export const observable = <T>(
  * @template T - Type of input observable
  * @param value - The value to be converted into a static observable
  */
-export const observableFrom = <T>(value: T) => observable<T>(({ next }) => next?.(value));
+export const observableFrom = <const T>(value: T) => observable<T>(({ next }) => next?.(value));
 observable.from = observableFrom;
 
 /**
@@ -167,7 +167,7 @@ observable.project = projectObservables;
  * Check if a given value is an Observer
  * @param value - Value to be checked
  */
-export const isObservable = (value: any): value is Observable<any> => !!(
+export const isObservable = <T = any>(value: any): value is Observable<T> => !!(
   value
   && typeof value === 'object'
   && Object.keys(value).every((key) => testObservableKeys.includes(key))

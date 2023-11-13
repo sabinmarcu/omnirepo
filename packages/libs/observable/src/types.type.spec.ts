@@ -4,6 +4,7 @@ import type {
   ObservableMap,
   Observer,
   Subject,
+  TypeOfObservable,
 } from './types';
 
 type ObserverTest = Observer<number>;
@@ -50,3 +51,12 @@ type ObservableFilterTest = ObservableFilter<ObservableTest>;
 
 type ObservableMapTest = ObservableMap<ObservableTest>;
 //    ^? type ObservableMapTest = <R>(map: (input: ObservableTest) => R) => Observable<R>
+
+type TypeOfObservableTest1 = TypeOfObservable<ObservableTest>;
+//    ^? type TypeOfObservableTest1 = number
+
+type TypeOfObservableTest2 = TypeOfObservable<SubjectTest>;
+//    ^? type TypeOfObservableTest2 = number
+
+type TypeOfObservableTest3 = TypeOfObservable<Observable<string>>;
+//    ^? type TypeOfObservableTest3 = string
