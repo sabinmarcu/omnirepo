@@ -1,7 +1,7 @@
 import type {
   Observable,
-  ObservableFilter,
-  ObservableMap,
+  ObservableFilterFunction,
+  ObservableMapFunction,
   Observer,
   Subject,
   TypeOfObservable,
@@ -46,11 +46,11 @@ type SubjectTestComplete = SubjectTest['complete'];
 type SubjectTestValue = SubjectTest['value'];
 //   ^? type SubjectTestValue = number
 
-type ObservableFilterTest = ObservableFilter<ObservableTest>;
-//    ^? type ObservableFilterTest = (filter: (input: ObservableTest) => boolean) => Observable<ObservableTest>
+type ObservableFilterTest = ObservableFilterFunction<ObservableTest>;
+//    ^? type ObservableFilterTest = (filter: (input: ObservableTest) => boolean) => PipedObservable<ObservableTest>
 
-type ObservableMapTest = ObservableMap<ObservableTest>;
-//    ^? type ObservableMapTest = <R>(map: (input: ObservableTest) => R) => Observable<R>
+type ObservableMapTest = ObservableMapFunction<ObservableTest>;
+//    ^? type ObservableMapTest = <R>(map: (input: ObservableTest) => R) => PipedObservable<R>
 
 type TypeOfObservableTest1 = TypeOfObservable<ObservableTest>;
 //    ^? type TypeOfObservableTest1 = number
