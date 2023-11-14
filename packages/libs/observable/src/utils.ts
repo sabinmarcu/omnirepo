@@ -1,11 +1,13 @@
 import type {
+  MutableStore,
+} from '@sabinmarcu/utils-primitives';
+import type {
   Observable,
-  ObservableValueStore,
 } from './types';
 
 export const observableValueStore = <T>(
-  input?: ObservableValueStore<T>,
-) => (input ?? { value: undefined } as ObservableValueStore<T>);
+  input?: MutableStore<T>,
+) => (input ?? { value: undefined } as MutableStore<T>);
 
 export const extendObservable = <
   T extends Observable<any>,

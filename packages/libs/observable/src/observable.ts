@@ -1,3 +1,4 @@
+import type { MutableStore } from '@sabinmarcu/utils-primitives';
 import { observableKeys } from './constants';
 import { addToSubscriptionPool } from './mock';
 import type {
@@ -5,7 +6,6 @@ import type {
   Observer,
   ObservableDispatch,
   Subscription,
-  ObservableValueStore,
   ObservableSubscriberStore,
   RawObservable,
   ObserverController,
@@ -18,7 +18,7 @@ import {
 } from './utils';
 
 export const makeControllerFunction = <T>(
-  valueStore: ObservableValueStore<T>,
+  valueStore: MutableStore<T>,
   subscriberStore: ObservableSubscriberStore<T>,
 ) => <Key extends keyof ObserverController<T> = 'next'>(
   key: Key,
@@ -41,7 +41,7 @@ export const makeControllerFunction = <T>(
 };
 
 export const makeController = <T>(
-  valueStore: ObservableValueStore<T>,
+  valueStore: MutableStore<T>,
   subscriberStore: ObservableSubscriberStore<T>,
 ) => {
   const factory = makeControllerFunction<T>(valueStore, subscriberStore);
@@ -56,7 +56,7 @@ export const observable = <T>(
   source: ObservableDispatch<T>,
   initialValue?: T,
 ): Observable<T> => {
-  const valueStore: ObservableValueStore<T> = observableValueStore<T>(
+  const valueStore: MutableStore<T> = observableValueStore<T>(
     initialValue
       ? { value: initialValue }
       : undefined,
@@ -65,7 +65,7 @@ export const observable = <T>(
 
   const subscribe = (observer: Observer<T>): Subscription => {
     subscribersStore.add(observer);
-    observer.next?.(valueStore.value);
+    observer.next?.(valueStore.value!);
     const subscription = {
       unsubscribe: () => {
         subscribersStore.delete(observer);
@@ -145,7 +145,7 @@ export const observableFrom = <const T>(value: T) => observable<T>(({ next }) =>
 observable.from = observableFrom;
 
 /**
-* Projedct a set of observables into a single observable based on a projection function
+* Project a set of observables into a single observable based on a projection function
  * @template Observables extends Observable<any>[] - Observables to be projected
  * @template Result - Result of the projection
  * @param input - Observables to be projected
@@ -173,7 +173,7 @@ export const projectObservables = <
       },
     });
 
-    const nextFunction = () => next(projectionValueStore.value);
+    const nextFunction = () => next(projectionValueStore.value!);
     for (const item of input) {
       subscriptions.push(item.subscribe({ next: nextFunction, error }));
     }
