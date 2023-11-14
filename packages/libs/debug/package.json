@@ -1,5 +1,5 @@
 {
-  "name": "@sabinmarcu/utils-test",
+  "name": "@sabinmarcu/debug",
   "version": "1.0.1",
   "main": "./cjs/index.cjs",
   "types": "./cjs/index.d.ts",
@@ -35,14 +35,15 @@
     "preset": "../../../.config/build.config.ts"
   },
   "dependencies": {
-    "glob": "^8.0.3",
-    "memfs": "^3.4.12",
-    "moize": "^6.1.4",
-    "yaml": "^2.2.0"
+    "@sabinmarcu/config": "workspace:*",
+    "@sabinmarcu/observable": "workspace:*",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@sabinmarcu/types": "workspace:*",
-    "@types/glob": "^8"
+    "@sabinmarcu/utils-test": "workspace:*",
+    "@types/ramda": "^0",
+    "ramda": "^0.29.1"
   },
   "tscmono": {
     "preset": "lib"

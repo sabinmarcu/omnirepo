@@ -1,0 +1,9 @@
+project:
+  name: debug
+  description: Debug / Logging tool
+  channel: "#libs"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: library
