@@ -28,7 +28,7 @@
     "dev": "yarn moon run :dev",
     "lint": "yarn moon run :lint",
     "moon": "$(yarn bin moon)",
-    "postinstall": "husky install",
+    "postinstall": "husky install && tscmono",
     "test": "yarn moon run :test"
   },
   "devDependencies": {
