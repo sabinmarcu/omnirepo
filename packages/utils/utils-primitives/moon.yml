@@ -1,0 +1,9 @@
+project:
+  name: utils-primitives
+  description: Reusable Primitives
+  channel: "#utils"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: library
