@@ -1,6 +1,6 @@
 {
   "name": "@sabinmarcu/config",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "main": "./cjs/index.cjs",
   "types": "./cjs/index.d.ts",
   "module": "./esm/index.mjs",
