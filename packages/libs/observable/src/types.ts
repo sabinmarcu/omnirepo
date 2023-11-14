@@ -25,19 +25,19 @@ export type Observable<T> =
   & RawObservable<T>
   & {
     get value(): T;
-    filter: ObservableFilter<T>;
-    map: ObservableMap<T>;
+    filter: ObservableFilterFunction<T>;
+    map: ObservableMapFunction<T>;
   };
 
 export type PipedObservable<T> =
   & Observable<T>
   & Subscription;
 
-export type ObservableFilter<T> = (
+export type ObservableFilterFunction<T> = (
   filter: (input: T) => boolean
 ) => PipedObservable<T>;
 
-export type ObservableMap<T> = <R>(
+export type ObservableMapFunction<T> = <R>(
   map: (input: T) => R
 ) => PipedObservable<R>;
 
