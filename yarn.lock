@@ -1926,6 +1926,7 @@ __metadata:
   resolution: "@sabinmarcu/observable@workspace:packages/libs/observable"
   dependencies:
     "@sabinmarcu/types": "workspace:*"
+    "@sabinmarcu/utils-primitives": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
   languageName: unknown
   linkType: soft
@@ -1947,7 +1948,6 @@ __metadata:
     "@sabinmarcu/utils-repo": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
     "@types/glob": "npm:^8"
-    "@types/ramda": "npm:^0"
     babel-plugin-dynamic-import-node: "npm:*"
     babel-plugin-parameter-decorator: "npm:*"
     clipanion: "npm:^3.2.0-rc.14"
@@ -1955,7 +1955,6 @@ __metadata:
     jiti: "npm:^1.16.1"
     memfs: "npm:^3.4.12"
     moize: "npm:^6.1.4"
-    ramda: "npm:^0.28.0"
     typanion: "npm:^3.12.1"
     yaml: "npm:^2.2.0"
   bin:
@@ -1990,6 +1989,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@sabinmarcu/utils-primitives@workspace:*, @sabinmarcu/utils-primitives@workspace:packages/utils/utils-primitives":
+  version: 0.0.0-use.local
+  resolution: "@sabinmarcu/utils-primitives@workspace:packages/utils/utils-primitives"
+  dependencies:
+    "@sabinmarcu/types": "workspace:*"
+    "@sabinmarcu/utils-test": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
 "@sabinmarcu/utils-repo@workspace:*, @sabinmarcu/utils-repo@workspace:packages/utils/utils-repo":
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/utils-repo@workspace:packages/utils/utils-repo"
@@ -2001,7 +2009,7 @@ __metadata:
     "@types/ramda": "npm:^0"
     glob: "npm:^8.0.3"
     moize: "npm:^6.1.4"
-    ramda: "npm:^0.28.0"
+    ramda: "npm:^0.29.1"
   languageName: unknown
   linkType: soft
 
@@ -2011,11 +2019,9 @@ __metadata:
   dependencies:
     "@sabinmarcu/types": "workspace:*"
     "@types/glob": "npm:^8"
-    "@types/ramda": "npm:^0"
     glob: "npm:^8.0.3"
     memfs: "npm:^3.4.12"
     moize: "npm:^6.1.4"
-    ramda: "npm:^0.28.0"
     yaml: "npm:^2.2.0"
   languageName: unknown
   linkType: soft
@@ -8303,13 +8309,6 @@ __metadata:
   version: 4.0.1
   resolution: "quick-lru@npm:4.0.1"
   checksum: 5c7c75f1c696750f619b165cc9957382f919e4207dabf04597a64f0298861391cdc5ee91a1dde1a5d460ecf7ee1af7fc36fef6d155bef2be66f05d43fd63d4f0
-  languageName: node
-  linkType: hard
-
-"ramda@npm:^0.28.0":
-  version: 0.28.0
-  resolution: "ramda@npm:0.28.0"
-  checksum: 1925e1881ece9feacd7eae620036996dcd3fb4973d931200e8594813238169afeaae8cc4377b4cb40978c26a07929f4e7f88cb2776a6c41b2e65f18dfba6530d
   languageName: node
   linkType: hard
 
