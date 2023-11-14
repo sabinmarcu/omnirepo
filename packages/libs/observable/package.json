@@ -47,5 +47,8 @@
         "./esm/*"
       ]
     }
+  },
+  "dependencies": {
+    "@sabinmarcu/utils-primitives": "workspace:*"
   }
 }

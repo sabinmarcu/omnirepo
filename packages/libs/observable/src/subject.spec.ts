@@ -46,19 +46,19 @@ describe('subject', () => {
   describe('subscription pool (mocking)', () => {
     describe('subscription pool', () => {
       it('should be empty by default', () => {
-        expect(mock.subscriptionPool.size).toBe(0);
+        expect(mock.subscriptionPool.value?.size).toBe(0);
       });
       it('should increase when subscribing', () => {
         const obs = subject();
-        expect(mock.subscriptionPool.size).toBe(0);
+        expect(mock.subscriptionPool.value?.size).toBe(0);
         const sub = obs.subscribe({} as any);
-        expect(mock.subscriptionPool.size).toBe(1);
+        expect(mock.subscriptionPool.value?.size).toBe(1);
         sub.unsubscribe();
-        expect(mock.subscriptionPool.size).toBe(0);
+        expect(mock.subscriptionPool.value?.size).toBe(0);
       });
       it('should empty with the correct method', () => {
         const obs = subject();
-        expect(mock.subscriptionPool.size).toBe(0);
+        expect(mock.subscriptionPool.value?.size).toBe(0);
         const next = jest.fn();
         obs.subscribe({ next });
         expect(next).toHaveBeenCalledWith(undefined);
@@ -66,9 +66,9 @@ describe('subject', () => {
         obs.next(42);
         expect(next).toHaveBeenCalledWith(42);
         expect(next).toHaveBeenCalledTimes(2);
-        expect(mock.subscriptionPool.size).toBe(1);
+        expect(mock.subscriptionPool.value?.size).toBe(1);
         mock.emptySubscriptionPool();
-        expect(mock.subscriptionPool.size).toBe(0);
+        expect(mock.subscriptionPool.value?.size).toBe(0);
         obs.next(69);
         expect(next).toHaveBeenCalledTimes(2);
       });
