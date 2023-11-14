@@ -3,7 +3,7 @@ export type Subscription = {
 };
 
 export type Observer<T> = {
-  next?: (value: T) => void;
+  next?: (value: T | undefined) => void;
   error?: (error: Error) => void;
   complete?: () => void;
 };
@@ -13,7 +13,7 @@ export type ObservableDispatch<T> = (controller: ObserverController<T>) => void;
 export type ObservableSubscriberStore<T> = Set<Observer<T>>;
 
 export type RawObservable<T> = {
-  subscribe: (observer: Observer<T>) => Subscription;
+  subscribe: (observer: Observer<T | undefined>) => Subscription;
 };
 
 export type Subject<T> =
@@ -23,7 +23,7 @@ export type Subject<T> =
 export type Observable<T> =
   & RawObservable<T>
   & {
-    get value(): T;
+    get value(): T | undefined;
     filter: ObservableFilterFunction<T>;
     map: ObservableMapFunction<T>;
   };
@@ -33,11 +33,11 @@ export type PipedObservable<T> =
   & Subscription;
 
 export type ObservableFilterFunction<T> = (
-  filter: (input: T) => boolean
+  filter: (input: T | undefined) => boolean
 ) => PipedObservable<T>;
 
 export type ObservableMapFunction<T> = <R>(
-  map: (input: T) => R
+  map: (input: T | undefined) => R
 ) => PipedObservable<R>;
 
 export type TypeOfObservable<T extends Observable<any>> =

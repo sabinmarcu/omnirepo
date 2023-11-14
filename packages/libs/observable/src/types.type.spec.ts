@@ -10,7 +10,7 @@ import type {
 type ObserverTest = Observer<number>;
 
 type OberverTestNext = ObserverTest['next'];
-//    ^? type OberverTestNext = ((value: number) => void) | undefined
+//    ^? type OberverTestNext = ((value: number | undefined) => void) | undefined
 
 type OberverTestError = ObserverTest['error'];
 //    ^? type OberverTestError = ((error: Error) => void) | undefined
@@ -21,10 +21,10 @@ type OberverTestComplete = ObserverTest['complete'];
 type ObservableTest = Observable<number>;
 
 type ObservableTestSubscribe = ObservableTest['subscribe'];
-//    ^? type ObservableTestSubscribe = (observer: Observer<number>) => Subscription
+//    ^? type ObservableTestSubscribe = (observer: Observer<number | undefined>) => Subscription
 
 type ObservableTestValue = ObservableTest['value'];
-//   ^? type ObservableTestValue = number
+//   ^? type ObservableTestValue = number | undefined
 
 type SubjectTest = Subject<number>;
 
@@ -32,10 +32,10 @@ type SubjectTestKeys = keyof SubjectTest;
 //    ^? type SubjectTestKeys = "subscribe" | "value" | keyof Observer<number> | "filter" | "map"
 
 type SubjectTestSubscribe = SubjectTest['subscribe'];
-//   ^? type SubjectTestSubscribe = (observer: Observer<number>) => Subscription
+//   ^? type SubjectTestSubscribe = (observer: Observer<number | undefined>) => Subscription
 
 type SubjectTestNext = SubjectTest['next'];
-//    ^? type SubjectTestNext = (value: number) => void
+//    ^? type SubjectTestNext = (value: number | undefined) => void
 
 type SubjectTestError = SubjectTest['error'];
 //    ^? type SubjectTestError = (error: Error) => void
@@ -44,13 +44,13 @@ type SubjectTestComplete = SubjectTest['complete'];
 //    ^? type SubjectTestComplete = () => void
 
 type SubjectTestValue = SubjectTest['value'];
-//   ^? type SubjectTestValue = number
+//   ^? type SubjectTestValue = number | undefined
 
 type ObservableFilterTest = ObservableFilterFunction<ObservableTest>;
-//    ^? type ObservableFilterTest = (filter: (input: ObservableTest) => boolean) => PipedObservable<ObservableTest>
+//    ^? type ObservableFilterTest = (filter: (input: ObservableTest | undefined) => boolean) => PipedObservable<ObservableTest>
 
 type ObservableMapTest = ObservableMapFunction<ObservableTest>;
-//    ^? type ObservableMapTest = <R>(map: (input: ObservableTest) => R) => PipedObservable<R>
+//    ^? type ObservableMapTest = <R>(map: (input: ObservableTest | undefined) => R) => PipedObservable<R>
 
 type TypeOfObservableTest1 = TypeOfObservable<ObservableTest>;
 //    ^? type TypeOfObservableTest1 = number

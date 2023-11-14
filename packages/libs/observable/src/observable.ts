@@ -65,7 +65,7 @@ export const observable = <T>(
 
   const subscribe = (observer: Observer<T>): Subscription => {
     subscribersStore.add(observer);
-    observer.next?.(valueStore.value!);
+    observer.next?.(valueStore.value);
     const subscription = {
       unsubscribe: () => {
         subscribersStore.delete(observer);
@@ -82,7 +82,7 @@ export const observable = <T>(
   } satisfies RawObservable<T>;
 
   const filter = (
-    filterFunction: (input: T) => boolean,
+    filterFunction: (input: T | undefined) => boolean,
   ) => {
     let subscription: Subscription;
     const newObservable = observable<T>(
@@ -107,7 +107,7 @@ export const observable = <T>(
   };
 
   const map = <R>(
-    mapFunction: (input: T) => R,
+    mapFunction: (input: T | undefined) => R,
   ) => {
     let subscription: Subscription;
     const newObservable = observable<R>(
@@ -173,7 +173,7 @@ export const projectObservables = <
       },
     });
 
-    const nextFunction = () => next(projectionValueStore.value!);
+    const nextFunction = () => next(projectionValueStore.value);
     for (const item of input) {
       subscriptions.push(item.subscribe({ next: nextFunction, error }));
     }
