@@ -113,7 +113,7 @@ describe('rawRules', () => {
 
     expect(debugSubject.value).toBe(undefined);
     expect(debugString.value).toBe(environment.DEBUG);
-    expect(next).toHaveBeenCalledWith([]);
+    expect(next).toHaveBeenCalledWith(undefined);
 
     debugSubject.next('foo,-bar,baz');
 
@@ -146,7 +146,7 @@ describe('enabledRules', () => {
 
     expect(debugSubject.value).toBe(undefined);
     expect(debugString.value).toBe(environment.DEBUG);
-    expect(next).toHaveBeenCalledWith([]);
+    expect(next).toHaveBeenCalledWith(undefined);
 
     debugSubject.next('foo,-bar,baz');
 
@@ -174,7 +174,7 @@ describe('disabledRules', () => {
 
     expect(debugSubject.value).toBe(undefined);
     expect(debugString.value).toBe(environment.DEBUG);
-    expect(next).toHaveBeenCalledWith([]);
+    expect(next).toHaveBeenCalledWith(undefined);
 
     debugSubject.next('foo,-bar,baz');
 
