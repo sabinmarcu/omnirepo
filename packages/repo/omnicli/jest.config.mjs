@@ -7,3 +7,10 @@ export default generateFromPath(
     new URL('.', import.meta.url),
   ),
 );
+
+export const coverageExcludes = [
+  'src/commands/**/*',
+  'src/cli.ts',
+  'src/features/context/context.ts',
+  'src/features/command/OmnicliCommand.ts',
+];

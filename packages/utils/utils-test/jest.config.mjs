@@ -7,3 +7,7 @@ export default generateFromPath(
     new URL('.', import.meta.url),
   ),
 );
+
+export const coverageExcludes = [
+  '**/*',
+];
