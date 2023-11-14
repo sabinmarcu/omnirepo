@@ -14,3 +14,7 @@ export default generateFromPath(
     ],
   }),
 );
+
+export const coverageExcludes = [
+  'src/configs/**/*',
+];
