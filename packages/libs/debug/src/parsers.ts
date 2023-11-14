@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import * as R from 'ramda';
 import type { RawDebugRule } from './types';
 
 const fragmentValidCharacters = '@a-zA-Z9-9*';
@@ -73,12 +74,12 @@ export const parseDebugStringFragment = (
 };
 
 export const parseDebugString = (input: string) => {
-  const fragments = input
-    .split(',')
-    .map((fragment) => fragment.trim());
-  return fragments
-    .map(
-      (fragment) => parseDebugStringFragment(fragment),
-    )
-    .filter(Boolean);
+  const fragments = R.map(
+    (fragment) => fragment.trim(),
+    R.split(',', input),
+  );
+  return R.filter(
+    (fragment) => fragment !== undefined,
+    R.map(parseDebugStringFragment, fragments),
+  ) as RawDebugRule[];
 };
