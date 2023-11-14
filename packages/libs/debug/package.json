@@ -37,13 +37,13 @@
   "dependencies": {
     "@sabinmarcu/config": "workspace:*",
     "@sabinmarcu/observable": "workspace:*",
+    "ramda": "^0.29.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@sabinmarcu/types": "workspace:*",
     "@sabinmarcu/utils-test": "workspace:*",
-    "@types/ramda": "^0",
-    "ramda": "^0.29.1"
+    "@types/ramda": "^0"
   },
   "tscmono": {
     "preset": "lib"
