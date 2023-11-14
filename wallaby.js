@@ -28,4 +28,9 @@ export default () => ({
   testFramework: {
     config: './jest.config.mjs',
   },
+  env: {
+    params: {
+      env: 'DEBUG=',
+    },
+  },
 });
