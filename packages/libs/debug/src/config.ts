@@ -13,12 +13,18 @@ import { parseDebugString } from './parsers';
 export const debugSubject = subject<string>();
 
 export const filterRawDebugRulesBy = (isEnabled: boolean) => (
-  input: RawDebugRule[],
-) => R.filter(({ enabled }) => enabled === isEnabled, input);
+  input: RawDebugRule[] | undefined,
+) => (input
+  ? R.filter(({ enabled }) => enabled === isEnabled, input)
+  : undefined
+);
 
 export const mapRawDebugRuleToDebugRule = (
-  input: RawDebugRule[],
-) => R.map(({ enabled, ...rest }) => rest satisfies DebugRule, input);
+  input: RawDebugRule[] | undefined,
+) => (input
+  ? R.map(({ enabled, ...rest }) => rest satisfies DebugRule, input)
+  : undefined
+);
 
 export const debugString = config(
   environment.DEBUG,

@@ -73,7 +73,10 @@ export const parseDebugStringFragment = (
   }
 };
 
-export const parseDebugString = (input: string) => {
+export const parseDebugString = (input: string | undefined) => {
+  if (!input) {
+    return undefined;
+  }
   const fragments = R.map(
     (fragment) => fragment.trim(),
     R.split(',', input),

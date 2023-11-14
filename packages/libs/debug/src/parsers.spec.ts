@@ -306,8 +306,8 @@ describe('parseDebugStringFragment', () => {
   });
 });
 describe('parseDebugString', () => {
-  it('should return an empty array when given an empty string', () => {
-    expect(parseDebugString('')).toEqual([]);
+  it('should return undefined when given an empty string', () => {
+    expect(parseDebugString('')).toEqual(undefined);
   });
 
   it('should parse a single debug rule', () => {
