@@ -38,7 +38,29 @@ export const generateSimpleTests = (config = simpleConfig) => {
     expect(next).toHaveBeenCalledWith(undefined);
   });
 
-  it('should properly react to subject changes', () => {
+  it('should properly react to subject changes (one value, one subject)', () => {
+    const testSubject = subject<number>();
+    const result = config(11, testSubject);
+
+    expect(result.value).toEqual(11);
+    expect(testSubject.value).toEqual(undefined);
+
+    const next = jest.fn();
+    result.subscribe({ next });
+    expect(next).toHaveBeenLastCalledWith(11);
+
+    testSubject.next(42);
+
+    expect(result.value).toEqual(42);
+    expect(next).toHaveBeenLastCalledWith(42);
+
+    testSubject.next(undefined as any);
+
+    expect(result.value).toEqual(11);
+    expect(next).toHaveBeenLastCalledWith(11);
+  });
+
+  it('should properly react to subject changes (one value, two subjects)', () => {
     const subject1 = subject(35);
     const subject2 = subject(21);
     const result = config(11, subject1, subject2);
