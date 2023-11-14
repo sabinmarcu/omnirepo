@@ -1870,13 +1870,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@sabinmarcu/config@workspace:packages/libs/config":
+"@sabinmarcu/config@workspace:*, @sabinmarcu/config@workspace:packages/libs/config":
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/config@workspace:packages/libs/config"
   dependencies:
     "@sabinmarcu/observable": "workspace:*"
     "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@sabinmarcu/debug@workspace:packages/libs/debug":
+  version: 0.0.0-use.local
+  resolution: "@sabinmarcu/debug@workspace:packages/libs/debug"
+  dependencies:
+    "@sabinmarcu/config": "workspace:*"
+    "@sabinmarcu/observable": "workspace:*"
+    "@sabinmarcu/types": "workspace:*"
+    "@sabinmarcu/utils-test": "workspace:*"
+    "@types/ramda": "npm:^0"
+    ramda: "npm:^0.29.1"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
@@ -8299,6 +8313,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ramda@npm:^0.29.1":
+  version: 0.29.1
+  resolution: "ramda@npm:0.29.1"
+  checksum: 5824249efa18f3c013ea0bae6cdcc167ef357fff5441586b7ad98759e902b1397297d92b50bdc317f49fe73fa6b0e17f806f4d0f7a95270f05c25afa733a8fc5
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -9811,5 +9832,12 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: f77b3d8d00310def622123df93d4ee654fc6a0096182af8bd60679ddcdfb3474c56c6c7190817c84a2785648cdee9d721c0154eb45698c62176c322fb46fc700
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.22.4":
+  version: 3.22.4
+  resolution: "zod@npm:3.22.4"
+  checksum: 73622ca36a916f785cf528fe612a884b3e0f183dbe6b33365a7d0fc92abdbedf7804c5e2bd8df0a278e1472106d46674281397a3dd800fa9031dc3429758c6ac
   languageName: node
   linkType: hard
