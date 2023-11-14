@@ -26,20 +26,16 @@ tasks:
       runDepsInParallel: false
 
   clean: 
-    command: "/usr/bin/find"
+    command: "git clean"
     args: 
-      - .
-      - -iname
-      - tsconfig.json
-      - -not
-      - -path
-      - ./node_modules/*
-      - -prune
-      - -exec
-      - rm
-      - -rf
-      - "{}"
-      - +;
+      - -x
+      - -d
+      - -f
+      - -n
+      - -e 
+      - /node_modules
+      - e
+      - \"/.yarn/*\"
     options:
       cache: false
       runInCI: false
@@ -47,6 +43,9 @@ tasks:
   tsconfig:
     command: yarn tscmono
     inputs: []
+    options: 
+      cache: false
+      runInCI: false
     
 language: bash
 type: unknown

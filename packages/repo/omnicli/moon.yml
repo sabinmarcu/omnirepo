@@ -9,8 +9,4 @@ language: typescript
 type: tool
 workspace:
   inheritedTasks:
-    include: [clean]
-tasks:
-  clean:
-    args:
-      - ./node_modules/.bin/omni
+    include: []
