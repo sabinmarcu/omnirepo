@@ -29,7 +29,6 @@ tasks:
     deps: 
       - 'root:init'
       - '~:fixExports'
-      - '~:clean'
       - '^:build'
     inputs: 
       - '@globs(sources)'
@@ -37,6 +36,8 @@ tasks:
     outputs: 
       - esm
       - cjs
+    options: 
+      cache: true
 
   test: 
     command: 'jest'
@@ -64,13 +65,14 @@ tasks:
     deps: 
       - 'root:init'
       - '~:devExports'
-      - '~:clean'
       - '^:dev'
     inputs: 
       - '@globs(sources)'
       - '@files(buildConfig)'
+    outputs: 
+      - esm
+      - cjs
     options:
-      cache: false
       runInCI: false
       persistent: false
 
@@ -84,15 +86,6 @@ tasks:
     inputs: 
       - '@globs(sources)'
     options:
-      cache: false
-      runInCI: false
-
-  clean:
-    command: rm -rf 
-    args: 
-      - esm 
-      - cjs
-    options: 
       cache: false
       runInCI: false
 
