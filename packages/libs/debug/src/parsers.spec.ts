@@ -2,7 +2,6 @@ import * as R from 'ramda';
 import {
   parseDebugString,
   parseDebugStringFragment,
-  parseDebugStringFragmentPath,
 } from './parsers';
 import type { RawDebugRule } from './types';
 
@@ -14,17 +13,17 @@ const testCases: {
     input: 'example',
     output: {
       path: 'example',
-      namespace: '',
-      channel: '',
+      namespace: undefined,
+      channel: undefined,
       enabled: true,
     },
   },
   {
     input: 'example*',
     output: {
-      namespace: '',
+      namespace: undefined,
       path: 'example*',
-      channel: '',
+      channel: undefined,
       enabled: true,
     },
   },
@@ -33,189 +32,82 @@ const testCases: {
     output: {
       namespace: 'namespaced',
       path: '*',
-      channel: '',
+      channel: undefined,
       enabled: true,
     },
   },
   {
-    input: '#channel',
+    input: '#info',
     output: {
-      namespace: '',
-      path: '',
-      channel: 'channel',
+      namespace: undefined,
+      path: undefined,
+      channel: 'info',
       enabled: true,
     },
   },
   {
-    input: 'example#channel',
+    input: 'example#info',
     output: {
-      namespace: '',
+      namespace: undefined,
       path: 'example',
-      channel: 'channel',
+      channel: 'info',
       enabled: true,
     },
   },
   {
-    input: 'example:*#channel',
+    input: 'example:*#info',
     output: {
       namespace: 'example',
       path: '*',
-      channel: 'channel',
+      channel: 'info',
       enabled: true,
     },
   },
   {
-    input: 'namespace:example#channel',
+    input: 'namespace:example#info',
     output: {
       namespace: 'namespace',
       path: 'example',
-      channel: 'channel',
+      channel: 'info',
       enabled: true,
     },
   },
   {
     input: '-thing',
     output: {
-      namespace: '',
+      namespace: undefined,
       path: 'thing',
-      channel: '',
+      channel: undefined,
       enabled: false,
     },
   },
   {
-    input: '-#channel',
+    input: '-#info',
     output: {
-      namespace: '',
-      path: '',
-      channel: 'channel',
+      namespace: undefined,
+      path: undefined,
+      channel: 'info',
       enabled: false,
     },
   },
   {
-    input: '-namespace:example#channel',
+    input: '-namespace:example#info',
     output: {
       namespace: 'namespace',
       path: 'example',
-      channel: 'channel',
+      channel: 'info',
       enabled: false,
     },
   },
 ];
 
-describe('parseDebugStringFragmentPath', () => {
-  it('should return the correct path and namespace when given a valid input', () => {
-    // const input = 'example:*#channel';
-    const groups = {
-      disabled: '',
-      namespaceOrPath: 'example',
-      path: '*',
-      channel: 'channel',
-    };
-    const expectedOutput = {
-      namespace: 'example',
-      path: '*',
-    };
-    expect(parseDebugStringFragmentPath(groups)).toEqual(expectedOutput);
-  });
-
-  it('should return the correct path and namespace when given a valid input with no channel', () => {
-    // const input = 'example:*';
-    const groups = {
-      disabled: '',
-      namespaceOrPath: 'example',
-      path: '*',
-      channel: '',
-    };
-    const expectedOutput = {
-      namespace: 'example',
-      path: '*',
-    };
-    expect(parseDebugStringFragmentPath(groups)).toEqual(expectedOutput);
-  });
-
-  it('should return the correct path and namespace when given a valid input with no namespace', () => {
-    // const input = '*#channel';
-    const groups = {
-      disabled: '',
-      namespaceOrPath: '',
-      path: '*',
-      channel: 'channel',
-    };
-    const expectedOutput = {
-      namespace: '',
-      path: '*',
-    };
-    expect(parseDebugStringFragmentPath(groups)).toEqual(expectedOutput);
-  });
-
-  it('should return the correct path and namespace when given a valid input with no namespace and no channel', () => {
-    // const input = '*';
-    const groups = {
-      disabled: '',
-      namespaceOrPath: '',
-      path: '*',
-      channel: '',
-    };
-    const expectedOutput = {
-      namespace: '',
-      path: '*',
-    };
-    expect(parseDebugStringFragmentPath(groups)).toEqual(expectedOutput);
-  });
-
-  it('should return the correct path and namespace when given a valid input with no path', () => {
-    // const input = 'example#channel';
-    const groups = {
-      disabled: '',
-      namespaceOrPath: 'example',
-      path: '',
-      channel: 'channel',
-    };
-    const expectedOutput = {
-      namespace: '',
-      path: 'example',
-    };
-    expect(parseDebugStringFragmentPath(groups)).toEqual(expectedOutput);
-  });
-
-  it('should return the correct path and namespace when given a valid input with no namespace and no path', () => {
-    // const input = '#channel';
-    const groups = {
-      disabled: '',
-      namespaceOrPath: '',
-      path: '',
-      channel: 'channel',
-    };
-    const expectedOutput = {
-      namespace: '',
-      path: '',
-    };
-    expect(parseDebugStringFragmentPath(groups)).toEqual(expectedOutput);
-  });
-
-  it('should return the correct path and namespace when given a valid input with a disabled flag', () => {
-    // const input = '-example:*#channel';
-    const groups = {
-      disabled: '-',
-      namespaceOrPath: 'example',
-      path: '*',
-      channel: 'channel',
-    };
-    const expectedOutput = {
-      namespace: 'example',
-      path: '*',
-    };
-    expect(parseDebugStringFragmentPath(groups)).toEqual(expectedOutput);
-  });
-});
-
 describe('parseDebugStringFragment', () => {
-  it('should parse a valid debug string fragment with namespace, path, and channel', () => {
-    const input = 'example:*#channel';
+  it('should parse a valid debug string fragment with namespace, path, and info', () => {
+    const input = 'example:*#info';
     const expectedOutput = {
       namespace: 'example',
       path: '*',
-      channel: 'channel',
+      channel: 'info',
       enabled: true,
     };
     const output = parseDebugStringFragment(input);
@@ -227,7 +119,7 @@ describe('parseDebugStringFragment', () => {
     const expectedOutput = {
       namespace: 'example',
       path: '*',
-      channel: '',
+      channel: undefined,
       enabled: true,
     };
     const output = parseDebugStringFragment(input);
@@ -235,17 +127,17 @@ describe('parseDebugStringFragment', () => {
   });
 
   it('should error out if namespace is present, but no path', () => {
-    const input = 'example:#channel';
+    const input = 'example:#info';
     const output = parseDebugStringFragment(input);
     expect(output).toEqual(undefined);
   });
 
-  it('should parse a valid debug string fragment with path and channel', () => {
-    const input = '*#channel';
+  it('should parse a valid debug string fragment with path and info', () => {
+    const input = '*#info';
     const expectedOutput = {
-      namespace: '',
+      namespace: undefined,
       path: '*',
-      channel: 'channel',
+      channel: 'info',
       enabled: true,
     };
     const output = parseDebugStringFragment(input);
@@ -256,8 +148,8 @@ describe('parseDebugStringFragment', () => {
     const input = 'example';
     const expectedOutput = {
       path: 'example',
-      namespace: '',
-      channel: '',
+      namespace: undefined,
+      channel: undefined,
       enabled: true,
     };
     const output = parseDebugStringFragment(input);
@@ -267,9 +159,9 @@ describe('parseDebugStringFragment', () => {
   it('should parse a valid debug string fragment with path only', () => {
     const input = '*';
     const expectedOutput = {
-      namespace: '',
+      namespace: undefined,
       path: '*',
-      channel: '',
+      channel: undefined,
       enabled: true,
     };
     const output = parseDebugStringFragment(input);
@@ -277,11 +169,11 @@ describe('parseDebugStringFragment', () => {
   });
 
   it('should parse a valid debug string fragment with channel only', () => {
-    const input = '#channel';
+    const input = '#info';
     const expectedOutput = {
-      namespace: '',
-      path: '',
-      channel: 'channel',
+      namespace: undefined,
+      path: undefined,
+      channel: 'info',
       enabled: true,
     };
     const output = parseDebugStringFragment(input);
@@ -289,22 +181,39 @@ describe('parseDebugStringFragment', () => {
   });
 
   it('should parse a valid debug string fragment with disabled flag', () => {
-    const input = '-example:*#channel';
+    const input = '-example:*#info';
     const expectedOutput = {
       namespace: 'example',
       path: '*',
-      channel: 'channel',
+      channel: 'info',
       enabled: false,
     };
     const output = parseDebugStringFragment(input);
     expect(output).toEqual(expectedOutput);
   });
+
+  it('should return undefined when string is empty', () => {
+    expect(parseDebugStringFragment('')).toEqual(undefined);
+  });
+
+  it('should return undefined when namespace pattern exists, but string is empty', () => {
+    expect(parseDebugStringFragment(':example')).toEqual(undefined);
+  });
+
+  it('should return undefined when channel is not a valid debug channel', () => {
+    expect(parseDebugStringFragment('#channel')).toEqual(undefined);
+    expect(parseDebugStringFragment('namespace:path#invalid')).toEqual(undefined);
+    expect(parseDebugStringFragment('example#invalid')).toEqual(undefined);
+    expect(parseDebugStringFragment('#invalid')).toEqual(undefined);
+  });
+
   describe('test cases', () => {
     it.each(testCases)('parseDebugStringFragment($input)', ({ input, output }) => {
       expect(parseDebugStringFragment(input)).toEqual(output);
     });
   });
 });
+
 describe('parseDebugString', () => {
   it('should return undefined when given an empty string', () => {
     expect(parseDebugString('')).toEqual(undefined);
@@ -314,32 +223,32 @@ describe('parseDebugString', () => {
     const input = 'example';
     const expectedOutput = {
       path: 'example',
-      namespace: '',
-      channel: '',
+      namespace: undefined,
+      channel: undefined,
       enabled: true,
     };
     expect(parseDebugString(input)).toEqual([expectedOutput]);
   });
 
   it('should parse multiple debug rules separated by commas', () => {
-    const input = 'example, another:example#channel, -disabled';
+    const input = 'example, another:example#info, -disabled';
     const expectedOutput = [
       {
         path: 'example',
-        namespace: '',
-        channel: '',
+        namespace: undefined,
+        channel: undefined,
         enabled: true,
       },
       {
         path: 'example',
         namespace: 'another',
-        channel: 'channel',
+        channel: 'info',
         enabled: true,
       },
       {
         path: 'disabled',
-        namespace: '',
-        channel: '',
+        namespace: undefined,
+        channel: undefined,
         enabled: false,
       },
     ];
@@ -348,24 +257,24 @@ describe('parseDebugString', () => {
   });
 
   it('should ignore whitespace around debug rules', () => {
-    const input = 'example ,  another:example#channel , -disabled ';
+    const input = 'example ,  another:example#info , -disabled ';
     const expectedOutput = [
       {
         path: 'example',
-        namespace: '',
-        channel: '',
+        namespace: undefined,
+        channel: undefined,
         enabled: true,
       },
       {
         path: 'example',
         namespace: 'another',
-        channel: 'channel',
+        channel: 'info',
         enabled: true,
       },
       {
         path: 'disabled',
-        namespace: '',
-        channel: '',
+        namespace: undefined,
+        channel: undefined,
         enabled: false,
       },
     ];
@@ -373,24 +282,24 @@ describe('parseDebugString', () => {
   });
 
   it('should ignore empty debug rules', () => {
-    const input = 'example, , another:example#channel, -disabled';
+    const input = 'example, , another:example#info, -disabled';
     const expectedOutput = [
       {
         path: 'example',
-        namespace: '',
-        channel: '',
+        namespace: undefined,
+        channel: undefined,
         enabled: true,
       },
       {
         path: 'example',
         namespace: 'another',
-        channel: 'channel',
+        channel: 'info',
         enabled: true,
       },
       {
         path: 'disabled',
-        namespace: '',
-        channel: '',
+        namespace: undefined,
+        channel: undefined,
         enabled: false,
       },
     ];
