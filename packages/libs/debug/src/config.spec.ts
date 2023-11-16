@@ -92,20 +92,20 @@ describe('rawRules', () => {
       {
         enabled: true,
         path: 'foo',
-        namespace: '',
-        channel: '',
+        namespace: undefined,
+        channel: undefined,
       },
       {
         enabled: false,
         path: 'bar',
-        namespace: '',
-        channel: '',
+        namespace: undefined,
+        channel: undefined,
       },
       {
         enabled: true,
         path: 'baz',
-        namespace: '',
-        channel: '',
+        namespace: undefined,
+        channel: undefined,
       },
     ];
     const next = jest.fn();
@@ -132,13 +132,13 @@ describe('enabledRules', () => {
     const expectedOutput = [
       {
         path: 'foo',
-        namespace: '',
-        channel: '',
+        namespace: undefined,
+        channel: undefined,
       },
       {
         path: 'baz',
-        namespace: '',
-        channel: '',
+        namespace: undefined,
+        channel: undefined,
       },
     ];
     const next = jest.fn();
@@ -165,8 +165,8 @@ describe('disabledRules', () => {
     const expectedOutput = [
       {
         path: 'bar',
-        namespace: '',
-        channel: '',
+        namespace: undefined,
+        channel: undefined,
       },
     ];
     const next = jest.fn();
