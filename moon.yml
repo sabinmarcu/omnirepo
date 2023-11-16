@@ -25,18 +25,36 @@ tasks:
     options:
       runDepsInParallel: false
 
-  clean: 
+  cleanAll: 
     command: "git clean"
     args: 
       - -x
       - -d
       - -f
-      - -n
       - -e 
-      - /node_modules
-      - e
-      - \"/.yarn/*\"
+      - node_modules
+      - -e
+      - .yarn/*
+      - -e
+      - .husky/*
     options:
+      cache: false
+      runInCI: false
+
+  postCleanAll: 
+    command: yarn install
+    options:
+      cache: false
+      runInCI: false
+
+  clean:
+    command: noop
+    deps: 
+      - cleanAll
+      - postCleanAll
+      - tsconfig
+    options:
+      runDepsInParallel: false
       cache: false
       runInCI: false
 
