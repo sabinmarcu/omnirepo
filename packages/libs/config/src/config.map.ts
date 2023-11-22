@@ -45,6 +45,7 @@ export const complexConfig: ComplexConfigFunction = (
 ) => {
   const observables = projectMapInput(input);
   const result = observable.project(
+    ...observables,
     (...values: any[]) => {
       let combinedValue = {};
       for (const value of values) {
@@ -52,7 +53,6 @@ export const complexConfig: ComplexConfigFunction = (
       }
       return combinedValue;
     },
-    ...observables,
   );
   return result as any;
 };

@@ -30,15 +30,15 @@ export const simpleConfig: SimpleConfigFunction = (
 ) => {
   const observables = projectListInput(...input);
   const result = observable.project(
+    ...observables as any[],
     (...values) => {
       for (const value of values.reverse()) {
         if (value !== undefined) {
           return value;
         }
       }
-      return values[0];
+      return (values as any[])[0];
     },
-    ...observables,
   );
   return result as any;
 };
