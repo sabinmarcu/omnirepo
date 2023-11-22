@@ -240,32 +240,32 @@ describe('observable', () => {
     it('should be a function', () => {
       expect(typeof observable.project).toBe('function');
     });
-    it('should have one argument', () => {
-      expect(observable.project.length).toBe(1);
+    it('should have no arguments (it\'s all rest)', () => {
+      expect(observable.project.length).toBe(0);
     });
     it('should return an observable', () => {
       const obs = observable(noop);
-      const projection = observable.project(() => {}, obs);
+      const projection = observable.project(obs, () => {});
       expect(isObservable(projection)).toBe(true);
     });
     it('should project basic map', () => {
       const obs = observable.from(42);
-      const projection = observable.project((v) => v * 2, obs);
+      const projection = observable.project(obs, (v) => v * 2);
       expect(projection.value).toBe(84);
     });
     it('should project basic addition', () => {
       const a = observable.from(5);
       const b = observable.from(7);
-      const projection = observable.project((x, y) => x + y, a, b);
+      const projection = observable.project(a, b, (x, y) => x + y);
       expect(projection.value).toBe(12);
     });
     it('should project a mix of numbers and strings', () => {
       const valueObs = observable.from(5);
       const prefixObs = observable.from('The value is ');
       const projection = observable.project(
-        (value, prefix) => prefix + value,
         valueObs,
         prefixObs,
+        (value, prefix) => prefix + value,
       );
       expect(projection.value).toBe('The value is 5');
     });
@@ -275,7 +275,7 @@ describe('observable', () => {
       const obs = observable<number>(({ next }) => {
         nextFunction = next;
       }, initialValue);
-      const mappedObs = observable.project((v) => v * 2, obs);
+      const mappedObs = observable.project(obs, (v) => v * 2);
       expect(mappedObs.value).toBe(initialValue * 2);
       // @ts-ignore
       nextFunction(69);
@@ -300,7 +300,7 @@ describe('observable', () => {
 
     it('should filter by even and then map to double', () => {
       const spy = jest.fn();
-      const sub = obs.filter((v) => v % 2 === 1).map((v) => v * 2);
+      const sub = obs.filter((v) => v! % 2 === 1).map((v) => v! * 2);
       sub.subscribe({ next: spy });
       expect(sub.value).toEqual(initialValue * 2);
       expect(spy).toHaveBeenCalledTimes(1);
