@@ -50,9 +50,24 @@ export type TypeOfObservableOrType<T extends any> =
     ? U
     : T;
 
-export type ObservableProjection<
+export type ObservableProjectionArguments<
   Observables extends Observable<any>[],
 > =
   Observables extends [Observable<infer Current>, ...infer Rest extends Observable<any>[]]
-    ? [Current, ...ObservableProjection<Rest>]
+    ? [Current, ...ObservableProjectionArguments<Rest>]
     : [];
+
+export type ObservableProjection<
+  Observables extends Observable<any>[],
+  Result,
+> = (...values: ObservableProjectionArguments<Observables>) => Result;
+
+export type ObservableProjectorArguments<
+  Observables extends Observable<any>[],
+  Result,
+> = [...Observables, ObservableProjection<Observables, Result>];
+
+export type ObservableProjector = <
+  const Observables extends Observable<any>[] = Observable<any>[],
+  const Result = any,
+>(...values: ObservableProjectorArguments<Observables, Result>) => Observable<Result>;

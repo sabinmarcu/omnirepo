@@ -11,6 +11,7 @@ import type {
   ObserverController,
   ObservableProjection,
   PipedObservable,
+  ObservableProjector,
 } from './types';
 import {
   extendObservable,
@@ -152,15 +153,12 @@ observable.from = observableFrom;
  * @param projection - The projection function
  * @returns The result of the projection function applied to input
  */
-export const projectObservables = <
-  Observables extends Observable<any>[],
-  Result,
->(
-  projection: (...values: ObservableProjection<Observables>) => Result,
-  ...input: Observables
-) => {
+export const projectObservables: ObservableProjector = (...parameters: any[]) => {
+  const projection = parameters.pop();
+  const input = parameters;
+
   const getProjectionValues = () => (
-    input.map(({ value }) => value) as ObservableProjection<Observables>
+    input.map(({ value }) => value) as any
   );
 
   const subscriptions: Subscription[] = [];
@@ -177,7 +175,7 @@ export const projectObservables = <
     for (const item of input) {
       subscriptions.push(item.subscribe({ next: nextFunction, error }));
     }
-  }) satisfies Observable<Result>;
+  });
 
   const subscription = {
     unsubscribe: () => {
@@ -190,7 +188,7 @@ export const projectObservables = <
   return extendObservable(
     projectionObservable,
     subscription,
-  ) satisfies PipedObservable<Result>;
+  ) as any;
 };
 observable.project = projectObservables;
 
