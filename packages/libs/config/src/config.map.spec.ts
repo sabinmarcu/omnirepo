@@ -49,12 +49,12 @@ describe('projectMapInput', () => {
     const result = projectMapInput({ something: 'awesome', some: 'thing' });
     for (const item of result) {
       const { value } = item;
-      const keys = Object.keys(value);
+      const keys = Object.keys(value!);
       // has one key only
       expect(keys.length).toBe(1);
       const [key] = keys;
       // the value associated with the key is the same as the input
-      expect(value[key as keyof typeof value]).toEqual(input[key as keyof typeof input]);
+      expect(value![key as keyof typeof value]).toEqual(input[key as keyof typeof input]);
     }
   });
 });
