@@ -11,4 +11,6 @@ export default generateFromPath(
 export const coverageExcludes = [
   'src/config.ts',
   'src/environment.ts',
+  'src/printers.ts',
+  'src/formatting.ts',
 ];

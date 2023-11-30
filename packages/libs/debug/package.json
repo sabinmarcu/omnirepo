@@ -37,12 +37,14 @@
   "dependencies": {
     "@sabinmarcu/config": "workspace:*",
     "@sabinmarcu/observable": "workspace:*",
+    "micromatch": "^4.0.5",
     "ramda": "^0.29.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@sabinmarcu/types": "workspace:*",
     "@sabinmarcu/utils-test": "workspace:*",
+    "@types/micromatch": "^4",
     "@types/ramda": "^0"
   },
   "tscmono": {
