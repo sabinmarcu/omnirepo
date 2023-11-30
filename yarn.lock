@@ -1888,7 +1888,9 @@ __metadata:
     "@sabinmarcu/observable": "workspace:*"
     "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
+    "@types/micromatch": "npm:^4"
     "@types/ramda": "npm:^0"
+    micromatch: "npm:^4.0.5"
     ramda: "npm:^0.29.1"
     zod: "npm:^3.22.4"
   languageName: unknown
@@ -2357,6 +2359,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/braces@npm:*":
+  version: 3.0.4
+  resolution: "@types/braces@npm:3.0.4"
+  checksum: 7324497b6cc34c963c44d3f8516c67a83b749ab4f18defd9418b231b071af7ee8f0a0f345a52b204e867de80f684cabb21158512e1eaecbcebbabed1d1e357a3
+  languageName: node
+  linkType: hard
+
 "@types/eslint@npm:^8.4.10":
   version: 8.4.10
   resolution: "@types/eslint@npm:8.4.10"
@@ -2455,6 +2464,15 @@ __metadata:
   version: 4.14.191
   resolution: "@types/lodash@npm:4.14.191"
   checksum: ab8cd8eeb941f0fb89248cd5d520b942b841e936e4fcb093370f76d137a8b6f6be0de7f38fc259d56d3cc45b1b50ed69d15c9b94922545166e3ef1f0218be2f2
+  languageName: node
+  linkType: hard
+
+"@types/micromatch@npm:^4":
+  version: 4.0.5
+  resolution: "@types/micromatch@npm:4.0.5"
+  dependencies:
+    "@types/braces": "npm:*"
+  checksum: 146a5dd7d0f797748afc0b3603b55c20daab604d86865011c217fe5cde1a2710d8de9f78863a4c07e249352de44cbf9cf0fdd2e617e708d1dc289bc5a1c509e7
   languageName: node
   linkType: hard
 
@@ -7354,7 +7372,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"micromatch@npm:^4.0.2, micromatch@npm:^4.0.4":
+"micromatch@npm:^4.0.2, micromatch@npm:^4.0.4, micromatch@npm:^4.0.5":
   version: 4.0.5
   resolution: "micromatch@npm:4.0.5"
   dependencies:

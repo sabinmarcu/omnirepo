@@ -17,6 +17,7 @@ import type {
 } from './types';
 import { globalFormatter } from './formatting';
 import { globalPrintFunctions } from './printers';
+import { debugDefinitionEnabled } from './enabled';
 
 export const debugDefinitionFromString = <T extends string>(input: T) => {
   const parsed = parseDebugStringFragment(input, true);
@@ -56,6 +57,7 @@ export const debug: DebugFactory = (
   options: DebugOptions = {},
 ) => {
   const template = debugDefinitionFromInput(definition);
+  const enabled = debugDefinitionEnabled(template as any);
 
   const [formatter, setFormatter] = getOverrideForSubject(globalFormatter, options.formatter);
   const boundFormatter = formatter.map((it) => it?.(template as any));
@@ -64,7 +66,7 @@ export const debug: DebugFactory = (
     options.printFunction,
   );
 
-  const debugFunction = (...parameters: any[]) => {
+  const debugFunctionRaw = (...parameters: any[]) => {
     const formatterOptions = {
       columns: process?.stdout?.columns,
       tty: process?.stdout?.isTTY,
@@ -75,11 +77,15 @@ export const debug: DebugFactory = (
     printFunctionValue(...finalArguments);
   };
 
+  const debugFunction = (...parameters: any[]) => {
+    if (enabled.value) {
+      debugFunctionRaw(...parameters);
+    }
+    return undefined;
+  };
+
   debugFunction.setFormatter = setFormatter;
   debugFunction.setPrintFunction = setPrintFunction;
 
   return debugFunction satisfies DebugFunction;
 };
-
-const x = debug('stuff');
-x('awesome stuff', 'and change');

@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import type {
   DebugChannels,
-  RawDebugRule,
+  DebugRule,
 } from './types';
 import { debugChannels } from './constants';
 import { globalWarnFunction } from './printers';
@@ -21,7 +21,7 @@ const validateChannel = (channel: string): channel is DebugChannels => (
 export const parseDebugStringFragment = (
   input: string,
   rethrow = false,
-): RawDebugRule | undefined => {
+): DebugRule | undefined => {
   try {
     if (input === '') {
       throw new InvalidDebugStringError('Input empty');
@@ -95,5 +95,5 @@ export const parseDebugString = (input: string | undefined) => {
   return R.filter(
     (fragment) => fragment !== undefined,
     R.map(parseDebugStringFragment, fragments),
-  ) as RawDebugRule[];
+  ) as DebugRule[];
 };

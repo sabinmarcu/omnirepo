@@ -8,14 +8,12 @@ import type {
   defaultChannel,
 } from './constants';
 
-export type RawDebugRule = {
+export type DebugRule = {
   path?: string;
   namespace?: string;
   channel?: string;
   enabled: boolean;
 };
-
-export type DebugRule = Omit<RawDebugRule, 'enabled'>;
 
 export type DebugChannels = typeof debugChannels[number];
 export type DefaultChannel = typeof defaultChannel;
@@ -35,9 +33,9 @@ export type DebugDefinitionInput<
   Namespace extends string = '',
   Channel extends DebugChannels = DefaultChannel,
 > = {
-  path: Path,
-  namespace?: Namespace,
-  channel?: Channel,
+  readonly path: Path,
+  readonly namespace?: Namespace,
+  readonly channel?: Channel,
 };
 
 // TODO: move this to types package
@@ -83,23 +81,23 @@ export type DebugOptions = {
 
 export interface DebugDefinitionFromDebugInput {
   <
-    Path extends string = string,
-    Namespace extends string = '',
-    Channel extends DebugChannels = DefaultChannel,
+    const Path extends string = string,
+    const Namespace extends string = '',
+    const Channel extends DebugChannels = DefaultChannel,
   >(
     definition: DebugDefinitionInput<Path, Namespace, Channel>,
   ): DebugDefinition<Path, Namespace, Channel>;
 
-  <T extends string>(
+  <const T extends string>(
     definition: T & ValidDebugDefinitionString<T>
   ): DebugDefinitionFromString<T>;
 }
 
 export interface DebugFactory {
   <
-    Path extends string = string,
-    Namespace extends string = '',
-    Channel extends DebugChannels = DefaultChannel,
+    const Path extends string = string,
+    const Namespace extends string = '',
+    const Channel extends DebugChannels = DefaultChannel,
   >(
     definition: DebugDefinitionInput<Path, Namespace, Channel>,
     options?: DebugOptions,

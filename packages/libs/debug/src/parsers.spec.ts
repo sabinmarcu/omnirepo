@@ -3,11 +3,11 @@ import {
   parseDebugString,
   parseDebugStringFragment,
 } from './parsers';
-import type { RawDebugRule } from './types';
+import type { DebugRule } from './types';
 
 const testCases: {
   input: string;
-  output: RawDebugRule;
+  output: DebugRule;
 }[] = [
   {
     input: 'example',
