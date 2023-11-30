@@ -1,6 +1,6 @@
 {
   "name": "@sabinmarcu/utils-fs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "./cjs/index.cjs",
   "types": "./cjs/index.d.ts",
   "module": "./esm/index.mjs",
