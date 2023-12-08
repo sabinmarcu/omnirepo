@@ -10,6 +10,7 @@ node:
   inferTasksFromScripts: false
   syncProjectWorkspaceDependencies: false
   syncVersionManagerConfig: 'nvm'
+  rootPackageOnly: true
 
 typescript:
   createMissingConfig: false
