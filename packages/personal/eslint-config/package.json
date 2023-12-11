@@ -1,6 +1,6 @@
 {
   "name": "@sabinmarcu/eslint-config",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "packageManager": "yarn@3.3.0",
   "dependencies": {
     "@babel/eslint-parser": "^7.19.1",
