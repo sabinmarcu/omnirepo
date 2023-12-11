@@ -12,7 +12,7 @@ import path from 'node:path';
 import { DOCS_WORKSPACE_EXCLUDES } from '../../.config/documentation.cjs';
 
 const rootPath = resolveRootSync(__dirname);
-const workspaces = (Object.entries(getWorkspaces.map.sync()) as [string, string][])
+const workspaces = (Object.entries(getWorkspaces.map.sync(__dirname)) as [string, string][])
   .filter(([, workspacePath]) => workspacePath.startsWith('packages'))
   .filter(([name]) => !DOCS_WORKSPACE_EXCLUDES.includes(name))
   .map(([, workspacePath]) => ({
