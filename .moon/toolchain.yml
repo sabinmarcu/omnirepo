@@ -13,7 +13,7 @@ node:
   rootPackageOnly: true
 
 typescript:
-  createMissingConfig: false
+  createMissingConfig: true
   routeOutDirToCache: false
-  syncProjectReferences: false
-  syncProjectReferencesToPaths: false
+  syncProjectReferences: true
+  syncProjectReferencesToPaths: true

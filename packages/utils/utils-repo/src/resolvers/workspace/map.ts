@@ -18,7 +18,7 @@ export const getWorkspacesMap = moize.promise(async (
   const paths = await getWorkspacesPaths.async(from);
   const names = await getWorkspacesNames.async(from);
   return zipObj(names, paths);
-}) as PathResolverFunctionAsync<Record<string, string>>;
+}) satisfies PathResolverFunctionAsync<Record<string, string>>;
 
 export const getWorkspacesMapSync = moize((
   from: string,
@@ -26,7 +26,7 @@ export const getWorkspacesMapSync = moize((
   const paths = getWorkspacesPaths.sync(from);
   const names = getWorkspacesNames.sync(from);
   return zipObj(names, paths);
-}) as PathResolverFunction<Record<string, string>>;
+}) satisfies PathResolverFunction<Record<string, string>>;
 
 export const resolver = {
   async: getWorkspacesMap,

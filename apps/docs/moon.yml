@@ -1,0 +1,27 @@
+project:
+  name: documentation
+  description: Documentation
+  channel: "#docs"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: application
+
+tasks: 
+  start:
+    command: 'yarn start'
+    options: 
+      cache: false
+    deps: 
+      - "^:dev"
+  build:
+    command: 'yarn build'
+    options: 
+      cache: false
+    deps:
+      - "^:build"
+
+workspace:
+  inheritedTasks:
+    include: []

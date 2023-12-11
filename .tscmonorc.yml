@@ -8,3 +8,8 @@ presets:
       - "src/**/*"
     compilerOptions:
       rootDir: 'src'
+  docusaurus:
+    extends: "@docusaurus/tsconfig"
+    compilerOptions: 
+      baseUrl: "."
+  

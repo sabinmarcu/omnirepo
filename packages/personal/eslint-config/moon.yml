@@ -11,6 +11,7 @@ workspace:
   inheritedTasks:
     exclude:
       - dev
+      - devExports
 tasks: 
   build: 
     deps: []

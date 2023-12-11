@@ -154,3 +154,7 @@ tsconfig.*.json
 # Dists
 esm
 cjs
+
+# MacOS Stuff
+.DS_Store
+
