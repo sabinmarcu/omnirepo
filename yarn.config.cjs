@@ -1,39 +1,38 @@
 // @ts-check
 /* eslint-disable no-continue */
 
+const { defineConfig } = require('@yarnpkg/types');
+const { default: moize } = require('moize');
+
+const {
+  DOCS_WORKSPACE_EXCLUDES,
+  DOCS_WORKSPACE_NAME,
+} = require('./.config/documentation.cjs');
+const {
+  FIELD_IGNORE_LIST,
+  FIELD_UPDATE_MAP,
+  REQUIRED_WORKSPACE_DEPENDENCIES,
+  REQUIRED_WORKSPACE_IGNORE_LIST,
+  FIELD_TSCMONO_CONFIG_MAP,
+  FIELD_TSCMONO_KEY,
+} = require('./.config/manifest.cjs');
+const { WORKSPACE_PROTOCOL_RANGE } = require('./.config/yarn.cjs');
+
 /**
  * @typedef {import('@yarnpkg/types').Yarn.Constraints.Workspace} Workspace
  * @typedef {import('@yarnpkg/types').Yarn.Constraints.Dependency} Dependency
  * @typedef {import('@yarnpkg/types').Yarn.Constraints.Context} Context
  */
 
-/** @type {import('@yarnpkg/types')} */
-const { defineConfig } = require('@yarnpkg/types');
+const getMoonConfigOf = moize.promise(async (path) => {
+  const { readFileSync } = await import('node:fs');
+  const { resolve } = await import('node:path');
+  const { parse } = await import('yaml');
 
-const WORKSPACE_PROTOCOL_RANGE = 'workspace:*';
-const FIELD_IGNORE_LIST = new Set(['root']);
-const FIELD_UPDATE_MAP = {
-  type: 'module',
-  main: './cjs/index.cjs',
-  module: './esm/index.mjs',
-  'exports.["."].require': './cjs/index.cjs',
-  'exports.["."].import': './esm/index.mjs',
-  'exports.["./src/*"].require': './src/*',
-  'exports.["./src/*"].import': './src/*',
-  'exports.["./*"].require': './cjs/*.cjs',
-  'exports.["./*"].import': './esm/*.mjs',
-  'exports.["./package.json"]': './package.json',
-  'typeVersions.["*"]["*"][0]': './esm/*',
-  'build.preset': '../../../.config/build.config.ts',
-  'tscmono.preset': 'lib',
-};
-const REQUIRED_WORKSPACE_IGNORE_LIST = new Set(['root']);
-const REQUIRED_WORKSPACE_DEPENDENCIES = {
-  devDependencies: [
-    '@sabinmarcu/types',
-    '@sabinmarcu/utils-test',
-  ],
-};
+  const moonConfig = parse(readFileSync(resolve(path, 'moon.yml'), 'utf8'));
+
+  return moonConfig;
+});
 
 /**
  * Ensure that all workspace dependencies are using workspace protocol
@@ -78,12 +77,18 @@ async function enforceConsistentDependenciesAcrossTheProject({ Yarn }) {
 }
 
 /**
- * Ensure that esm,build & tscmono fields are correctly set
+ * Ensure that esm, build & tscmono fields are correctly set
  *
  * @param {Context} context
  */
 async function ensureFieldConsistency({ Yarn }) {
   for (const workspace of Yarn.workspaces()) {
+    for (const [match, preset] of Object.entries(FIELD_TSCMONO_CONFIG_MAP)) {
+      if (workspace.cwd.startsWith(match)) {
+        workspace.set(FIELD_TSCMONO_KEY, preset);
+      }
+    }
+
     if (FIELD_IGNORE_LIST.has(`${workspace.ident}`)) {
       continue;
     }
@@ -116,6 +121,22 @@ async function ensureRequiredDependencies({ Yarn }) {
   }
 }
 
+// eslint-disable-next-line unicorn/prevent-abbreviations
+async function ensureDocsDependencies({ Yarn }) {
+  // eslint-disable-next-line unicorn/prevent-abbreviations
+  const docsWorkspace = Yarn.workspace({ ident: DOCS_WORKSPACE_NAME });
+  for (const workspace of Yarn.workspaces()) {
+    if (DOCS_WORKSPACE_EXCLUDES.includes(workspace.ident)) {
+      continue;
+    }
+    // eslint-disable-next-line no-await-in-loop
+    const moonConfig = await getMoonConfigOf(workspace.cwd);
+    if (moonConfig.type === 'library') {
+      docsWorkspace.set(`devDependencies.${workspace.ident}`, WORKSPACE_PROTOCOL_RANGE);
+    }
+  }
+}
+
 /**
  * A collection of all constraints defined in this file
  *
@@ -126,6 +147,7 @@ async function constraints(context) {
   await enforceConsistentDependenciesAcrossTheProject(context);
   await ensureFieldConsistency(context);
   await ensureRequiredDependencies(context);
+  await ensureDocsDependencies(context);
 }
 
 module.exports = defineConfig({

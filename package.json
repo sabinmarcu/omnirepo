@@ -20,8 +20,9 @@
     "minimist": "^1.2.7",
     "mkdist": "^1.0.0",
     "moize": "^6.1.4",
-    "typescript": "^5.3.2",
-    "unbuild": "^1.0.0"
+    "typescript": "5.3.2",
+    "unbuild": "^1.0.0",
+    "yaml": "^2.2.0"
   },
   "scripts": {
     "coverage": "jest --coverage",
@@ -43,7 +44,8 @@
     "inquirer": "8"
   },
   "workspaces": [
-    "./packages/*/*"
+    "./packages/*/*",
+    "./apps/*"
   ],
   "engines": {
     "node": "18.15.0"

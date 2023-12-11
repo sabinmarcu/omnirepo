@@ -1,0 +1,8 @@
+releases:
+  "@sabinmarcu/commitlint-config-workspaces": patch
+  "@sabinmarcu/eslint-config": patch
+  "@sabinmarcu/utils-repo": patch
+
+declined:
+  - "@sabinmarcu/docs"
+  - "@sabinmarcu/omnicli"
