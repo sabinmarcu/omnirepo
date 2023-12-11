@@ -48,7 +48,7 @@
     "./apps/*"
   ],
   "engines": {
-    "node": "18.15.0"
+    "node": "20.0.0"
   },
   "resolutions": {
     "mkdist@^1.0.0": "patch:mkdist@npm%3A1.0.0#./.yarn/patches/mkdist-npm-1.0.0-ae21d37d50.patch"
