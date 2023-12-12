@@ -1,0 +1,5 @@
+releases:
+  "@sabinmarcu/utils-path": patch
+
+declined:
+  - "@sabinmarcu/docs"
