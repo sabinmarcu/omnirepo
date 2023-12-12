@@ -4,3 +4,4 @@ export {
 export {
   toPath,
 } from './toPath';
+export * from './types';
