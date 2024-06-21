@@ -43,6 +43,12 @@ const unicornRulesConfig = [
       'unicorn/prefer-module': 'off',
     },
   }),
+  compileConfigFor('*.css.*')({
+    name: 'Unicorn Vanilla CSS Rules',
+    rules: {
+      'unicorn/filename-case': ['error', { case: 'pascalCase' }],
+    },
+  }),
 ] as const satisfies Config[];
 
 export default unicornRulesConfig;

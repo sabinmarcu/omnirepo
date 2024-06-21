@@ -1,0 +1,55 @@
+{
+  "name": "eslint-plugin-logical-properties",
+  "packageManager": "yarn@4.0.1",
+  "tscmono": {
+    "preset": "lib"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./esm/index.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./cjs/index.cjs",
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./src/*": {
+      "import": "./src/*",
+      "require": "./src/*",
+      "default": "./src/*"
+    },
+    "./*": {
+      "import": "./dist/*.js",
+      "require": "./cjs/*.cjs",
+      "default": "./dist/*.js",
+      "types": "./dist/*.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "typeVersions": {
+    "*": {
+      "*": [
+        "./dist/*"
+      ]
+    }
+  },
+  "build": {
+    "preset": "../../../.config/build.config.ts"
+  },
+  "devDependencies": {
+    "@sabinmarcu/types": "workspace:*",
+    "@sabinmarcu/utils-test": "workspace:*"
+  },
+  "peerDependencies": {
+    "eslint": ">=8.31.0",
+    "estree": "*"
+  },
+  "types": "./dist/index.d.ts",
+  "repository": {
+    "url": "git+https://github.com/sabinmarcu/omnirepo.git",
+    "directory": "workspaces/libs/eslint-plugin-logical-properties",
+    "type": "git"
+  },
+  "homepage": "https://sabinmarcu.dev//api/undefined"
+}
