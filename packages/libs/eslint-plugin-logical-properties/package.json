@@ -1,0 +1,43 @@
+{
+  "name": "eslint-plugin-logical-properties",
+  "packageManager": "yarn@4.0.1",
+  "tscmono": {
+    "preset": "lib"
+  },
+  "type": "module",
+  "main": "./cjs/index.cjs",
+  "module": "./esm/index.mjs",
+  "exports": {
+    ".": {
+      "import": "./esm/index.mjs",
+      "require": "./cjs/index.cjs"
+    },
+    "./src/*": {
+      "import": "./src/*",
+      "require": "./src/*"
+    },
+    "./*": {
+      "import": "./esm/*.mjs",
+      "require": "./cjs/*.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "typeVersions": {
+    "*": {
+      "*": [
+        "./esm/*"
+      ]
+    }
+  },
+  "build": {
+    "preset": "../../../.config/build.config.ts"
+  },
+  "devDependencies": {
+    "@sabinmarcu/types": "workspace:*",
+    "@sabinmarcu/utils-test": "workspace:*"
+  },
+  "peerDependencies": {
+    "eslint": ">=8.31.0",
+    "estree": "*"
+  }
+}

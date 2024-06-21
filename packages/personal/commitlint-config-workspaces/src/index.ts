@@ -1,9 +1,9 @@
-import { generateWorkspacesConfig } from './generateWorkspacesConfig';
+import { generateWorkspacesConfig } from "./generateWorkspacesConfig";
 
 module.exports = generateWorkspacesConfig([
-  'root',
+  "root",
   "repo",
-  'ci',
-  'docs',
-  'deps',
+  "ci",
+  "docs",
+  "deps",
 ]);

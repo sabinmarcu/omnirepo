@@ -1,0 +1,9 @@
+project:
+  name: eslint-plugin-logical-properties
+  description: ESLint plugin for enforcing logical properties
+  channel: "#libs"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: library

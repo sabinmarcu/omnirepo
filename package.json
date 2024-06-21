@@ -41,7 +41,8 @@
     "@types/minimist": "^1",
     "@yarnpkg/types": "^4.0.0",
     "commitizen": "^4.2.6",
-    "inquirer": "8"
+    "inquirer": "8",
+    "ts-node": "^10.9.2"
   },
   "workspaces": [
     "./packages/*/*",
