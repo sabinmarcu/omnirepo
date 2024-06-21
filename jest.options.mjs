@@ -1,7 +1,11 @@
 import glob from 'glob';
+import fs from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import { dirname } from 'node:path';
-import packageJson from './package.json' assert { type: 'json' };
+import path from 'node:path';
+
+const packageJson = JSON.parse(
+  await fs.readFile(new URL('package.json', import.meta.url), 'utf8'),
+);
 
 export const projects = packageJson.workspaces.map(
   (workspace) => `<rootDir>/${workspace}/jest.config.{js,cjs,mjs}`,
@@ -11,7 +15,7 @@ export const coverageCollection = packageJson.workspaces.map(
   (workspace) => `<rootDir>/${workspace}/src/**/!(index|*type*).{ts,tsx}`,
 );
 
-const rootPath = dirname(fileURLToPath(import.meta.url));
+const rootPath = path.dirname(fileURLToPath(import.meta.url));
 const projectConfigs = await Promise.all(
   packageJson.workspaces.flatMap(
     (workspace) => {
@@ -19,10 +23,7 @@ const projectConfigs = await Promise.all(
       return glob.sync(
         inputGlob,
         { cwd: rootPath },
-      ).map(async (jestConfig) => [
-        dirname(jestConfig).replace(/^(\.\/)?/, ''),
-        await import(jestConfig),
-      ]);
+      ).map(async (jestConfig) => [path.dirname(jestConfig).replace(/^(\.\/)?/, ''), await import(jestConfig)]);
     },
   ),
 );

@@ -11,6 +11,7 @@ import unicornConfig from './configs/unicorn.js';
 import { logConfigs } from './utils/logConfigs.js';
 import storybookConfig from './configs/storybook.js';
 import typeTestingConfig from './configs/typeTesting.js';
+import logicalPropertiesConfig from './configs/logicalProperties.js';
 
 export { compileConfigFilesConfig } from './configs/root.js';
 export { logConfigs } from './utils/logConfigs.js';
@@ -25,6 +26,7 @@ const finalConfig = [
   ...unicornConfig,
   ...storybookConfig,
   ...typeTestingConfig,
+  ...logicalPropertiesConfig,
 ] as const satisfies Config[];
 
 logConfigs(finalConfig);

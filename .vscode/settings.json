@@ -18,6 +18,7 @@
     "http://yarnpkg.com/configuration/yarnrc.json": ".yarnrc.yml"
   },
   "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "cSpell.words": [
     "nodenext"
   ]

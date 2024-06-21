@@ -4,18 +4,12 @@ const minimumPerLine = 3;
 export const jsStyleRules = {
   'array-element-newline': [
     'error',
-    {
-      multiline: true,
-      minItems: minimumPerLine,
-    },
+    'consistent',
   ],
 
   'array-bracket-newline': [
     'error',
-    {
-      multiline: true,
-      minItems: minimumPerLine,
-    },
+    'consistent',
   ],
 
   // enforce spacing inside array brackets
