@@ -1,107 +1,108 @@
-$schema: 'https://moonrepo.dev/schemas/tasks.json'
+$schema: "https://moonrepo.dev/schemas/tasks.json"
 
 fileGroups:
   configs:
-    - '*.{js,json}'
+    - "*.{js,json}"
 
   sources:
-    - 'src/**/*'
+    - "src/**/*"
 
   buildConfig:
-    - '/.config/build.config.ts'
+    - "/.config/build.config.ts"
 
   tests:
-    - 'src/**/*.spec.*'
+    - "src/**/*.spec.*"
 
 tasks:
-  fixExports: 
-    command: 'omni fix exports'
+  fixExports:
+    command: "omni fix exports"
     inputs:
       - package.json
-    outputs: 
+    outputs:
       - package.json
-    options: 
+    options:
       cache: false
 
-  build: 
-    command: 'unbuild'
+  build:
+    command: "unbuild"
     type: build
-    deps: 
-      - 'root:init'
-      - '~:fixExports'
-      - '^:build'
-    inputs: 
-      - '@globs(sources)'
-      - '@files(buildConfig)'
-    outputs: 
+    deps:
+      - "root:init"
+      - "~:fixExports"
+      - "^:build"
+    inputs:
+      - "@globs(sources)"
+      - "@files(buildConfig)"
+    outputs:
       - esm
       - cjs
-    options: 
+    options:
       cache: true
 
-  test: 
-    command: 'jest'
-    args: 
+  test:
+    command: "jest"
+    args:
       - --passWithNoTests
     deps:
-      - '~:build'
-    inputs: 
-      - '@globs(sources)'
+      - "~:build"
+    inputs:
+      - "@globs(sources)"
 
-  devExports: 
-    command: 'omni fix exports'
+  devExports:
+    command: "omni fix exports"
     args:
       - --dev
     inputs:
       - package.json
-    outputs: 
+    outputs:
       - package.json
     options:
       cache: false
       runInCI: false
 
   dev:
-    command: 'unbuild --stub'
-    deps: 
-      - 'root:init'
-      - '~:devExports'
-      - '^:dev'
-    inputs: 
-      - '@globs(sources)'
-      - '@files(buildConfig)'
-    outputs: 
+    command: "unbuild --stub"
+    deps:
+      - "root:init"
+      - "~:devExports"
+      - "^:dev"
+    inputs:
+      - "@globs(sources)"
+      - "@files(buildConfig)"
+    outputs:
       - esm
       - cjs
     options:
       runInCI: false
       persistent: false
 
-  testDev: 
-    command: 'jest'
+  testDev:
+    command: "jest"
     type: test
     args:
       - --watch
     deps:
-      - '~:dev'
-    inputs: 
-      - '@globs(sources)'
+      - "~:dev"
+    inputs:
+      - "@globs(sources)"
     options:
       cache: false
       runInCI: false
 
-  lint: 
-    command: 'eslint'
+  lint:
+    command: "eslint"
     type: test
     deps:
+      - "~:build"
       - eslint-config:build
-    inputs: 
-      - '@globs(sources)'
+    inputs:
+      - "@globs(sources)"
 
   publish:
-    command: 'yarn npm publish --tolerate-republish'
+    command: "yarn npm publish --tolerate-republish"
     deps:
       - "~:build"
-    inputs: 
-      - '@globs(sources)'
-    options: 
+    inputs:
+      - "@globs(sources)"
+    options:
       runInCI: false
