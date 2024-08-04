@@ -11,7 +11,12 @@ import { OmnicliCommand } from '../../features';
 import { fixPathMapping } from './utils/fixPathMapping';
 
 export class FixExportsCommand extends OmnicliCommand<ContextWithCwd> {
-  static readonlyPaths = [['fix', 'exports']];
+  static readonlyPaths = [
+    [
+      'fix',
+      'exports',
+    ],
+  ];
 
   workspacePath = Option.String({ required: false });
 
@@ -31,9 +36,12 @@ export class FixExportsCommand extends OmnicliCommand<ContextWithCwd> {
       ? {
         cjs: '.ts',
         esm: '.ts',
-      } : {
+        dts: '.ts',
+      }
+      : {
         cjs: '.cjs',
         esm: '.mjs',
+        dts: '.d.ts',
       };
 
     const localWorkspacePath = workspacePath ?? context.cwd;
@@ -46,10 +54,12 @@ export class FixExportsCommand extends OmnicliCommand<ContextWithCwd> {
       ...packageJson,
       main: fixPath.cjs('./cjs/index'),
       module: fixPath.esm('./esm/index'),
+      types: fixPath.dts('./esm/index'),
       exports: {
         '.': {
           import: fixPath.esm('./esm/index'),
           require: fixPath.cjs('./cjs/index'),
+          types: fixPath.dts('./esm/index'),
         },
         './src/*': {
           import: './src/*',
@@ -58,18 +68,17 @@ export class FixExportsCommand extends OmnicliCommand<ContextWithCwd> {
         './*': {
           import: fixPath.esm('./esm/*'),
           require: fixPath.cjs('./cjs/*'),
+          types: fixPath.dts('./esm/*'),
         },
         './package.json': './package.json',
       },
     };
 
     if (dryRun) {
-      context.stdout.write(`${JSON.stringify(
-        {
-          path: packageJsonPath,
-          packageJson: fixedPackageJson,
-        }, undefined, 2,
-      )}\n`);
+      context.stdout.write(`${JSON.stringify({
+        path: packageJsonPath,
+        packageJson: fixedPackageJson,
+      }, undefined, 2)}\n`);
     } else {
       await fs.writeFile(
         packageJsonPath,
