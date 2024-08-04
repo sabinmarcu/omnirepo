@@ -1,22 +1,19 @@
-import type {
-  Config,
-} from '../types.js';
+import type { Config } from '../types';
+import { makeConfigFactory } from '../utils/makeConfig';
 
-const config = {
-  overrides: [
-    {
-      files: [
-        '*.mjs',
-        '*.mts',
+const config = [
+  makeConfigFactory(
+    '*.mjs',
+    '*.mts',
+  )({
+    name: 'ESM Modules Overrides',
+    rules: {
+      'import/extensions': [
+        'error',
+        'always',
       ],
-      rules: {
-        'import/extensions': [
-          'error',
-          'always',
-        ],
-      },
     },
-  ],
-} satisfies Config;
+  }),
+] satisfies Config[];
 
-module.exports = config;
+export default config;

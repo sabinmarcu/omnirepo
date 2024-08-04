@@ -2,13 +2,14 @@
   "name": "@sabinmarcu/config",
   "version": "1.0.1",
   "main": "./cjs/index.cjs",
-  "types": "./cjs/index.d.ts",
+  "types": "./esm/index.d.ts",
   "module": "./esm/index.mjs",
   "type": "module",
   "exports": {
     ".": {
       "import": "./esm/index.mjs",
-      "require": "./cjs/index.cjs"
+      "require": "./cjs/index.cjs",
+      "types": "./esm/index.d.ts"
     },
     "./src/*": {
       "import": "./src/*",
@@ -16,7 +17,8 @@
     },
     "./*": {
       "import": "./esm/*.mjs",
-      "require": "./cjs/*.cjs"
+      "require": "./cjs/*.cjs",
+      "types": "./esm/*.d.ts"
     },
     "./package.json": "./package.json"
   },
