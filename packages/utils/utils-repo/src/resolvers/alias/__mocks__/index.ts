@@ -11,7 +11,10 @@ export type WorkspaceResolverFixture = {
   }
   | { error: string }
 );
-export default () => compileFixtures<WorkspaceResolverFixture>(
+
+const fixtures = () => compileFixtures<WorkspaceResolverFixture>(
   new URL('.', import.meta.url),
   ['index.ts'],
 );
+
+export default fixtures;

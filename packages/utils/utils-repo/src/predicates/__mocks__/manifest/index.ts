@@ -6,7 +6,9 @@ export interface PackageJsonPredicateFixtures {
   output: boolean,
 }
 
-export default () => compileFixtures<PackageJsonPredicateFixtures>(
+const config = () => compileFixtures<PackageJsonPredicateFixtures>(
   new URL('.', import.meta.url),
   ['index.ts'],
 );
+
+export default config;

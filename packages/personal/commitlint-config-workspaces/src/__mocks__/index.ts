@@ -12,7 +12,9 @@ export type WorkspacesFixture = {
   | { scopes: string[] }
 );
 
-export default () => compileFixtures<WorkspacesFixture>(
+const config = () => compileFixtures<WorkspacesFixture>(
   new URL('.', import.meta.url),
   ['index.ts'],
 );
+
+export default config;

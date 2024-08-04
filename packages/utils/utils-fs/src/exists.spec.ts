@@ -24,7 +24,9 @@ describe('exists', () => {
   afterEach(resetFsMock);
   it.each(fixtures)(
     '$name',
-    async ({ setup, input, expected }) => {
+    async ({
+      setup, input, expected,
+    }) => {
       setupFsMock(setup);
       expect(await exists(input)).toBe(expected);
     },

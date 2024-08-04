@@ -24,14 +24,14 @@ export const wrapMapMethod = <
   InputMap extends Map<any, any>,
   MethodName extends MethodsOfMap,
 >(
-  source: InputMap,
-  method: MethodName,
-  store: Subject<InputMap>,
-) => {
+    source: InputMap,
+    method: MethodName,
+    store: Subject<InputMap>,
+  ) => {
   const member = source[method];
   const replacement = (
     (...parameters: Parameters<typeof member>) => {
-      const result = (member as any).apply(source, parameters);
+      const result = Reflect.apply((member as any), source, parameters);
       store.next(source);
       return result;
     }) as typeof member;

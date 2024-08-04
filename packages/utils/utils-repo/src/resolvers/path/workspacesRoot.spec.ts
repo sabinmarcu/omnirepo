@@ -18,7 +18,9 @@ describe('resolver.workspacesRoot', () => {
     });
     describe.each(testCases)(
       '$input',
-      ({ setup, input, output }) => {
+      ({
+        setup, input, output,
+      }) => {
         setupFsMockAll(setup);
         it('should return expected', () => {
           expect(resolver.sync(input)).toEqual(output);
@@ -35,7 +37,9 @@ describe('resolver.workspacesRoot', () => {
     });
     describe.each(testCases)(
       '$input',
-      ({ setup, input, output }) => {
+      ({
+        setup, input, output,
+      }) => {
         setupFsMockAll(setup);
         it('should return expected', async () => {
           await expect(resolver.async(input)).resolves.toEqual(output);

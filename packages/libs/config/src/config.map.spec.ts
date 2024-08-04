@@ -38,15 +38,24 @@ describe('projectMapInput', () => {
   });
 
   it('should return an array of observables', () => {
-    const result = projectMapInput({ something: 'awesome', some: 'thing' });
+    const result = projectMapInput({
+      something: 'awesome',
+      some: 'thing',
+    });
     expect(Array.isArray(result)).toBe(true);
     expect(result.length).toBe(2);
     expect(result.every((item) => isObservable(item))).toBe(true);
   });
 
   it('should return the correct array of observables', () => {
-    const input = { something: 'awesome', some: 'thing' };
-    const result = projectMapInput({ something: 'awesome', some: 'thing' });
+    const input = {
+      something: 'awesome',
+      some: 'thing',
+    };
+    const result = projectMapInput({
+      something: 'awesome',
+      some: 'thing',
+    });
     for (const item of result) {
       const { value } = item;
       const keys = Object.keys(value!);

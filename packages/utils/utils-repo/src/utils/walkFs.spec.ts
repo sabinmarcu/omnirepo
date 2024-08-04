@@ -22,7 +22,9 @@ describe('walker', () => {
     });
     describe.each(fixtures)(
       '$name',
-      ({ input, ...result }) => {
+      ({
+        input, ...result
+      }) => {
         if ('error' in result) {
           it('should throw an error', () => {
             expect(() => walker.sync(...input)).toThrow(result.error);
@@ -49,7 +51,9 @@ describe('walker', () => {
     });
     describe.each(fixtures)(
       '$name',
-      ({ input, ...result }) => {
+      ({
+        input, ...result
+      }) => {
         const testInput = input as unknown as Parameters<typeof walker.async>;
         if ('error' in result) {
           it('should throw an error', async () => {

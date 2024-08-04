@@ -10,7 +10,10 @@ describe('deriveAlias', () => {
   describe.each([
     {
       input: '@scope/name',
-      output: ['name', '@scope/name'],
+      output: [
+        'name',
+        '@scope/name',
+      ],
     },
     {
       input: 'name',
@@ -20,7 +23,9 @@ describe('deriveAlias', () => {
       input: '',
       output: [''],
     },
-  ])('$input', ({ input, output }) => {
+  ])('$input', ({
+    input, output,
+  }) => {
     it('should return the expected value', () => {
       expect(deriveAlias(input)).toEqual(output);
     });

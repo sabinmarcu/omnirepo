@@ -17,7 +17,11 @@ export const generateSimpleTests = (config = simpleConfig) => {
 
   it('should properly filter the correct value in reverse order', () => {
     const result = config(
-      1, 2, 3, 4, 5,
+      1,
+      2,
+      3,
+      4,
+      5,
       undefined,
       observable.from(undefined),
     ) as Observable<number>;

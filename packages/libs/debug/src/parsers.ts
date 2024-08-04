@@ -1,4 +1,8 @@
-import * as R from 'ramda';
+import {
+  map,
+  split,
+  filter,
+} from 'ramda';
 import type {
   DebugChannels,
   DebugRule,
@@ -88,12 +92,12 @@ export const parseDebugString = (input: string | undefined) => {
   if (!input) {
     return undefined;
   }
-  const fragments = R.map(
+  const fragments = map(
     (fragment) => fragment.trim(),
-    R.split(',', input),
+    split(',', input),
   );
-  return R.filter(
+  return filter(
     (fragment) => fragment !== undefined,
-    R.map(parseDebugStringFragment, fragments),
+    map(parseDebugStringFragment, fragments),
   ) as DebugRule[];
 };

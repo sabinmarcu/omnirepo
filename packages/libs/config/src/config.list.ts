@@ -12,8 +12,8 @@ import type {
 export const projectListInput = <
   const Parameters extends ConfigListParameters,
 >(
-  ...inputs: Parameters
-) => {
+    ...inputs: Parameters
+  ) => {
   const outputs: Observable<any>[] = [];
   for (const input of inputs) {
     outputs.push(

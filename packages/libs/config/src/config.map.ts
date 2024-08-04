@@ -15,9 +15,9 @@ export const projectMapInputItem = <
   const Parameters extends ConfigMapParameter,
   const Key extends keyof Parameters,
 >(
-  inputs: Parameters,
-  key: Key,
-) => {
+    inputs: Parameters,
+    key: Key,
+  ) => {
   const input = inputs[key];
   const inputObservable = (
     isObservable(input)
@@ -32,8 +32,8 @@ export const projectMapInputItem = <
 export const projectMapInput = <
   const Parameters extends ConfigMapParameter,
 >(
-  inputs: Parameters,
-) => {
+    inputs: Parameters,
+  ) => {
   const outputs = Object
     .keys(inputs)
     .map((key) => projectMapInputItem(inputs, key));
@@ -49,7 +49,10 @@ export const complexConfig: ComplexConfigFunction = (
     (...values: any[]) => {
       let combinedValue = {};
       for (const value of values) {
-        combinedValue = { ...combinedValue, ...value };
+        combinedValue = {
+          ...combinedValue,
+          ...value,
+        };
       }
       return combinedValue;
     },

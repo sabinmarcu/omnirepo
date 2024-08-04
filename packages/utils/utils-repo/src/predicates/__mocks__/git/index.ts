@@ -6,7 +6,9 @@ export interface GitPredicateFixtures {
   output: boolean,
 }
 
-export default () => compileFixtures<GitPredicateFixtures>(
+const config = () => compileFixtures<GitPredicateFixtures>(
   new URL('.', import.meta.url),
   ['index.ts'],
 );
+
+export default config;

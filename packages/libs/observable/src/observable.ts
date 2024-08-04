@@ -9,7 +9,6 @@ import type {
   ObservableSubscriberStore,
   RawObservable,
   ObserverController,
-  ObservableProjection,
   PipedObservable,
   ObservableProjector,
 } from './types';
@@ -22,24 +21,24 @@ export const makeControllerFunction = <T>(
   valueStore: MutableStore<T>,
   subscriberStore: ObservableSubscriberStore<T>,
 ) => <Key extends keyof ObserverController<T> = 'next'>(
-  key: Key,
-) => (...arguments_: Parameters<ObserverController<T>[Key]>) => {
-  if (key === 'next') {
-    // eslint-disable-next-line no-param-reassign
-    valueStore.value = arguments_[0] as T;
-  }
-  for (const subscriber of subscriberStore) {
-    const dispatcher = subscriber[key];
-    if (dispatcher) {
-      (dispatcher as any)(...arguments_);
-    }
-  }
-  if (key === 'complete') {
-    for (const subscriber of subscriberStore) {
-      subscriberStore.delete(subscriber);
-    }
-  }
-};
+    key: Key,
+  ) => (...arguments_: Parameters<ObserverController<T>[Key]>) => {
+      if (key === 'next') {
+        // eslint-disable-next-line no-param-reassign
+        valueStore.value = arguments_[0] as T;
+      }
+      for (const subscriber of subscriberStore) {
+        const dispatcher = subscriber[key];
+        if (dispatcher) {
+          (dispatcher as any)(...arguments_);
+        }
+      }
+      if (key === 'complete') {
+        for (const subscriber of subscriberStore) {
+          subscriberStore.delete(subscriber);
+        }
+      }
+    };
 
 export const makeController = <T>(
   valueStore: MutableStore<T>,
@@ -87,7 +86,9 @@ export const observable = <T>(
   ) => {
     let subscription: Subscription;
     const newObservable = observable<T>(
-      ({ next, complete, error }) => {
+      ({
+        next, complete, error,
+      }) => {
         subscription = observableInstance.subscribe({
           next: (value) => {
             if (filterFunction(value)) {
@@ -112,7 +113,9 @@ export const observable = <T>(
   ) => {
     let subscription: Subscription;
     const newObservable = observable<R>(
-      ({ next, complete, error }) => {
+      ({
+        next, complete, error,
+      }) => {
         subscription = observableInstance.subscribe({
           next: (value) => next(mapFunction(value)),
           complete,
@@ -162,7 +165,9 @@ export const projectObservables: ObservableProjector = (...parameters: any[]) =>
   );
 
   const subscriptions: Subscription[] = [];
-  const projectionObservable = observable(({ next, error }) => {
+  const projectionObservable = observable(({
+    next, error,
+  }) => {
     const projectionValueStore = observableValueStore({
       get value() {
         const projectionValues = getProjectionValues();
@@ -173,7 +178,10 @@ export const projectObservables: ObservableProjector = (...parameters: any[]) =>
 
     const nextFunction = () => next(projectionValueStore.value);
     for (const item of input) {
-      subscriptions.push(item.subscribe({ next: nextFunction, error }));
+      subscriptions.push(item.subscribe({
+        next: nextFunction,
+        error,
+      }));
     }
   });
 

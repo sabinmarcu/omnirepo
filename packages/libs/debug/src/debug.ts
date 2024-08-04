@@ -21,7 +21,9 @@ import { debugDefinitionEnabled } from './enabled';
 
 export const debugDefinitionFromString = <T extends string>(input: T) => {
   const parsed = parseDebugStringFragment(input, true);
-  const { path, namespace, channel = defaultChannel } = parsed!;
+  const {
+    path, namespace, channel = defaultChannel,
+  } = parsed!;
   if (path === undefined) {
     throw new Error('Invalid debug definition string (requires a name)');
   }
@@ -59,9 +61,15 @@ export const debug: DebugFactory = (
   const template = debugDefinitionFromInput(definition);
   const enabled = debugDefinitionEnabled(template as any);
 
-  const [formatter, setFormatter] = getOverrideForSubject(globalFormatter, options.formatter);
+  const [
+    formatter,
+    setFormatter,
+  ] = getOverrideForSubject(globalFormatter, options.formatter);
   const boundFormatter = formatter.map((it) => it?.(template as any));
-  const [printFunction, setPrintFunction] = getOverrideForSubject(
+  const [
+    printFunction,
+    setPrintFunction,
+  ] = getOverrideForSubject(
     globalPrintFunctions[template.channel],
     options.printFunction,
   );

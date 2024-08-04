@@ -1,4 +1,9 @@
-import * as R from 'ramda';
+import {
+  flatten,
+  map,
+  values,
+  project,
+} from 'ramda';
 import {
   parseDebugString,
   parseDebugStringFragment,
@@ -208,7 +213,9 @@ describe('parseDebugStringFragment', () => {
   });
 
   describe('test cases', () => {
-    it.each(testCases)('parseDebugStringFragment($input)', ({ input, output }) => {
+    it.each(testCases)('parseDebugStringFragment($input)', ({
+      input, output,
+    }) => {
       expect(parseDebugStringFragment(input)).toEqual(output);
     });
   });
@@ -307,13 +314,13 @@ describe('parseDebugString', () => {
   });
 
   it('test cases (joined)', () => {
-    const inputString = R.flatten(
-      // eslint-disable-next-line unicorn/no-array-callback-reference
-      R.map(R.values as any, R.project(['input'], testCases)),
+    const inputString = flatten(
+
+      map(values as any, project(['input'], testCases)),
     ).join(',');
-    const outputs = R.flatten(
-      // eslint-disable-next-line unicorn/no-array-callback-reference
-      R.map(R.values as any, R.project(['output'], testCases)),
+    const outputs = flatten(
+
+      map(values as any, project(['output'], testCases)),
     );
     expect(parseDebugString(inputString)).toEqual(outputs);
   });

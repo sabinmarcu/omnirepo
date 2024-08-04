@@ -1,1 +1,1 @@
-console.log("wack")
+console.log('wack');

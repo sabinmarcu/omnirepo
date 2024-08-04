@@ -30,7 +30,9 @@ describe('predicates.git', () => {
     });
     describe.each(fixtures)(
       '$name',
-      ({ setup, input, output }) => {
+      ({
+        setup, input, output,
+      }) => {
         setupFsMockAll(setup);
         it('should return expected', () => {
           expect(predicate.sync(input)).toBe(output);
@@ -52,7 +54,9 @@ describe('predicates.git', () => {
     });
     describe.each(fixtures)(
       '$name',
-      ({ setup, input, output }) => {
+      ({
+        setup, input, output,
+      }) => {
         setupFsMockAll(setup);
         it('should return expected', async () => {
           await expect(predicate.async(input)).resolves.toBe(output);

@@ -15,10 +15,16 @@ export const getWorkspacesMap = moize.promise(async (
   const mapping = await getMapping.async(from);
   return Object.fromEntries(
     Object.entries(mapping).flatMap(
-      ([name, path]) => {
+      ([
+        name,
+        path,
+      ]) => {
         const aliases = deriveAlias(name);
         return aliases.map(
-          (alias) => [alias, path],
+          (alias) => [
+            alias,
+            path,
+          ],
         );
       },
     ),
@@ -31,10 +37,16 @@ export const getWorkspacesMapSync = moize((
   const mapping = getMapping.sync(from);
   return Object.fromEntries(
     Object.entries(mapping).flatMap(
-      ([name, path]) => {
+      ([
+        name,
+        path,
+      ]) => {
         const aliases = deriveAlias(name);
         return aliases.map(
-          (alias) => [alias, path],
+          (alias) => [
+            alias,
+            path,
+          ],
         );
       },
     ),

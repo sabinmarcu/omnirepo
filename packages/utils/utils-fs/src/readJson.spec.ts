@@ -25,7 +25,9 @@ jest.mock('node:fs/promises', jest.requireActual('@sabinmarcu/utils-test').mockF
 describe('readJson', () => {
   describe.each(fixtures)(
     '$name',
-    ({ setup, input, ...outcome }) => {
+    ({
+      setup, input, ...outcome
+    }) => {
       setupFsMockAll(setup);
       if ('error' in outcome) {
         const { error } = outcome;
@@ -45,7 +47,9 @@ describe('readJson', () => {
 describe('readJsonSync', () => {
   describe.each(fixtures)(
     '$name',
-    ({ setup, input, ...outcome }) => {
+    ({
+      setup, input, ...outcome
+    }) => {
       setupFsMockAll(setup);
       if ('error' in outcome) {
         const { error } = outcome;

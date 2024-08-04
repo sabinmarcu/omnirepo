@@ -1,5 +1,5 @@
 import glob from 'glob';
-import util from 'node:util';
+import { promisify } from 'node:util';
 import path from 'node:path';
 import moize from 'moize';
 import { testWorkspaces as test } from '../../predicates/index';
@@ -11,7 +11,7 @@ import type {
   PathResolverFunctionAsync,
 } from '../../types';
 
-const globPromised = util.promisify(glob);
+const globPromised = promisify(glob);
 
 export const getWorkspacesPaths = moize.promise(async (
   from: string,

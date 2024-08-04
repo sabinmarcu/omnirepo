@@ -1,7 +1,5 @@
 import moize from 'moize';
-import {
-  resolve as resolvePath,
-} from 'node:path';
+import nodePath from 'node:path';
 import type {
   PathResolver,
   PathResolverFunction,
@@ -15,7 +13,7 @@ import type {
  */
 export const resolveSync = moize(((
   path: string,
-) => resolvePath(path, 'package.json')
+) => nodePath.resolve(path, 'package.json')
 ) satisfies PathResolverFunction);
 
 /**
@@ -25,7 +23,7 @@ export const resolveSync = moize(((
  */
 export const resolve = moize.promise((async (
   path: string,
-) => resolvePath(path, 'package.json')
+) => nodePath.resolve(path, 'package.json')
 ) satisfies PathResolverFunctionAsync);
 
 export const resolver = {

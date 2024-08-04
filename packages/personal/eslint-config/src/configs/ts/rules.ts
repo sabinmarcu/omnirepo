@@ -74,21 +74,6 @@ export default {
   'func-call-spacing': 'off',
   '@stylistic/ts/func-call-spacing': baseStyleRules['func-call-spacing'],
 
-  // Replace Airbnb 'indent' rule with '@typescript-eslint' version
-  // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/indent.md
-  indent: 'off',
-  '@stylistic/ts/indent': [
-    baseStyleRules.indent[0],
-    baseStyleRules.indent[1],
-    {
-      ...baseStyleRules.indent[2],
-      ignoredNodes: [
-        ...baseStyleRules.indent[2].ignoredNodes,
-        'TSTypeParameterInstantiation',
-      ],
-    },
-  ],
-
   // Replace Airbnb 'keyword-spacing' rule with '@typescript-eslint' version
   // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/keyword-spacing.md
   'keyword-spacing': 'off',
@@ -265,4 +250,21 @@ export default {
       fixStyle: 'separate-type-imports',
     },
   ],
+
+  // Replace Airbnb 'indent' rule with '@typescript-eslint' version
+  // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/indent.md
+  indent: 'off',
+  '@stylistic/ts/indent': [
+    baseStyleRules.indent[0],
+    baseStyleRules.indent[1],
+    {
+      ...baseStyleRules.indent[2],
+      ignoredNodes: [
+        ...baseStyleRules.indent[2].ignoredNodes,
+        'TSTypeParameterInstantiation',
+        'TSTypeParameterDeclaration',
+      ],
+    },
+  ],
+
 } as const satisfies Config['rules'];

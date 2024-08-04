@@ -88,7 +88,10 @@ describe('getOverrideForSubject', () => {
     const defaultSubject = subject('base');
     const initialValue = 'initial';
     const nextValue = 'next';
-    const [result, next] = getOverrideForSubject(defaultSubject, initialValue);
+    const [
+      result,
+      next,
+    ] = getOverrideForSubject(defaultSubject, initialValue);
     expect(result.value).toBe(initialValue);
     next(nextValue);
     expect(result.value).toBe(nextValue);
@@ -97,7 +100,10 @@ describe('getOverrideForSubject', () => {
   it('should return a subject that reverts to base value when subject is set to undefined', () => {
     const defaultSubject = subject('base');
     const initialValue = 'initial';
-    const [result, next] = getOverrideForSubject(defaultSubject, initialValue);
+    const [
+      result,
+      next,
+    ] = getOverrideForSubject(defaultSubject, initialValue);
     expect(result.value).toBe(initialValue);
     next(undefined);
     expect(result.value).toBe(defaultSubject.value);

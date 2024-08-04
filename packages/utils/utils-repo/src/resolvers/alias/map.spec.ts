@@ -33,7 +33,9 @@ describe('getWorkspaces.paths', () => {
     });
     describe.each(fixtures)(
       '$name',
-      ({ setup, input, ...outcome }) => {
+      ({
+        setup, input, ...outcome
+      }) => {
         setupFsMockAll(setup);
         if ('error' in outcome) {
           it('should throw', () => {
@@ -61,7 +63,9 @@ describe('getWorkspaces.paths', () => {
     });
     describe.each(fixtures)(
       '$name',
-      ({ setup, input, ...outcome }) => {
+      ({
+        setup, input, ...outcome
+      }) => {
         setupFsMockAll(setup);
         if ('error' in outcome) {
           it('should throw', async () => {

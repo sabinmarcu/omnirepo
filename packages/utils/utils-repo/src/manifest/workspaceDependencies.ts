@@ -9,7 +9,9 @@ export const filterDependenciesByWorkspace = (
   dependencies: Record<string, string>,
 ) => Object.fromEntries(
   Object.entries(dependencies)
-    .filter(([, version]) => version.startsWith('workspace:')),
+    .filter(([
+      , version,
+    ]) => version.startsWith('workspace:')),
 );
 
 export const workspaceDependenciesOfSync = moize((

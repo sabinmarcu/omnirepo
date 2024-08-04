@@ -3,9 +3,18 @@ import { resolver } from './manifest';
 
 describe('resolver.manifest', () => {
   const testCases = [
-    { input: 'foo', output: './foo/package.json' },
-    { input: 'foo/bar', output: './foo/bar/package.json' },
-    { input: 'foo/', output: './foo/package.json' },
+    {
+      input: 'foo',
+      output: './foo/package.json',
+    },
+    {
+      input: 'foo/bar',
+      output: './foo/bar/package.json',
+    },
+    {
+      input: 'foo/',
+      output: './foo/package.json',
+    },
   ] as const;
   describe('sync', () => {
     it('should be a function', () => {
@@ -16,7 +25,9 @@ describe('resolver.manifest', () => {
     });
     describe.each(testCases)(
       '$input',
-      ({ input, output }) => {
+      ({
+        input, output,
+      }) => {
         it('should return expected', () => {
           expect(resolver.sync(input)).toBe(path.resolve(output));
         });
@@ -32,7 +43,9 @@ describe('resolver.manifest', () => {
     });
     describe.each(testCases)(
       '$input',
-      ({ input, output }) => {
+      ({
+        input, output,
+      }) => {
         it('should return expected', async () => {
           await expect(resolver.async(input)).resolves.toBe(path.resolve(output));
         });

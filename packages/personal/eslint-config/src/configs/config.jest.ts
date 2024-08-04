@@ -31,6 +31,7 @@ const config = [
   }),
   makeConfigFactory(
     `**/*.${testNamingGlob}.${testExtensionGlob}`,
+    `**/*.${testNamingGlob}.*.${testExtensionGlob}`,
     `**/__${testNamingGlob}__/**/*.${testExtensionGlob}`,
   )({
     name: 'Test Files',
