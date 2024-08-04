@@ -15,6 +15,7 @@ const {
   REQUIRED_WORKSPACE_IGNORE_LIST,
   FIELD_TSCMONO_CONFIG_MAP,
   FIELD_TSCMONO_KEY,
+  MODULE_DEPENDENCY_ENFORCEMENT_FIELD_LIST,
 } = require('./.config/manifest.cjs');
 const { WORKSPACE_PROTOCOL_RANGE } = require('./.config/yarn.cjs');
 
@@ -50,6 +51,14 @@ async function ensureWorkspaceProtocol({ Yarn }) {
   }
 }
 
+const shouldSkipConsistentDependencyEnforcement = (dependency) => {
+  if (MODULE_DEPENDENCY_ENFORCEMENT_FIELD_LIST.includes(dependency.type)) {
+    return true;
+  }
+  if (!dependency.workspace.pkg[dependency.type]?.[dependency.ident]) {
+    return true;
+  }
+}
 /**
  * This rule will enforce that a workspace MUST depend on the same version of
  * a dependency as the one used by the other workspaces.
@@ -58,7 +67,7 @@ async function ensureWorkspaceProtocol({ Yarn }) {
  */
 async function enforceConsistentDependenciesAcrossTheProject({ Yarn }) {
   for (const dependency of Yarn.dependencies()) {
-    if (dependency.type === 'peerDependencies') {
+    if (shouldSkipConsistentDependencyEnforcement(dependency)) {
       continue;
     }
 
@@ -67,7 +76,7 @@ async function enforceConsistentDependenciesAcrossTheProject({ Yarn }) {
     }
 
     for (const otherDependency of Yarn.dependencies({ ident: dependency.ident })) {
-      if (otherDependency.type === 'peerDependencies') {
+      if (shouldSkipConsistentDependencyEnforcement(otherDependency)) {
         continue;
       }
 
@@ -102,7 +111,7 @@ async function ensureFieldConsistency({ Yarn }) {
 /**
  * Ensure required dependencies for all packages
  *
- * @param {Context} context
+* @param {Context} context
  */
 async function ensureRequiredDependencies({ Yarn }) {
   for (const workspace of Yarn.workspaces()) {

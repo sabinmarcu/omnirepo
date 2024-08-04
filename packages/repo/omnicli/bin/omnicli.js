@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* eslint-disable import/extensions */
+ 
 
 const url = await import('node:url');
 const { default: jiti } = (await import('jiti'));

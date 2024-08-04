@@ -1,5 +1,5 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable import/no-extraneous-dependencies */
+ 
+ 
 
 import url from 'node:url';
 import path from 'node:path';

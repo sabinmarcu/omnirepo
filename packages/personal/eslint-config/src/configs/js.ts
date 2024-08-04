@@ -1,28 +1,12 @@
-import type {
-  Config,
-} from '../types.js';
+import jsConfig from './js/js';
+import jsxConfig from './js/jsx';
+import jsImportConfig from './js/import';
+import type { Config } from '../types';
 
-const config = {
-  overrides: [
-    {
-      files: [
-        '*.js',
-        '*.mjs',
-        '*.cjs',
-      ],
-      extends: 'airbnb-base',
+const config = [
+  ...jsImportConfig,
+  ...jsConfig,
+  ...jsxConfig,
+] as const satisfies Config[];
 
-      parser: '@babel/eslint-parser',
-      parserOptions: {
-        requireConfigFile: false,
-        babelOptions: {
-          plugins: [
-            '@babel/plugin-syntax-import-assertions',
-          ],
-        },
-      },
-    },
-  ],
-} satisfies Config;
-
-module.exports = config;
+export default config;

@@ -1,19 +1,14 @@
-import type {
-  Config,
-} from '../types.js';
+import tsConfig from './ts/ts';
+import tsxConfig from './ts/tsx';
+import tsImportConfig from './ts/import';
+import resetConfig from './ts/reset';
+import type { Config } from '../types';
 
-const config = {
-  overrides: [
-    {
-      files: [
-        '*.ts',
-      ],
-      extends: [
-        'airbnb-base',
-        'airbnb-typescript/base',
-      ],
-    },
-  ],
-} satisfies Config;
+const config = [
+  ...resetConfig,
+  ...tsConfig,
+  ...tsxConfig,
+  ...tsImportConfig,
+] as const satisfies Config[];
 
-module.exports = config;
+export default config;

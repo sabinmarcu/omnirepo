@@ -2,13 +2,14 @@
   "name": "@sabinmarcu/utils-test",
   "version": "1.0.2",
   "main": "./cjs/index.cjs",
-  "types": "./cjs/index.d.ts",
+  "types": "./esm/index.d.ts",
   "module": "./esm/index.mjs",
   "type": "module",
   "exports": {
     ".": {
       "import": "./esm/index.mjs",
-      "require": "./cjs/index.cjs"
+      "require": "./cjs/index.cjs",
+      "types": "./esm/index.d.ts"
     },
     "./src/*": {
       "import": "./src/*",
@@ -16,7 +17,8 @@
     },
     "./*": {
       "import": "./esm/*.mjs",
-      "require": "./cjs/*.cjs"
+      "require": "./cjs/*.cjs",
+      "types": "./esm/*.d.ts"
     },
     "./package.json": "./package.json"
   },
@@ -38,7 +40,7 @@
     "glob": "^8.0.3",
     "memfs": "^3.4.12",
     "moize": "^6.1.4",
-    "yaml": "^2.2.0"
+    "yaml": "^2.5.0"
   },
   "devDependencies": {
     "@sabinmarcu/types": "workspace:*",
