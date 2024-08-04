@@ -35,7 +35,6 @@
     "@sabinmarcu/config": "workspace:*",
     "@sabinmarcu/debug": "workspace:*",
     "@sabinmarcu/eslint-config": "workspace:*",
-    "@sabinmarcu/jotai-storage-adapter-querystring": "workspace:*",
     "@sabinmarcu/observable": "workspace:*",
     "@sabinmarcu/types": "workspace:*",
     "@sabinmarcu/utils-fs": "workspace:*",
