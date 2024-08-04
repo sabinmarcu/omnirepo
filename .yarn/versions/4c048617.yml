@@ -13,5 +13,4 @@ releases:
 
 declined:
   - "@sabinmarcu/docs"
-  - "@sabinmarcu/jotai-storage-adapter-querystring"
   - "@sabinmarcu/omnicli"
