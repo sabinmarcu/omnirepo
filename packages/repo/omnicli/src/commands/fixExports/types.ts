@@ -1,4 +1,5 @@
 export interface ExtensionMapping {
   cjs: string,
-  esm: string
+  esm: string,
+  dts: string,
 }
