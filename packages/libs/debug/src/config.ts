@@ -1,7 +1,8 @@
+/* eslint-disable no-undef */
 import {
   subject,
 } from '@sabinmarcu/observable';
-import * as R from 'ramda';
+import { filter } from 'ramda';
 import { env as environment } from './environment';
 import type {
   DebugRule,
@@ -13,7 +14,7 @@ export const debugString = subject<string>(environment.DEBUG);
 export const filterRawDebugRulesBy = (isEnabled: boolean) => (
   input: DebugRule[] | undefined,
 ) => (input
-  ? R.filter(({ enabled }) => enabled === isEnabled, input)
+  ? filter(({ enabled }) => enabled === isEnabled, input)
   : undefined
 );
 

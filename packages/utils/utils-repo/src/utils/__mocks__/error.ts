@@ -4,6 +4,9 @@ export default {
   setup: {
     '/path': '',
   },
-  input: ['/path', () => false],
+  input: [
+    '/path',
+    () => false,
+  ],
   error: 'Reached root',
 } satisfies WalkFsFixture;

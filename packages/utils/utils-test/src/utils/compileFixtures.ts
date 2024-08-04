@@ -72,7 +72,7 @@ export const compileFixtures = <T extends unknown>(
       const fixture = parser(cwd, path.resolve(cwd, it));
       const name = ((fixture as any)?.name as string | undefined)
         ? ((fixture as any).name as string | undefined)
-        : it.replace(/\.[^.]+$/, '').replace(/[.-]/g, ' ');
+        : it.replace(/\.[^.]+$/, '').replaceAll(/[.-]/g, ' ');
       return {
         ...(fixture as any),
         name,

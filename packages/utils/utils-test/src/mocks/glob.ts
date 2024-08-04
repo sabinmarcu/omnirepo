@@ -6,10 +6,16 @@ export const mockGlob = (
   globInstance = glob,
 ) => {
   const mockedGlob = (pattern: string, options: any, callback: any) => (
-    globInstance(pattern, { ...options, fs }, callback)
+    globInstance(pattern, {
+      ...options,
+      fs,
+    }, callback)
   );
   const mockedGlobSync = (pattern: string, options: any) => (
-    globInstance.sync(pattern, { ...options, fs })
+    globInstance.sync(pattern, {
+      ...options,
+      fs,
+    })
   );
   mockedGlob.sync = mockedGlobSync;
   return mockedGlob;

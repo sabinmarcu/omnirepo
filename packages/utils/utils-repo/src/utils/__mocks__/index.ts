@@ -9,7 +9,9 @@ export type WalkFsFixture = {
   | { error: string }
 );
 
-export default () => compileFixtures<WalkFsFixture>(
+const fixtures = () => compileFixtures<WalkFsFixture>(
   new URL('.', import.meta.url),
   ['index.ts'],
 );
+
+export default fixtures;

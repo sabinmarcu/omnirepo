@@ -24,14 +24,14 @@ export const wrapSetMethod = <
   InputSet extends Set<any>,
   MethodName extends MethodsOfSet,
 >(
-  source: InputSet,
-  method: MethodName,
-  store: Subject<InputSet>,
-) => {
+    source: InputSet,
+    method: MethodName,
+    store: Subject<InputSet>,
+  ) => {
   const member = source[method];
   const replacement = (
     (...parameters: Parameters<typeof member>) => {
-      const result = (member as any).apply(source, parameters);
+      const result = Reflect.apply((member as any), source, parameters);
       store.next(source);
       return result;
     }) as typeof member;

@@ -1,6 +1,6 @@
 import moize from 'moize';
-import { 
-  predicate as testPath
+import {
+  predicate as testPath,
 } from '../../predicates/git';
 import type {
   PathResolver,

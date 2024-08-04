@@ -4,6 +4,10 @@ export default {
   setup: {
     '/path': '',
   },
-  input: ['/path', () => true, (value) => `processed ${value}`],
+  input: [
+    '/path',
+    () => true,
+    (value) => `processed ${value}`,
+  ],
   output: 'processed /path',
 } satisfies WalkFsFixture;

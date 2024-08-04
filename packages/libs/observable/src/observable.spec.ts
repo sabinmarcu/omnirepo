@@ -89,7 +89,9 @@ describe('observable', () => {
     const initialValue = 42;
 
     beforeEach(() => {
-      obs = observable(({ next, complete, error }) => {
+      obs = observable(({
+        next, complete, error,
+      }) => {
         nextFunction = next;
         completeFunction = complete;
         errorFunction = error;
@@ -127,7 +129,10 @@ describe('observable', () => {
     it('should stop propagation after complete', () => {
       const next = jest.fn();
       const complete = jest.fn();
-      obs.subscribe({ complete, next });
+      obs.subscribe({
+        complete,
+        next,
+      });
       expect(complete).not.toHaveBeenCalled();
       expect(next).toHaveBeenCalledTimes(1);
       completeFunction();
@@ -165,7 +170,7 @@ describe('observable', () => {
     describe('filtering by even', () => {
       let filteredObs: PipedObservable<number>;
       beforeEach(() => {
-        filteredObs = obs.filter((v) => v % 2 === 0);
+        filteredObs = obs.filter((v) => v! % 2 === 0);
       });
 
       it('should initially have the correct value', () => {
@@ -212,7 +217,7 @@ describe('observable', () => {
     });
 
     it('should double the input', () => {
-      const mappedObs = obs.map((v) => v * 2);
+      const mappedObs = obs.map((v) => v! * 2);
       expect(mappedObs.value).toBe(initialValue * 2);
     });
   });
@@ -322,11 +327,28 @@ describe('isObservable', () => {
     expect(isObservable.length).toBe(1);
   });
   it.each([
-    { description: 'undefined', given: undefined, expected: false },
-    // eslint-disable-next-line unicorn/no-null
-    { description: 'null', given: null, expected: false },
-    { description: 'empty object', given: {}, expected: false },
-    { description: 'observable from factory', given: observable(noop), expected: true },
+    {
+      description: 'undefined',
+      given: undefined,
+      expected: false,
+    },
+
+    {
+      description: 'null',
+      // eslint-disable-next-line unicorn/no-null
+      given: null,
+      expected: false,
+    },
+    {
+      description: 'empty object',
+      given: {},
+      expected: false,
+    },
+    {
+      description: 'observable from factory',
+      given: observable(noop),
+      expected: true,
+    },
     {
       description: 'fake object that matches shape',
       given: {
@@ -337,7 +359,9 @@ describe('isObservable', () => {
       },
       expected: true,
     },
-  ])('isObservable($description)', ({ given, expected }) => {
+  ])('isObservable($description)', ({
+    given, expected,
+  }) => {
     expect(isObservable(given)).toBe(expected);
   });
 });

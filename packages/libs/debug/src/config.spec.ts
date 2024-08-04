@@ -18,14 +18,29 @@ describe('debugSubject', () => {
 describe('filterRawDebugRulesBy', () => {
   it('should filter raw debug rules by enabled', () => {
     const input = [
-      { enabled: true, name: 'foo' },
-      { enabled: false, name: 'bar' },
-      { enabled: true, name: 'baz' },
+      {
+        enabled: true,
+        name: 'foo',
+      },
+      {
+        enabled: false,
+        name: 'bar',
+      },
+      {
+        enabled: true,
+        name: 'baz',
+      },
     ];
     const isEnabled = true;
     const expectedOutput = [
-      { enabled: true, name: 'foo' },
-      { enabled: true, name: 'baz' },
+      {
+        enabled: true,
+        name: 'foo',
+      },
+      {
+        enabled: true,
+        name: 'baz',
+      },
     ];
     expect(filterRawDebugRulesBy(isEnabled)(input as any)).toEqual(expectedOutput);
   });

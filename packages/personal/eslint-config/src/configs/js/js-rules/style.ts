@@ -512,7 +512,7 @@ export default {
     {
       max: 1,
       maxBOF: 0,
-      maxEOF: 0,
+      maxEOF: 1,
     },
   ],
 

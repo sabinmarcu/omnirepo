@@ -3,9 +3,18 @@ import { resolver } from './git';
 
 describe('resolver.git', () => {
   const testCases = [
-    { input: 'foo', output: './foo/.git' },
-    { input: 'foo/bar', output: './foo/bar/.git' },
-    { input: 'foo/', output: './foo/.git' },
+    {
+      input: 'foo',
+      output: './foo/.git',
+    },
+    {
+      input: 'foo/bar',
+      output: './foo/bar/.git',
+    },
+    {
+      input: 'foo/',
+      output: './foo/.git',
+    },
   ] as const;
   describe('sync', () => {
     it('should be a function', () => {
@@ -16,7 +25,9 @@ describe('resolver.git', () => {
     });
     describe.each(testCases)(
       '$input',
-      ({ input, output }) => {
+      ({
+        input, output,
+      }) => {
         it('should return expected', () => {
           expect(resolver.sync(input)).toBe(path.resolve(output));
         });
@@ -32,7 +43,9 @@ describe('resolver.git', () => {
     });
     describe.each(testCases)(
       '$input',
-      ({ input, output }) => {
+      ({
+        input, output,
+      }) => {
         it('should return expected', async () => {
           await expect(resolver.async(input)).resolves.toBe(path.resolve(output));
         });

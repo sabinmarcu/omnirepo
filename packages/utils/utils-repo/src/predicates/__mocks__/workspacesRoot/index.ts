@@ -6,7 +6,9 @@ export interface WorkspacesRootPredicateFixtures {
   output: boolean,
 }
 
-export default () => compileFixtures<WorkspacesRootPredicateFixtures>(
+const fixtures = () => compileFixtures<WorkspacesRootPredicateFixtures>(
   new URL('.', import.meta.url),
   ['index.ts'],
 );
+
+export default fixtures;

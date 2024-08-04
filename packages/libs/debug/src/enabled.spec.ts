@@ -25,36 +25,72 @@ describe('definitionIsEnabled', () => {
     const rulesInput = [
       {
         id: 'foo',
-        rules: [{ path: 'foo', enabled: true }],
+        rules: [
+          {
+            path: 'foo',
+            enabled: true,
+          },
+        ],
       },
       {
         id: 'fooStuff',
-        rules: [{ path: 'fooStuff', enabled: true }],
+        rules: [
+          {
+            path: 'fooStuff',
+            enabled: true,
+          },
+        ],
       },
       {
         id: 'fooWildcard',
-        rules: [{ path: 'foo*', enabled: true }],
+        rules: [
+          {
+            path: 'foo*',
+            enabled: true,
+          },
+        ],
       },
       {
         id: 'fooWildcardNoFooStuff',
         rules: [
-          { path: 'foo*', enabled: true },
-          { path: 'fooStuff', enabled: false },
+          {
+            path: 'foo*',
+            enabled: true,
+          },
+          {
+            path: 'fooStuff',
+            enabled: false,
+          },
         ],
       },
       {
         id: 'fooWildcardNoFooStuffWildcard',
         rules: [
-          { path: 'foo*', enabled: true },
-          { path: 'fooStuff*', enabled: false },
+          {
+            path: 'foo*',
+            enabled: true,
+          },
+          {
+            path: 'fooStuff*',
+            enabled: false,
+          },
         ],
       },
       {
         id: 'fooWildcardNoFooStuffWildcardFooStuff',
         rules: [
-          { path: 'foo*', enabled: true },
-          { path: 'fooStuff*', enabled: false },
-          { path: 'fooStuff', enabled: true },
+          {
+            path: 'foo*',
+            enabled: true,
+          },
+          {
+            path: 'fooStuff*',
+            enabled: false,
+          },
+          {
+            path: 'fooStuff',
+            enabled: true,
+          },
         ],
       },
     ] as const satisfies Rules;
@@ -63,7 +99,11 @@ describe('definitionIsEnabled', () => {
 
     const testCases = [
       {
-        given: { path: 'foo', namespace: '', channel: 'debug' },
+        given: {
+          path: 'foo',
+          namespace: '',
+          channel: 'debug',
+        },
         expected: {
           foo: true,
           fooStuff: false,
@@ -74,7 +114,11 @@ describe('definitionIsEnabled', () => {
         },
       },
       {
-        given: { path: 'notFoo', namespace: '', channel: 'debug' },
+        given: {
+          path: 'notFoo',
+          namespace: '',
+          channel: 'debug',
+        },
         expected: {
           foo: false,
           fooStuff: false,
@@ -85,7 +129,11 @@ describe('definitionIsEnabled', () => {
         },
       },
       {
-        given: { path: 'fooStuff', namespace: '', channel: 'debug' },
+        given: {
+          path: 'fooStuff',
+          namespace: '',
+          channel: 'debug',
+        },
         expected: {
           foo: false,
           fooStuff: true,
@@ -96,7 +144,11 @@ describe('definitionIsEnabled', () => {
         },
       },
       {
-        given: { path: 'fooStuffs', namespace: '', channel: 'debug' },
+        given: {
+          path: 'fooStuffs',
+          namespace: '',
+          channel: 'debug',
+        },
         expected: {
           foo: false,
           fooStuff: false,
@@ -108,8 +160,12 @@ describe('definitionIsEnabled', () => {
       },
     ] satisfies { given: DebugDefinition, expected: Outputs }[];
 
-    describe.each(rulesInput)('enabled = $enabled, disabled = $disabled', ({ rules, id }) => {
-      it.each(testCases)('definitionIsEnabled($given) = $expected', ({ given, expected }) => {
+    describe.each(rulesInput)('enabled = $enabled, disabled = $disabled', ({
+      rules, id,
+    }) => {
+      it.each(testCases)('definitionIsEnabled($given) = $expected', ({
+        given, expected,
+      }) => {
         const result = expected[id];
         expect(definitionIsEnabled(given, rules as any)).toBe(result);
       });
