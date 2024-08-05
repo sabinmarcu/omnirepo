@@ -5,11 +5,16 @@ import {
   reactPlugin,
 } from './shared';
 import reactRules from '../jsx-rules/react';
+import { getLogger } from '../../../utils/debug';
+
+const logger = getLogger('module:jsx:react');
 
 if (!react) {
-  console.error('React not found. Skipping react config');
+  logger.warn('React not found. Skipping react config');
 } else if (!reactPlugin) {
-  console.error('React Plugin not found. Skipping react config');
+  logger.warn('React Plugin not found. Skipping react config');
+} else {
+  logger.log('Loading React Rules');
 }
 
 const config = [

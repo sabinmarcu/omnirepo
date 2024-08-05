@@ -7,15 +7,20 @@ import {
 } from './shared';
 
 import reactA11yRules from '../jsx-rules/reactA11y';
+import { getLogger } from '../../../utils/debug';
+
+const logger = getLogger('module:jsx:react-a11y');
 
 const jsxA11yPlugin = await tryImport('eslint-plugin-jsx-a11y');
 
 if (!react) {
-  console.error('React not found. Skipping react a11y config.');
+  logger.warn('React not found. Skipping react a11y config.');
 } else if (!reactPlugin) {
-  console.error('React Plugin not found. Skipping react a11y config.');
+  logger.warn('React Plugin not found. Skipping react a11y config.');
 } else if (!jsxA11yPlugin) {
-  console.error('React A11Y Plugin not found. Skipping react a11y config.');
+  logger.warn('React A11Y Plugin not found. Skipping react a11y config.');
+} else {
+  logger.log('Lodin A11Y Rules');
 }
 
 const config = [

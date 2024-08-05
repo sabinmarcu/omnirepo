@@ -1,5 +1,6 @@
 import globals from 'globals';
 import type { Config } from '../../types';
+import { getLogger } from '../../utils/debug';
 
 type ExtractESVersions<T extends string> = T extends `es${infer Version extends number}`
   ? Version
@@ -7,6 +8,8 @@ type ExtractESVersions<T extends string> = T extends `es${infer Version extends 
 type ESVersion = ExtractESVersions<keyof typeof globals>;
 
 const ecmaVersion: ESVersion = 2024;
+
+getLogger('parser:shared').log('Loading shared language options');
 
 const config = [
   {

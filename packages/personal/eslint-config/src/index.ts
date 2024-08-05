@@ -13,25 +13,17 @@ import unicornConfig from './configs/unicorn';
 import typeTestingConfig from './configs/typeTesting';
 import canonicalConfig from './configs/canonical';
 
-const hasParser = parserConfig.length > 0;
-
-if (!hasParser) {
-  console.error('No parser installed, will not be loading config!');
-}
-
-const config: Config[] = hasParser
-  ? [
-    ...parserConfig,
-    ...jsConfig,
-    ...tsConfig,
-    ...rootConfigsConfig,
-    ...jestConfigsConfig,
-    ...moduleConfig,
-    ...storybookConfig,
-    ...unicornConfig,
-    ...typeTestingConfig,
-    ...canonicalConfig,
-  ] as const satisfies Config[]
-  : [] satisfies Config[];
+const config: Config[] = [
+  ...parserConfig,
+  ...jsConfig,
+  ...tsConfig,
+  ...rootConfigsConfig,
+  ...jestConfigsConfig,
+  ...moduleConfig,
+  ...storybookConfig,
+  ...unicornConfig,
+  ...typeTestingConfig,
+  ...canonicalConfig,
+] as const satisfies Config[];
 
 export default config;

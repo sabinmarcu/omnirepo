@@ -1,13 +1,17 @@
 import type {
   Config,
 } from '../types';
+import { getLogger } from '../utils/debug';
 import { makeConfigFactory } from '../utils/makeConfig';
 import { tryImport } from '../utils/tryImport';
 
 const storybookPlugin = await tryImport('eslint-plugin-storybook');
+const logger = getLogger('plugin:storybook');
 
-if (!storybookPlugin) {
-  console.warn('Storybook plugin not found, not loading Storybook rules');
+if (storybookPlugin) {
+  logger.log('Enabling Storybook Rules');
+} else {
+  logger.warn('Storybook Plugin not found. Skipping');
 }
 
 const config = storybookPlugin
