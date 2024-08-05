@@ -25,6 +25,7 @@ module.exports.FIELD_TSCMONO_KEY = 'tscmono.preset';
 module.exports.FIELD_TSCMONO_CONFIG_MAP = {
   packages: 'lib',
   'apps/docs': 'docusaurus',
+  'apps/droprate': 'viteApp'
 };
 module.exports.REQUIRED_WORKSPACE_IGNORE_LIST = new Set([
   'root',

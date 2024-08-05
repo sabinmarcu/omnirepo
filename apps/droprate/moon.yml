@@ -1,0 +1,27 @@
+project:
+  name: droprate
+  description: DropRate App
+  channel: "#droprate"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: application
+
+tasks:
+  start:
+    command: "yarn dev"
+    options:
+      cache: false
+    deps:
+      - "^:dev"
+  build:
+    command: "yarn build"
+    options:
+      cache: false
+    deps:
+      - "^:build"
+
+workspace:
+  inheritedTasks:
+    include: []
