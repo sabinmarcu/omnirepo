@@ -1,0 +1,9 @@
+project:
+  name: use-duplicate-ref
+  description: Hook used to duplicate a forwardRef into a useRef
+  channel: "#hooks"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: library
