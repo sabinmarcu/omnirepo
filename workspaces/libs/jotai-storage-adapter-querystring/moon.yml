@@ -1,0 +1,9 @@
+project:
+  name: jotai-storage-adapter-querystring
+  description: Jotai atomWithStorage adapter for storing data in query string
+  channel: "#libs"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: library
