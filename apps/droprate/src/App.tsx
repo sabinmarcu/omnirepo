@@ -4,11 +4,8 @@ import { ThemeSelector } from './components/ThemeSelector';
 // eslint-disable-next-line unicorn/prevent-abbreviations
 import { DevTools } from './DevTools';
 import { CounterSection } from './components/CounterSection';
-import {
-  Heading,
-  HeadingSection,
-} from './App.style';
 import { RunsList } from './components/RunsList';
+import { Header } from './components/Header';
 
 function App() {
   return (
@@ -17,9 +14,9 @@ function App() {
       <ThemeProvider>
         <GlobalStyles />
         <ThemeSelector />
-        <HeadingSection>
-          <Heading>Calculate drop rates</Heading>
-        </HeadingSection>
+        <Header>
+          Calculate drop rates
+        </Header>
         <CounterSection />
         <RunsList />
       </ThemeProvider>

@@ -10,7 +10,7 @@ import {
   BodyText,
 } from './Display';
 
-export const CounterSection = () => {
+export function CounterSection() {
   const upperLimit = useAtomValue(upperLimitDropRate);
   const print = Number.parseInt(`${upperLimit}`, 10);
 
@@ -23,7 +23,8 @@ export const CounterSection = () => {
           <BodyDescription>
             ... that&apos;s a guaranteed drop, what are you doing here?
           </BodyDescription>
-        ) : (
+        )
+        : (
           <BodyDescription>
             ... this is equal to a 1 in roughly
             {` ${print} `}
@@ -32,4 +33,4 @@ export const CounterSection = () => {
         )}
     </Section>
   );
-};
+}
