@@ -156,7 +156,7 @@ export default {
   // enforces use of function declarations or expressions
   // https://eslint.org/docs/rules/func-style
   'func-style': [
-    'error',
+    'off',
     'expression',
   ],
 
