@@ -12,17 +12,20 @@ workspace:
     exclude:
       - dev
       - devExports
-tasks: 
-  build: 
+tasks:
+  build:
     deps: []
     options:
       mergeDeps: replace
   test:
-    deps: 
+    deps:
       - utils-test:build
       - utils-repo:build
   testDev:
     deps:
       - utils-test:dev
       - utils-repo:dev
-
+dependsOn:
+  - "@sabinmarcu/utils-repo"
+  - "@sabinmarcu/types"
+  - "@sabinmarcu/utils-test"

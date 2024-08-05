@@ -7,12 +7,13 @@ project:
   owner: Sabin Marcu
 language: typescript
 type: library
-tasks: 
-  dev: 
+tasks:
+  dev:
     deps: []
     options:
       mergeDeps: replace
-  build: 
+  build:
     deps: []
     options:
       mergeDeps: replace
+dependsOn: []

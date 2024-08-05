@@ -14,6 +14,15 @@ fileGroups:
     - "src/**/*.spec.*"
 
 tasks:
+  fixDependsOn:
+    command: "omni fix moon dependsOn"
+    inputs:
+      - package.json
+    outputs:
+      - package.json
+    options:
+      cache: false
+
   fixExports:
     command: "omni fix exports"
     inputs:
@@ -22,6 +31,8 @@ tasks:
       - package.json
     options:
       cache: false
+    deps:
+      - "~:fixDependsOn"
 
   build:
     command: "unbuild"
@@ -59,6 +70,8 @@ tasks:
     options:
       cache: false
       runInCI: false
+    deps:
+      - "~:fixDependsOn"
 
   dev:
     command: "unbuild --stub"
