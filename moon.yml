@@ -1,37 +1,34 @@
-tasks: 
-  init: 
+tasks:
+  init:
     command: noop
-    deps: 
+    deps:
       - eslint-config:build
       - commitlint-config-workspaces:build
     inputs: []
-    options: 
+    options:
       cache: false
       runInCI: false
-
-  coverage: 
-    command: "yarn coverage"
+  coverage:
+    command: yarn coverage
     inputs: []
-    options: 
+    options:
       cache: false
       runInCI: false
-
-  eslint: 
-    command: 'eslint'
+  eslint:
+    command: eslint
     inputs: []
     local: true
-    deps: 
+    deps:
       - eslint-config:build
     options:
       runDepsInParallel: false
-
-  cleanAll: 
-    command: "git clean"
-    args: 
+  cleanAll:
+    command: git clean
+    args:
       - -x
       - -d
       - -f
-      - -e 
+      - -e
       - node_modules
       - -e
       - .yarn/*
@@ -40,16 +37,14 @@ tasks:
     options:
       cache: false
       runInCI: false
-
-  postCleanAll: 
+  postCleanAll:
     command: yarn install
     options:
       cache: false
       runInCI: false
-
   clean:
     command: noop
-    deps: 
+    deps:
       - cleanAll
       - postCleanAll
       - tsconfig
@@ -57,17 +52,16 @@ tasks:
       runDepsInParallel: false
       cache: false
       runInCI: false
-
   tsconfig:
     command: yarn tscmono
     inputs: []
-    options: 
+    options:
       cache: false
       runInCI: false
-    
 language: bash
 type: unknown
-
 workspace:
   inheritedTasks:
     include: []
+dependsOn:
+  - "@sabinmarcu/eslint-config"

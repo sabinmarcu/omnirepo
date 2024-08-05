@@ -7,3 +7,7 @@ project:
   owner: Sabin Marcu
 language: typescript
 type: library
+dependsOn:
+  - "@sabinmarcu/utils-fs"
+  - "@sabinmarcu/types"
+  - "@sabinmarcu/utils-test"
