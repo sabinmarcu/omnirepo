@@ -1,0 +1,9 @@
+project:
+  name: moving-mesh-background
+  description: Cool little background
+  channel: "#components"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: library
