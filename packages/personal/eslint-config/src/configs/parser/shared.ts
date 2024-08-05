@@ -18,6 +18,7 @@ const config = [
       },
       globals: {
         ...globals[`es${ecmaVersion}`],
+        ...globals.browser,
         ...globals.node,
       },
     },
