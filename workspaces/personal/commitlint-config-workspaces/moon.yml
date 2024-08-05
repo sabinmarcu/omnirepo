@@ -21,10 +21,18 @@ tasks:
     deps:
       - utils-test:build
       - utils-repo:build
+      - utils-test:build
   testDev:
     deps:
       - utils-test:dev
       - utils-repo:dev
+      - utils-test:dev
+  lint:
+    deps:
+      - utils-test:build
+      - utils-repo:build
+      - utils-test:build
+
 dependsOn:
   - "@sabinmarcu/utils-repo"
   - "@sabinmarcu/types"
