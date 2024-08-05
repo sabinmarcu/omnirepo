@@ -49,7 +49,7 @@
     "inquirer": "8"
   },
   "workspaces": [
-    "./packages/*/*",
+    "./workspaces/*/*",
     "./apps/*"
   ],
   "engines": {

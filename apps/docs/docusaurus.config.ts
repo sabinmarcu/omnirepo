@@ -1,6 +1,7 @@
 /* eslint-disable unicorn/prefer-module */
 import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
+// eslint-disable-next-line import/no-namespace
 import type * as Preset from '@docusaurus/preset-classic';
 import {
   getWorkspaces,
@@ -9,13 +10,18 @@ import {
 import path from 'node:path';
 
 // @ts-ignore
+// eslint-disable-next-line import/no-relative-packages
 import { DOCS_WORKSPACE_EXCLUDES } from '../../.config/documentation.cjs';
 
 const rootPath = resolveRootSync(__dirname);
 const workspaces = (Object.entries(getWorkspaces.map.sync(__dirname)) as [string, string][])
-  .filter(([, workspacePath]) => workspacePath.startsWith('packages'))
+  .filter(([
+    , workspacePath,
+  ]) => workspacePath.startsWith('packages'))
   .filter(([name]) => !DOCS_WORKSPACE_EXCLUDES.includes(name))
-  .map(([, workspacePath]) => ({
+  .map(([
+    , workspacePath,
+  ]) => ({
     path: workspacePath,
     entry: 'src/index.ts',
   }));
@@ -47,7 +53,10 @@ const config: Config = {
   // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'ro'],
+    locales: [
+      'en',
+      'ro',
+    ],
   },
 
   plugins: [
