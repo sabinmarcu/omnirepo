@@ -1,6 +1,6 @@
 {
   "name": "@sabinmarcu/utils-test",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "./cjs/index.cjs",
   "types": "./esm/index.d.ts",
   "module": "./esm/index.mjs",

@@ -1,6 +1,6 @@
 {
   "name": "@sabinmarcu/utils-path",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "./cjs/index.cjs",
   "types": "./esm/index.d.ts",
   "module": "./esm/index.mjs",
