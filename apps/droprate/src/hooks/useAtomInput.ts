@@ -31,6 +31,7 @@ export const useAtomInput = ({ atom }: { atom: WritableAtom<number, [number], vo
     state,
     setValue,
   ]);
+
   useEffect(() => setState(`${value}`), [value]);
 
   return {

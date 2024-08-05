@@ -21,6 +21,7 @@
     "jotai-devtools": "^0.10.0",
     "jotai-effect": "^1.0.0",
     "jotai-optics": "^0.4.0",
+    "nanoid": "^5.0.7",
     "optics-ts": "^2.4.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

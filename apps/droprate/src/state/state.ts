@@ -4,10 +4,14 @@ import {
   queryStorage,
   b64EncoderFromSchema,
 } from '@sabinmarcu/jotai-storage-adapter-querystring';
+import { nanoid } from 'nanoid';
 
 export const stateSchema = z.object({
   dropRate: z.number(),
-  runsList: z.array(z.number()),
+  runsList: z.array(z.object({
+    runs: z.number(),
+    id: z.string(),
+  })),
 });
 
 export type StateType = z.infer<typeof stateSchema>;
@@ -19,9 +23,18 @@ export const storedState = atomWithStorage(
   storage.getItem('state', {
     dropRate: 1,
     runsList: [
-      10,
-      50,
-      100,
+      {
+        runs: 10,
+        id: nanoid(),
+      },
+      {
+        runs: 50,
+        id: nanoid(),
+      },
+      {
+        runs: 100,
+        id: nanoid(),
+      },
     ],
   }),
   storage,

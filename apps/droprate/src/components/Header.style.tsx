@@ -6,9 +6,9 @@ import { Background as MeshBackground } from '@sabinmarcu/moving-mesh-background
 import { Section } from './Section';
 
 export const HeadingSection = styled(Section)(({ theme }) => {
-  const color = theme.palette.mode === 'light' ? '0' : '255';
+  const color = theme.palette.mode === 'light' ? 'black' : 'white';
   return ({
-    background: `linear-gradient(0, rgba(${color}, ${color}, ${color}, 0.1), transparent 25%)`,
+    background: `linear-gradient(0, hsla(from ${color} h s l / 0.1), transparent 25%)`,
     paddingBlock: '6cqh 4cqh',
     position: 'relative',
   });
@@ -26,10 +26,13 @@ export const Background = styled(MeshBackground)(({ theme }) => ({
   '--render-color': theme.palette.primary.main,
 }));
 
-export const Heading = styled(Typography)(() => ({
-  fontSize: '4rem',
-  lineHeight: '5rem',
-  textAlign: 'center',
-  filter: 'blur(1px)',
-  textShadow: '0 0 20rem black',
-}));
+export const Heading = styled(Typography)(({ theme }) => {
+  const color = theme.palette.mode === 'light' ? 'white' : 'black';
+  return {
+    fontSize: '4rem',
+    lineHeight: '5rem',
+    textAlign: 'center',
+    color: `hsla(from ${theme.palette.text.primary} h s l / 0.6)`,
+    textShadow: `0 0 20rem hsla(from ${color} h s l / 0.3)`,
+  };
+});

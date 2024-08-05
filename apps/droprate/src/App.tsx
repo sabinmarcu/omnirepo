@@ -13,10 +13,10 @@ function App() {
       <DevTools />
       <ThemeProvider>
         <GlobalStyles />
-        <ThemeSelector />
         <Header>
           Calculate drop rates
         </Header>
+        <ThemeSelector />
         <CounterSection />
         <RunsList />
       </ThemeProvider>
