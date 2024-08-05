@@ -15,3 +15,11 @@ export const BodyDescription = styled(Typography)({
 export const Paper = styled(MUIPaper)({
   backgroundImage: 'none',
 });
+
+export const Break = styled('hr')(({ theme }) => ({
+  border: 0,
+  height: '2px',
+  width: '100%',
+  marginBlock: '2rem',
+  background: theme.palette.divider,
+}));
