@@ -1,0 +1,9 @@
+project:
+  name: use-match-media
+  description: useMatchMedia hook for React
+  channel: "#hooks"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: library
