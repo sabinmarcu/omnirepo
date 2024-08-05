@@ -1,0 +1,71 @@
+{
+  "name": "@sabinmarcu/droprate",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@fontsource/roboto": "^5.0.13",
+    "@mui/icons-material": "^5.16.5",
+    "@mui/material": "^5.16.5",
+    "@sabinmarcu/jotai-storage-adapter-querystring": "workspace:*",
+    "@sabinmarcu/moving-mesh-background": "workspace:*",
+    "jotai": "^2.9.1",
+    "jotai-devtools": "^0.10.0",
+    "jotai-effect": "^1.0.0",
+    "jotai-optics": "^0.4.0",
+    "optics-ts": "^2.4.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@sabinmarcu/types": "workspace:*",
+    "@sabinmarcu/utils-test": "workspace:*",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "typescript": "5.5.4",
+    "vite": "^5.3.4"
+  },
+  "main": "./cjs/index.cjs",
+  "module": "./esm/index.mjs",
+  "exports": {
+    ".": {
+      "require": "./cjs/index.cjs",
+      "import": "./esm/index.mjs",
+      "types": "./esm/index.d.ts"
+    },
+    "./src/*": {
+      "require": "./src/*",
+      "import": "./src/*"
+    },
+    "./*": {
+      "require": "./cjs/*.cjs",
+      "import": "./esm/*.mjs",
+      "types": "./esm/*.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "typeVersions": {
+    "*": {
+      "*": [
+        "./esm/*"
+      ]
+    }
+  },
+  "build": {
+    "preset": "../../../.config/build.config.ts"
+  },
+  "types": "./esm/index.d.ts",
+  "tscmono": {
+    "preset": "viteApp"
+  }
+}
