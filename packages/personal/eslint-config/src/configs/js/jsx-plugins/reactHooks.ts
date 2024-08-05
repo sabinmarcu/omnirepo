@@ -1,4 +1,5 @@
 import type { Config } from '../../../types';
+import { getLogger } from '../../../utils/debug';
 import { legacyPlugin } from '../../../utils/legacyPlugin';
 import { tryImport } from '../../../utils/tryImport';
 import reactHooksRules from '../jsx-rules/reactHooks';
@@ -9,13 +10,16 @@ import {
 } from './shared';
 
 const reactHooksPlugin = await tryImport('eslint-plugin-react-hooks');
+const logger = getLogger('module:jsx:react-hooks');
 
 if (!react) {
-  console.error('React not found. Skipping react hooks config.');
+  logger.warn('React not found. Skipping react hooks config.');
 } else if (!reactPlugin) {
-  console.error('React Plugin not found. Skipping react hooks config.');
+  logger.warn('React Plugin not found. Skipping react hooks config.');
 } else if (!reactHooksPlugin) {
-  console.error('React Hooks Plugin not found. Skipping react hooks config.');
+  logger.warn('React Hooks Plugin not found. Skipping react hooks config.');
+} else {
+  logger.log('Loading React Hooks Rules');
 }
 
 const config = [

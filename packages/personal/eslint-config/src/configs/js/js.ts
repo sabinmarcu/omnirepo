@@ -5,6 +5,9 @@ import type {
 
 import rules from './js-rules/index';
 import { makeConfigFactory } from '../../utils/makeConfig';
+import { getLogger } from '../../utils/debug';
+
+getLogger('module:js').log('Loading base JS rules');
 
 const config = [
   makeConfigFactory(

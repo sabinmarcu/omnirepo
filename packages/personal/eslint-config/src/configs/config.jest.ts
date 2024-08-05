@@ -3,9 +3,12 @@ import type {
   Config,
 } from '../types';
 import { makeConfigFactory } from '../utils/makeConfig';
+import { getLogger } from '../utils/debug';
 
 const testExtensionGlob = '*(m|c)@(j|t)s*(x)';
 const testNamingGlob = '@(spec|test)';
+
+getLogger('module:jest').log('Loading Jest Rules');
 
 const config = [
   makeConfigFactory(

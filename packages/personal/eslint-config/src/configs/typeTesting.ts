@@ -1,13 +1,17 @@
 import type {
   Config,
 } from '../types';
+import { getLogger } from '../utils/debug';
 import { makeConfigFactory } from '../utils/makeConfig';
 import { tryImport } from '../utils/tryImport';
 
+const logger = getLogger('plugin:expect-type');
 const expectTypePlugin = await tryImport('eslint-plugin-expect-type');
 
-if (!expectTypePlugin) {
-  console.warn('Expect Type plugin not found. Skipping type unit testing.');
+if (expectTypePlugin) {
+  logger.log('Loading Type Testing (expect-type)');
+} else {
+  logger.warn('Expect Type plugin not found. Skipping');
 }
 
 const config = expectTypePlugin

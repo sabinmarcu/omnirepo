@@ -1,7 +1,10 @@
 import type {
   Config,
 } from '../types';
+import { getLogger } from '../utils/debug';
 import { makeConfigFactory } from '../utils/makeConfig';
+
+getLogger('module:config').log('Loading root config files');
 
 const config = [
   makeConfigFactory(

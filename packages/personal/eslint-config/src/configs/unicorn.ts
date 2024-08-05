@@ -4,6 +4,9 @@ import type {
 } from '../types';
 
 import { makeConfigFactory } from '../utils/makeConfig';
+import { getLogger } from '../utils/debug';
+
+getLogger('plugin:unicorn').log('Loading Plugin and Rules');
 
 const config = [
   {

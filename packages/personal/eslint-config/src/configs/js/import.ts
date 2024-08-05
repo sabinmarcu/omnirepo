@@ -1,5 +1,8 @@
 import type { Config } from '../../types';
+import { getLogger } from '../../utils/debug';
 import { legacyPlugin } from '../../utils/legacyPlugin';
+
+getLogger('module:js:import').log('Loading JS Import settings');
 
 const config = [
   {
@@ -28,7 +31,7 @@ const config = [
       'import/core-modules': [],
       'import/ignore': [
         'node_modules',
-        String.raw`\.(coffee|scss|css|less|hbs|svg|json)$`,
+        '\\.(coffee|scss|css|less|hbs|svg|json)$',
       ],
     },
   },

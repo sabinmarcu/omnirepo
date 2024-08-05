@@ -8,11 +8,15 @@ import { makeTSConfig } from './import';
 
 import rules from './rules';
 import JSConfigs from '../js';
+import { getLogger } from '../../utils/debug';
 
+const logger = getLogger('module:ts');
 const tsPlugin = await tryImport('typescript-eslint');
 
-if (!tsPlugin) {
-  console.error('Typescript Plugin not loaded. Skipping Typescript rules.');
+if (tsPlugin) {
+  logger.log('Loading Typescript Rules');
+} else {
+  logger.error('Typescript Plugin not loaded. Skipping Typescript rules.');
 }
 
 const config = tsPlugin

@@ -1,6 +1,9 @@
 import canonicalPlugin from 'eslint-plugin-canonical';
 import type { Config } from '../types';
 import { makeConfigFactory } from '../utils/makeConfig';
+import { getLogger } from '../utils/debug';
+
+getLogger('plugin:canonical').log('Loading canonical style rules');
 
 const canonical = [
   makeConfigFactory(

@@ -1,10 +1,15 @@
 import type { Config } from '../../types';
+import { getLogger } from '../../utils/debug';
 import { tryImport } from '../../utils/tryImport';
 
 const typescriptParser = await tryImport('typescript-eslint');
 
-if (!typescriptParser) {
-  console.warn('Typescript Parser not found, will not be parsing Tyepscript!');
+const logger = getLogger('parser:typescript');
+
+if (typescriptParser) {
+  logger.log('Typescript Parser found. Loading');
+} else {
+  logger.warn('Typescript Parser not found, will not be parsing Tyepscript!');
 }
 
 const config = typescriptParser
