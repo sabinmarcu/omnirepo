@@ -1,11 +1,13 @@
 import {
   Button,
   Input,
-  Paper,
   Typography,
   styled as muiStyled,
 } from '@mui/material';
 import styled from '@emotion/styled';
+import {
+  Paper,
+} from './Display';
 
 export const CounterButton = muiStyled(Button)({
   fontSize: '2rem',

@@ -1,32 +1,66 @@
 import { useAtom } from 'jotai';
+import { useCallback } from 'react';
+import { nanoid } from 'nanoid';
+import { PlusOne } from '@mui/icons-material';
 import {
-  styled,
-} from '@mui/material';
-import { runsList } from '../state/atoms';
-import { Section } from './Section';
+  runsList,
+  runsListAtom,
+} from '../state/atoms';
+import {
+  StatsListSection,
+  StatsListDescription,
+  StatsListAddButton,
+  StatsListActions,
+} from './StatsList';
+
 import { Runs } from './Runs';
-import { BodyText } from './Display';
-
-const RunsListSection = styled(Section)({
-  flexFlow: 'row wrap',
-});
-
-const RunsListDescription = styled(BodyText)({
-  fontSize: '1.1rem',
-  flex: '0 0 100%',
-  textAlign: 'center',
-});
 
 export function RunsList() {
+  const [
+    ,setList,
+  ] = useAtom(runsListAtom);
   const [runs] = useAtom(runsList);
+  const onRemove = useCallback(
+    (id: string) => {
+      setList((oldList) => {
+        const newList = oldList.filter((runsSet) => runsSet.id !== id);
+        if (newList.length !== oldList.length) {
+          return newList;
+        }
+        return oldList;
+      });
+    },
+    [setList],
+  );
+  const onAdd = useCallback(
+    () => {
+      setList((oldList) => [
+        ...oldList,
+        {
+          runs: Number.parseInt(`${Math.random() * 100}`, 10),
+          id: nanoid(),
+        },
+      ]);
+    },
+    [setList],
+  );
   return (
-    <RunsListSection>
-      <RunsListDescription>
+    <StatsListSection>
+      <StatsListDescription>
         Your chance of winning at least once
-      </RunsListDescription>
+      </StatsListDescription>
       {runs.map((atom) => (
-        <Runs atom={atom} key={atom.debugLabel} />
+        <Runs
+          atom={atom}
+          key={atom.toString()}
+          onRemove={runs.length > 1 ? onRemove : undefined}
+        />
       ))}
-    </RunsListSection>
+      <StatsListActions>
+        <StatsListAddButton variant="contained" color="inherit" onClick={onAdd}>
+          <PlusOne />
+        </StatsListAddButton>
+      </StatsListActions>
+    </StatsListSection>
   );
 }

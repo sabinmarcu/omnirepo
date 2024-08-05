@@ -1,17 +1,40 @@
 import {
-  Paper,
+  IconButton,
   styled,
   TextField,
   Typography,
 } from '@mui/material';
-import { BodyText } from './Display';
+import {
+  BodyText,
+  Paper,
+} from './Display';
 
 const StatsBase = styled(Paper)({
   display: 'flex',
   flexFlow: 'column nowrap',
   padding: '1rem',
   gap: '1rem',
+  position: 'relative',
 });
+
+const StatsActions = styled('div')({
+  display: 'flex',
+  flexFlow: 'row nowrap',
+  justifyContent: 'flex-end',
+  position: 'absolute',
+  insetBlockStart: '-0.5rem',
+  insetInlineEnd: '-0.5rem',
+});
+
+const StatsActionButton = styled(IconButton)(({ theme }) => ({
+  background: `hsla(from ${theme.palette.error.main} h s l / 0.3)`,
+  '&:hover': {
+    background: `hsla(from ${theme.palette.error.main} h s l / 0.8)`,
+  },
+  '& > *': {
+    fontSize: 'inherit',
+  },
+}));
 
 const StatsTop = styled('div')({
   display: 'flex',
@@ -34,9 +57,13 @@ export const Stats = StatsBase as (typeof StatsBase) & {
   Text: typeof StatsText,
   Input: typeof StatsInput,
   Result: typeof StatsResult,
+  Actions: typeof StatsActions,
+  ActionButton: typeof StatsActionButton,
 };
 
 Stats.Top = StatsTop;
 Stats.Text = StatsText;
 Stats.Input = StatsInput;
 Stats.Result = StatsResult;
+Stats.Actions = StatsActions;
+Stats.ActionButton = StatsActionButton;
