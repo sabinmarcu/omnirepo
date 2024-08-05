@@ -28,6 +28,7 @@ module.exports.FIELD_TSCMONO_CONFIG_MAP = {
 };
 module.exports.REQUIRED_WORKSPACE_IGNORE_LIST = new Set([
   'root',
+  '@sabinmarcu/types',
   DOCS_WORKSPACE_NAME,
 ]);
 module.exports.REQUIRED_WORKSPACE_DEPENDENCIES = {
