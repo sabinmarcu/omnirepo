@@ -5,7 +5,9 @@ import { ThemeSelector } from './components/ThemeSelector';
 import { DevTools } from './DevTools';
 import { CounterSection } from './components/CounterSection';
 import { RunsList } from './components/RunsList';
+import { ProbabilityRunsList } from './components/ProbabilityRunsList';
 import { Header } from './components/Header';
+import { Break } from './components/Display';
 
 function App() {
   return (
@@ -18,7 +20,10 @@ function App() {
         </Header>
         <ThemeSelector />
         <CounterSection />
+        <Break />
         <RunsList />
+        <Break />
+        <ProbabilityRunsList />
       </ThemeProvider>
     </>
   );

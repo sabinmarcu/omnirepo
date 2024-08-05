@@ -12,6 +12,11 @@ export const stateSchema = z.object({
     runs: z.number(),
     id: z.string(),
   })),
+  probabilityList: z.array(z.object({
+    probability: z.number(),
+    id: z.string(),
+  })),
+
 });
 
 export type StateType = z.infer<typeof stateSchema>;
@@ -33,6 +38,20 @@ export const storedState = atomWithStorage(
       },
       {
         runs: 100,
+        id: nanoid(),
+      },
+    ],
+    probabilityList: [
+      {
+        probability: 50,
+        id: nanoid(),
+      },
+      {
+        probability: 80,
+        id: nanoid(),
+      },
+      {
+        probability: 95,
         id: nanoid(),
       },
     ],

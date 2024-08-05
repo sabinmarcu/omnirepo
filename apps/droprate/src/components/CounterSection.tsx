@@ -15,7 +15,7 @@ export function CounterSection() {
   const print = Number.parseInt(`${upperLimit}`, 10);
 
   return (
-    <Section>
+    <Section style={{ marginBlockStart: '2rem' }}>
       <BodyText>Enter your drop-rate below</BodyText>
       <Counter atom={percentDropRate} afterText="%" />
       {print === 1

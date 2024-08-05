@@ -1,6 +1,7 @@
 import emotionStyled from '@emotion/styled';
 
 export const Section = emotionStyled.section({
+  boxSizing: 'border-box',
   paddingInline: '3cqw',
   paddingBlock: '2cqh',
   width: '100%',

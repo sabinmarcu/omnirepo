@@ -32,6 +32,12 @@ export const runsListAtom = focusAtom(
 
 export const runsList = splitAtom(runsListAtom);
 
+export const probabilityListAtom = focusAtom(
+  storedState,
+  (optic) => optic.prop('probabilityList'),
+);
+
+export const probabilityList = splitAtom(probabilityListAtom);
 /**
  * x / 100 = 1 / y
  * x = 1 / y * 100
@@ -41,4 +47,7 @@ export const runsList = splitAtom(runsListAtom);
  * P(one drop) = 1 - (1 - p) ^ n
  * p = probability
  * n = number of tries
+ * P = 1 - (1 - p) ^ n
+ * (1 - p) ^ n = 1 - P
+ * n = log(1 - P) / log(1 - p)
  * */
