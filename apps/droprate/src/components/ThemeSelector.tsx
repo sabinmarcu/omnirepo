@@ -21,14 +21,22 @@ const getSelectionData = (input: Selections): (typeof selections)[number] => (
   selections.find(({ value }) => value === input)!
 );
 
-export const ThemeSelector = () => {
-  const [selection, setSelection] = useAtom(themeSelectionAtom);
-  const { name: currentName, icon: CurrentIcon } = useMemo(
+export function ThemeSelector() {
+  const [
+    selection,
+    setSelection,
+  ] = useAtom(themeSelectionAtom);
+  const {
+    name: currentName, icon: CurrentIcon,
+  } = useMemo(
     () => getSelectionData(selection),
     [selection],
   );
 
-  const [anchorElement, setAnchorElement] = useState<HTMLElement | undefined>(undefined);
+  const [
+    anchorElement,
+    setAnchorElement,
+  ] = useState<HTMLElement | undefined>(undefined);
   const handleOpen = (event: MouseEvent<HTMLElement>) => setAnchorElement(event.currentTarget);
   const handleClose = () => setAnchorElement(undefined);
   const open = !!anchorElement;
@@ -61,7 +69,9 @@ export const ThemeSelector = () => {
         onClose={handleClose}
         MenuListProps={{ 'aria-labelledby': 'theme-selection-button' }}
       >
-        {selections.map(({ value, icon: Icon, name }) => (
+        {selections.map(({
+          value, icon: Icon, name,
+        }) => (
 
           <MenuItem key={value} onClick={handleSelection(value)}>
             <ListItemIcon><Icon /></ListItemIcon>
@@ -71,4 +81,4 @@ export const ThemeSelector = () => {
       </Menu>
     </>
   );
-};
+}

@@ -3,7 +3,7 @@ import {
 } from '@emotion/react';
 import { useTheme } from '@mui/material';
 
-export const GlobalStyles = () => {
+export function GlobalStyles() {
   const theme = useTheme();
 
   return (
@@ -27,4 +27,4 @@ export const GlobalStyles = () => {
     }}
     />
   );
-};
+}

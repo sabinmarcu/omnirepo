@@ -2,9 +2,15 @@ import { atom } from 'jotai';
 import { atomEffect } from 'jotai-effect';
 import { atomWithStorage } from 'jotai/utils';
 
-export const variants = ['light', 'dark'] as const;
+export const variants = [
+  'light',
+  'dark',
+] as const;
 export type Variants = typeof variants[number];
-export const selections = [...variants, 'system'] as const;
+export const selections = [
+  ...variants,
+  'system',
+] as const;
 export type Selections = typeof selections[number];
 
 export const themeSelectionAtom = atomWithStorage<Selections>('theme', 'system');

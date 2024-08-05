@@ -7,7 +7,7 @@ import { ThemeProvider as MUIThemeProvider } from '@mui/material';
 import { themeAtom } from '../state/theme';
 import { themes } from '../constants/theme';
 
-export const ThemeProvider = ({ children }: PropsWithChildren) => {
+export function ThemeProvider({ children }: PropsWithChildren) {
   const [variant] = useAtom(themeAtom);
   const theme = useMemo(
     () => themes[variant],
@@ -18,4 +18,4 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
       {children}
     </MUIThemeProvider>
   );
-};
+}

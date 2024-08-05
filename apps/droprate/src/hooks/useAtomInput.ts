@@ -7,11 +7,19 @@ import {
 } from 'react';
 
 export const useAtomInput = ({ atom }: { atom: WritableAtom<number, [number], void> }) => {
-  const [value, setValue] = useAtom(atom);
-  const [state, setState] = useState(`${value}`);
+  const [
+    value,
+    setValue,
+  ] = useAtom(atom);
+  const [
+    state,
+    setState,
+  ] = useState(`${value}`);
 
   const onChange = ({ currentTarget: { value: newValue } }: ChangeEvent<HTMLInputElement>) => {
-    setState(newValue);
+    if (/^\d*$/.test(newValue)) {
+      setState(newValue);
+    }
   };
 
   useEffect(() => {
@@ -19,8 +27,15 @@ export const useAtomInput = ({ atom }: { atom: WritableAtom<number, [number], vo
     if (nextValue && !Number.isNaN(nextValue)) {
       setValue(nextValue);
     }
-  }, [state, setValue]);
+  }, [
+    state,
+    setValue,
+  ]);
   useEffect(() => setState(`${value}`), [value]);
 
-  return { state, value, onChange } as const;
+  return {
+    state,
+    value,
+    onChange,
+  } as const;
 };

@@ -5,12 +5,17 @@ import { Stats } from './Stats';
 import { useAtomInput } from '../hooks/useAtomInput';
 import { unitDroprate } from '../state/atoms';
 
-export const Runs = ({ atom }: { atom: PrimitiveAtom<number> }) => {
-  const { value: runs, state, onChange } = useAtomInput({ atom });
+export function Runs({ atom }: { atom: PrimitiveAtom<number> }) {
+  const {
+    value: runs, state, onChange,
+  } = useAtomInput({ atom });
   const probability = useAtomValue(unitDroprate);
   const percentage = useMemo(
     () => Number.parseInt(`${(1 - (1 - probability) ** runs) * 100}`, 10),
-    [probability, runs],
+    [
+      probability,
+      runs,
+    ],
   );
   return (
     <Stats>
@@ -28,4 +33,4 @@ export const Runs = ({ atom }: { atom: PrimitiveAtom<number> }) => {
       </Stats.Result>
     </Stats>
   );
-};
+}

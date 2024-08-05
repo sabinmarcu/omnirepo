@@ -17,7 +17,7 @@ const RunsListDescription = styled(BodyText)({
   textAlign: 'center',
 });
 
-export const RunsList = () => {
+export function RunsList() {
   const [runs] = useAtom(runsList);
   return (
     <RunsListSection>
@@ -29,4 +29,4 @@ export const RunsList = () => {
       ))}
     </RunsListSection>
   );
-};
+}
