@@ -12,8 +12,10 @@ const config = [
   {
     name: 'Shared Parser Options',
     languageOptions: {
-      ecmaVersion,
-      sourceType: 'module',
+      parserOptions: {
+        ecmaVersion,
+        sourceType: 'module',
+      },
       globals: {
         ...globals[`es${ecmaVersion}`],
         ...globals.node,
