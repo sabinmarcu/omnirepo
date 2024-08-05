@@ -1,0 +1,9 @@
+project:
+  name: use-prefers-reduced-motion
+  description: usePrefersReducedMotion React Hook
+  channel: "#hooks"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: library
