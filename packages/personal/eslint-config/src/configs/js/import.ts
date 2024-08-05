@@ -18,6 +18,7 @@ const config = [
             '.json',
           ],
         },
+        exports: true,
       },
       'import/extensions': [
         '.js',
