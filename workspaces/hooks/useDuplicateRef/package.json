@@ -1,0 +1,59 @@
+{
+  "name": "@sabinmarcu/use-duplicate-ref",
+  "version": "1.0.1",
+  "main": "./cjs/index.cjs",
+  "types": "./esm/index.d.ts",
+  "module": "./esm/index.mjs",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./esm/index.mjs",
+      "require": "./cjs/index.cjs",
+      "types": "./esm/index.d.ts"
+    },
+    "./src/*": {
+      "import": "./src/*",
+      "require": "./src/*"
+    },
+    "./*": {
+      "import": "./esm/*.mjs",
+      "require": "./cjs/*.cjs",
+      "types": "./esm/*.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./esm/*"
+      ]
+    }
+  },
+  "packageManager": "yarn@3.3.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "build": {
+    "preset": "../../../.config/build.config.ts"
+  },
+  "devDependencies": {
+    "@sabinmarcu/types": "workspace:*",
+    "@sabinmarcu/utils-test": "workspace:*"
+  },
+  "tscmono": {
+    "preset": "lib"
+  },
+  "typeVersions": {
+    "*": {
+      "*": [
+        "./esm/*"
+      ]
+    }
+  },
+  "peerDependencies": {
+    "react": "*"
+  },
+  "dependencies": {
+    "@sabinmarcu/use-match-media": "workspace:*"
+  }
+}
