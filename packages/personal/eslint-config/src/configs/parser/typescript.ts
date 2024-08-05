@@ -7,13 +7,15 @@ if (!typescriptParser) {
   console.warn('Typescript Parser not found, will not be parsing Tyepscript!');
 }
 
-const config = [
-  typescriptParser && {
-    name: 'Typescript Parser',
-    languageOptions: {
-      parser: typescriptParser.parser,
+const config = typescriptParser
+  ? [
+    {
+      name: 'Typescript Parser',
+      languageOptions: {
+        parser: typescriptParser.parser,
+      },
     },
-  },
-] satisfies Config[];
+  ] as const satisfies Config[]
+  : [] satisfies Config[];
 
 export default config;
