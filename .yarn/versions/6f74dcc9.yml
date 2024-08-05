@@ -1,5 +1,0 @@
-releases:
-  "@sabinmarcu/eslint-config": patch
-
-declined:
-  - "@sabinmarcu/docs"
