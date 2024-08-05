@@ -17,7 +17,7 @@ const rootPath = resolveRootSync(__dirname);
 const workspaces = (Object.entries(getWorkspaces.map.sync(__dirname)) as [string, string][])
   .filter(([
     , workspacePath,
-  ]) => workspacePath.startsWith('packages'))
+  ]) => workspacePath.startsWith('workspaces'))
   .filter(([name]) => !DOCS_WORKSPACE_EXCLUDES.includes(name))
   .map(([
     , workspacePath,
