@@ -5903,7 +5903,6 @@ __metadata:
     "@mui/icons-material": "npm:^5.16.5"
     "@mui/material": "npm:^5.16.5"
     "@sabinmarcu/jotai-storage-adapter-querystring": "workspace:*"
-    "@sabinmarcu/moving-mesh-background": "workspace:*"
     "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
     "@types/react": "npm:^18.3.3"

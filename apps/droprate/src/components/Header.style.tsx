@@ -2,7 +2,7 @@ import {
   styled,
   Typography,
 } from '@mui/material';
-import { Background as MeshBackground } from '@sabinmarcu/moving-mesh-background';
+// import { Background as MeshBackground } from '@sabinmarcu/moving-mesh-background';
 import { Section } from './Section';
 
 export const HeadingSection = styled(Section)(({ theme }) => {
@@ -14,17 +14,17 @@ export const HeadingSection = styled(Section)(({ theme }) => {
   });
 });
 
-export const BackgroundWrapper = styled('div')({
-  position: 'absolute',
-  inset: 0,
-});
-
-export const Background = styled(MeshBackground)(({ theme }) => ({
-  width: '100%',
-  height: '100%',
-  opacity: 0.3,
-  '--render-color': theme.palette.primary.main,
-}));
+// export const BackgroundWrapper = styled('div')({
+//   position: 'absolute',
+//   inset: 0,
+// });
+//
+// export const Background = styled(MeshBackground)(({ theme }) => ({
+//   width: '100%',
+//   height: '100%',
+//   opacity: 0.3,
+//   '--render-color': theme.palette.primary.main,
+// }));
 
 export const Heading = styled(Typography)(({ theme }) => {
   const color = theme.palette.mode === 'light' ? 'white' : 'black';
