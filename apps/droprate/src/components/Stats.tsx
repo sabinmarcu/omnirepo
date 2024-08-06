@@ -43,9 +43,7 @@ const StatsTop = styled('div')({
   gap: '1rem',
 });
 
-const StatsText = styled(BodyText)({
-  flex: 0,
-});
+const StatsText = styled(BodyText)({});
 const StatsInput = styled(TextField)({});
 const StatsResult = styled(Typography)(({ theme }) => ({
   background: theme.palette.background.default,

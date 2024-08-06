@@ -33,11 +33,6 @@ export function ProbabilityRuns({
   const runs = useMemo(
     () => {
       const runsNumber = Math.log(1 - probability / 100) / Math.log(1 - globalProbability);
-      console.log({
-        runsNumber,
-        globalProbability,
-        probability,
-      });
       return Number.parseInt(`${Math.ceil(runsNumber)}`, 10);
     },
     [
@@ -64,13 +59,13 @@ export function ProbabilityRuns({
         </Stats.Actions>
       )}
       <Stats.Top>
-        <Stats.Text>every</Stats.Text>
+        <Stats.Text>for a</Stats.Text>
         <Stats.Input
           variant="outlined"
           value={state}
           onChange={onChange}
         />
-        <Stats.Text>runs</Stats.Text>
+        <Stats.Text>% chance</Stats.Text>
       </Stats.Top>
       <Stats.Result>
         {`${runs} runs`}
