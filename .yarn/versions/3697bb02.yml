@@ -1,0 +1,22 @@
+releases:
+  "@sabinmarcu/commitlint-config-workspaces": major
+  "@sabinmarcu/config": major
+  "@sabinmarcu/debug": major
+  "@sabinmarcu/eslint-config": major
+  "@sabinmarcu/jotai-storage-adapter-querystring": major
+  "@sabinmarcu/moving-mesh-background": major
+  "@sabinmarcu/observable": major
+  "@sabinmarcu/types": major
+  "@sabinmarcu/use-duplicate-ref": major
+  "@sabinmarcu/use-match-media": major
+  "@sabinmarcu/use-prefers-reduced-motion": major
+  "@sabinmarcu/utils-fs": major
+  "@sabinmarcu/utils-path": major
+  "@sabinmarcu/utils-primitives": major
+  "@sabinmarcu/utils-repo": major
+  "@sabinmarcu/utils-test": major
+
+declined:
+  - "@sabinmarcu/docs"
+  - "@sabinmarcu/droprate"
+  - "@sabinmarcu/omnicli"
