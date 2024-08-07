@@ -19,6 +19,7 @@ tasks:
     command: "yarn build"
     options:
       cache: false
+      runInCI: false
     deps:
       - "^:build"
 
