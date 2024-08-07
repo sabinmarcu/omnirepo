@@ -20,12 +20,8 @@ import {
   forwardRef,
   useState,
 } from 'react';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import type { PrimitiveAtom } from 'jotai';
-import type { Dayjs } from 'dayjs';
-import dayjs from 'dayjs';
 import { TitleEditorWrapper } from './TitleEditor.style.tsx';
-import { dateToState } from '../utils/date.ts';
 
 export type Encoder = {
   encode: (input: string) => string,
@@ -61,8 +57,6 @@ export type DisplayProperties = {
 
 export type EditorProperties = {
   label: string,
-  // eslint-disable-next-line react/no-unused-prop-types
-  type?: InputProperties['type'],
 } & SharedInnerProperties;
 
 export type TitleEditorProperties = Omit<
@@ -92,7 +86,7 @@ export function TitleEditorDisplay({
   if (location === 'left') {
     return (
       <>
-        <Typography variant="h4">{display}</Typography>
+        <Typography variant="h4" component="h1">{display}</Typography>
         <TitleEditorInteraction onClick={onClick} icon={Edit} />
       </>
     );
@@ -100,12 +94,12 @@ export function TitleEditorDisplay({
   return (
     <>
       <TitleEditorInteraction onClick={onClick} icon={Edit} />
-      <Typography variant="h4">{display}</Typography>
+      <Typography variant="h4" component="h1">{display}</Typography>
     </>
   );
 }
 
-export function TitleEditorTextInput({
+export function TitleEditorEdit({
   atom,
   label,
   location,
@@ -152,68 +146,8 @@ export function TitleEditorTextInput({
   );
 }
 
-export function TitleEditorDateInput({
-  atom,
-  label,
-  location,
-  onClick,
-}: EditorProperties) {
-  const [
-    outerValue,
-    setOuterValue,
-  ] = useAtom(atom);
-  const [
-    input,
-    setInput,
-  ] = useState(dayjs(outerValue, 'DD.MM.YYYY'));
-  const onChange = (value: Dayjs | null) => {
-    if (value) {
-      setInput(value);
-    }
-  };
-  const onSave = () => {
-    setOuterValue(dateToState(input));
-    onClick();
-  };
-  if (location === 'left') {
-    return (
-      <>
-        <DatePicker
-          value={input}
-          label={label}
-          onChange={onChange}
-        />
-        <TitleEditorInteraction onClick={onSave} color="success" icon={Check} />
-        <TitleEditorInteraction onClick={onClick} color="error" icon={Close} />
-      </>
-    );
-  }
-  return (
-    <>
-      <TitleEditorInteraction onClick={onClick} color="error" icon={Close} />
-      <TitleEditorInteraction onClick={onSave} color="success" icon={Check} />
-      <DatePicker
-        label={label}
-        value={input}
-        onChange={onChange}
-      />
-    </>
-  );
-}
-
-export function TitleEditorEdit({
-  type = 'text',
-  ...editorProperties
-}: EditorProperties) {
-  if (type === 'text') {
-    return <TitleEditorTextInput {...editorProperties} />;
-  }
-  return <TitleEditorDateInput {...editorProperties} />;
-}
-
 export function TitleEditor({
   atom,
-  type,
   location = 'left',
   label,
   format,
@@ -230,7 +164,6 @@ export function TitleEditor({
           <TitleEditorEdit
             onClick={toggleEdit}
             atom={atom}
-            type={type}
             location={location}
             label={label}
           />

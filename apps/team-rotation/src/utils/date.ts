@@ -1,9 +1,11 @@
 import dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat.js';
 
-dayjs.extend(localizedFormat);
 dayjs.locale('ro');
 
+const romanianDateFormat = 'DD.MM.YYYY';
+export const parseDate = (input: Parameters<typeof dayjs>[0]) => (
+  dayjs(input, romanianDateFormat, 'ro')
+);
 export const dateToState = (input: Parameters<typeof dayjs>[0]) => (
-  dayjs(input, 'DD.MM.YYYY', 'ro').format('L')
+  parseDate(input).format(romanianDateFormat)
 );
