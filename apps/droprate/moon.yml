@@ -13,8 +13,6 @@ tasks:
     command: "yarn dev"
     options:
       cache: false
-    deps:
-      - "^:dev"
   build:
     command: "yarn build"
     options:

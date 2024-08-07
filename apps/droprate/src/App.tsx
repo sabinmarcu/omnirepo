@@ -1,4 +1,4 @@
-import { ThemeProvider } from './components/ThemeProvider.js';
+import { ThemeProvider } from '@sabinmarcu/mui-material-theme';
 import { GlobalStyles } from './GlobalStyles.js';
 import { ThemeSelector } from './components/ThemeSelector.js';
 // eslint-disable-next-line unicorn/prevent-abbreviations

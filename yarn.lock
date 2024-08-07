@@ -5282,7 +5282,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/icons-material@npm:^5.16.5":
+"@mui/icons-material@npm:^5.16.5, @mui/icons-material@npm:^5.16.6":
   version: 5.16.6
   resolution: "@mui/icons-material@npm:5.16.6"
   dependencies:
@@ -5298,7 +5298,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/material@npm:^5.16.5":
+"@mui/material@npm:^5.16.5, @mui/material@npm:^5.16.6":
   version: 5.16.6
   resolution: "@mui/material@npm:5.16.6"
   dependencies:
@@ -5723,9 +5723,11 @@ __metadata:
     "@sabinmarcu/eslint-config": "workspace:*"
     "@sabinmarcu/jotai-storage-adapter-querystring": "workspace:*"
     "@sabinmarcu/moving-mesh-background": "workspace:*"
+    "@sabinmarcu/mui-material-theme": "workspace:*"
     "@sabinmarcu/observable": "workspace:*"
     "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/use-duplicate-ref": "workspace:*"
+    "@sabinmarcu/use-local-storage": "workspace:*"
     "@sabinmarcu/use-match-media": "workspace:*"
     "@sabinmarcu/use-prefers-reduced-motion": "workspace:*"
     "@sabinmarcu/utils-fs": "workspace:*"
@@ -5755,7 +5757,9 @@ __metadata:
     "@mui/material": "npm:^5.16.5"
     "@sabinmarcu/jotai-storage-adapter-querystring": "workspace:*"
     "@sabinmarcu/moving-mesh-background": "workspace:*"
+    "@sabinmarcu/mui-material-theme": "workspace:*"
     "@sabinmarcu/types": "workspace:*"
+    "@sabinmarcu/use-match-media": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
@@ -5851,6 +5855,33 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@sabinmarcu/mui-material-theme@workspace:*, @sabinmarcu/mui-material-theme@workspace:workspaces/components/mui-material-theme":
+  version: 0.0.0-use.local
+  resolution: "@sabinmarcu/mui-material-theme@workspace:workspaces/components/mui-material-theme"
+  dependencies:
+    "@mui/icons-material": "npm:^5.16.6"
+    "@mui/material": "npm:^5.16.6"
+    "@sabinmarcu/types": "workspace:*"
+    "@sabinmarcu/use-local-storage": "workspace:*"
+    "@sabinmarcu/use-match-media": "workspace:*"
+    "@sabinmarcu/utils-test": "workspace:*"
+  peerDependencies:
+    "@mui/icons-material": "*"
+    "@mui/material": "*"
+    react: "*"
+  dependenciesMeta:
+    "@mui/icons-material":
+      optional: true
+    "@mui/material":
+      optional: true
+  peerDependenciesMeta:
+    "@mui/icons-material":
+      optional: true
+    "@mui/material":
+      optional: true
+  languageName: unknown
+  linkType: soft
+
 "@sabinmarcu/observable@workspace:*, @sabinmarcu/observable@workspace:workspaces/libs/observable":
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/observable@workspace:workspaces/libs/observable"
@@ -5906,6 +5937,17 @@ __metadata:
   dependencies:
     "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/use-match-media": "workspace:*"
+    "@sabinmarcu/utils-test": "workspace:*"
+  peerDependencies:
+    react: "*"
+  languageName: unknown
+  linkType: soft
+
+"@sabinmarcu/use-local-storage@workspace:*, @sabinmarcu/use-local-storage@workspace:workspaces/hooks/useLocalStorage":
+  version: 0.0.0-use.local
+  resolution: "@sabinmarcu/use-local-storage@workspace:workspaces/hooks/useLocalStorage"
+  dependencies:
+    "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
   peerDependencies:
     react: "*"
