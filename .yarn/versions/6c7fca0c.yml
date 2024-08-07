@@ -1,0 +1,6 @@
+releases:
+  "@sabinmarcu/config": patch
+  "@sabinmarcu/debug": patch
+
+declined:
+  - "@sabinmarcu/docs"
