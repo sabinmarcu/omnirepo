@@ -1,0 +1,14 @@
+project:
+  name: mui-material-theme
+  description: MUI Material Theme Selector and controls
+  channel: "#components"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: library
+dependsOn:
+  - "@sabinmarcu/use-duplicate-ref"
+  - "@sabinmarcu/use-prefers-reduced-motion"
+  - "@sabinmarcu/types"
+  - "@sabinmarcu/utils-test"
