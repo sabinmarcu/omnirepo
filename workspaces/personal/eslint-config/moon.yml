@@ -7,22 +7,11 @@ project:
   owner: Sabin Marcu
 language: typescript
 type: library
-workspace:
-  inheritedTasks:
-    exclude:
-      - dev
-      - devExports
 tasks:
   build:
     deps: []
     options:
       mergeDeps: replace
-  test:
-    deps:
-      - utils-test:build
-  testDev:
-    deps:
-      - utils-test:dev
 dependsOn:
   - "@sabinmarcu/types"
   - "@sabinmarcu/utils-test"

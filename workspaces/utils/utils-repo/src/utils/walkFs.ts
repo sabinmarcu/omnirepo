@@ -6,8 +6,8 @@ import type {
   PathWalkerFunction,
   PathWalkerFunctionAsync,
   PathWalkerProcessFunction,
-} from '../types';
-import { fsRoot } from '../constants';
+} from '../types.js';
+import { fsRoot } from '../constants/index.js';
 
 /**
  * Walk the filesystem up from a path, checking each path against a predicate (async)

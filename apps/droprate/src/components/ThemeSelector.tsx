@@ -12,10 +12,10 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import type { Selections } from '../state/theme';
-import { themeSelectionAtom } from '../state/theme';
-import { selections } from '../constants/theme';
-import { ThemeSelectorWrapper } from './ThemeSelector.style';
+import type { Selections } from '../state/theme.js';
+import { themeSelectionAtom } from '../state/theme.js';
+import { selections } from '../constants/theme.js';
+import { ThemeSelectorWrapper } from './ThemeSelector.style.js';
 
 const getSelectionData = (input: Selections): (typeof selections)[number] => (
   selections.find(({ value }) => value === input)!

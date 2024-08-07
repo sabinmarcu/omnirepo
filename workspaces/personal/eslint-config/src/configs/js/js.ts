@@ -1,11 +1,10 @@
 import stylisticJsPlugin from '@stylistic/eslint-plugin-js';
 import type {
   Config,
-} from '../../types';
-
-import rules from './js-rules/index';
-import { makeConfigFactory } from '../../utils/makeConfig';
-import { getLogger } from '../../utils/debug';
+} from '../../types.js';
+import rules from './js-rules/index.js';
+import { makeConfigFactory } from '../../utils/makeConfig.js';
+import { getLogger } from '../../utils/debug.js';
 
 getLogger('module:js').log('Loading base JS rules');
 
@@ -18,7 +17,7 @@ const config = [
   )({
     name: 'JS Config',
     plugins: {
-      '@stylistic/js': stylisticJsPlugin,
+      '@stylistic/js': stylisticJsPlugin as any,
     },
     rules,
   }),

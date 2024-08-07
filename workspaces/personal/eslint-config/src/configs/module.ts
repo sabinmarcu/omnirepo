@@ -1,6 +1,6 @@
-import type { Config } from '../types';
-import { getLogger } from '../utils/debug';
-import { makeConfigFactory } from '../utils/makeConfig';
+import type { Config } from '../types.js';
+import { getLogger } from '../utils/debug.js';
+import { makeConfigFactory } from '../utils/makeConfig.js';
 
 getLogger('module:esm').log('Loading ESM rules');
 

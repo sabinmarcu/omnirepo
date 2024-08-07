@@ -2,19 +2,22 @@ import {
   readJson,
   readJsonSync,
 } from '@sabinmarcu/utils-fs';
-import moize from 'moize';
+import moizeImport, { type Moize } from 'moize';
+
 import path from 'node:path';
 import type { PackageJson } from 'type-fest';
 import type {
   PathResolver,
   PathResolverFunction,
   PathResolverFunctionAsync,
-} from '../../types';
-import { walker } from '../../utils/walkFs';
+} from '../../types.js';
+import { walker } from '../../utils/walkFs.js';
 import {
   resolver as getWorkspacesPaths,
-} from './paths';
-import { testWorkspaces as test } from '../../predicates/index';
+} from './paths.js';
+import { testWorkspaces as test } from '../../predicates/index.js';
+
+const moize = moizeImport as unknown as Moize;
 
 export const getWorkspacesNames = moize.promise(async (
   from: string,
@@ -31,7 +34,7 @@ export const getWorkspacesNames = moize.promise(async (
     return packageJson.name!;
   }));
   return names;
-}) satisfies PathResolverFunctionAsync<string[]>;
+}) satisfies PathResolverFunctionAsync<string[]> as PathResolverFunctionAsync<string[]>;
 
 export const getWorkspacesNamesSync = moize((
   from: string,
@@ -48,7 +51,7 @@ export const getWorkspacesNamesSync = moize((
     return packageJson.name!;
   });
   return names;
-}) satisfies PathResolverFunction<string[]>;
+}) satisfies PathResolverFunction<string[]> as PathResolverFunction<string[]>;
 
 export const resolver = {
   async: getWorkspacesNames,

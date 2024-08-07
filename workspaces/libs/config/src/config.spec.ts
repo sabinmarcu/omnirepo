@@ -1,7 +1,7 @@
 import {
   isObservable,
 } from '@sabinmarcu/observable';
-import { config } from './config';
+import { config } from './config.js';
 import { generateComplexTests } from './config.map.spec.partial';
 import { generateSimpleTests } from './config.list.spec.partial';
 

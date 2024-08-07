@@ -1,13 +1,15 @@
-import moize from 'moize';
+import moizeImport, { type Moize } from 'moize';
 import type {
   PathResolver,
   PathResolverFunction,
   PathResolverFunctionAsync,
-} from '../../types';
+} from '../../types.js';
 import {
   resolver as getWorkspacesNames,
-} from '../workspace/names';
-import { deriveAlias } from '../../utils/deriveAlias';
+} from '../workspace/names.js';
+import { deriveAlias } from '../../utils/deriveAlias.js';
+
+const moize = moizeImport as unknown as Moize;
 
 export const getAliasesNames = moize.promise(async (
   from: string,

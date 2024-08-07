@@ -1,11 +1,11 @@
 import { Builtins } from 'clipanion';
 
-import { HelloCommand } from './HelloCommand';
+import { HelloCommand } from './HelloCommand.js';
 
-import { WorkspaceCommand } from './workspace';
-import { FixExportsCommand } from './fixExports';
-import { WorkspacesCommand } from './workspaces';
-import { FixMoonDependsOnCommand } from './fixMoonDependsOn/FixMoonDependsOnCommand';
+import { WorkspaceCommand } from './workspace/index.js';
+import { FixExportsCommand } from './fixExports/index.js';
+import { WorkspacesCommand } from './workspaces/index.js';
+import { FixMoonDependsOnCommand } from './fixMoonDependsOn/FixMoonDependsOnCommand.js';
 
 export const commands = [
   Builtins.DefinitionsCommand,

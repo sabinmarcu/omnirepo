@@ -1,10 +1,10 @@
-import { resolver as resolveRootViaGit } from './git';
-import { resolver as resolveRootViaPackageJson } from './packageJson';
-import { resolver as resolveRootViaWorkspaces } from './workspacesRoot';
+import { resolver as resolveRootViaGit } from './git.js';
+import { resolver as resolveRootViaPackageJson } from './packageJson.js';
+import { resolver as resolveRootViaWorkspaces } from './workspacesRoot.js';
 
-export { resolver as resolveRootViaGit } from './git';
-export { resolver as resolveRootViaPackageJson } from './packageJson';
-export { resolver as resolveRootViaWorkspaces } from './workspacesRoot';
+export { resolver as resolveRootViaGit } from './git.js';
+export { resolver as resolveRootViaPackageJson } from './packageJson.js';
+export { resolver as resolveRootViaWorkspaces } from './workspacesRoot.js';
 
 export const rootResolver = {
   viaGit: resolveRootViaGit,

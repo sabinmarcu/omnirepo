@@ -1,12 +1,12 @@
 export {
   allDependenciesOf,
   allDependenciesOfSync,
-} from './allDependencies';
+} from './allDependencies.js';
 export {
   workspaceDependenciesOf,
   workspaceDependenciesOfSync,
-} from './workspaceDependencies';
+} from './workspaceDependencies.js';
 export {
   manifestOf,
   manifestOfSync,
-} from './manifestOf';
+} from './manifestOf.js';

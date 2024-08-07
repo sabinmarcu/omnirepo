@@ -1,4 +1,4 @@
-import type { Volume } from 'memfs/lib/volume';
+import type { Volume } from 'memfs/lib/volume.js';
 import glob from 'glob';
 
 export const mockGlob = (

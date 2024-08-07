@@ -1,4 +1,4 @@
-import { unpackSinglePath } from './unpackSinglePath';
+import { unpackSinglePath } from './unpackSinglePath.js';
 
 describe('unpackSinglePath', () => {
   it('should be a function', () => {

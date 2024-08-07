@@ -1,11 +1,11 @@
-import type { Config } from '../../../types';
+import type { Config } from '../../../types.js';
 import {
   makeJSXConfig,
   react,
   reactPlugin,
-} from './shared';
-import reactRules from '../jsx-rules/react';
-import { getLogger } from '../../../utils/debug';
+} from './shared.js';
+import reactRules from '../jsx-rules/react.js';
+import { getLogger } from '../../../utils/debug.js';
 
 const logger = getLogger('module:jsx:react');
 

@@ -1,3 +1,4 @@
+import type { WritableAtom } from 'jotai';
 import { atom } from 'jotai';
 import { atomEffect } from 'jotai-effect';
 import { atomWithStorage } from 'jotai/utils';
@@ -15,7 +16,7 @@ export type Selections = typeof selections[number];
 
 export const themeSelectionAtom = atomWithStorage<Selections>('theme', 'system');
 
-export const prefersColorSchemeAtom = atom(true);
+export const prefersColorSchemeAtom = atom(true) as WritableAtom<boolean, [boolean], void>;
 export const prefersColorSchemeEffect = atomEffect(
   (_, set) => {
     const match = window.matchMedia('(prefers-color-scheme: dark)');

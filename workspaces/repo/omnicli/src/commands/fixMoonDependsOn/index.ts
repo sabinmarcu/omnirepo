@@ -1,1 +1,1 @@
-export { FixMoonDependsOnCommand } from './FixMoonDependsOnCommand';
+export { FixMoonDependsOnCommand } from './FixMoonDependsOnCommand.js';

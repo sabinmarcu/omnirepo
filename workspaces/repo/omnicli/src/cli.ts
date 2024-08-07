@@ -1,7 +1,7 @@
 import { Cli } from 'clipanion';
 import path from 'node:path';
-import { compileContext } from './features';
-import { commands } from './commands/index';
+import { compileContext } from './features/index.js';
+import { commands } from './commands/index.js';
 
 import {
   name,

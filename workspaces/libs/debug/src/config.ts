@@ -3,11 +3,11 @@ import {
   subject,
 } from '@sabinmarcu/observable';
 import { filter } from 'ramda';
-import { env as environment } from './environment';
+import { env as environment } from './environment.js';
 import type {
   DebugRule,
-} from './types';
-import { parseDebugString } from './parsers';
+} from './types.js';
+import { parseDebugString } from './parsers.js';
 
 export const debugString = subject<string>(environment.DEBUG);
 

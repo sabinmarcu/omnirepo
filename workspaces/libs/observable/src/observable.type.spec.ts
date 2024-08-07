@@ -1,4 +1,4 @@
-import { observable } from './observable';
+import { observable } from './observable.js';
 
 const testObservableNumber = observable.from(42);
 const testObservableString = observable.from('Value: ');
@@ -22,14 +22,18 @@ const testObservableFrom = observable.from(1);
 //    ^? const testObservableFrom: Observable<1>
 
 const testObservableProjection = observable.project(
+  testObservableString,
+  testObservableNumber,
   (prefix, value) => ({
     prefix,
     value,
     result: `${prefix}${value}`,
   }),
-  testObservableString,
-  testObservableNumber,
 );
 
 const testObservableProjectionValue = testObservableProjection.value;
-//    ^? const testObservableProjectionValue: any
+//    ^? const testObservableProjectionValue: {
+//           readonly prefix: "Value: ";
+//           readonly value: 42;
+//           readonly result: "Value: 42";
+//       } | undefined

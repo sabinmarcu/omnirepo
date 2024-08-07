@@ -5,8 +5,8 @@ import {
 import { config } from '@sabinmarcu/config';
 import {
   defaultChannel,
-} from './constants';
-import { parseDebugStringFragment } from './parsers';
+} from './constants.js';
+import { parseDebugStringFragment } from './parsers.js';
 import type {
   DebugDefinitionFromDebugInput,
   DebugDefinitionFromString,
@@ -14,10 +14,10 @@ import type {
   DebugFunction,
   DebugOptions,
   FormatterOptions,
-} from './types';
-import { globalFormatter } from './formatting';
-import { globalPrintFunctions } from './printers';
-import { debugDefinitionEnabled } from './enabled';
+} from './types.js';
+import { globalFormatter } from './formatting.js';
+import { globalPrintFunctions } from './printers.js';
+import { debugDefinitionEnabled } from './enabled.js';
 
 export const debugDefinitionFromString = <T extends string>(input: T) => {
   const parsed = parseDebugStringFragment(input, true);

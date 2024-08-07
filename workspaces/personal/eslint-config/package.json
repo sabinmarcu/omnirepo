@@ -12,7 +12,8 @@
     "eslint-import-resolver-exports": "^1.0.0-beta.5",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-canonical": "^4.18.1",
-    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-file-extension-in-import-ts": "^2.1.0",
+    "eslint-plugin-import": "patch:eslint-plugin-import@npm%3A2.29.1#~/.yarn/patches/eslint-plugin-import-npm-2.29.1-b94305f7dc.patch",
     "eslint-plugin-unicorn": "^55.0.0",
     "glob": "^8.0.3",
     "globals": "^15.9.0",
@@ -30,22 +31,25 @@
     "access": "public"
   },
   "type": "module",
-  "main": "./cjs/index.cjs",
+  "main": "./dist/index.js",
   "module": "./esm/index.mjs",
   "exports": {
     ".": {
-      "import": "./esm/index.mjs",
-      "require": "./cjs/index.cjs",
-      "types": "./esm/index.d.ts"
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "main": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./src/*": {
       "import": "./src/*",
-      "require": "./src/*"
+      "main": "./src/*",
+      "default": "./src/*"
     },
     "./*": {
-      "import": "./esm/*.mjs",
-      "require": "./cjs/*.cjs",
-      "types": "./esm/*.d.ts"
+      "import": "./dist/*.js",
+      "types": "./dist/*.d.ts",
+      "main": "./dist/*.js",
+      "default": "./dist/*.js"
     },
     "./package.json": "./package.json"
   },
@@ -58,11 +62,11 @@
   "typeVersions": {
     "*": {
       "*": [
-        "./esm/*"
+        "./dist/*"
       ]
     }
   },
-  "types": "./esm/index.d.ts",
+  "types": "./dist/index.d.ts",
   "peerDependencies": {
     "@babel/eslint-parser": "^7.25.1",
     "eslint-plugin-expect-type": "^0.4.0",
@@ -94,5 +98,11 @@
     "typescript-eslint": {
       "optional": true
     }
-  }
+  },
+  "repository": {
+    "url": "git+https://github.com/sabinmarcu/omnirepo.git",
+    "type": "git",
+    "directory": "workspaces/personal/eslint-config"
+  },
+  "homepage": "https://sabinmarcu.dev//api/eslint-config"
 }

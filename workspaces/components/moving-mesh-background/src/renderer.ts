@@ -1,11 +1,11 @@
 import {
   canvasCSSProperty,
   defaultColor,
-} from './constants';
+} from './constants.js';
 import type {
   PointType,
   RendererProperties,
-} from './types';
+} from './types.js';
 
 const wnd = typeof window === 'undefined' ? undefined : window;
 

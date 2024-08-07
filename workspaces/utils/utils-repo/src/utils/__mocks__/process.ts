@@ -1,4 +1,4 @@
-import type { WalkFsFixture } from './index';
+import type { WalkFsFixture } from './index.js';
 
 export default {
   setup: {

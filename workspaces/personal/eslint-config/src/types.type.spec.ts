@@ -1,6 +1,6 @@
 import type {
   Config,
-} from './types';
+} from './types.js';
 
 type _Test = Config;
 //    ^? type _Test = Linter.Config<Linter.RulesRecord>

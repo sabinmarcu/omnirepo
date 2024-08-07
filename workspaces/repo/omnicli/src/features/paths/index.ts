@@ -1,4 +1,4 @@
-export * from './types';
-export { getSinglePathOf } from './getSinglePathOf';
-export { getSinglePathsOf } from './getSinglePathsOf';
-export { unpackSinglePath } from './unpackSinglePath';
+export * from './types.js';
+export { getSinglePathOf } from './getSinglePathOf.js';
+export { getSinglePathsOf } from './getSinglePathsOf.js';
+export { unpackSinglePath } from './unpackSinglePath.js';

@@ -1,10 +1,8 @@
-import jsConfig from './js/js';
-import jsxConfig from './js/jsx';
-import jsImportConfig from './js/import';
-import type { Config } from '../types';
+import jsConfig from './js/js.js';
+import jsxConfig from './js/jsx.js';
+import type { Config } from '../types.js';
 
 const config = [
-  ...jsImportConfig,
   ...jsConfig,
   ...jsxConfig,
 ] as const satisfies Config[];

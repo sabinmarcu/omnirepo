@@ -8,16 +8,16 @@ project:
 language: typescript
 type: application
 
-tasks: 
+tasks:
   start:
-    command: 'yarn start'
-    options: 
+    command: "yarn start"
+    options:
       cache: false
-    deps: 
+    deps:
       - "^:dev"
   build:
-    command: 'yarn build'
-    options: 
+    command: "yarn build"
+    options:
       cache: false
     deps:
       - "^:build"

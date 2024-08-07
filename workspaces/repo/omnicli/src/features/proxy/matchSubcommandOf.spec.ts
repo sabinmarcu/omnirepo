@@ -1,5 +1,5 @@
 import { testSubcommands } from '../__mocks__/list';
-import { matchSubcommandOf } from './matchSubcommandOf';
+import { matchSubcommandOf } from './matchSubcommandOf.js';
 
 describe('matchSubcommandOf', () => {
   it('should be a function', () => {

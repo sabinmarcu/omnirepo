@@ -1,1 +1,1 @@
-export { useDuplicateRef } from './useDuplicateRef';
+export { useDuplicateRef } from './useDuplicateRef.js';

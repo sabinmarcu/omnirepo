@@ -1,7 +1,7 @@
 /* eslint-disable unicorn/prevent-abbreviations */
 import { useAtom } from 'jotai';
 import { DevTools as JotaiDevTools } from 'jotai-devtools';
-import { themeAtom } from './state/theme';
+import { themeAtom } from './state/theme.js';
 import 'jotai-devtools/styles.css';
 
 export function DevTools() {

@@ -1,17 +1,19 @@
-import moize from 'moize';
+import moizeImport, { type Moize } from 'moize';
 import {
   resolve,
   resolveSync,
-} from '../resolvers/path/workspacesRoot';
+} from '../resolvers/path/workspacesRoot.js';
 import {
   test as testPackage,
   testSync as testPackageSync,
-} from './manifest';
+} from './manifest.js';
 import type {
   PathPredicate,
   PathPredicateFunction,
   PathPredicateFunctionAsync,
-} from '../types';
+} from '../types.js';
+
+const moize = moizeImport as unknown as Moize;
 
 /**
  * Determine if a path is a git root
@@ -25,7 +27,7 @@ export const testSync = moize(((
     return false;
   }
   return Boolean(resolveSync(path));
-}) satisfies PathPredicateFunction);
+})) satisfies PathPredicateFunction as PathPredicateFunction;
 
 /**
  * Determine if a path is a git root (async)
@@ -39,7 +41,7 @@ export const test = moize.promise((async (
     return false;
   }
   return Boolean(await resolve(path));
-}) satisfies PathPredicateFunctionAsync);
+})) satisfies PathPredicateFunctionAsync as PathPredicateFunctionAsync;
 
 /**
  * Resolver set for git roots

@@ -2,7 +2,7 @@ import type { IsUnknown } from 'type-fest';
 import type {
   IsKnown,
   BoolToUnknownNever,
-} from './predicates';
+} from './predicates.js';
 
 type IsUnknownTest1 = IsUnknown<unknown>;
 //    ^? type IsUnknownTest1 = true

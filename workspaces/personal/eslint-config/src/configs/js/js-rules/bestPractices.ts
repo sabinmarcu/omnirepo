@@ -1,6 +1,6 @@
 // Taken from https://github.com/airbnb/javascript/blob/master/packages/eslint-config-airbnb-base/rules/best-practices.js
 
-import type { Config } from '../../../types';
+import type { Config } from '../../../types.js';
 
 export default {
   // enforces getter/setter pairs in objects

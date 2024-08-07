@@ -1,10 +1,10 @@
 import { Command } from 'clipanion';
 import type {
   PartialOmniCliContext,
-} from '../context';
+} from '../context/index.js';
 import type {
   ReadonlyPaths,
-} from '../paths';
+} from '../paths/index.js';
 
 export abstract class OmnicliCommand<
   Context extends PartialOmniCliContext = PartialOmniCliContext,

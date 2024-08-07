@@ -1,8 +1,8 @@
 export * from 'node:fs';
 export {
   exists,
-} from './exists';
+} from './exists.js';
 export {
   readJson,
   readJsonSync,
-} from './readJson';
+} from './readJson.js';

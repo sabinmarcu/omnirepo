@@ -1,7 +1,7 @@
 import { focusAtom } from 'jotai-optics';
 import { atom } from 'jotai';
 import { splitAtom } from 'jotai/utils';
-import { storedState } from './state';
+import { storedState } from './state.js';
 
 export const dropRateAtom = focusAtom(
   storedState,

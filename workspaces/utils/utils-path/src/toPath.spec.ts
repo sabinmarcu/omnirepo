@@ -1,4 +1,4 @@
-import { toPath } from './toPath';
+import { toPath } from './toPath.js';
 
 describe('toPath', () => {
   it('should be a function', () => {

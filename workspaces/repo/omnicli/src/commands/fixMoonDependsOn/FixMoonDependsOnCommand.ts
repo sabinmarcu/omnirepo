@@ -11,11 +11,17 @@ import {
   parse,
   stringify,
 } from 'yaml';
-import type { ContextWithCwd } from '../../features';
-import { OmnicliCommand } from '../../features';
+import type { ContextWithCwd } from '../../features/index.js';
+import { OmnicliCommand } from '../../features/index.js';
 
 export class FixMoonDependsOnCommand extends OmnicliCommand<ContextWithCwd> {
-  static readonlyPaths = [['fix', 'moon', 'dependsOn']];
+  static readonlyPaths = [
+    [
+      'fix',
+      'moon',
+      'dependsOn',
+    ],
+  ];
 
   workspacePath = Option.String({ required: false });
 

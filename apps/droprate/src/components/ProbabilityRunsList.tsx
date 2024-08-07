@@ -5,15 +5,15 @@ import { PlusOne } from '@mui/icons-material';
 import {
   probabilityList,
   probabilityListAtom,
-} from '../state/atoms';
+} from '../state/atoms.js';
 import {
   StatsListSection,
   StatsListDescription,
   StatsListAddButton,
   StatsListActions,
-} from './StatsList';
+} from './StatsList.js';
 
-import { ProbabilityRuns } from './ProbabilityRuns';
+import { ProbabilityRuns } from './ProbabilityRuns.js';
 
 export function ProbabilityRunsList() {
   const [

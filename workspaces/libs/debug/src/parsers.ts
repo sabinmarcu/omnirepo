@@ -6,9 +6,9 @@ import {
 import type {
   DebugChannels,
   DebugRule,
-} from './types';
-import { debugChannels } from './constants';
-import { globalWarnFunction } from './printers';
+} from './types.js';
+import { debugChannels } from './constants.js';
+import { globalWarnFunction } from './printers.js';
 
 const validCharacters = /^[*9@A-Z_a-z-]*$/;
 

@@ -1,11 +1,11 @@
-import { FixExportsCommand } from './fixExports';
-import type { SubcommandType } from '../features';
+import { FixExportsCommand } from './fixExports/index.js';
+import type { SubcommandType } from '../features/index.js';
 import {
   compileSubcommandsMap,
   isSubcommandOf,
-} from '../features';
-import { FixMoonDependsOnCommand } from './fixMoonDependsOn/FixMoonDependsOnCommand';
-import { matchSubcommandOf } from '../features/proxy/matchSubcommandOf';
+} from '../features/index.js';
+import { FixMoonDependsOnCommand } from './fixMoonDependsOn/FixMoonDependsOnCommand.js';
+import { matchSubcommandOf } from '../features/proxy/matchSubcommandOf.js';
 
 export const subcommands = [
   FixExportsCommand,

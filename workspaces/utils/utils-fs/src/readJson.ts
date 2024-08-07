@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import fsPromises from 'node:fs/promises';
 import {
   exists,
-} from './exists';
+} from './exists.js';
 
 /**
  * Reads a JSON file and returns its contents (async)

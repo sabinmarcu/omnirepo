@@ -1,5 +1,5 @@
-import { makeConfigFactory } from '../../../utils/makeConfig';
-import { tryImport } from '../../../utils/tryImport';
+import { makeConfigFactory } from '../../../utils/makeConfig.js';
+import { tryImport } from '../../../utils/tryImport.js';
 
 export const makeJSXConfig = makeConfigFactory('*.jsx');
 

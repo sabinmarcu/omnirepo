@@ -2,7 +2,7 @@ import type {
   DebugDefinition,
   DebugDefinitionFromString,
   NonEmptyString,
-} from './types';
+} from './types.js';
 
 type TestDebugDefinition1 = DebugDefinition<'example', 'namespace', 'debug'>;
 //    ^? type TestDebugDefinition1 = {

@@ -1,6 +1,6 @@
-import type { Config } from '../../types';
-import { getLogger } from '../../utils/debug';
-import { tryImport } from '../../utils/tryImport';
+import type { Config } from '../../types.js';
+import { getLogger } from '../../utils/debug.js';
+import { tryImport } from '../../utils/tryImport.js';
 
 const typescriptParser = await tryImport('typescript-eslint');
 
@@ -18,6 +18,9 @@ const config = typescriptParser
       name: 'Typescript Parser',
       languageOptions: {
         parser: typescriptParser.parser,
+        parserOptions: {
+          projectService: true,
+        },
       },
     },
   ] as const satisfies Config[]

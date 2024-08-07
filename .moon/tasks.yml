@@ -23,30 +23,29 @@ tasks:
     options:
       cache: false
 
-  fixExports:
-    command: "omni fix exports"
-    inputs:
-      - package.json
-    outputs:
-      - package.json
-    options:
-      cache: false
-    deps:
-      - "~:fixDependsOn"
+  # fixExports:
+  #   command: "omni fix exports"
+  #   inputs:
+  #     - package.json
+  #   outputs:
+  #     - package.json
+  #   options:
+  #     cache: false
+  #   deps:
+  #     - "^:fixExports"
+  #     - "~:fixDependsOn"
 
   build:
-    command: "unbuild"
+    command: "tsc -b tsconfig.json"
     type: build
     deps:
       - "root:init"
-      - "~:fixExports"
-      - "^:build"
+      # - "~:fixExports"
     inputs:
       - "@globs(sources)"
       - "@files(buildConfig)"
     outputs:
-      - esm
-      - cjs
+      - dist
     options:
       cache: true
 
@@ -59,32 +58,31 @@ tasks:
     inputs:
       - "@globs(sources)"
 
-  devExports:
-    command: "omni fix exports"
-    args:
-      - --dev
-    inputs:
-      - package.json
-    outputs:
-      - package.json
-    options:
-      cache: false
-      runInCI: false
-    deps:
-      - "~:fixDependsOn"
+  # devExports:
+  #   command: "omni fix exports"
+  #   args:
+  #     - --dev
+  #   inputs:
+  #     - package.json
+  #   outputs:
+  #     - package.json
+  #   options:
+  #     cache: false
+  #     runInCI: false
+  #   deps:
+  #     - "^:devExports"
+  #     - "~:fixDependsOn"
 
   dev:
-    command: "unbuild --stub"
+    command: "tsc -b tsconfig.json --watch"
     deps:
       - "root:init"
-      - "~:devExports"
-      - "^:dev"
+      # - "~:devExports"
     inputs:
       - "@globs(sources)"
       - "@files(buildConfig)"
     outputs:
-      - esm
-      - cjs
+      - dist
     options:
       runInCI: false
       persistent: false
@@ -94,8 +92,6 @@ tasks:
     type: test
     args:
       - --watch
-    deps:
-      - "~:dev"
     inputs:
       - "@globs(sources)"
     options:
@@ -107,7 +103,6 @@ tasks:
     type: test
     deps:
       - "~:build"
-      - eslint-config:build
     inputs:
       - "@globs(sources)"
 

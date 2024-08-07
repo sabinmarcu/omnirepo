@@ -1,3 +1,3 @@
-export * from './fs';
-export { mockGlob } from './glob';
-export { mockMoize } from './moize';
+export * from './fs.js';
+export { mockGlob } from './glob.js';
+export { mockMoize } from './moize.js';

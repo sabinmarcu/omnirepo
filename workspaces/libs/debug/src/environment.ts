@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ENV_DEBUG_KEY } from './constants';
+import { ENV_DEBUG_KEY } from './constants.js';
 
 export const environmentSchema = z.object({
   [ENV_DEBUG_KEY]: z.string().default(''),

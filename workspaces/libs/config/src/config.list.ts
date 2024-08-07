@@ -7,7 +7,7 @@ import type {
   ConfigListParameters,
   SimpleConfigFunction,
   ConfigObservablesFromParameters,
-} from './types';
+} from './types.js';
 
 export const projectListInput = <
   const Parameters extends ConfigListParameters,

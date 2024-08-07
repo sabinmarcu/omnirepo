@@ -1,14 +1,12 @@
-import tsConfig from './ts/ts';
-import tsxConfig from './ts/tsx';
-import tsImportConfig from './ts/import';
-import resetConfig from './ts/reset';
-import type { Config } from '../types';
+import tsConfig from './ts/ts.js';
+import tsxConfig from './ts/tsx.js';
+import resetConfig from './ts/reset.js';
+import type { Config } from '../types.js';
 
 const config = [
   ...resetConfig,
   ...tsConfig,
   ...tsxConfig,
-  ...tsImportConfig,
 ] as const satisfies Config[];
 
 export default config;

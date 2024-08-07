@@ -7,7 +7,7 @@ import {
 import {
   BodyText,
   Paper,
-} from './Display';
+} from './Display.js';
 
 const StatsBase = styled(Paper)({
   display: 'flex',

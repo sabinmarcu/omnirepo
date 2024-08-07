@@ -10,7 +10,7 @@ import type {
   ConfigListParametersCommonType,
   ConfigFunction,
   MapConfigMapParameterToObservables,
-} from './types';
+} from './types.js';
 
 type TestConfigParameters = ConfigParameters;
 //    ^? type TestConfigParameters = Readonly<Record<string, any>> | readonly unknown[]

@@ -1,15 +1,17 @@
 import glob from 'glob';
 import { promisify } from 'node:util';
 import path from 'node:path';
-import moize from 'moize';
-import { testWorkspaces as test } from '../../predicates/index';
-import { walker } from '../../utils/walkFs';
-import { resolveWorkspaces as resolve } from '../path/index';
+import moizeImport, { type Moize } from 'moize';
+import { testWorkspaces as test } from '../../predicates/index.js';
+import { walker } from '../../utils/walkFs.js';
+import { resolveWorkspaces as resolve } from '../path/index.js';
 import type {
   PathResolver,
   PathResolverFunction,
   PathResolverFunctionAsync,
-} from '../../types';
+} from '../../types.js';
+
+const moize = moizeImport as unknown as Moize;
 
 const globPromised = promisify(glob);
 
@@ -44,7 +46,7 @@ export const getWorkspacesPaths = moize.promise(async (
   );
   const packageJsonList = packageJsonListMap.flat();
   return packageJsonList.map((it) => it.replace(/\/package\.json$/, ''));
-}) satisfies PathResolverFunctionAsync<string[]>;
+}) satisfies PathResolverFunctionAsync<string[]> as PathResolverFunctionAsync<string[]>;
 
 export const getWorkspacesPathsSync = moize((
   from: string,
@@ -74,7 +76,7 @@ export const getWorkspacesPathsSync = moize((
     ),
   );
   return packageJsonList.map((it) => it.replace(/\/package\.json$/, ''));
-}) satisfies PathResolverFunction<string[]>;
+}) satisfies PathResolverFunction<string[]> as PathResolverFunction<string[]>;
 
 export const resolver = {
   async: getWorkspacesPaths,

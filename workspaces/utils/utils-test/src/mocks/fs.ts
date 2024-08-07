@@ -6,7 +6,7 @@ import {
 import type {
   NestedDirectoryJSON,
   DirectoryJSON,
-} from 'memfs/lib/volume';
+} from 'memfs/lib/volume.js';
 
 export * from 'memfs';
 export * as memfs from 'memfs';

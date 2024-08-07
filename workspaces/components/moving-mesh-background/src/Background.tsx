@@ -9,15 +9,15 @@ import {
 } from 'react';
 import { usePrefersReducedMotion } from '@sabinmarcu/use-prefers-reduced-motion';
 import { useDuplicateRef } from '@sabinmarcu/use-duplicate-ref';
-import { debounce } from './debounce';
+import { debounce } from './debounce.js';
 import type {
   CanvasProperties,
   RendererProperties,
-} from './types';
+} from './types.js';
 import {
   canvasCSSProperty,
-} from './constants';
-import { makeRenderer } from './renderer';
+} from './constants.js';
+import { makeRenderer } from './renderer.js';
 
 const wnd = typeof window === 'undefined' ? undefined : window;
 

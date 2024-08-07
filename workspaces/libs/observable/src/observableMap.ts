@@ -1,9 +1,9 @@
 import type { RawFunction } from '@sabinmarcu/types';
-import { subject } from './subject';
+import { subject } from './subject.js';
 import type {
   Observable,
   Subject,
-} from './types';
+} from './types.js';
 
 export interface IObservableMap<K, V> extends Observable<Map<K, V>>, Map<K, V> {}
 export type ObservableMap<K, V> = Omit<IObservableMap<K, V>, 'value'>;

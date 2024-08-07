@@ -1,9 +1,9 @@
 import globals from 'globals';
 import type {
   Config,
-} from '../types';
-import { makeConfigFactory } from '../utils/makeConfig';
-import { getLogger } from '../utils/debug';
+} from '../types.js';
+import { makeConfigFactory } from '../utils/makeConfig.js';
+import { getLogger } from '../utils/debug.js';
 
 const testExtensionGlob = '*(m|c)@(j|t)s*(x)';
 const testNamingGlob = '@(spec|test)';

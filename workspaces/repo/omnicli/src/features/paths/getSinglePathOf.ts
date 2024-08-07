@@ -1,8 +1,8 @@
-import { singlePathSeparator } from './constants';
+import { singlePathSeparator } from './constants.js';
 import type {
   ReadonlyPaths,
   SinglePathOf,
-} from './types';
+} from './types.js';
 
 export const getSinglePathOf = <
   Path extends ReadonlyPaths[number],

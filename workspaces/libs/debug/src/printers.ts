@@ -2,7 +2,7 @@ import { subject } from '@sabinmarcu/observable';
 import type {
   PrintFunction,
   PrintFunctionMap,
-} from './types';
+} from './types.js';
 
 // eslint-disable-next-line no-console
 export const globalPrintFunction = subject<PrintFunction>(console.log);

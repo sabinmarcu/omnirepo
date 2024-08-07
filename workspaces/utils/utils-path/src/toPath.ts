@@ -1,5 +1,5 @@
 import url from 'node:url';
-import type { PathLike } from './types';
+import type { PathLike } from './types.js';
 
 /**
  * Converts a URL or path to a file path.

@@ -1,4 +1,4 @@
-import { basicFormatter } from './basic';
+import { basicFormatter } from './basic.js';
 
 describe('basicFormatter', () => {
   const formatterFunction = basicFormatter(undefined as any);

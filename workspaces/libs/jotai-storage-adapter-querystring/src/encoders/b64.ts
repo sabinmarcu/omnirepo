@@ -1,6 +1,6 @@
 import type { ZodSchema } from 'zod';
-import type { Encoder } from '../types';
-import { jsonEncoder } from './json';
+import type { Encoder } from '../types.js';
+import { jsonEncoder } from './json.js';
 
 export const b64Encoder = {
   encode: (input: any) => btoa(jsonEncoder.encode(input)),

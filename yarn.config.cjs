@@ -14,8 +14,12 @@ const {
   REQUIRED_WORKSPACE_DEPENDENCIES,
   REQUIRED_WORKSPACE_IGNORE_LIST,
   FIELD_TSCMONO_CONFIG_MAP,
-  FIELD_TSCMONO_KEY,
+  FIELD_TSCMONO_PRESET_KEY,
+  FIELD_TSCMONO_PRESETS_KEY,
   MODULE_DEPENDENCY_ENFORCEMENT_FIELD_LIST,
+  FIELD_REMOVE_MAP,
+  TREAT_AS_CJS,
+  CJS_FIELD_UPDATE_MAP,
 } = require('./.config/manifest.cjs');
 const { WORKSPACE_PROTOCOL_RANGE } = require('./.config/yarn.cjs');
 
@@ -92,9 +96,21 @@ async function enforceConsistentDependenciesAcrossTheProject({ Yarn }) {
  */
 async function ensureFieldConsistency({ Yarn }) {
   for (const workspace of Yarn.workspaces()) {
-    for (const [match, preset] of Object.entries(FIELD_TSCMONO_CONFIG_MAP)) {
+    const matches = [];
+    for (const [match, presetOrPresets] of Object.entries(FIELD_TSCMONO_CONFIG_MAP)) {
       if (workspace.cwd.startsWith(match)) {
-        workspace.set(FIELD_TSCMONO_KEY, preset);
+        matches.push([match, presetOrPresets]);
+      }
+    }
+
+    if (matches.length > 0) {
+      const [[,match]] = matches.sort(([a], [b]) => b.length - a.length);
+      if (Array.isArray(match)) {
+        for (const [index, value] of Object.entries(match)) {
+          workspace.set(`${FIELD_TSCMONO_PRESETS_KEY}[${index}]`, value);
+        }
+      } else {
+        workspace.set(FIELD_TSCMONO_PRESET_KEY, match);
       }
     }
 
@@ -102,7 +118,11 @@ async function ensureFieldConsistency({ Yarn }) {
       continue;
     }
 
-    for (const [field, value] of Object.entries(FIELD_UPDATE_MAP)) {
+    const fields = TREAT_AS_CJS.includes(`${workspace.ident}`)
+      ? CJS_FIELD_UPDATE_MAP
+      : FIELD_UPDATE_MAP;
+
+    for (const [field, value] of Object.entries(fields)) {
       workspace.set(field, value);
     }
   }
@@ -147,6 +167,39 @@ async function ensureDocsDependencies({ Yarn }) {
 }
 
 /**
+ * Ensure each package has the correct homepage and repository fields
+ *
+ * @param {Context} context
+ */
+async function ensureHomepageAndRepository({ Yarn }) {
+  const rootWorkspace = Yarn.workspace({ ident: 'root' });
+  const {homepage,repository}= rootWorkspace?.manifest;
+  for (const workspace of Yarn.workspaces()) {
+    if (workspace.ident !== 'root' && !workspace.cwd.includes('apps')) {
+      const workspaceHomepage = `${homepage}/api/${workspace.ident?.split('/')[1]}`;
+      workspace.set('repository.url', repository.url);
+      workspace.set('repository.directory', workspace.cwd);
+      workspace.set('repository.type', repository.type);
+      workspace.set('homepage', workspaceHomepage);
+    }   
+  }
+}
+
+/**
+ * Ensure that all are type:module unless otherwise specified
+ *
+ * @param {Context} context
+ */
+async function ensureTypeModule({ Yarn }) {
+  for (const workspace of Yarn.workspaces()) {
+    const type = TREAT_AS_CJS.includes(`${workspace.ident}`)
+      ? 'commonjs'
+      : 'module';
+    workspace.set('type', type);
+  }
+}
+
+/**
  * A collection of all constraints defined in this file
  *
  * @param {Context} context
@@ -157,6 +210,8 @@ async function constraints(context) {
   await ensureFieldConsistency(context);
   await ensureRequiredDependencies(context);
   await ensureDocsDependencies(context);
+  await ensureHomepageAndRepository(context);
+  await ensureTypeModule(context);
 }
 
 module.exports = defineConfig({

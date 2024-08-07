@@ -3,7 +3,7 @@ import type {
   ContextPartialCompiler,
   ContextWithCwd,
   ContextWithRootDirectory,
-} from './types';
+} from './types.js';
 
 type CwdContextPartial = ContextPartial<ContextWithCwd>;
 //    ^? type CwdContextPartial = {

@@ -3,7 +3,7 @@ import type {
 } from '@sabinmarcu/utils-primitives';
 import type {
   Observable,
-} from './types';
+} from './types.js';
 
 export const observableValueStore = <T>(
   input?: MutableStore<T>,

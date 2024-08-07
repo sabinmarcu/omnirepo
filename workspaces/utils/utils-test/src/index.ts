@@ -1,2 +1,2 @@
-export * from './utils';
-export * from './mocks';
+export * from './utils/index.js';
+export * from './mocks/index.js';

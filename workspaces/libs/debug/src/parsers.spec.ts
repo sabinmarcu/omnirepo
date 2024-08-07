@@ -7,8 +7,8 @@ import {
 import {
   parseDebugString,
   parseDebugStringFragment,
-} from './parsers';
-import type { DebugRule } from './types';
+} from './parsers.js';
+import type { DebugRule } from './types.js';
 
 const testCases: {
   input: string;

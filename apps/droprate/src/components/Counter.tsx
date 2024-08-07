@@ -10,8 +10,8 @@ import {
   CounterSurface,
   CounterText,
   CounterWrapper,
-} from './Counter.style';
-import { useAtomInput } from '../hooks/useAtomInput';
+} from './Counter.style.js';
+import { useAtomInput } from '../hooks/useAtomInput.js';
 
 interface MutateButtonProperties extends PropsWithChildren {
   atom: WritableAtom<number, [number], void>,

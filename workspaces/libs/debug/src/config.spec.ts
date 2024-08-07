@@ -5,8 +5,8 @@ import {
   filterRawDebugRulesBy,
   debugString,
   debugRules,
-} from './config';
-import { env as environment } from './environment';
+} from './config.js';
+import { env as environment } from './environment.js';
 
 describe('debugSubject', () => {
   it('should be a subject', () => {

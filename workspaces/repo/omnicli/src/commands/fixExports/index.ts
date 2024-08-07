@@ -1,2 +1,2 @@
-export { FixExportsCommand } from './FixExportsCommand';
-export * from './types';
+export { FixExportsCommand } from './FixExportsCommand.js';
+export * from './types.js';

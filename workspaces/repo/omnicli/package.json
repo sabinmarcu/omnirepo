@@ -1,25 +1,28 @@
 {
   "name": "@sabinmarcu/omnicli",
   "version": "1.0.2",
-  "main": "./cjs/index.cjs",
-  "types": "./esm/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "module": "./esm/index.mjs",
   "type": "module",
   "private": true,
   "exports": {
     ".": {
-      "import": "./esm/index.mjs",
-      "require": "./cjs/index.cjs",
-      "types": "./esm/index.d.ts"
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "main": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./src/*": {
       "import": "./src/*",
-      "require": "./src/*"
+      "main": "./src/*",
+      "default": "./src/*"
     },
     "./*": {
-      "import": "./esm/*.mjs",
-      "require": "./cjs/*.cjs",
-      "types": "./esm/*.d.ts"
+      "import": "./dist/*.js",
+      "types": "./dist/*.d.ts",
+      "main": "./dist/*.js",
+      "default": "./dist/*.js"
     },
     "./package.json": "./package.json"
   },
@@ -54,7 +57,7 @@
     "glob": "^8.0.3",
     "jiti": "^1.16.1",
     "memfs": "^3.4.12",
-    "moize": "^6.1.4",
+    "moize": "patch:moize@npm%3A6.1.4#~/.yarn/patches/moize-npm-6.1.4-85c2846283.patch",
     "typanion": "^3.12.1",
     "yaml": "^2.5.0"
   },
@@ -69,8 +72,14 @@
   "typeVersions": {
     "*": {
       "*": [
-        "./esm/*"
+        "./dist/*"
       ]
     }
-  }
+  },
+  "repository": {
+    "url": "git+https://github.com/sabinmarcu/omnirepo.git",
+    "type": "git",
+    "directory": "workspaces/repo/omnicli"
+  },
+  "homepage": "https://sabinmarcu.dev//api/omnicli"
 }

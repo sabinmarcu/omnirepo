@@ -6,7 +6,7 @@ import type {
 import type {
   debugChannels,
   defaultChannel,
-} from './constants';
+} from './constants.js';
 
 export type DebugRule = {
   path?: string;

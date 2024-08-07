@@ -1,5 +1,5 @@
 import confusingBrowserGlobals from 'confusing-browser-globals';
-import type { Config } from '../../../types';
+import type { Config } from '../../../types.js';
 
 export default {
   // enforce or disallow variable initializations at definition

@@ -1,6 +1,6 @@
 import type { Split } from 'type-fest';
-import { singlePathSeparator } from './constants';
-import type { SinglePathSeparator } from './types';
+import { singlePathSeparator } from './constants.js';
+import type { SinglePathSeparator } from './types.js';
 
 export const unpackSinglePath = <
   Input extends string,

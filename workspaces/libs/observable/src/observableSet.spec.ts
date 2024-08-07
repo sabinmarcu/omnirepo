@@ -1,4 +1,4 @@
-import { observableSet } from './observableSet';
+import { observableSet } from './observableSet.js';
 
 describe('observableSet', () => {
   it('should emit a new value when a new item is added', () => {

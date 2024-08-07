@@ -1,10 +1,10 @@
 import unicornPlugin from 'eslint-plugin-unicorn';
 import type {
   Config,
-} from '../types';
+} from '../types.js';
 
-import { makeConfigFactory } from '../utils/makeConfig';
-import { getLogger } from '../utils/debug';
+import { makeConfigFactory } from '../utils/makeConfig.js';
+import { getLogger } from '../utils/debug.js';
 
 getLogger('plugin:unicorn').log('Loading Plugin and Rules');
 

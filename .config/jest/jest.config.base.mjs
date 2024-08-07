@@ -1,11 +1,33 @@
 // @ts-check
 
+const bypassSwcProjects = [
+  'commitlint-config-workspaces',
+].join('|');
+
+const swcTransformString = String.raw`^((?!${bypassSwcProjects}).)*\.(m|c)?(j|t)sx?$`;
+const tsJestTransformString = String.raw`^.*(${bypassSwcProjects}).*\.(m|c)?(j|t)sx?$`;
+
 /** @type {import('jest').Config} */
 const config = {
-  testRegex: '^(?!.*?type).*(\\.(test|spec))\\.tsx?$',
+  testRegex: String.raw`^(?!.*?type).*(\.(test|spec))\.(m|c)?tsx?$`,
   transform: {
-    '^.+\\.(m|c)?(t|j)sx?$': '@swc/jest',
+    [swcTransformString]: '@swc/jest',
+    [tsJestTransformString]: [
+      'ts-jest',
+      {
+        tsconfig: '<rootDir>/tsconfig.jest.json',
+        useESM: true,
+      }
+    ]
   },
+  moduleNameMapper: {
+    [String.raw`^(\.\.?\/.+)\.js(x)?$`]: "$1",
+    [String.raw`^(\.\.?\/.+)\.(m|c)js$`]: "$1.$2ts",
+  },
+  transformIgnorePatterns: [
+    `<rootDir>/node_modules/(?!@sabinmarcu\/*)`
+  ],
+  extensionsToTreatAsEsm: ['.ts', '.cts', '.mts', '.tsx'],
   moduleFileExtensions: [
     'js',
     'cjs',

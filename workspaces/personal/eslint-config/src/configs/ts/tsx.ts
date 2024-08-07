@@ -1,12 +1,11 @@
 import type {
   Config,
-} from '../../types';
-
-import reactRules from '../js/jsx-rules/react';
-import { tryImport } from '../../utils/tryImport';
-import { makeConfigFactory } from '../../utils/makeConfig';
-import JSXConfigs from '../js/jsx';
-import { getLogger } from '../../utils/debug';
+} from '../../types.js';
+import reactRules from '../js/jsx-rules/react.js';
+import { tryImport } from '../../utils/tryImport.js';
+import { makeConfigFactory } from '../../utils/makeConfig.js';
+import JSXConfigs from '../js/jsx.js';
+import { getLogger } from '../../utils/debug.js';
 
 const tsPlugin = await tryImport('@typescript-eslint/eslint-plugin');
 const makeConfig = makeConfigFactory('*.tsx');

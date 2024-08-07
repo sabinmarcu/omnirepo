@@ -2,9 +2,9 @@ import {
   setupFsMockAll,
   vol,
 } from '@sabinmarcu/utils-test';
-import { generateWorkspacesScopes } from './generateWorkspacesScopes';
+import { generateWorkspacesConfig } from './generateWorkspacesConfig.cjs';
 
-import compileFixtures from './__mocks__';
+import compileFixtures from './__mocks__/index.cjs';
 
 const fixtures = compileFixtures();
 
@@ -17,12 +17,12 @@ jest.mock('glob', () => (
   )
 ));
 
-describe('generateWorkspacesScopes', () => {
+describe('generateWorkspacesConfig', () => {
   it('should be a function', () => {
-    expect(typeof generateWorkspacesScopes).toBe('function');
+    expect(typeof generateWorkspacesConfig).toBe('function');
   });
   it('should have no parameters (all have defaults)', () => {
-    expect(generateWorkspacesScopes.length).toBe(0);
+    expect(generateWorkspacesConfig.length).toBe(0);
   });
   describe.each(fixtures)(
     '$name',
@@ -31,23 +31,27 @@ describe('generateWorkspacesScopes', () => {
       input: {
         path,
         withAliases,
+        extraScopes,
       },
       ...outcome
     }) => {
       setupFsMockAll(setup);
       if ('error' in outcome) {
-        it('should throw an error', () => {
-          expect(() => generateWorkspacesScopes(
+        it('should throw an error', async () => {
+          await expect(() => generateWorkspacesConfig(
+            extraScopes,
             path,
             withAliases,
-          )).toThrow(outcome.error);
+          )).rejects.toThrow(outcome.error);
         });
       } else {
-        it('should return expected', () => {
-          expect(generateWorkspacesScopes(
+        it('should return expected', async () => {
+          const result = await generateWorkspacesConfig(
+            extraScopes,
             path,
             withAliases,
-          )).toEqual(outcome.scopes);
+          )
+          expect(result.rules['scope-enum'][2]).toEqual(outcome.scopes);
         });
       }
     },

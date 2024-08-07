@@ -1,6 +1,6 @@
 import globals from 'globals';
-import type { Config } from '../../types';
-import { getLogger } from '../../utils/debug';
+import type { Config } from '../../types.js';
+import { getLogger } from '../../utils/debug.js';
 
 type ExtractESVersions<T extends string> = T extends `es${infer Version extends number}`
   ? Version

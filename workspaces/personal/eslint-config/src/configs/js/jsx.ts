@@ -1,11 +1,10 @@
 import type {
   Config,
-} from '../../types';
-
-import reactConfig from './jsx-plugins/react';
-import reactHooksConfig from './jsx-plugins/reactHooks';
-import reactA11yConfig from './jsx-plugins/reactA11y';
-import { getLogger } from '../../utils/debug';
+} from '../../types.js';
+import reactConfig from './jsx-plugins/react.js';
+import reactHooksConfig from './jsx-plugins/reactHooks.js';
+import reactA11yConfig from './jsx-plugins/reactA11y.js';
+import { getLogger } from '../../utils/debug.js';
 
 getLogger('module:jsx').log('Loading JSX Rules');
 

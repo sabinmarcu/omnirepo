@@ -1,6 +1,6 @@
 import type { MutableStore } from '@sabinmarcu/utils-primitives';
-import { observableKeys } from './constants';
-import { addToSubscriptionPool } from './mock';
+import { observableKeys } from './constants.js';
+import { addToSubscriptionPool } from './mock.js';
 import type {
   Observable,
   Observer,
@@ -11,11 +11,11 @@ import type {
   ObserverController,
   PipedObservable,
   ObservableProjector,
-} from './types';
+} from './types.js';
 import {
   extendObservable,
   observableValueStore,
-} from './utils';
+} from './utils.js';
 
 export const makeControllerFunction = <T>(
   valueStore: MutableStore<T>,

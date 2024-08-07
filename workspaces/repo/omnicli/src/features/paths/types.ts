@@ -1,6 +1,6 @@
 import type { Join } from 'type-fest';
-import type { SubcommandType } from '../command/types';
-import type { singlePathSeparator } from './constants';
+import type { SubcommandType } from '../command/types.ts';
+import type { singlePathSeparator } from './constants.js';
 
 export type SinglePathSeparator = typeof singlePathSeparator;
 export type ReadonlyPaths = Readonly<Array<Readonly<Array<string>>>>;
