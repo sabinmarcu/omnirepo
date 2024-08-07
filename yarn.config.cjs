@@ -192,6 +192,10 @@ async function ensureHomepageAndRepository({ Yarn }) {
  */
 async function ensureTypeModule({ Yarn }) {
   for (const workspace of Yarn.workspaces()) {
+    if (FIELD_IGNORE_LIST.has(`${workspace.ident}`)) {
+      continue;
+    }
+
     const type = TREAT_AS_CJS.includes(`${workspace.ident}`)
       ? 'commonjs'
       : 'module';
