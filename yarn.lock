@@ -5754,7 +5754,7 @@ __metadata:
     "@mui/icons-material": "npm:^5.16.5"
     "@mui/material": "npm:^5.16.5"
     "@sabinmarcu/jotai-storage-adapter-querystring": "workspace:*"
-    "@sabinmarcu/moving-mesh-background": "workspace:^"
+    "@sabinmarcu/moving-mesh-background": "workspace:*"
     "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
     "@types/react": "npm:^18.3.3"
@@ -5838,7 +5838,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@sabinmarcu/moving-mesh-background@workspace:*, @sabinmarcu/moving-mesh-background@workspace:^, @sabinmarcu/moving-mesh-background@workspace:workspaces/components/moving-mesh-background":
+"@sabinmarcu/moving-mesh-background@workspace:*, @sabinmarcu/moving-mesh-background@workspace:workspaces/components/moving-mesh-background":
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/moving-mesh-background@workspace:workspaces/components/moving-mesh-background"
   dependencies:
