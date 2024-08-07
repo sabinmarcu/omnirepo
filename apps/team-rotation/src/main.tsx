@@ -8,6 +8,8 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
+import 'dayjs/locale/ro';
+
 ReactDOM.createRoot(document.querySelector('#root')!).render(
   <React.StrictMode>
     <App />
