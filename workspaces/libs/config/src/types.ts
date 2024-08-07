@@ -80,4 +80,4 @@ export interface SimpleConfigFunction {
   ): Result extends TypeError ? Result : Observable<Result>;
 }
 
-export interface ConfigFunction extends SimpleConfigFunction, ComplexConfigFunction {}
+export interface ConfigFunction extends ComplexConfigFunction, SimpleConfigFunction {}
