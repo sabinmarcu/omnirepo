@@ -1,6 +1,6 @@
 import { styled } from '@mui/material';
 
-export const PageTitleWrapper = styled('div')({
+export const TitleEditorWrapper = styled('div')({
   display: 'flex',
   gap: '0.5rem',
   alignItems: 'center',
