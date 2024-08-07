@@ -19,12 +19,15 @@ import type {
 import {
   forwardRef,
   useState,
-  useRef,
 } from 'react';
-import { pageTitleAtom } from '../state/atoms.ts';
-import { PageTitleWrapper } from './PageTitle.style.tsx';
+import type { WritableAtom } from 'jotai/vanilla';
+import { TitleEditorWrapper } from './TitleEditor.style.tsx';
 
-export interface InteractionProperties {
+export interface StringAtomProperties {
+  atom: WritableAtom<string, [string], void>
+}
+
+export interface InteractionProperties extends StringAtomProperties {
   onClick: () => void;
 }
 
@@ -32,7 +35,7 @@ export interface InteractionButtonProperties extends ComponentProps<typeof IconB
   icon: typeof Edit,
 }
 
-const PageTitleInteraction = forwardRef<HTMLButtonElement, InteractionButtonProperties>(
+const TitleEditorInteraction = forwardRef<HTMLButtonElement, InteractionButtonProperties>(
   ({
     icon: Icon, ...rest
   }, reference) => (
@@ -42,21 +45,27 @@ const PageTitleInteraction = forwardRef<HTMLButtonElement, InteractionButtonProp
   ),
 );
 
-export function PageTitleDisplay({ onClick }: InteractionProperties) {
-  const title = useAtomValue(pageTitleAtom);
+export function TitleEditorDisplay({
+  onClick,
+  atom,
+}: InteractionProperties) {
+  const title = useAtomValue(atom);
   return (
     <>
       <Typography variant="h4">{title}</Typography>
-      <PageTitleInteraction onClick={onClick} icon={Edit} />
+      <TitleEditorInteraction onClick={onClick} icon={Edit} />
     </>
   );
 }
 
-export function PageTitleEdit({ onClick }: InteractionProperties) {
+export function TitleEditorEdit({
+  onClick,
+  atom,
+}: InteractionProperties) {
   const [
     title,
     setTitle,
-  ] = useAtom(pageTitleAtom);
+  ] = useAtom(atom);
   const [
     input,
     setInput,
@@ -75,23 +84,23 @@ export function PageTitleEdit({ onClick }: InteractionProperties) {
         onChange={onChange}
         label="Team Name"
       />
-      <PageTitleInteraction onClick={onSave} color="success" icon={Check} />
-      <PageTitleInteraction onClick={onClick} color="error" icon={Close} />
+      <TitleEditorInteraction onClick={onSave} color="success" icon={Check} />
+      <TitleEditorInteraction onClick={onClick} color="error" icon={Close} />
     </>
   );
 }
 
-export function PageTitle() {
+export function TitleEditor({ atom }: StringAtomProperties) {
   const [
     editing,
     setEditing,
   ] = useState(false);
   const toggleEdit = () => setEditing((previous) => !previous);
   return (
-    <PageTitleWrapper>
+    <TitleEditorWrapper>
       {editing
-        ? (<PageTitleEdit onClick={toggleEdit} />)
-        : (<PageTitleDisplay onClick={toggleEdit} />)}
-    </PageTitleWrapper>
+        ? (<TitleEditorEdit onClick={toggleEdit} atom={atom} />)
+        : (<TitleEditorDisplay onClick={toggleEdit} atom={atom} />)}
+    </TitleEditorWrapper>
   );
 }
