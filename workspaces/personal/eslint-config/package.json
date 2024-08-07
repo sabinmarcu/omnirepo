@@ -1,6 +1,6 @@
 {
   "name": "@sabinmarcu/eslint-config",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "dependencies": {
     "@babel/plugin-syntax-import-assertions": "^7.20.0",
     "@eslint/compat": "^1.1.1",

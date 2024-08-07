@@ -1,6 +1,6 @@
 {
   "name": "@sabinmarcu/commitlint-config-workspaces",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "module": "./esm/index.mjs",
