@@ -5923,6 +5923,37 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@sabinmarcu/team-rotation@workspace:apps/team-rotation":
+  version: 0.0.0-use.local
+  resolution: "@sabinmarcu/team-rotation@workspace:apps/team-rotation"
+  dependencies:
+    "@emotion/react": "npm:^11.13.0"
+    "@emotion/styled": "npm:^11.13.0"
+    "@fontsource/roboto": "npm:^5.0.13"
+    "@mui/icons-material": "npm:^5.16.5"
+    "@mui/material": "npm:^5.16.5"
+    "@sabinmarcu/jotai-storage-adapter-querystring": "workspace:*"
+    "@sabinmarcu/moving-mesh-background": "workspace:*"
+    "@sabinmarcu/mui-material-theme": "workspace:*"
+    "@sabinmarcu/types": "workspace:*"
+    "@sabinmarcu/use-match-media": "workspace:*"
+    "@sabinmarcu/utils-test": "workspace:*"
+    "@types/react": "npm:^18.3.3"
+    "@types/react-dom": "npm:^18.3.0"
+    "@vitejs/plugin-react": "npm:^4.3.1"
+    jotai: "npm:^2.9.1"
+    jotai-devtools: "npm:^0.10.0"
+    jotai-effect: "npm:^1.0.0"
+    jotai-optics: "npm:^0.4.0"
+    optics-ts: "npm:^2.4.1"
+    react: "npm:^18.0.0"
+    react-dom: "npm:^18.0.0"
+    typescript: "npm:5.5.4"
+    vite: "npm:^5.3.4"
+    zod: "npm:^3.23.8"
+  languageName: unknown
+  linkType: soft
+
 "@sabinmarcu/types@workspace:*, @sabinmarcu/types@workspace:workspaces/libs/types":
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/types@workspace:workspaces/libs/types"

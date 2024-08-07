@@ -11,21 +11,19 @@ import { Break } from './components/Display.js';
 
 function App() {
   return (
-    <>
+    <ThemeProvider>
       <DevTools />
-      <ThemeProvider>
-        <GlobalStyles />
-        <Header>
-          Calculate drop rates
-        </Header>
-        <ThemeSelector />
-        <CounterSection />
-        <Break />
-        <RunsList />
-        <Break />
-        <ProbabilityRunsList />
-      </ThemeProvider>
-    </>
+      <GlobalStyles />
+      <Header>
+        Calculate drop rates
+      </Header>
+      <ThemeSelector />
+      <CounterSection />
+      <Break />
+      <RunsList />
+      <Break />
+      <ProbabilityRunsList />
+    </ThemeProvider>
   );
 }
 

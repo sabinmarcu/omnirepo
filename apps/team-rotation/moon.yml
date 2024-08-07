@@ -1,0 +1,26 @@
+project:
+  name: team-rotation
+  description: Team Rotation App
+  channel: "#team-rotation"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: application
+
+tasks:
+  start:
+    command: "yarn dev"
+    options:
+      cache: false
+  build:
+    command: "yarn build"
+    options:
+      cache: false
+      runInCI: false
+    deps:
+      - "^:build"
+
+workspace:
+  inheritedTasks:
+    include: []

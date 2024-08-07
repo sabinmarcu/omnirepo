@@ -51,7 +51,8 @@ module.exports.FIELD_TSCMONO_CONFIG_MAP = {
   'workspaces/components': ['lib', 'react'],
   'workspaces/personal/commitlint-config-workspaces': ["lib", "commonjs"],
   'apps/docs': 'docusaurus',
-  'apps/droprate': 'viteApp'
+  'apps/droprate': 'viteApp',
+  'apps/team-rotation': 'viteApp',
 };
 module.exports.REQUIRED_WORKSPACE_IGNORE_LIST = new Set([
   'root',
