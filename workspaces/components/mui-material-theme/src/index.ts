@@ -6,4 +6,3 @@ export {
   useThemeSelection,
 } from './state.js';
 
-export * from './types.js';

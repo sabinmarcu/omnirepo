@@ -1,0 +1,7 @@
+releases:
+  "@sabinmarcu/mui-material-theme": major
+  "@sabinmarcu/use-local-storage": major
+
+declined:
+  - "@sabinmarcu/docs"
+  - "@sabinmarcu/droprate"
