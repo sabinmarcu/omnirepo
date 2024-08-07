@@ -7,11 +7,6 @@ export const pageTitleAtom = focusAtom(
   (optics) => optics.prop('pageTitle'),
 );
 
-export const startDateAtom = focusAtom(
-  storageAtom,
-  (optics) => optics.prop('startDate'),
-);
-
 export const rotationsAtom = focusAtom(
   storageAtom,
   (optics) => optics.prop('rotations'),
