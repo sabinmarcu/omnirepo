@@ -22,7 +22,6 @@ export function GlobalStyles() {
         flexFlow: 'column nowrap',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        gap: '1cqh',
       },
     }}
     />
