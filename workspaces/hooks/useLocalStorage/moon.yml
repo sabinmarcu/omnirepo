@@ -1,0 +1,13 @@
+project:
+  name: use-local-storage
+  description: Hook used to sync data with localStorage
+  channel: "#hooks"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: library
+dependsOn:
+  - "@sabinmarcu/use-match-media"
+  - "@sabinmarcu/types"
+  - "@sabinmarcu/utils-test"
