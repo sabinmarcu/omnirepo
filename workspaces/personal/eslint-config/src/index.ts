@@ -1,17 +1,18 @@
 import type {
   Config,
-} from './types';
+} from './types.js';
 
-import parserConfig from './configs/parser';
-import jsConfig from './configs/js';
-import tsConfig from './configs/ts';
-import rootConfigsConfig from './configs/config.root';
-import jestConfigsConfig from './configs/config.jest';
-import moduleConfig from './configs/module';
-import storybookConfig from './configs/storybook';
-import unicornConfig from './configs/unicorn';
-import typeTestingConfig from './configs/typeTesting';
-import canonicalConfig from './configs/canonical';
+import parserConfig from './configs/parser.js';
+import jsConfig from './configs/js.js';
+import tsConfig from './configs/ts.js';
+import rootConfigsConfig from './configs/config.root.js';
+import jestConfigsConfig from './configs/config.jest.js';
+import moduleConfig from './configs/module.js';
+import storybookConfig from './configs/storybook.js';
+import unicornConfig from './configs/unicorn.js';
+import typeTestingConfig from './configs/typeTesting.js';
+import canonicalConfig from './configs/canonical.js';
+import importConfig from './configs/import.js';
 
 const config: Config[] = [
   ...parserConfig,
@@ -24,6 +25,7 @@ const config: Config[] = [
   ...unicornConfig,
   ...typeTestingConfig,
   ...canonicalConfig,
+  ...importConfig,
 ] as const satisfies Config[];
 
 export default config;

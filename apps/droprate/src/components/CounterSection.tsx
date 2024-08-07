@@ -2,13 +2,13 @@ import { useAtomValue } from 'jotai';
 import {
   percentDropRate,
   upperLimitDropRate,
-} from '../state/atoms';
-import { Counter } from './Counter';
-import { Section } from './Section';
+} from '../state/atoms.js';
+import { Counter } from './Counter.js';
+import { Section } from './Section.js';
 import {
   BodyDescription,
   BodyText,
-} from './Display';
+} from './Display.js';
 
 export function CounterSection() {
   const upperLimit = useAtomValue(upperLimitDropRate);

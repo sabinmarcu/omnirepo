@@ -4,7 +4,7 @@ import type {
   PathPredicate,
   PathResolver,
   PathWalker,
-} from './types';
+} from './types.js';
 
 type _AsyncifyArrayTest1 = AsyncifyArray<[string, number, boolean]>;
 //    ^? type _AsyncifyArrayTest1 = [string, number, boolean]

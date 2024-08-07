@@ -5,7 +5,7 @@ import type {
   ContextWithCwd,
   ContextWithRootDirectory,
   OmniCliContext,
-} from './types';
+} from './types.js';
 
 export const compileContextWithCwd = (() => ({
   cwd: process.cwd(),

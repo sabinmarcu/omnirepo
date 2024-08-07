@@ -1,1 +1,1 @@
-export { WorkspaceCommand } from './WorkspaceCommand';
+export { WorkspaceCommand } from './WorkspaceCommand.js';

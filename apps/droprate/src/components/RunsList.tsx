@@ -5,15 +5,15 @@ import { PlusOne } from '@mui/icons-material';
 import {
   runsList,
   runsListAtom,
-} from '../state/atoms';
+} from '../state/atoms.js';
 import {
   StatsListSection,
   StatsListDescription,
   StatsListAddButton,
   StatsListActions,
-} from './StatsList';
+} from './StatsList.js';
 
-import { Runs } from './Runs';
+import { Runs } from './Runs.js';
 
 export function RunsList() {
   const [

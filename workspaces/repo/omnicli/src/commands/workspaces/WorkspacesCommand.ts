@@ -3,10 +3,10 @@ import {
   Option,
 } from 'clipanion';
 import { getWorkspacesPaths } from '@sabinmarcu/utils-repo';
-import type { ContextWithCwd } from '../../features';
+import type { ContextWithCwd } from '../../features/index.js';
 import {
   matchSubcommand,
-} from '../workspaceCommands';
+} from '../workspaceCommands.js';
 
 export class WorkspacesCommand extends Command<ContextWithCwd> {
   static paths = [['workspaces']];
@@ -20,7 +20,10 @@ export class WorkspacesCommand extends Command<ContextWithCwd> {
       cli,
     } = this;
 
-    const [commandPath, commandArguments] = matchSubcommand(rest);
+    const [
+      commandPath,
+      commandArguments,
+    ] = matchSubcommand(rest);
 
     const workspacesPaths = await getWorkspacesPaths.async(context.cwd);
 

@@ -1,9 +1,9 @@
 import {
   isObservable,
 } from '@sabinmarcu/observable';
-import { simpleConfig } from './config.list';
-import { complexConfig } from './config.map';
-import type { ConfigFunction } from './types';
+import { simpleConfig } from './config.list.js';
+import { complexConfig } from './config.map.js';
+import type { ConfigFunction } from './types.js';
 
 export const config: ConfigFunction = (...input: any[]) => {
   if (Array.isArray(input) && input.length > 1) {

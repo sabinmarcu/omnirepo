@@ -6,9 +6,9 @@ import {
   testSync,
   test as testAsync,
   predicate,
-} from './manifest';
+} from './manifest.js';
 
-import compileFixtures from './__mocks__/manifest';
+import compileFixtures from './__mocks__/manifest.js';
 
 const fixtures = compileFixtures();
 

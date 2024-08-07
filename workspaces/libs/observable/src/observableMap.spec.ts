@@ -1,6 +1,6 @@
 import {
   observableMap,
-} from './observableMap';
+} from './observableMap.js';
 
 describe('observableMap', () => {
   it('should create an observable map with the given source', () => {

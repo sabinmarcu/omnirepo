@@ -3,7 +3,7 @@ import {
   debugDefinitionFromInput,
   debugDefinitionFromString,
   getOverrideForSubject,
-} from './debug';
+} from './debug.js';
 
 describe('debugDefinitionFromString', () => {
   it('should parse a valid debug string fragment', () => {

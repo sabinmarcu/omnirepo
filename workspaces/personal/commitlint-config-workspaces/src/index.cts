@@ -1,8 +1,7 @@
 /* eslint-disable import/no-commonjs */
-/* eslint-disable import/no-import-module-exports */
 /* eslint-disable unicorn/prefer-module */
 
-import { generateWorkspacesConfig } from './generateWorkspacesConfig';
+const { generateWorkspacesConfig } = require('./generateWorkspacesConfig.cjs');
 
 module.exports = generateWorkspacesConfig([
   'root',

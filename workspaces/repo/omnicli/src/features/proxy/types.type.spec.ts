@@ -3,7 +3,7 @@ import type {
   FindKV,
   KVSubcommandsList,
   MapOfSubcommandsList,
-} from './types';
+} from './types.js';
 import type { testSubcommands } from '../__mocks__/list';
 import type { Test1 } from '../__mocks__/test1';
 import type { Test2 } from '../__mocks__/test2';

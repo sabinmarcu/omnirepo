@@ -1,0 +1,57 @@
+diff --git a/lib/rules/extensions.js b/lib/rules/extensions.js
+index 3bd6529d40ae428e6efbda0fd6d48de10e7ea110..5e1fc9f71e848fe8154fd386de57dd0bb920e01b 100644
+--- a/lib/rules/extensions.js
++++ b/lib/rules/extensions.js
+@@ -4,6 +4,33 @@ var _resolve = require('eslint-module-utils/resolve');var _resolve2 = _interopRe
+ var _importType = require('../core/importType');
+ var _moduleVisitor = require('eslint-module-utils/moduleVisitor');var _moduleVisitor2 = _interopRequireDefault(_moduleVisitor);
+ var _docsUrl = require('../docsUrl');var _docsUrl2 = _interopRequireDefault(_docsUrl);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { 'default': obj };}
++var _has = require('has');var _has2 = _interopRequireDefault(_has);
++
++const defaultExtensionAlias = {
++  '.js': [
++    '.ts',
++    // `.tsx` can also be compiled as `.js`
++    '.tsx',
++    '.d.ts',
++    '.js',
++  ],
++  '.jsx': ['.tsx', '.d.ts', '.jsx'],
++  '.cjs': ['.cts', '.d.cts', '.cjs'],
++  '.mjs': ['.mts', '.d.mts', '.mjs'],
++};
++
++function getValidExtensionFor(context, importPath, resolvedExtension) {
++  let extensionAlias = {};
++  if (context.settings['import/resolver']  && context.settings['import/resolver'].typescript) {
++    extensionAlias = context.settings['import/resolver'].typescript.extensionAlias || defaultExtensionAlias;
++  }
++
++  const importedExtension = _path2["default"].extname(importPath);
++  if (_has2["default"](extensionAlias, importedExtension)) {
++    return extensionAlias[importedExtension].map((ext) => ext.slice(1));
++  }
++  return [resolvedExtension];
++}
+ 
+ var enumValues = { 'enum': ['always', 'ignorePackages', 'never'] };
+ var patternProperties = {
+@@ -157,7 +184,7 @@ module.exports = {
+ 
+         // get extension from resolved path, if possible.
+         // for unresolved, use source value.
+-        var extension = _path2['default'].extname(resolvedPath || importPath).substring(1);
++        var extension = _path2['default'].extname(resolvedPath || importPath).slice(1);
+ 
+         // determine if this is a module
+         var isPackage = (0, _importType.isExternalModule)(
+@@ -166,7 +193,8 @@ module.exports = {
+         context) ||
+         (0, _importType.isScoped)(importPath);
+ 
+-        if (!extension || !importPath.endsWith('.' + String(extension))) {
++        var validExtensions = getValidExtensionFor(context, importPath, extension);
++        if (!extension || !validExtensions.includes(extension)) {
+           // ignore type-only imports and exports
+           if (node.importKind === 'type' || node.exportKind === 'type') {return;}
+           var extensionRequired = isUseOfExtensionRequired(extension, isPackage);

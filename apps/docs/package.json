@@ -25,7 +25,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "typedoc": "^0.26.5",
-    "typedoc-plugin-markdown": "^3.17.1"
+    "typedoc-plugin-markdown": "^4.2.3"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.4.0",
@@ -66,5 +66,6 @@
   },
   "tscmono": {
     "preset": "docusaurus"
-  }
+  },
+  "type": "module"
 }

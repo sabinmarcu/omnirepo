@@ -1,9 +1,9 @@
-export * from './observable';
-export * from './subject';
-export * from './types';
-export * from './utils';
+export * from './observable.js';
+export * from './subject.js';
+export * from './types.js';
+export * from './utils.js';
 
-export * from './observableSet';
-export * from './observableMap';
+export * from './observableSet.js';
+export * from './observableMap.js';
 
-export { mock as __mock } from './mock';
+export { mock as __mock } from './mock.js';

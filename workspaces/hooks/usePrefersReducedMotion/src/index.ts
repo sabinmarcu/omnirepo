@@ -1,1 +1,1 @@
-export { usePrefersReducedMotion } from './usePrefersReducedMotion';
+export { usePrefersReducedMotion } from './usePrefersReducedMotion.js';

@@ -1,4 +1,4 @@
-import { getLogger } from './debug';
+import { getLogger } from './debug.js';
 
 const logger = getLogger('importer');
 

@@ -5,7 +5,7 @@ import type {
   Observer,
   Subject,
   TypeOfObservable,
-} from './types';
+} from './types.js';
 
 type ObserverTest = Observer<number>;
 

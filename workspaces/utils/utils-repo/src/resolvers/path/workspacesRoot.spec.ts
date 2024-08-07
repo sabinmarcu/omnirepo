@@ -1,7 +1,7 @@
 import { setupFsMockAll } from '@sabinmarcu/utils-test';
-import { resolver } from './workspacesRoot';
+import { resolver } from './workspacesRoot.js';
 
-import compileFixtures from './__mocks__';
+import compileFixtures from './__mocks__.js';
 
 const testCases = compileFixtures();
 

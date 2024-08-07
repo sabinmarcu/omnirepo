@@ -2,7 +2,7 @@ import type {
   PrimaryPathsOfCommand,
   SinglePathOf,
   SinglePathsOf,
-} from './types';
+} from './types.js';
 
 import type { Test1 } from '../__mocks__/test1';
 

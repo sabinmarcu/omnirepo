@@ -2,8 +2,8 @@ import micromatch from 'micromatch';
 import type {
   DebugDefinition,
   DebugRule,
-} from './types';
-import { debugRules } from './config';
+} from './types.js';
+import { debugRules } from './config.js';
 
 export const definitionIsEnabled = (
   definition: DebugDefinition,

@@ -1,4 +1,4 @@
-import type { Moize } from 'moize';
+import type { Moize } from 'moize/index.d.ts';
 
 const fix = (returnValue: any) => returnValue;
 

@@ -1,4 +1,4 @@
-import { toUrl } from './toUrl';
+import { toUrl } from './toUrl.js';
 
 describe('toUrl', () => {
   it('should be a function', () => {

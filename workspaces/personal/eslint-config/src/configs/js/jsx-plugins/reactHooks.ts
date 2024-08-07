@@ -1,13 +1,13 @@
-import type { Config } from '../../../types';
-import { getLogger } from '../../../utils/debug';
-import { legacyPlugin } from '../../../utils/legacyPlugin';
-import { tryImport } from '../../../utils/tryImport';
-import reactHooksRules from '../jsx-rules/reactHooks';
+import type { Config } from '../../../types.js';
+import { getLogger } from '../../../utils/debug.js';
+import { legacyPlugin } from '../../../utils/legacyPlugin.js';
+import { tryImport } from '../../../utils/tryImport.js';
+import reactHooksRules from '../jsx-rules/reactHooks.js';
 import {
   makeJSXConfig,
   react,
   reactPlugin,
-} from './shared';
+} from './shared.js';
 
 const reactHooksPlugin = await tryImport('eslint-plugin-react-hooks');
 const logger = getLogger('module:jsx:react-hooks');

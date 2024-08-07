@@ -1,13 +1,13 @@
-import { mock } from './mock';
+import { mock } from './mock.js';
 import {
   isObservable,
   observable,
-} from './observable';
+} from './observable.js';
 import type {
   Observable,
   ObserverController,
   PipedObservable,
-} from './types';
+} from './types.js';
 
 // eslint-disable-next-line unicorn/empty-brace-spaces
 const noop = () => { };

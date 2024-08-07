@@ -2,8 +2,8 @@ import {
   Button,
   styled,
 } from '@mui/material';
-import { Section } from './Section';
-import { BodyText } from './Display';
+import { Section } from './Section.js';
+import { BodyText } from './Display.js';
 
 export const StatsListSection = styled(Section)({
   flexFlow: 'row wrap',

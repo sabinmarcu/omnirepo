@@ -1,24 +1,27 @@
 {
   "name": "@sabinmarcu/use-prefers-reduced-motion",
   "version": "1.0.0",
-  "main": "./cjs/index.cjs",
-  "types": "./esm/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "module": "./esm/index.mjs",
   "type": "module",
   "exports": {
     ".": {
-      "import": "./esm/index.mjs",
-      "require": "./cjs/index.cjs",
-      "types": "./esm/index.d.ts"
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "main": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./src/*": {
       "import": "./src/*",
-      "require": "./src/*"
+      "main": "./src/*",
+      "default": "./src/*"
     },
     "./*": {
-      "import": "./esm/*.mjs",
-      "require": "./cjs/*.cjs",
-      "types": "./esm/*.d.ts"
+      "import": "./dist/*.js",
+      "types": "./dist/*.d.ts",
+      "main": "./dist/*.js",
+      "default": "./dist/*.js"
     },
     "./package.json": "./package.json"
   },
@@ -46,7 +49,7 @@
   "typeVersions": {
     "*": {
       "*": [
-        "./esm/*"
+        "./dist/*"
       ]
     }
   },
@@ -55,5 +58,11 @@
   },
   "dependencies": {
     "@sabinmarcu/use-match-media": "workspace:*"
-  }
+  },
+  "repository": {
+    "url": "git+https://github.com/sabinmarcu/omnirepo.git",
+    "type": "git",
+    "directory": "workspaces/hooks/usePrefersReducedMotion"
+  },
+  "homepage": "https://sabinmarcu.dev//api/use-prefers-reduced-motion"
 }

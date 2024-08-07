@@ -6,9 +6,9 @@ import {
   manifestOf,
   resolveManifest,
 } from '@sabinmarcu/utils-repo';
-import type { ContextWithCwd } from '../../features';
-import { OmnicliCommand } from '../../features';
-import { fixPathMapping } from './utils/fixPathMapping';
+import type { ContextWithCwd } from '../../features/index.js';
+import { OmnicliCommand } from '../../features/index.js';
+import { fixPathMapping } from './utils/fixPathMapping.js';
 
 export class FixExportsCommand extends OmnicliCommand<ContextWithCwd> {
   static readonlyPaths = [
@@ -57,16 +57,16 @@ export class FixExportsCommand extends OmnicliCommand<ContextWithCwd> {
       types: fixPath.dts('./esm/index'),
       exports: {
         '.': {
-          import: fixPath.esm('./esm/index'),
+          import: fixPath.esm('./esm/index.js'),
           require: fixPath.cjs('./cjs/index'),
           types: fixPath.dts('./esm/index'),
         },
         './src/*': {
-          import: './src/*',
+          import: './src/*.js',
           require: './src/*',
         },
         './*': {
-          import: fixPath.esm('./esm/*'),
+          import: fixPath.esm('./esm/*.js'),
           require: fixPath.cjs('./cjs/*'),
           types: fixPath.dts('./esm/*'),
         },

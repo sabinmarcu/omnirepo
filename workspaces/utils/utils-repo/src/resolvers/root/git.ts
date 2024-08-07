@@ -1,13 +1,15 @@
-import moize from 'moize';
+import moizeImport, { type Moize } from 'moize';
 import {
   predicate as testPath,
-} from '../../predicates/git';
+} from '../../predicates/git.js';
 import type {
   PathResolver,
   PathResolverFunction,
   PathResolverFunctionAsync,
-} from '../../types';
-import { walker } from '../../utils/walkFs';
+} from '../../types.js';
+import { walker } from '../../utils/walkFs.js';
+
+const moize = moizeImport as unknown as Moize;
 
 /**
  * Resolve a path to the .git folder
@@ -17,7 +19,7 @@ import { walker } from '../../utils/walkFs';
 export const resolveSync = moize(((
   path: string,
 ) => walker.sync(path, testPath.sync)
-) satisfies PathResolverFunction);
+)) satisfies PathResolverFunction as PathResolverFunction;
 
 /**
  * Resolve a path to the .git folder (async)
@@ -27,7 +29,7 @@ export const resolveSync = moize(((
 export const resolve = moize.promise((async (
   path: string,
 ) => walker.async(path, testPath.async)
-) satisfies PathResolverFunctionAsync);
+)) satisfies PathResolverFunctionAsync as PathResolverFunctionAsync;
 
 export const resolver = {
   sync: resolveSync,

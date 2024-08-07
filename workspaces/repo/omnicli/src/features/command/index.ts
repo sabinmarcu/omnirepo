@@ -1,2 +1,2 @@
-export { OmnicliCommand } from './OmnicliCommand';
-export * from './types';
+export { OmnicliCommand } from './OmnicliCommand.js';
+export * from './types.js';

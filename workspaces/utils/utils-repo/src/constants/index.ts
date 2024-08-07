@@ -1,1 +1,1 @@
-export { fsRoot } from './fsRoot';
+export { fsRoot } from './fsRoot.js';

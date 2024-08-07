@@ -1,13 +1,12 @@
-import type { Config } from '../../../types';
-import { tryImport } from '../../../utils/tryImport';
+import type { Config } from '../../../types.js';
+import { tryImport } from '../../../utils/tryImport.js';
 import {
   makeJSXConfig,
   react,
   reactPlugin,
-} from './shared';
-
-import reactA11yRules from '../jsx-rules/reactA11y';
-import { getLogger } from '../../../utils/debug';
+} from './shared.js';
+import reactA11yRules from '../jsx-rules/reactA11y.js';
+import { getLogger } from '../../../utils/debug.js';
 
 const logger = getLogger('module:jsx:react-a11y');
 

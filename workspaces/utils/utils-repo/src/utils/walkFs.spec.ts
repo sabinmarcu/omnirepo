@@ -1,9 +1,9 @@
-import compileFixtures from './__mocks__';
+import compileFixtures from './__mocks__/index.js';
 import {
   walker,
   walkFs,
   walkFsSync,
-} from './walkFs';
+} from './walkFs.js';
 
 const fixtures = compileFixtures();
 

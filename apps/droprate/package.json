@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc -b . && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -35,36 +35,39 @@
     "typescript": "5.5.4",
     "vite": "^5.3.4"
   },
-  "main": "./cjs/index.cjs",
+  "main": "./dist/index.js",
   "module": "./esm/index.mjs",
   "exports": {
     ".": {
-      "require": "./cjs/index.cjs",
-      "import": "./esm/index.mjs",
-      "types": "./esm/index.d.ts"
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "main": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./src/*": {
-      "require": "./src/*",
-      "import": "./src/*"
+      "import": "./src/*",
+      "main": "./src/*",
+      "default": "./src/*"
     },
     "./*": {
-      "require": "./cjs/*.cjs",
-      "import": "./esm/*.mjs",
-      "types": "./esm/*.d.ts"
+      "import": "./dist/*.js",
+      "types": "./dist/*.d.ts",
+      "main": "./dist/*.js",
+      "default": "./dist/*.js"
     },
     "./package.json": "./package.json"
   },
   "typeVersions": {
     "*": {
       "*": [
-        "./esm/*"
+        "./dist/*"
       ]
     }
   },
   "build": {
     "preset": "../../../.config/build.config.ts"
   },
-  "types": "./esm/index.d.ts",
+  "types": "./dist/index.d.ts",
   "tscmono": {
     "preset": "viteApp"
   }

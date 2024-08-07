@@ -1,9 +1,9 @@
 import type {
   Config,
-} from '../types';
-import { getLogger } from '../utils/debug';
-import { makeConfigFactory } from '../utils/makeConfig';
-import { tryImport } from '../utils/tryImport';
+} from '../types.js';
+import { getLogger } from '../utils/debug.js';
+import { makeConfigFactory } from '../utils/makeConfig.js';
+import { tryImport } from '../utils/tryImport.js';
 
 const logger = getLogger('plugin:expect-type');
 const expectTypePlugin = await tryImport('eslint-plugin-expect-type');

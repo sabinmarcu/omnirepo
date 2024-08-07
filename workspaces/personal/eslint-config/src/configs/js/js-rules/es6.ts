@@ -1,4 +1,4 @@
-import type { Config } from '../../../types';
+import type { Config } from '../../../types.js';
 
 export default {
   // enforces no braces where they can be omitted

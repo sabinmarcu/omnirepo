@@ -1,2 +1,2 @@
-export { walker as walkFs } from './walkFs';
-export { deriveAlias } from './deriveAlias';
+export { walker as walkFs } from './walkFs.js';
+export { deriveAlias } from './deriveAlias.js';

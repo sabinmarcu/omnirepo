@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
 import { mutableStore } from '@sabinmarcu/utils-primitives';
-import { observableKeys } from './constants';
+import { observableKeys } from './constants.js';
 import type {
   Subscription,
-} from './types';
+} from './types.js';
 
 export const subscriptionPool = mutableStore<Set<Subscription>>();
 

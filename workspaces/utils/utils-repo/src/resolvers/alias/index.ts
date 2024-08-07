@@ -1,8 +1,8 @@
-import { resolver as getAliasesNames } from './names';
-import { resolver as getAliasesMap } from './map';
+import { resolver as getAliasesNames } from './names.js';
+import { resolver as getAliasesMap } from './map.js';
 
-export { resolver as getAliasesNames } from './names';
-export { resolver as getAliasesMap } from './map';
+export { resolver as getAliasesNames } from './names.js';
+export { resolver as getAliasesMap } from './map.js';
 
 export const getAliases = {
   names: getAliasesNames,

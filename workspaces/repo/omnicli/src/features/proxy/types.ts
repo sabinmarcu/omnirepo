@@ -1,5 +1,5 @@
-import type { SubcommandType } from '../command';
-import type { PrimaryPathsOfCommand } from '../paths/types';
+import type { SubcommandType } from '../command/index.js';
+import type { PrimaryPathsOfCommand } from '../paths/types.js';
 
 export type SubcommandsList = Readonly<Array<SubcommandType>>;
 export type IKVSubcommandsList = { paths: string, item: any };

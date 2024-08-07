@@ -5,25 +5,51 @@ module.exports.FIELD_IGNORE_LIST = new Set([
   '@sabinmarcu/docs',
 ]);
 module.exports.FIELD_UPDATE_MAP = {
-  type: 'module',
-  main: './cjs/index.cjs',
-  module: './esm/index.mjs',
-  types: './esm/index.d.ts',
-  'exports.["."].require': './cjs/index.cjs',
-  'exports.["."].import': './esm/index.mjs',
-  'exports.["."].types': './esm/index.d.ts',
-  'exports.["./src/*"].require': './src/*',
+  main: './dist/index.js',
+  types: './dist/index.d.ts',
+  'exports.["."].import': './dist/index.js',
+  'exports.["."].default': './dist/index.js',
+  'exports.["."].types': './dist/index.d.ts',
   'exports.["./src/*"].import': './src/*',
-  'exports.["./*"].require': './cjs/*.cjs',
-  'exports.["./*"].import': './esm/*.mjs',
-  'exports.["./*"].types': './esm/*.d.ts',
+  'exports.["./src/*"].default': './src/*',
+  'exports.["./*"].import': './dist/*.js',
+  'exports.["./*"].default': './dist/*.js',
+  'exports.["./*"].types': './dist/*.d.ts',
   'exports.["./package.json"]': './package.json',
-  'typeVersions.["*"]["*"][0]': './esm/*',
-  'build.preset': '../../../.config/build.config.ts',
+  'typeVersions.["*"]["*"][0]': './dist/*',
 };
-module.exports.FIELD_TSCMONO_KEY = 'tscmono.preset';
+module.exports.CJS_FIELD_UPDATE_MAP = {
+  main: './dist/index.cjs',
+  types: './dist/index.d.ts',
+  'exports.["."].import': './dist/index.cjs',
+  'exports.["."].default': './dist/index.cjs',
+  'exports.["."].types': './dist/index.d.ts',
+  'exports.["./src/*"].import': './src/*',
+  'exports.["./src/*"].default': './src/*',
+  'exports.["./*"].import': './dist/*.cjs',
+  'exports.["./*"].default': './dist/*.cjs',
+  'exports.["./*"].types': './dist/*.d.ts',
+  'exports.["./package.cjson"]': './package.json',
+  'typeVersions.["*"]["*"][0]': './dist/*',
+};
+module.exports.FIELD_REMOVE_MAP = [
+  'exports.["."].require',
+  'exports.["./src/*"].require',
+  'exports.["./*"].require',
+  'module',
+  'exports.["./*"].main',
+  'exports.["./src/*"].main',
+  'exports.["./src/*"].main',
+];
+module.exports.TREAT_AS_CJS = [
+  "@sabinmarcu/commitlint-config-workspaces",
+]
+module.exports.FIELD_TSCMONO_PRESET_KEY = 'tscmono.preset';
+module.exports.FIELD_TSCMONO_PRESETS_KEY = 'tscmono.presets';
 module.exports.FIELD_TSCMONO_CONFIG_MAP = {
-  packages: 'lib',
+  workspaces: 'lib',
+  'workspaces/components': ['lib', 'react'],
+  'workspaces/personal/commitlint-config-workspaces': ["lib", "commonjs"],
   'apps/docs': 'docusaurus',
   'apps/droprate': 'viteApp'
 };

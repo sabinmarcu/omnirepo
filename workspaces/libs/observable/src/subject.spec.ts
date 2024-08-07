@@ -1,8 +1,8 @@
-import { mock } from './mock';
+import { mock } from './mock.js';
 import {
   isObservable,
-} from './observable';
-import { subject } from './subject';
+} from './observable.js';
+import { subject } from './subject.js';
 
 describe('subject', () => {
   it('should be a function', () => {
@@ -38,7 +38,7 @@ describe('subject', () => {
   it('should map correctly to double value', () => {
     const initialValue = 42;
     const subj = subject(initialValue);
-    const obs = subj.map((v) => v * 2);
+    const obs = subj.map((v) => v! * 2);
     expect(subj.value).toBe(initialValue);
     expect(obs.value).toBe(initialValue * 2);
   });

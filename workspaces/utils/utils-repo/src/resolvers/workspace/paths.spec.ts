@@ -6,9 +6,9 @@ import {
   resolver as getWorkspacesPaths,
   getWorkspacesPaths as getWorkspacesPathsAsync,
   getWorkspacesPathsSync,
-} from './paths';
+} from './paths.js';
 
-import compileFixtures from './__mocks__';
+import compileFixtures from './__mocks__.js';
 
 const fixtures = compileFixtures();
 

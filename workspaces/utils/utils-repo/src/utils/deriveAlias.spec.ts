@@ -1,4 +1,4 @@
-import { deriveAlias } from './deriveAlias';
+import { deriveAlias } from './deriveAlias.js';
 
 describe('deriveAlias', () => {
   it('should be a function', () => {

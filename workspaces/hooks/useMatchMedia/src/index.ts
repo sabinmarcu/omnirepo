@@ -1,1 +1,1 @@
-export { useMatchMedia } from './useMatchMedia';
+export { useMatchMedia } from './useMatchMedia.js';

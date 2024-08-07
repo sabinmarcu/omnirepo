@@ -1,8 +1,8 @@
 import type {
   Config,
-} from '../types';
-import { getLogger } from '../utils/debug';
-import { makeConfigFactory } from '../utils/makeConfig';
+} from '../types.js';
+import { getLogger } from '../utils/debug.js';
+import { makeConfigFactory } from '../utils/makeConfig.js';
 
 getLogger('module:config').log('Loading root config files');
 

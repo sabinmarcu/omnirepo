@@ -3,16 +3,18 @@ import {
   readJsonSync,
 } from '@sabinmarcu/utils-fs';
 import type { PackageJson } from 'type-fest';
-import moize from 'moize';
+import moizeImport, { type Moize } from 'moize';
 import {
   resolve as resolvePackageJson,
   resolveSync as resolvePackageJsonSync,
-} from './manifest';
+} from './manifest.js';
 import type {
   PathResolver,
   PathResolverFunction,
   PathResolverFunctionAsync,
-} from '../../types';
+} from '../../types.js';
+
+const moize = moizeImport as unknown as Moize;
 
 /**
  * Resolve a path to the package.json file (async)
@@ -25,7 +27,7 @@ export const resolveSync = moize(((
   const packageJson = resolvePackageJsonSync(path);
   const contents = readJsonSync<PackageJson>(packageJson);
   return contents.workspaces;
-}) satisfies PathResolverFunction<PackageJson['workspaces']>);
+})) satisfies PathResolverFunction<PackageJson['workspaces']> as PathResolverFunction<PackageJson['workspaces']>;
 
 /**
  * Resolve a path to the workspaces field of a package.json
@@ -39,7 +41,7 @@ export const resolve = moize.promise((async (
   const packageJson = await resolvePackageJson(path);
   const contents = await readJson<PackageJson>(packageJson);
   return contents.workspaces;
-}) satisfies PathResolverFunctionAsync<PackageJson['workspaces']>);
+})) satisfies PathResolverFunctionAsync<PackageJson['workspaces']> as PathResolverFunctionAsync<PackageJson['workspaces']>;
 
 export const resolver = {
   sync: resolveSync,

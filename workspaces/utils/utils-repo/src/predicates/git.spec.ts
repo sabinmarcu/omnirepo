@@ -6,9 +6,9 @@ import {
   testSync,
   test as testAsync,
   predicate,
-} from './git';
+} from './git.js';
 
-import compileFixtures from './__mocks__/git';
+import compileFixtures from './__mocks__/git.js';
 
 const fixtures = compileFixtures();
 

@@ -7,7 +7,7 @@ import {
 import styled from '@emotion/styled';
 import {
   Paper,
-} from './Display';
+} from './Display.js';
 
 export const CounterButton = muiStyled(Button)({
   fontSize: '2rem',

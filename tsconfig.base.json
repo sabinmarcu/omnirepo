@@ -9,7 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "inlineSources": false,
     "isolatedModules": true,
-    "moduleResolution": "Bundler",
+    "moduleResolution": "NodeNext",
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "preserveWatchOutput": true,
@@ -22,7 +22,7 @@
       "DOM"
     ],
     "jsx": "react-jsx",
-    "module": "ES2022",
+    "module": "NodeNext",
     "target": "ES2022"
   },
   "exclude": [

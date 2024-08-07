@@ -1,4 +1,4 @@
-import { isSubcommandOf } from './isSubcommandOf';
+import { isSubcommandOf } from './isSubcommandOf.js';
 import { testSubcommands } from '../__mocks__/list';
 
 const isValidSubcommand = isSubcommandOf(testSubcommands);

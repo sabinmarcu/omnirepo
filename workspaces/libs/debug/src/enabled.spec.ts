@@ -1,8 +1,8 @@
-import { definitionIsEnabled } from './enabled';
+import { definitionIsEnabled } from './enabled.js';
 import type {
   DebugDefinition,
   DebugRule,
-} from './types';
+} from './types.js';
 
 type Rules = Readonly<
     {

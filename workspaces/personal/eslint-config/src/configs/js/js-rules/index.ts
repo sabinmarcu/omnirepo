@@ -1,12 +1,12 @@
-import type { Config } from '../../../types';
-import bestPractices from './bestPractices';
-import errors from './errors';
-import es6 from './es6';
-import imports from './imports';
-import node from './node';
-import strict from './strict';
-import style from './style';
-import variables from './variables';
+import type { Config } from '../../../types.js';
+import bestPractices from './bestPractices.js';
+import errors from './errors.js';
+import es6 from './es6.js';
+import imports from './imports.js';
+import node from './node.js';
+import strict from './strict.js';
+import style from './style.js';
+import variables from './variables.js';
 
 export default {
   ...bestPractices,

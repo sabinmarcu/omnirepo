@@ -1,4 +1,4 @@
-import type { ExtensionMapping } from '../types';
+import type { ExtensionMapping } from '../types.js';
 
 export const fixPathMapping = (mapping: ExtensionMapping) => ({
   cjs: (path: string) => `${path}${mapping.cjs}`,

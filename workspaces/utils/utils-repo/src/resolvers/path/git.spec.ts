@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { resolver } from './git';
+import { resolver } from './git.js';
 
 describe('resolver.git', () => {
   const testCases = [

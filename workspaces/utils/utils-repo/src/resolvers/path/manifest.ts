@@ -1,10 +1,12 @@
-import moize from 'moize';
+import moizeImport, { type Moize } from 'moize';
 import nodePath from 'node:path';
 import type {
   PathResolver,
   PathResolverFunction,
   PathResolverFunctionAsync,
-} from '../../types';
+} from '../../types.js';
+
+const moize = moizeImport as unknown as Moize;
 
 /**
  * Resolve a path to the package.json file
@@ -14,7 +16,7 @@ import type {
 export const resolveSync = moize(((
   path: string,
 ) => nodePath.resolve(path, 'package.json')
-) satisfies PathResolverFunction);
+)) satisfies PathResolverFunction as PathResolverFunction;
 
 /**
  * Resolve a path to the package.json file (async)
@@ -24,7 +26,7 @@ export const resolveSync = moize(((
 export const resolve = moize.promise((async (
   path: string,
 ) => nodePath.resolve(path, 'package.json')
-) satisfies PathResolverFunctionAsync);
+)) satisfies PathResolverFunctionAsync as PathResolverFunctionAsync;
 
 export const resolver = {
   sync: resolveSync,

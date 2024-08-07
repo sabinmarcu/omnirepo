@@ -1,1 +1,1 @@
-export { basicFormatter } from './basic';
+export { basicFormatter } from './basic.js';

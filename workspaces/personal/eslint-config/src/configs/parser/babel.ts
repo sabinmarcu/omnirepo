@@ -1,6 +1,6 @@
-import type { Config } from '../../types';
-import { getLogger } from '../../utils/debug';
-import { tryImport } from '../../utils/tryImport';
+import type { Config } from '../../types.js';
+import { getLogger } from '../../utils/debug.js';
+import { tryImport } from '../../utils/tryImport.js';
 
 const babelParser = await tryImport('@babel/eslint-parser');
 

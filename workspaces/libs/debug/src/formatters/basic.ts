@@ -1,7 +1,7 @@
 import type {
   Formatter,
   FormatterFunction,
-} from '../types';
+} from '../types.js';
 
 export const basicFormatterFunction: FormatterFunction = (
   __,

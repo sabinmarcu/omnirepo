@@ -1,13 +1,12 @@
 /* eslint-disable max-len */
 
-import type { Config } from '../../types';
-
-import baseBestPracticesRules from '../js/js-rules/bestPractices';
-import baseErrorsRules from '../js/js-rules/errors';
-import baseES6Rules from '../js/js-rules/es6';
-import baseImportsRules from '../js/js-rules/imports';
-import baseStyleRules from '../js/js-rules/style';
-import baseVariablesRules from '../js/js-rules/variables';
+import type { Config } from '../../types.js';
+import baseBestPracticesRules from '../js/js-rules/bestPractices.js';
+import baseErrorsRules from '../js/js-rules/errors.js';
+import baseES6Rules from '../js/js-rules/es6.js';
+import baseImportsRules from '../js/js-rules/imports.js';
+import baseStyleRules from '../js/js-rules/style.js';
+import baseVariablesRules from '../js/js-rules/variables.js';
 
 export default {
   // Replace Airbnb 'brace-style' rule with '@typescript-eslint' version

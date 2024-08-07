@@ -5,7 +5,7 @@ import {
 import {
   readJson,
   readJsonSync,
-} from './readJson';
+} from './readJson.js';
 
 export type ReadJsonFixtures = {
   setup: Record<string, string>,

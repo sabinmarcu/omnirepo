@@ -9,7 +9,7 @@ import type {
   MapConfigMapParameterKeyToObservable,
   MapConfigMapParameterToObservables,
   ObservableOf,
-} from './types';
+} from './types.js';
 
 export const projectMapInputItem = <
   const Parameters extends ConfigMapParameter,

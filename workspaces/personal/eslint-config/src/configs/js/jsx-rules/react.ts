@@ -1,6 +1,5 @@
-import type { Config } from '../../../types';
-
-import baseStyleRules from '../js-rules/style';
+import type { Config } from '../../../types.js';
+import baseStyleRules from '../js-rules/style.js';
 
 const dangleRules = baseStyleRules['no-underscore-dangle'];
 

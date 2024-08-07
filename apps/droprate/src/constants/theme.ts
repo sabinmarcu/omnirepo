@@ -7,7 +7,7 @@ import {
 import type {
   Selections,
   Variants,
-} from '../state/theme';
+} from '../state/theme.js';
 
 export const themes = {
   light: createTheme({

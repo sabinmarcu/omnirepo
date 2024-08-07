@@ -4,6 +4,19 @@ Modular config for widespread usage.
 
 ## Parsers: babel or typescript
 
+> [!WARNING]
+  For the time being, `eslint-plugin-import` has some issues with `eslint-import-resolver-typescript`
+So if you write ESM code with `type: module` (aka `module: node16/nodenext` in your `tsconfig.json`), you will encounter the following type of error:
+
+```sh
+  Missing file extension "ts" for "..."
+``` 
+To fix this, apply the following diff to `eslint-plugin-import` (yarn 4 does that automatically if you put the linked file under `.yarn/patches` and put a resolution of `patch:eslint-plugin-import@npm%3A2.29.1#~/.yarn/patches/eslint-plugin-import-npm-2.29.1-b94305f7dc.patch`): [https://github.com/sabinmarcu/omnirepo/tree/master/.yarn/patches/eslint-plugin-import-npm-2.29.1-b94305f7dc.patch](https://github.com/sabinmarcu/omnirepo/tree/master/.yarn/patches/eslint-plugin-import-npm-2.29.1-b94305f7dc.patch).
+
+---
+
+Let's carry on with configuration.
+
 If you have a typescript project, please install:
 
 ```sh

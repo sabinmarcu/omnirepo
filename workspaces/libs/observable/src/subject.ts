@@ -1,8 +1,8 @@
-import { observable } from './observable';
+import { observable } from './observable.js';
 import type {
   ObserverController,
   Subject,
-} from './types';
+} from './types.js';
 
 export const subject = <T>(initialValue?: T) => {
   let controller: ObserverController<T>;

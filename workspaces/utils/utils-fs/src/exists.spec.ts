@@ -5,7 +5,7 @@ import {
 } from '@sabinmarcu/utils-test';
 import {
   exists,
-} from './exists';
+} from './exists.js';
 
 export type ExistsFixtures = {
   setup: Record<string, string>,

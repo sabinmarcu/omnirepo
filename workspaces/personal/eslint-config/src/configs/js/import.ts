@@ -1,8 +1,20 @@
-import type { Config } from '../../types';
-import { getLogger } from '../../utils/debug';
-import { legacyPlugin } from '../../utils/legacyPlugin';
+import type { Config } from '../../types.js';
+import { getLogger } from '../../utils/debug.js';
+import { legacyPlugin } from '../../utils/legacyPlugin.js';
 
 getLogger('module:js:import').log('Loading JS Import settings');
+
+export const jsImportExtensions = [
+  '.js',
+  '.mjs',
+  '.jsx',
+];
+
+export const jsExtensions = [
+  ...jsImportExtensions,
+  '.cjs',
+  '.json',
+];
 
 const config = [
   {
@@ -13,21 +25,11 @@ const config = [
     settings: {
       'import/resolver': {
         node: {
-          extensions: [
-            '.mjs',
-            '.cjs',
-            '.js',
-            '.jsx',
-            '.json',
-          ],
+          extensions: jsExtensions,
         },
         exports: true,
       },
-      'import/extensions': [
-        '.js',
-        '.mjs',
-        '.jsx',
-      ],
+      'import/extensions': jsImportExtensions,
       'import/core-modules': [],
       'import/ignore': [
         'node_modules',

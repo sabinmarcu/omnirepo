@@ -14,14 +14,32 @@ tasks:
     options:
       cache: false
       runInCI: false
-  eslint:
+  lintAll:
     command: eslint
     inputs: []
     local: true
-    deps:
-      - eslint-config:build
     options:
       runDepsInParallel: false
+  testAll:
+    command: jest
+    inputs: []
+    local: true
+    options:
+      runDepsInParallel: false
+  testAllDev:
+    command: jest --watch
+    inputs: []
+    local: true
+    options:
+      runDepsInParallel: false
+  buildAll:
+    command: tsc -b ./tsconfig.json
+    inputs: []
+    local: true
+  devAll:
+    command: tsc -b ./tsconfig.json --watch
+    inputs: []
+    local: true
   cleanAll:
     command: git clean
     args:

@@ -1,9 +1,11 @@
-import moize from 'moize';
+import moizeImport, { type Moize } from 'moize';
 import type { PackageJson } from 'type-fest';
 import {
   allDependenciesOf,
   allDependenciesOfSync,
-} from './allDependencies';
+} from './allDependencies.js';
+
+const moize = moizeImport as unknown as Moize;
 
 export const filterDependenciesByWorkspace = (
   dependencies: Record<string, string>,
@@ -14,16 +16,22 @@ export const filterDependenciesByWorkspace = (
     ]) => version.startsWith('workspace:')),
 );
 
-export const workspaceDependenciesOfSync = moize((
+const workspaceDependenciesOfSyncRaw = (
   manifest: PackageJson | string,
 ) => {
   const dependencies = allDependenciesOfSync(manifest);
   return filterDependenciesByWorkspace(dependencies);
-});
+};
+export const workspaceDependenciesOfSync = moize(
+  workspaceDependenciesOfSyncRaw,
+) as typeof workspaceDependenciesOfSyncRaw;
 
-export const workspaceDependenciesOf = moize.promise(async (
+const workspaceDependenciesOfRaw = async (
   manifest: PackageJson | string,
 ) => {
   const dependencies = await allDependenciesOf(manifest);
   return filterDependenciesByWorkspace(dependencies);
-});
+};
+export const workspaceDependenciesOf = moize.promise(
+  workspaceDependenciesOfRaw,
+) as typeof workspaceDependenciesOfRaw;

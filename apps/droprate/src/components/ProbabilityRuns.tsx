@@ -7,10 +7,10 @@ import {
 import { Clear } from '@mui/icons-material';
 import { Tooltip } from '@mui/material';
 import { focusAtom } from 'jotai-optics';
-import { Stats } from './Stats';
-import { useAtomInput } from '../hooks/useAtomInput';
-import { unitDroprate } from '../state/atoms';
-import type { StateType } from '../state/state';
+import { Stats } from './Stats.js';
+import { useAtomInput } from '../hooks/useAtomInput.js';
+import { unitDroprate } from '../state/atoms.js';
+import type { StateType } from '../state/state.js';
 
 interface ProbabilityRunsProperties {
   atom: PrimitiveAtom<StateType['probabilityList'][number]>,

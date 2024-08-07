@@ -1,13 +1,13 @@
-import { ThemeProvider } from './components/ThemeProvider';
-import { GlobalStyles } from './GlobalStyles';
-import { ThemeSelector } from './components/ThemeSelector';
+import { ThemeProvider } from './components/ThemeProvider.js';
+import { GlobalStyles } from './GlobalStyles.js';
+import { ThemeSelector } from './components/ThemeSelector.js';
 // eslint-disable-next-line unicorn/prevent-abbreviations
-import { DevTools } from './DevTools';
-import { CounterSection } from './components/CounterSection';
-import { RunsList } from './components/RunsList';
-import { ProbabilityRunsList } from './components/ProbabilityRunsList';
-import { Header } from './components/Header';
-import { Break } from './components/Display';
+import { DevTools } from './DevTools.js';
+import { CounterSection } from './components/CounterSection.js';
+import { RunsList } from './components/RunsList.js';
+import { ProbabilityRunsList } from './components/ProbabilityRunsList.js';
+import { Header } from './components/Header.js';
+import { Break } from './components/Display.js';
 
 function App() {
   return (

@@ -1,9 +1,9 @@
 import type { RawFunction } from '@sabinmarcu/types';
-import { subject } from './subject';
+import { subject } from './subject.js';
 import type {
   Observable,
   Subject,
-} from './types';
+} from './types.js';
 
 export interface IObservableSet<T> extends Observable<Set<T>>, Set<T> {}
 export type ObservableSet<T> = Omit<IObservableSet<T>, 'value'>;

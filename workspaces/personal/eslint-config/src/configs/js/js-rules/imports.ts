@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
-
-import type { Config } from '../../../types';
+import type { Config } from '../../../types.js';
 
 export default {
   // ensure imports point to files/modules that can be resolved

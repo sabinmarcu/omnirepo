@@ -1,4 +1,4 @@
-export * from './types';
-export { compileSubcommandsMap } from './compileSubcommandsMap';
-export { isSubcommandOf } from './isSubcommandOf';
-export { matchSubcommandOf } from './matchSubcommandOf';
+export * from './types.js';
+export { compileSubcommandsMap } from './compileSubcommandsMap.js';
+export { isSubcommandOf } from './isSubcommandOf.js';
+export { matchSubcommandOf } from './matchSubcommandOf.js';

@@ -1,5 +1,5 @@
 import type { SyncStorage } from 'jotai/vanilla/utils/atomWithStorage';
-import type { Encoder } from './types';
+import type { Encoder } from './types.js';
 
 const queryStorageGetter = <T = unknown>(encoder: Encoder<T>) => (
   (key: string, initialValue: T) => {

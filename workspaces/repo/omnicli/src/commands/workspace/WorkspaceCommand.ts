@@ -3,10 +3,10 @@ import {
   Option,
 } from 'clipanion';
 import { getAliasesMap } from '@sabinmarcu/utils-repo';
-import type { ContextWithCwd } from '../../features';
+import type { ContextWithCwd } from '../../features/index.js';
 import {
   matchSubcommand,
-} from '../workspaceCommands';
+} from '../workspaceCommands.js';
 
 export class WorkspaceCommand extends Command<ContextWithCwd> {
   static paths = [['workspace']];
@@ -31,7 +31,10 @@ export class WorkspaceCommand extends Command<ContextWithCwd> {
       throw new Error('Workspace not found');
     }
 
-    const [commandPath, commandArguments] = matchSubcommand(rest);
+    const [
+      commandPath,
+      commandArguments,
+    ] = matchSubcommand(rest);
 
     cli.run([
       ...commandPath,

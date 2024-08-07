@@ -1,9 +1,8 @@
-import type { Config } from '../types';
-
-import sharedConfig from './parser/shared';
-import babelConfig from './parser/babel';
-import tsConfig from './parser/typescript';
-import { getLogger } from '../utils/debug';
+import type { Config } from '../types.js';
+import sharedConfig from './parser/shared.js';
+import babelConfig from './parser/babel.js';
+import tsConfig from './parser/typescript.js';
+import { getLogger } from '../utils/debug.js';
 
 const logger = getLogger('parser');
 

@@ -1,5 +1,5 @@
 import type { ZodSchema } from 'zod';
-import type { Encoder } from '../types';
+import type { Encoder } from '../types.js';
 
 export const jsonEncoder = {
   encode: (input: any) => JSON.stringify(input),

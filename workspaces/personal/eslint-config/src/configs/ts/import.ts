@@ -1,8 +1,11 @@
-import type { Config } from '../../types';
-import { getLogger } from '../../utils/debug';
-import { makeConfigFactory } from '../../utils/makeConfig';
-import { tryImport } from '../../utils/tryImport';
-import jsImportConfig from '../js/import';
+import type { Config } from '../../types.js';
+import { getLogger } from '../../utils/debug.js';
+import { makeConfigFactory } from '../../utils/makeConfig.js';
+import { tryImport } from '../../utils/tryImport.js';
+import jsImportConfig, {
+  jsExtensions,
+  jsImportExtensions,
+} from '../js/import.js';
 
 const [baseImportConfig] = jsImportConfig;
 
@@ -12,21 +15,28 @@ const logger = getLogger('module:ts:import');
 
 const tsxExtensions = reactPlugin ? ['.tsx'] : [];
 
-export const allExtensions = [
+export const tsImportExtensions = [
+  ...jsImportExtensions,
   '.ts',
   '.mts',
+  ...tsxExtensions,
+] as const;
+
+export const tsExtensions = [
+  ...tsImportExtensions,
   '.cts',
   '.d.ts',
   ...tsxExtensions,
 ] as const;
 
-export const importExtensions = [
-  '.ts',
-  '.mts',
-  ...tsxExtensions,
-] as const;
+export const allExtensions = [
+  ...jsExtensions,
+  ...tsExtensions,
+].filter((it, index, array) => array.indexOf(it) === index);
 
-const configFiles = allExtensions.map((it) => `*${it}`) as unknown as [string];
+const configFiles = allExtensions
+  .filter((it) => !it.includes('.json'))
+  .map((it) => `*${it}`) as unknown as [string];
 
 export const makeTSConfig = makeConfigFactory(
   ...configFiles,
@@ -38,20 +48,22 @@ if (tsPlugin) {
   logger.warn('Typescript not loaded. Skipping Typescript Import Settings');
 }
 
+const {
+  name,
+  ...baseConfig
+} = baseImportConfig;
+
 const config = tsPlugin
   ? [
     makeTSConfig({
       name: 'Typescript Import',
+      ...baseConfig,
       settings: {
-        'import/parsers': {
-          '@typescript-eslint/parser': allExtensions,
-        },
+        ...baseConfig.settings,
         'import/resolver': {
-          node: {
-            extensions: [
-              ...baseImportConfig.settings['import/resolver'].node.extensions,
-              ...allExtensions,
-            ],
+          exports: true,
+          typescript: {
+            alwaysTryTypes: true,
           },
         },
         'import/external-module-folders': [
@@ -59,9 +71,17 @@ const config = tsPlugin
           'node_modules/@types',
         ],
         'import/extensions': [
-          ...baseImportConfig.settings['import/extensions'],
-          ...importExtensions,
+          ...baseConfig.settings['import/extensions'],
+          ...tsImportExtensions,
         ],
+        'import/parsers': {
+          '@typescript-eslint/parser': [
+            '.ts',
+            '.tsx',
+            '.mts',
+            '.cts',
+          ],
+        },
       },
     }),
   ] as const satisfies Config[]

@@ -1,4 +1,4 @@
-import type { Config } from '../../../types';
+import type { Config } from '../../../types.js';
 
 export default {
   // Enforce that all elements that require alternative text have meaningful information

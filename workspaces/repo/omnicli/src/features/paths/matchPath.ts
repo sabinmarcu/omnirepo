@@ -1,8 +1,8 @@
-import { getSinglePathOf } from './getSinglePathOf';
+import { getSinglePathOf } from './getSinglePathOf.js';
 import type {
   ReadonlyPaths,
   SinglePathsOf,
-} from './types';
+} from './types.js';
 
 export const matchPath = <
   Match extends ReadonlyPaths,

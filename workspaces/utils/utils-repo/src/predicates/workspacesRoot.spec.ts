@@ -6,9 +6,9 @@ import {
   testSync,
   test as testAsync,
   predicate,
-} from './workspacesRoot';
+} from './workspacesRoot.js';
 
-import compileFixtures from './__mocks__/workspacesRoot';
+import compileFixtures from './__mocks__/workspacesRoot.js';
 
 const fixtures = compileFixtures();
 

@@ -1,4 +1,4 @@
-import { getSinglePathsOf } from './getSinglePathsOf';
+import { getSinglePathsOf } from './getSinglePathsOf.js';
 
 describe('getSinglePathsOf', () => {
   it('should be a function', () => {

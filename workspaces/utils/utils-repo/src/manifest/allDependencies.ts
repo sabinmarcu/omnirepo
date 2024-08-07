@@ -1,11 +1,13 @@
-import moize from 'moize';
+import moizeImport, { type Moize } from 'moize';
 import type { PackageJson } from 'type-fest';
 import {
   manifestOf,
   manifestOfSync,
-} from './manifestOf';
+} from './manifestOf.js';
 
-export const allDependenciesOfSync = moize((
+const moize = moizeImport as unknown as Moize;
+
+const allDependenciesOfSyncRaw = (
   manifest: PackageJson | string,
 ) => {
   const localManifest = typeof manifest === 'string'
@@ -17,9 +19,12 @@ export const allDependenciesOfSync = moize((
     ...localManifest.peerDependencies,
     ...localManifest.optionalDependencies,
   } as Record<string, string>;
-});
+};
+export const allDependenciesOfSync = moize(
+  allDependenciesOfSyncRaw,
+) as typeof allDependenciesOfSyncRaw;
 
-export const allDependenciesOf = moize.promise(async (
+const allDependenciesOfRaw = async (
   manifest: PackageJson | string,
 ) => {
   const localManifest = typeof manifest === 'string'
@@ -31,4 +36,5 @@ export const allDependenciesOf = moize.promise(async (
     ...localManifest.peerDependencies,
     ...localManifest.optionalDependencies,
   } as Record<string, string>;
-});
+};
+export const allDependenciesOf = moize.promise(allDependenciesOfRaw) as typeof allDependenciesOfRaw;

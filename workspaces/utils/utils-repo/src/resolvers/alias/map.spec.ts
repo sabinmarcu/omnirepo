@@ -6,9 +6,9 @@ import {
   resolver as getWorkspacesMap,
   getWorkspacesMap as getWorkspacesMapAsync,
   getWorkspacesMapSync,
-} from './map';
+} from './map.js';
 
-import compileFixtures from './__mocks__';
+import compileFixtures from './__mocks__.js';
 
 const fixtures = compileFixtures();
 

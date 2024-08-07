@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { resolver } from './manifest';
+import { resolver } from './manifest.js';
 
 describe('resolver.manifest', () => {
   const testCases = [

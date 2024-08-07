@@ -13,8 +13,8 @@ export type WorkspacesFixture = {
 );
 
 const config = () => compileFixtures<WorkspacesFixture>(
-  new URL('.', import.meta.url),
-  ['index.ts'],
+  __dirname,
+  ['index.cts'],
 );
 
 export default config;

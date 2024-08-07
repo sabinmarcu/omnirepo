@@ -6,9 +6,9 @@ import {
   resolver as getWorkspacesNames,
   getWorkspacesNames as getWorkspacesNamesAsync,
   getWorkspacesNamesSync,
-} from './names';
+} from './names.js';
 
-import compileFixtures from './__mocks__';
+import compileFixtures from './__mocks__.js';
 
 const fixtures = compileFixtures();
 
