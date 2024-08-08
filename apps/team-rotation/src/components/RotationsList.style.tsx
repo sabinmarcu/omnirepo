@@ -1,4 +1,7 @@
-import { styled } from '@mui/material';
+import {
+  Button,
+  styled,
+} from '@mui/material';
 
 export const RotationsListWrapper = styled('section')<{ spacing?: number }>(({
   spacing = 1.5,
@@ -7,7 +10,7 @@ export const RotationsListWrapper = styled('section')<{ spacing?: number }>(({
   display: 'flex',
   flexFlow: 'row wrap',
   gap: `${spacing}rem`,
-  alignItems: 'flex-start',
+  alignItems: 'center',
   width: '100%',
   paddingInline: `${spacing}rem`,
   paddingBlock: `${spacing * 1.5}rem`,
@@ -17,3 +20,33 @@ export const RotationsListWrapper = styled('section')<{ spacing?: number }>(({
     alignItems: 'stretch',
   },
 }));
+
+export const RotationListAddButton = styled(Button)(({ theme }) => {
+  const backgroundColor = [
+    'r',
+    'g',
+    'b',
+  ].map(
+    (it) => `calc(${it} ${theme.palette.mode === 'light' ? '* 1' : '/ 0.8'})`,
+  ).join(' ');
+  const hoverBackgroundColor = [
+    'r',
+    'g',
+    'b',
+  ].map(
+    (it) => `calc(${it} ${theme.palette.mode === 'light' ? '* 0.8' : '* 1'})`,
+  ).join(' ');
+  return {
+    padding: '3rem',
+    margin: '1rem',
+    justifySelf: 'center',
+    background: `rgb(from ${theme.palette.background.paper} ${backgroundColor})`,
+    color: theme.palette.text.primary,
+    '& svg': {
+      fontSize: '3rem',
+    },
+    '&:hover': {
+      background: `rgb(from ${theme.palette.background.paper} ${hoverBackgroundColor})`,
+    },
+  };
+});

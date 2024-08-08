@@ -125,9 +125,15 @@ export function RotationEditNameField({ atom }: RotationRootEditProperties) {
   );
 }
 
+export type RotationEditProperties = {
+  onRemove: () => void,
+} & RotationProperties;
+
 export function RotationEdit({
-  atom, onToggle,
-}: RotationProperties) {
+  atom,
+  onToggle,
+  onRemove,
+}: RotationEditProperties) {
   return (
     <RotationEditCardWrapper>
       <RotationEditCardEditWrapper>
@@ -138,8 +144,10 @@ export function RotationEdit({
         </RotationEditCardContent>
       </RotationEditCardEditWrapper>
       <CardActions sx={{ justifyContent: 'flex-end' }}>
+        <Button color="error" onClick={onRemove}>Delete this Rotation</Button>
         <Button color="primary" onClick={onToggle}>Done</Button>
       </CardActions>
     </RotationEditCardWrapper>
   );
 }
+

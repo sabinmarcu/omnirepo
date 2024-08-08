@@ -1,8 +1,17 @@
 import { dateToState } from '../utils/date.ts';
 import type {
   RotationTeamType,
+  RotationType,
   StateType,
 } from './types.ts';
+
+const possibleRotationNames = [
+  'Weeklies',
+  'Bi-Weeklies',
+  'Monthlies',
+  'Quartierlies',
+  'Whenverlies',
+];
 
 const possibleNames = [
   'John',
@@ -46,29 +55,50 @@ const generateList = () => {
   } satisfies RotationTeamType;
 };
 
+export const generateRotation = ({
+  name,
+  startDate,
+  every,
+  teams,
+}: {
+  name?: string,
+  startDate?: string,
+  every?: number,
+  teams?: RotationTeamType[]
+} = {}) => {
+  const currentName = name ?? pickOneOf(possibleRotationNames);
+  const currentStartDate = startDate ?? dateToState(Date.now());
+  const currentEvery = every ?? getRandomInteger(1, 12);
+  const currentTeams = teams ?? Array.from({ length: getRandomInteger(1, 3) })
+    .map(() => generateList()) as RotationTeamType[];
+  return {
+    name: currentName,
+    startDate: currentStartDate,
+    every: currentEvery,
+    teams: currentTeams,
+  } satisfies RotationType;
+};
+
 export const seedData = {
   pageTitle: 'This is my team!',
   rotations: [
-    {
+    generateRotation({
       name: 'Weeklies',
-      startDate: dateToState(Date.now()),
       every: 1,
       teams: [generateList()],
-    },
-    {
+    }),
+    generateRotation({
       name: 'Bi-Weeklies',
-      startDate: dateToState(Date.now()),
       every: 2,
       teams: [
         generateList(),
         generateList(),
       ],
-    },
-    {
+    }),
+    generateRotation({
       name: 'Monthlies',
-      startDate: dateToState(Date.now()),
       every: 4,
       teams: [generateList()],
-    },
+    }),
   ],
 } satisfies StateType;
