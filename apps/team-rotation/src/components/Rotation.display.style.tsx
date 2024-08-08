@@ -1,5 +1,6 @@
 import {
   CardContent,
+  IconButton,
   List,
   ListItem,
   Typography,
@@ -16,6 +17,7 @@ export const RotationMetadataCard = styled(CardContent)(({ theme }) => ({
   [theme.breakpoints.down('lg')]: {
     alignItems: 'center',
   },
+  position: 'relative',
 }));
 
 export const RotationDisplayListsWrapper = styled('div')({
@@ -129,3 +131,9 @@ export const RotationDisplayListItem = styled(ListItem)<{ level?: number }>(
     };
   },
 );
+
+export const RotationDisplayEditButton = styled(IconButton)({
+  position: 'absolute',
+  insetBlockStart: '0.5rem',
+  insetInlineStart: '0.5rem',
+});
