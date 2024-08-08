@@ -45,7 +45,7 @@ export function RotationsList() {
       {rotations.map((atom, index) => (
         <Rotation
           atom={atom}
-          key={JSON.stringify(rotationsAtoms[index])}
+          key={`${atom}-${rotationsAtoms[index]['name']}`}
           onRemove={removeRotation(rotationsAtoms[index])}
         />
       ))}
