@@ -5,6 +5,7 @@ import {
   IconButton,
   List,
   ListItem,
+  ListItemButton,
   TextField,
 } from '@mui/material';
 import {
@@ -45,11 +46,13 @@ import {
   RotationEditCardWrapper,
   RotationEditTeamAddButton,
   RotationEditTeamCardContent,
+  RotationEditTeamMemberAdd,
   RotationEditTeamMemberList,
   RotationEditTeamMemberListItem,
 } from './Rotation.edit.style.js';
 import {
   generateTeamList,
+  generateTeamMember,
 } from '../state/seed.js';
 import type { RotationTeamMemberType } from '../state/types.ts';
 
@@ -186,6 +189,7 @@ export function RotationEditTeamMember({
     <RotationEditTextField
       label={`Member #${index + 1}`}
       atom={nameAtom}
+      fullWidth
     />
   );
 }
@@ -194,10 +198,26 @@ export type RotationEditTeamListProperties = {
   atom: PrimitiveAtom<RotationTeamMemberType[]>
 };
 export function RotationEditTeamList({ atom }: RotationEditTeamListProperties) {
-  const [membersList] = useAtom(atom);
+  const [
+    membersList,
+    setMembersList,
+  ] = useAtom(atom);
   const membersListAtom = useMemo(
     () => splitAtom(atom),
     [atom],
+  );
+  const addMember = useCallback(
+    () => setMembersList((oldList) => [
+      ...oldList,
+      generateTeamMember(),
+    ]),
+    [setMembersList],
+  );
+  const removeMember = useCallback(
+    (id: string) => () => setMembersList((oldList) => oldList.filter(
+      (member) => member.id !== id,
+    )),
+    [setMembersList],
   );
   const members = useAtomValue(membersListAtom);
   return (
@@ -206,7 +226,12 @@ export function RotationEditTeamList({ atom }: RotationEditTeamListProperties) {
         <RotationEditTeamMemberListItem
           key={member.id}
           secondaryAction={(
-            <IconButton edge="end" aria-label="delete" color="error">
+            <IconButton
+              edge="end"
+              aria-label="delete"
+              color="error"
+              onClick={removeMember(member.id)}
+            >
               <Delete />
             </IconButton>
           )}
@@ -217,6 +242,11 @@ export function RotationEditTeamList({ atom }: RotationEditTeamListProperties) {
           />
         </RotationEditTeamMemberListItem>
       ))}
+      <RotationEditTeamMemberListItem>
+        <RotationEditTeamMemberAdd onClick={addMember}>
+          <PlusOne />
+        </RotationEditTeamMemberAdd>
+      </RotationEditTeamMemberListItem>
     </RotationEditTeamMemberList>
   );
 }
