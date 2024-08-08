@@ -1,13 +1,18 @@
 import {
   Button,
   CardActions,
+  Divider,
   TextField,
 } from '@mui/material';
 import {
   useAtom,
 } from 'jotai';
-import type { ChangeEvent } from 'react';
+import type {
+  ChangeEvent,
+  ComponentProps,
+} from 'react';
 import {
+  forwardRef,
   useEffect,
   useMemo,
   useState,
@@ -15,7 +20,12 @@ import {
 import { focusAtom } from 'jotai-optics';
 import type { Dayjs } from 'dayjs';
 import { DatePicker } from '@mui/x-date-pickers';
-import type { RotationProperties } from './Rotation.types.tsx';
+import { splitAtom } from 'jotai/utils';
+import type { PrimitiveAtom } from 'jotai/vanilla';
+import type {
+  RotationProperties,
+  RotationTeamProperties,
+} from './Rotation.types.tsx';
 import {
   dateToState,
   parseDate,
@@ -24,9 +34,36 @@ import {
   RotationEditCardContent,
   RotationEditCardEditWrapper,
   RotationEditCardWrapper,
+  RotationEditTeamCardContent,
 } from './Rotation.edit.style.tsx';
 
 export type RotationRootEditProperties = Omit<RotationProperties, 'onToggle'>;
+export type RotationEditTextFieldProperties = {
+  atom: PrimitiveAtom<string>
+} & ComponentProps<typeof TextField>;
+
+export const RotationEditTextField = forwardRef<HTMLInputElement, RotationEditTextFieldProperties>(
+  ({
+    atom,
+    ...rest
+  }, reference) => {
+    const [
+      input,
+      setInput,
+    ] = useAtom(atom);
+    const onChange = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
+      setInput(value);
+    };
+    return (
+      <TextField
+        {...rest}
+        ref={reference}
+        value={input}
+        onChange={onChange}
+      />
+    );
+  },
+);
 
 export function RotationEditStartDateField({ atom }: RotationRootEditProperties) {
   const startDateAtom = useMemo(
@@ -109,19 +146,56 @@ export function RotationEditNameField({ atom }: RotationRootEditProperties) {
     ),
     [atom],
   );
-  const [
-    name,
-    setName,
-  ] = useAtom(nameAtom);
-  const onChange = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
-    setName(value);
-  };
   return (
-    <TextField
-      label="Rotation Name"
-      value={name}
-      onChange={onChange}
-    />
+    <RotationEditTextField atom={nameAtom} label="Rotation Name" />
+  );
+}
+
+export type RotationEditTeamEditProperties = {
+  index: number
+} & RotationTeamProperties;
+export function RotationEditTeamEdit({
+  atom,
+  index,
+}: RotationEditTeamEditProperties) {
+  const nameAtom = useMemo(
+    () => focusAtom(
+      atom,
+      (optics) => optics.prop('name'),
+    ),
+    [atom],
+  );
+  return (
+    <RotationEditTeamCardContent>
+      <RotationEditTextField atom={nameAtom} label={`Team #${index + 1} Name`} />
+    </RotationEditTeamCardContent>
+  );
+}
+
+export function RotationEditAllTeams({ atom }: RotationRootEditProperties) {
+  const teamsListAtom = useMemo(
+    () => focusAtom(
+      atom,
+      (optics) => optics.prop('teams'),
+    ),
+    [atom],
+  );
+  const [teamsList] = useAtom(teamsListAtom);
+  const teamsAtom = useMemo(
+    () => splitAtom(teamsListAtom),
+    [teamsListAtom],
+  );
+  const [teams] = useAtom(teamsAtom);
+  return (
+    <>
+      {teamsList.map((team, index) => (
+        <RotationEditTeamEdit
+          atom={teams[index]}
+          index={index}
+          key={team.id}
+        />
+      ))}
+    </>
   );
 }
 
@@ -142,7 +216,9 @@ export function RotationEdit({
           <RotationEditEveryField atom={atom} />
           <RotationEditStartDateField atom={atom} />
         </RotationEditCardContent>
+        <RotationEditAllTeams atom={atom} />
       </RotationEditCardEditWrapper>
+      <Divider />
       <CardActions sx={{ justifyContent: 'flex-end' }}>
         <Button color="error" onClick={onRemove}>Delete this Rotation</Button>
         <Button color="primary" onClick={onToggle}>Done</Button>

@@ -53,6 +53,7 @@ const generateList = () => {
   return {
     name,
     list,
+    id: nanoid(),
   } satisfies RotationTeamType;
 };
 

@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 export const rotationTeamSchema = z.object({
   name: z.string(),
+  id: z.string(),
   list: z.array(z.string()),
 });
 
