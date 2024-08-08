@@ -6,6 +6,7 @@ import {
 } from '@mui/material';
 import {
   useAtom,
+  useAtomValue,
 } from 'jotai';
 import type {
   ChangeEvent,
@@ -13,6 +14,7 @@ import type {
 } from 'react';
 import {
   forwardRef,
+  useCallback,
   useEffect,
   useMemo,
   useState,
@@ -22,10 +24,11 @@ import type { Dayjs } from 'dayjs';
 import { DatePicker } from '@mui/x-date-pickers';
 import { splitAtom } from 'jotai/utils';
 import type { PrimitiveAtom } from 'jotai/vanilla';
+import { PlusOne } from '@mui/icons-material';
 import type {
   RotationProperties,
   RotationTeamProperties,
-} from './Rotation.types.tsx';
+} from './Rotation.types.js';
 import {
   dateToState,
   parseDate,
@@ -34,8 +37,12 @@ import {
   RotationEditCardContent,
   RotationEditCardEditWrapper,
   RotationEditCardWrapper,
+  RotationEditTeamAddButton,
   RotationEditTeamCardContent,
-} from './Rotation.edit.style.tsx';
+} from './Rotation.edit.style.js';
+import {
+  generateList,
+} from '../state/seed.js';
 
 export type RotationRootEditProperties = Omit<RotationProperties, 'onToggle'>;
 export type RotationEditTextFieldProperties = {
@@ -152,11 +159,13 @@ export function RotationEditNameField({ atom }: RotationRootEditProperties) {
 }
 
 export type RotationEditTeamEditProperties = {
-  index: number
+  index: number,
+  onRemove: () => void
 } & RotationTeamProperties;
 export function RotationEditTeamEdit({
   atom,
   index,
+  onRemove,
 }: RotationEditTeamEditProperties) {
   const nameAtom = useMemo(
     () => focusAtom(
@@ -168,6 +177,7 @@ export function RotationEditTeamEdit({
   return (
     <RotationEditTeamCardContent>
       <RotationEditTextField atom={nameAtom} label={`Team #${index + 1} Name`} />
+      <Button color="error" onClick={onRemove}>Remove Team</Button>
     </RotationEditTeamCardContent>
   );
 }
@@ -180,21 +190,41 @@ export function RotationEditAllTeams({ atom }: RotationRootEditProperties) {
     ),
     [atom],
   );
-  const [teamsList] = useAtom(teamsListAtom);
+  const [
+    teamsList,
+    setTeamsList,
+  ] = useAtom(teamsListAtom);
   const teamsAtom = useMemo(
     () => splitAtom(teamsListAtom),
     [teamsListAtom],
   );
-  const [teams] = useAtom(teamsAtom);
+  const teams = useAtomValue(teamsAtom);
+  const addTeam = useCallback(
+    () => setTeamsList((oldTeams) => [
+      ...oldTeams,
+      generateList(),
+    ]),
+    [setTeamsList],
+  );
+  const removeTeam = useCallback(
+    (team: string) => () => {
+      setTeamsList((oldTeams) => oldTeams.filter((maybeTeam) => maybeTeam.id !== team));
+    },
+    [setTeamsList],
+  );
   return (
     <>
       {teamsList.map((team, index) => (
         <RotationEditTeamEdit
           atom={teams[index]}
+          onRemove={removeTeam(team.id)}
           index={index}
           key={team.id}
         />
       ))}
+      <RotationEditTeamAddButton onClick={addTeam}>
+        <PlusOne />
+      </RotationEditTeamAddButton>
     </>
   );
 }

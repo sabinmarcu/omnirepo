@@ -42,7 +42,7 @@ const pickOneOf = (list: readonly string[]) => {
   return list[index];
 };
 
-const generateList = () => {
+export const generateList = () => {
   const numberOfItems = getRandomInteger(5, 2);
 
   const list = Array.from({ length: numberOfItems }).map(
