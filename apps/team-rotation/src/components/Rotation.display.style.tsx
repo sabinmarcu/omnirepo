@@ -24,24 +24,62 @@ export const RotationDisplayListsWrapper = styled('div')({
   gap: '0.2rem',
 });
 
-export const RotationDisplayListCardContent = styled(CardContent)(({ theme }) => ({
-  background: `rgba(from ${theme.palette.background.default} r g b / 0.5)`,
-  padding: 0,
-  flex: 1,
-  display: 'flex',
-  flexFlow: 'column nowrap',
-  '&:last-child': {
+export const RotationDisplayListCardContent = styled(CardContent)(({ theme }) => {
+  const backgroundColor = theme.palette.mode === 'light'
+    ? `rgb(from ${theme.palette.background.default} ${[
+      'r',
+      'g',
+      'b',
+    ]
+      .map((it) => `calc(${it} * 0.95)`)
+      .join(' ')})`
+    : `rgb(from ${theme.palette.background.default} ${[
+      'r',
+      'g',
+      'b',
+    ]
+      .map((it) => `calc(${it} / 0.9)`)
+      .join(' ')})`;
+  return {
+    background: backgroundColor,
     padding: 0,
-  },
-}));
+    flex: 1,
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    '&:last-child': {
+      padding: 0,
+    },
+  };
+});
 
-export const RotationDisplayTeamName = styled(Typography)(({ theme }) => ({
-  background: `rgba(from ${theme.palette.background.default} r g b / 0.7)`,
-  textAlign: 'center',
-  paddingInline: '1rem',
-  paddingBlockStart: '1rem',
-  paddingBlockEnd: '0.5rem',
-}));
+export const RotationDisplayTeamName = styled(Typography)(({ theme }) => {
+  const backgroundColor = theme.palette.mode === 'light'
+    ? `rgb(from ${theme.palette.background.default} ${[
+      'r',
+      'g',
+      'b',
+    ]
+      .map((it) => `calc(${it} * 0.8)`)
+      .join(' ')})`
+    : `rgb(from ${theme.palette.background.default} ${[
+      'r',
+      'g',
+      'b',
+    ]
+      .map((it) => `calc(${it} * 0.5)`)
+      .join(' ')})`;
+  const color = theme.palette.mode === 'light'
+    ? 'black'
+    : 'white';
+  return {
+    background: backgroundColor,
+    color,
+    textAlign: 'center',
+    paddingInline: '1rem',
+    paddingBlockStart: '1rem',
+    paddingBlockEnd: '0.5rem',
+  };
+});
 
 export const RotationDisplayList = styled(List)({
   padding: 0,

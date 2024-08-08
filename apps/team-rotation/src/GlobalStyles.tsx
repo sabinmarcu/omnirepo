@@ -22,6 +22,7 @@ export function GlobalStyles() {
         flexFlow: 'column nowrap',
         alignItems: 'center',
         justifyContent: 'flex-start',
+        overflow: 'hidden',
       },
     }}
     />
