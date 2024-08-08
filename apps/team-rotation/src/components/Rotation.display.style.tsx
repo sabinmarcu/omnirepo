@@ -20,11 +20,14 @@ export const RotationMetadataCard = styled(CardContent)(({ theme }) => ({
   position: 'relative',
 }));
 
-export const RotationDisplayListsWrapper = styled('div')({
+export const RotationDisplayListsWrapper = styled('div')(({ theme }) => ({
   display: 'flex',
   flexFlow: 'row nowrap',
   gap: '0.2rem',
-});
+  [theme.breakpoints.down('lg')]: {
+    flexFlow: 'row wrap',
+  },
+}));
 
 export const RotationDisplayListCardContent = styled(CardContent)(({ theme }) => {
   const backgroundColor = theme.palette.mode === 'light'
