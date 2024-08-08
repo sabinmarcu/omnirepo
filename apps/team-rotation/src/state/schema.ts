@@ -9,6 +9,7 @@ export const rotationSchema = z.object({
   name: z.string(),
   every: z.number(),
   startDate: z.string(),
+  id: z.string(),
   teams: z.array(
     rotationTeamSchema,
   ),
