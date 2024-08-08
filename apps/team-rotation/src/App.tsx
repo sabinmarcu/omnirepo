@@ -6,14 +6,17 @@ import { GlobalStyles } from './GlobalStyles.js';
 import { DevTools } from './DevTools.tsx';
 import { Header } from './components/Header.tsx';
 import { RotationsList } from './components/RotationsList.tsx';
+import { Background } from './components/Background.tsx';
 
 function App() {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ro">
       <ThemeProvider>
         <GlobalStyles />
-        <Header />
-        <RotationsList />
+        <Background>
+          <Header />
+          <RotationsList />
+        </Background>
         <DevTools />
       </ThemeProvider>
     </LocalizationProvider>
