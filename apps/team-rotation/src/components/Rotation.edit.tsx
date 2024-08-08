@@ -47,7 +47,6 @@ import {
   RotationEditListDragHandle,
   RotationEditTeamAddButton,
   RotationEditTeamCardContent,
-  RotationEditTeamCardDragHandle,
   RotationEditTeamCardDragHorizontalHandle,
   RotationEditTeamCardDragVerticalHandle,
   RotationEditTeamCardEditing,
