@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import { dateToState } from '../utils/date.ts';
 import type {
   RotationTeamType,
@@ -76,6 +77,7 @@ export const generateRotation = ({
     startDate: currentStartDate,
     every: currentEvery,
     teams: currentTeams,
+    id: nanoid(),
   } satisfies RotationType;
 };
 

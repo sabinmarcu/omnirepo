@@ -5995,6 +5995,7 @@ __metadata:
     jotai-devtools: "npm:^0.10.0"
     jotai-effect: "npm:^1.0.0"
     jotai-optics: "npm:^0.4.0"
+    nanoid: "npm:^5.0.7"
     optics-ts: "npm:^2.4.1"
     react: "npm:^18.0.0"
     react-dom: "npm:^18.0.0"

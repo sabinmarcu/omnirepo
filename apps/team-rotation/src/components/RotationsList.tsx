@@ -14,7 +14,6 @@ import {
 } from './RotationsList.style.tsx';
 import { Rotation } from './Rotation.tsx';
 import { generateRotation } from '../state/seed.ts';
-import type { RotationType } from '../state/types.ts';
 
 export function RotationsList() {
   const [
@@ -32,9 +31,11 @@ export function RotationsList() {
     [setRotations],
   );
   const removeRotation = useCallback(
-    (rotation: RotationType) => () => {
+    (rotation: string) => () => {
       setRotations((oldRotations) => {
-        const newRotations = oldRotations.filter((maybeRotation) => rotation !== maybeRotation);
+        const newRotations = oldRotations.filter(
+          (maybeRotation) => rotation !== maybeRotation.id,
+        );
         return newRotations;
       });
     },
@@ -42,11 +43,11 @@ export function RotationsList() {
   );
   return (
     <RotationsListWrapper>
-      {rotations.map((atom, index) => (
+      {rotationsAtoms.map((rotation, index) => (
         <Rotation
-          atom={atom}
-          key={`${atom}-${rotationsAtoms[index]['name']}`}
-          onRemove={removeRotation(rotationsAtoms[index])}
+          atom={rotations[index]}
+          key={rotation.id}
+          onRemove={removeRotation(rotation.id)}
         />
       ))}
       <RotationListAddButton onClick={addRotation}>
