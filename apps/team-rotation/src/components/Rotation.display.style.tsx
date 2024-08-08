@@ -5,6 +5,7 @@ import {
   Typography,
   styled,
 } from '@mui/material';
+import type { CSSProperties } from 'react';
 
 export const RotationMetadataCard = styled(CardContent)(({ theme }) => ({
   display: 'flex',
@@ -27,6 +28,11 @@ export const RotationDisplayListCardContent = styled(CardContent)(({ theme }) =>
   background: `rgba(from ${theme.palette.background.default} r g b / 0.5)`,
   padding: 0,
   flex: 1,
+  display: 'flex',
+  flexFlow: 'column nowrap',
+  '&:last-child': {
+    padding: 0,
+  },
 }));
 
 export const RotationDisplayTeamName = styled(Typography)(({ theme }) => ({
@@ -39,20 +45,39 @@ export const RotationDisplayTeamName = styled(Typography)(({ theme }) => ({
 
 export const RotationDisplayList = styled(List)({
   padding: 0,
+  flex: 1,
+  display: 'flex',
+  flexFlow: 'column nowrap',
+  justifyContent: 'center',
 });
 
-export const RotationDisplayListItem = styled(ListItem)(({ theme }) => ({
-  paddingInline: '2rem',
-  borderBlockEnd: `solid 1px ${theme.palette.divider}`,
-  cursor: 'default',
-  transition: theme.transitions.create('background'),
-  '&:last-of-type': {
-    borderBlockEnd: 'none',
+export const RotationDisplayListItem = styled(ListItem)<{ level?: number }>(
+  ({
+    theme,
+    level = 0,
+  }) => {
+    const borderStyle = `solid 1px ${theme.palette.divider}`;
+    const borderStyles = (
+      (level === 0 && {
+        borderBlock: borderStyle,
+      })
+      || (level === -1 && {
+        borderBlockStart: borderStyle,
+      })
+      || (level === 1 && {
+        borderBlockEnd: borderStyle,
+      })
+      || {}
+    ) satisfies CSSProperties;
+    return {
+      ...borderStyles,
+      paddingInline: '2rem',
+      cursor: 'default',
+      transition: theme.transitions.create('background'),
+      opacity: 1 - Math.sqrt(0.4 * Math.abs(level)),
+      '&:hover': {
+        background: `rgba(from ${theme.palette.background.default} r g b / 0.3)`,
+      },
+    };
   },
-  '&:first-of-type': {
-    borderBlockStart: `solid 1px ${theme.palette.divider}`,
-  },
-  '&:hover': {
-    background: `rgba(from ${theme.palette.background.default} r g b / 0.3)`,
-  },
-}));
+);
