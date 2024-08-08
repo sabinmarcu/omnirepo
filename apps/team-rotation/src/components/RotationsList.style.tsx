@@ -18,6 +18,7 @@ export const RotationsListWrapper = styled('section')<{ spacing?: number }>(({
   [theme.breakpoints.down('lg')]: {
     flexFlow: 'column nowrap',
     alignItems: 'stretch',
+    paddingInlineEnd: `${spacing * 2}rem`,
   },
 }));
 

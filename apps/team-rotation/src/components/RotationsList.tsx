@@ -14,6 +14,7 @@ import {
 } from './RotationsList.style.tsx';
 import { Rotation } from './Rotation.tsx';
 import { generateRotation } from '../state/seed.ts';
+import { DndSort } from './DndSort.tsx';
 
 export function RotationsList() {
   const [
@@ -42,17 +43,19 @@ export function RotationsList() {
     [setRotations],
   );
   return (
-    <RotationsListWrapper>
-      {rotationsAtoms.map((rotation, index) => (
-        <Rotation
-          atom={rotations[index]}
-          key={rotation.id}
-          onRemove={removeRotation(rotation.id)}
-        />
-      ))}
-      <RotationListAddButton onClick={addRotation}>
-        <PlusOne />
-      </RotationListAddButton>
-    </RotationsListWrapper>
+    <DndSort atom={rotationsAtom}>
+      <RotationsListWrapper>
+        {rotationsAtoms.map((rotation, index) => (
+          <Rotation
+            atom={rotations[index]}
+            key={rotation.id}
+            onRemove={removeRotation(rotation.id)}
+          />
+        ))}
+        <RotationListAddButton onClick={addRotation}>
+          <PlusOne />
+        </RotationListAddButton>
+      </RotationsListWrapper>
+    </DndSort>
   );
 }
