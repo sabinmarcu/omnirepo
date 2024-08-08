@@ -60,24 +60,33 @@ export function RotationDisplayTeamList({
     ],
   );
 
-  const atomsToRender = [
-    -2,
-    -1,
-    0,
-    1,
-    2,
-  ].map((offset) => {
-    const selected = selector(offset);
-    return {
-      member: list[selected],
-      level: 0 - Math.abs(offset),
-    } as const;
-  });
+  const atomsToRender = useMemo(
+    () => [
+      -2,
+      -1,
+      0,
+      1,
+      2,
+    ].map((offset) => {
+      const selected = selector(offset);
+      return {
+        member: list[selected],
+        level: offset,
+      } as const;
+    }),
+    [
+      selector,
+      list,
+    ],
+  );
 
   return (
     <RotationDisplayList>
-      {atomsToRender.map(({ member }) => (
-        <RotationDisplayListItem key={member}>
+      {atomsToRender.map(({
+        member,
+        level,
+      }) => (
+        <RotationDisplayListItem key={member} level={level}>
           <ListItemText>{member}</ListItemText>
         </RotationDisplayListItem>
       ))}
