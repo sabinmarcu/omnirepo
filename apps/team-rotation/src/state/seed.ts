@@ -1,6 +1,6 @@
 import { dateToState } from '../utils/date.ts';
 import type {
-  RotationListType,
+  RotationTeamType,
   StateType,
 } from './types.ts';
 
@@ -8,6 +8,8 @@ const possibleNames = [
   'John',
   'Jane',
   'Steve',
+  'Bob',
+  'Johnny',
 ] as const;
 
 const possibleSurnames = [
@@ -15,6 +17,10 @@ const possibleSurnames = [
   'White',
   'Black',
   'Carpenter',
+  'Odinsson',
+  'Lokisson',
+  'Thorsson',
+  'Jefferson',
 ] as const;
 
 const getRandomInteger = (max: number, min = 1) => (
@@ -25,16 +31,19 @@ const pickOneOf = (list: readonly string[]) => {
   const index = getRandomInteger(list.length);
   return list[index];
 };
+
 const generateList = () => {
-  const numberOfItems = getRandomInteger(5);
+  const numberOfItems = getRandomInteger(5, 2);
+
   const list = Array.from({ length: numberOfItems }).map(
     () => `${pickOneOf(possibleNames)} ${pickOneOf(possibleSurnames)}`,
   );
+
   const name = `Team ${String.fromCodePoint(getRandomInteger(25) + 65)}`;
   return {
     name,
     list,
-  } satisfies RotationListType;
+  } satisfies RotationTeamType;
 };
 
 export const seedData = {
