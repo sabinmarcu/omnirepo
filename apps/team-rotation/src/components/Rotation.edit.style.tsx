@@ -6,7 +6,10 @@ import {
   List,
   styled,
 } from '@mui/material';
-import { DndSortDragHandleVertical } from './DndSort.tsx';
+import {
+  DndSortDragHandleVertical,
+  DndSortDragHandleHorizontal,
+} from './DndSort.tsx';
 
 export const RotationEditCardWrapper = styled('div')({
   display: 'flex',
@@ -55,6 +58,7 @@ export const RotationEditTeamCardContent = styled(RotationEditCardContent)(({ th
       paddingInline: '1.5rem',
       paddingBlockStart: '2rem',
       paddingBlockEnd: '1rem',
+      flexFlow: 'column nowrap',
       '&:first-of-type': {
         marginBlockStart: 0,
       },
@@ -69,10 +73,17 @@ export const RotationEditTeamCardEditing = styled('div')({
   minWidth: '250px',
 });
 
-export const RotationEditTeamCardDragHandle = styled(DndSortDragHandleVertical)({
+export const RotationEditTeamCardDragVerticalHandle = styled(DndSortDragHandleVertical)({
   background: 'rgba(from black r g b / 0.2)',
   marginBlock: '-1rem',
   marginInlineEnd: '-1rem',
+});
+
+export const RotationEditTeamCardDragHorizontalHandle = styled(DndSortDragHandleHorizontal)({
+  background: 'rgba(from black r g b / 0.2)',
+  marginBlockStart: '-2rem',
+  marginInline: '-1.5rem',
+  marginBlockEnd: '2rem',
 });
 
 export const RotationEditTeamAddButton = styled(Button)(({ theme }) => {
@@ -113,4 +124,16 @@ export const RotationEditTeamMemberAdd = styled(ListItemButton)({
 export const RotationEditTeamMemberListItemActions = styled('div')({
   display: 'flex',
   flexFlow: 'row nowrap',
+});
+
+export const RotationEditListDragHandle = styled(DndSortDragHandleHorizontal)({
+  paddingBlock: '1rem',
+  paddingInline: '1rem',
+  '&:first-child': {
+    paddingInlineStart: 0,
+  },
+  '&:last-child': {
+    paddingInlineEnd: 0,
+  },
+  backgrounspd: 'transparent',
 });

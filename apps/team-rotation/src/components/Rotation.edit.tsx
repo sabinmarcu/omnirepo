@@ -44,9 +44,12 @@ import {
   RotationEditCardEditWrapper,
   RotationEditCardTeamWrapper,
   RotationEditCardWrapper,
+  RotationEditListDragHandle,
   RotationEditTeamAddButton,
   RotationEditTeamCardContent,
   RotationEditTeamCardDragHandle,
+  RotationEditTeamCardDragHorizontalHandle,
+  RotationEditTeamCardDragVerticalHandle,
   RotationEditTeamCardEditing,
   RotationEditTeamMemberAdd,
   RotationEditTeamMemberList,
@@ -65,6 +68,7 @@ import {
 } from './DndSort.tsx';
 import { useDndSortable } from '../hooks/useDndSortable.ts';
 import { rotationsAtom } from '../state/atoms.ts';
+import { useIsBelowLg } from '../hooks/useIsBelowLg.ts';
 
 export type RotationRootEditProperties = Omit<RotationProperties, 'onToggle' | 'dndProps'>;
 export type RotationEditTextFieldProperties = {
@@ -215,7 +219,7 @@ export function RotationEditTeamMember({
           >
             <Delete />
           </IconButton>
-          <DndSortDragHandleHorizontal {...dragHandleProps} />
+          <RotationEditListDragHandle {...dragHandleProps} />
         </RotationEditTeamMemberListItemActions>
       )}
     >
@@ -303,14 +307,24 @@ export function RotationEditTeamEdit({
     rootProps,
     dragHandleProps,
   } = useDndSortable(atom);
+  const isBelowLg = useIsBelowLg();
+  const DragHandleHorizontal = isBelowLg
+    ? RotationEditTeamCardDragHorizontalHandle
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    : () => (<></>);
+  const DragHandleVertical = isBelowLg
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    ? () => (<></>)
+    : RotationEditTeamCardDragVerticalHandle;
   return (
     <RotationEditTeamCardContent {...rootProps}>
+      <DragHandleHorizontal {...dragHandleProps} />
       <RotationEditTeamCardEditing>
         <RotationEditTextField atom={nameAtom} label={`Team #${index + 1} Name`} />
         <RotationEditTeamList atom={listAtom} />
         <Button color="error" onClick={onRemove}>Remove Team</Button>
       </RotationEditTeamCardEditing>
-      <RotationEditTeamCardDragHandle {...dragHandleProps} />
+      <DragHandleVertical {...dragHandleProps} />
     </RotationEditTeamCardContent>
   );
 }
@@ -399,10 +413,14 @@ export function RotationEdit({
   onRemove,
   dndProps,
 }: RotationEditProperties) {
+  const isBelowLg = useIsBelowLg();
+  const DragHandle = isBelowLg
+    ? DndSortDragHandleHorizontal
+    : DndSortDragHandleVertical;
   return (
     <RotationEditCardWrapper>
       <RotationEditCardEditWrapper>
-        <DndSortDragHandleVertical {...dndProps} />
+        <DragHandle {...dndProps} />
         <RotationEditCardContent>
           <RotationEditNameField atom={atom} />
           <RotationEditEveryField atom={atom} />

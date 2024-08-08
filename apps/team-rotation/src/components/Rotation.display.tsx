@@ -40,8 +40,10 @@ import {
 } from '../utils/arrays.js';
 import { parseDate } from '../utils/date.ts';
 import {
+  DndSortDragHandleHorizontal,
   DndSortDragHandleVertical,
 } from './DndSort.tsx';
+import { useIsBelowLg } from '../hooks/useIsBelowLg.ts';
 
 type WeekNumberProperties = {
   weekNumber: number;
@@ -190,9 +192,13 @@ export function RotationDisplay({
     [atom],
   );
   const teams = useAtomValue(teamsAtom);
+  const isBelowLg = useIsBelowLg();
+  const DragHandle = isBelowLg
+    ? DndSortDragHandleHorizontal
+    : DndSortDragHandleVertical;
   return (
     <>
-      <DndSortDragHandleVertical {...dndProps} />
+      <DragHandle {...dndProps} />
       <RotationDisplayEditButton onClick={onToggle}>
         <Edit />
       </RotationDisplayEditButton>

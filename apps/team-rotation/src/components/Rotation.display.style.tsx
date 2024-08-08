@@ -16,6 +16,7 @@ export const RotationMetadataCard = styled(CardContent)(({ theme }) => ({
   paddingInlineStart: '2rem',
   [theme.breakpoints.down('lg')]: {
     alignItems: 'center',
+    paddingInlineStart: '1rem',
   },
 }));
 
@@ -25,6 +26,9 @@ export const RotationDisplayListsWrapper = styled('div')(({ theme }) => ({
   gap: '0.2rem',
   [theme.breakpoints.down('lg')]: {
     flexFlow: 'row wrap',
+  },
+  '@media (max-width: 465px)': {
+    gap: 0,
   },
 }));
 
