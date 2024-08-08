@@ -52,7 +52,7 @@ export const RotationDisplayListCardContent = styled(CardContent)(({ theme }) =>
   };
 });
 
-export const RotationDisplayTeamName = styled(Typography)(({ theme }) => {
+export const RotationDisplayTeamNameWrapper = styled('div')(({ theme }) => {
   const backgroundColor = theme.palette.mode === 'light'
     ? `rgb(from ${theme.palette.background.default} ${[
       'r',
@@ -78,7 +78,17 @@ export const RotationDisplayTeamName = styled(Typography)(({ theme }) => {
     paddingInline: '1rem',
     paddingBlockStart: '1rem',
     paddingBlockEnd: '0.5rem',
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    alignItems: 'center',
+    gap: '0.5rem',
   };
+});
+
+export const RotationDisplayTeamName = styled(Typography)({
+  flex: 1,
+  padding: 0,
+  minWidth: '75px',
 });
 
 export const RotationDisplayList = styled(List)({
