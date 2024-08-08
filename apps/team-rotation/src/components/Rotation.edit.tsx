@@ -21,6 +21,11 @@ import {
   dateToState,
   parseDate,
 } from '../utils/date.ts';
+import {
+  RotationEditCardContent,
+  RotationEditCardEditWrapper,
+  RotationEditCardWrapper,
+} from './Rotation.edit.style.tsx';
 
 export type RotationRootEditProperties = Omit<RotationProperties, 'onToggle'>;
 
@@ -125,15 +130,17 @@ export function RotationEdit({
   atom, onToggle,
 }: RotationProperties) {
   return (
-    <>
-      <CardContent>
-        <RotationEditNameField atom={atom} />
-        <RotationEditEveryField atom={atom} />
-        <RotationEditStartDateField atom={atom} />
-      </CardContent>
-      <CardActions>
-        <Button color="secondary" onClick={onToggle}>Go Back</Button>
+    <RotationEditCardWrapper>
+      <RotationEditCardEditWrapper>
+        <RotationEditCardContent>
+          <RotationEditNameField atom={atom} />
+          <RotationEditEveryField atom={atom} />
+          <RotationEditStartDateField atom={atom} />
+        </RotationEditCardContent>
+      </RotationEditCardEditWrapper>
+      <CardActions sx={{ justifyContent: 'flex-end' }}>
+        <Button color="primary" onClick={onToggle}>Done</Button>
       </CardActions>
-    </>
+    </RotationEditCardWrapper>
   );
 }
