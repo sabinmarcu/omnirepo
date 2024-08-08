@@ -1,8 +1,11 @@
 import
 { styled } from '@mui/material';
-import type { ButtonsLocationProperties } from './TitleEditor.tsx';
 
-export const TitleEditorWrapper = styled('div')<ButtonsLocationProperties>(({ location }) => ({
+export type LocationProperties = {
+  location?: 'left' | 'right'
+};
+
+export const TitleEditorWrapper = styled('div')<LocationProperties>(({ location }) => ({
   display: 'flex',
   gap: '0.5rem',
   alignItems: 'center',
