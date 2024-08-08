@@ -8,6 +8,7 @@ import {
 import { useMemo } from 'react';
 import { focusAtom } from 'jotai-optics';
 import { splitAtom } from 'jotai/utils';
+import dayjs from 'dayjs';
 import type {
   RotationTeamProperties,
   RotationProperties,
@@ -22,11 +23,60 @@ import {
   RotationMetadataCard,
 } from './Rotation.display.style.tsx';
 
-export function RotationDisplayTeamList({ atom }: RotationTeamListProperties) {
+type WeekNumberProperties = {
+  weekNumber: number;
+};
+
+export type RotationDisplayTeamListProperties =
+& WeekNumberProperties
+& RotationTeamListProperties;
+
+const selectMemberForOffset = (
+  weekNumber: number,
+  total: number,
+  offset: number,
+) => {
+  const today = weekNumber % total;
+  if (offset === 0) {
+    return today;
+  }
+  const diff = today + offset;
+  if (diff < 0) {
+    return (total - Math.abs(diff)) % total;
+  }
+  return diff % total;
+};
+
+export function RotationDisplayTeamList({
+  atom,
+  weekNumber,
+}: RotationDisplayTeamListProperties) {
   const list = useAtomValue(atom);
+  const selector = useMemo(
+    () => selectMemberForOffset.bind(undefined, weekNumber, list.length),
+    [
+      weekNumber,
+      list.length,
+    ],
+  );
+
+  const atomsToRender = [
+    -2,
+    -1,
+    0,
+    1,
+    2,
+  ].map((offset) => {
+    const selected = selector(offset);
+    return {
+      member: list[selected],
+      level: 0 - Math.abs(offset),
+    } as const;
+  });
+
   return (
     <RotationDisplayList>
-      {list.map((member) => (
+      {atomsToRender.map(({ member }) => (
         <RotationDisplayListItem key={member}>
           <ListItemText>{member}</ListItemText>
         </RotationDisplayListItem>
@@ -35,7 +85,14 @@ export function RotationDisplayTeamList({ atom }: RotationTeamListProperties) {
   );
 }
 
-export function RotationDisplayTeam({ atom }: RotationTeamProperties) {
+type RotationDisplayTeamProperties =
+& WeekNumberProperties
+& RotationTeamProperties;
+
+export function RotationDisplayTeam({
+  atom,
+  weekNumber,
+}: RotationDisplayTeamProperties) {
   const { name } = useAtomValue(atom);
   const listAtom = useMemo(
     () => focusAtom(
@@ -47,7 +104,7 @@ export function RotationDisplayTeam({ atom }: RotationTeamProperties) {
   return (
     <RotationDisplayListCardContent>
       <RotationDisplayTeamName variant="h6">{name}</RotationDisplayTeamName>
-      <RotationDisplayTeamList atom={listAtom} />
+      <RotationDisplayTeamList atom={listAtom} weekNumber={weekNumber} />
     </RotationDisplayListCardContent>
   );
 }
@@ -58,6 +115,10 @@ export function RotationDisplay({ atom }: RotationProperties) {
     every,
     startDate,
   } = useAtomValue(atom);
+  const weekNumber = useMemo(
+    () => dayjs(Date.now()).diff(startDate, 'week'),
+    [startDate],
+  );
   const teamsAtom = useMemo(
     () => {
       const focused = focusAtom(
@@ -83,7 +144,11 @@ export function RotationDisplay({ atom }: RotationProperties) {
       </RotationMetadataCard>
       <RotationDisplayListsWrapper>
         {teams.map((teamAtom) => (
-          <RotationDisplayTeam atom={teamAtom} key={`${teamAtom}`} />
+          <RotationDisplayTeam
+            atom={teamAtom}
+            key={`${teamAtom}`}
+            weekNumber={weekNumber}
+          />
         ))}
       </RotationDisplayListsWrapper>
     </>
