@@ -21,6 +21,7 @@ import {
   useState,
 } from 'react';
 import type { PrimitiveAtom } from 'jotai';
+import type { LocationProperties } from './TitleEditor.style.tsx';
 import { TitleEditorWrapper } from './TitleEditor.style.tsx';
 
 export type Encoder = {
@@ -30,10 +31,6 @@ export type Encoder = {
 
 export type ButtonProperties = ComponentProps<typeof IconButton>;
 export type InputProperties = ComponentProps<typeof TextField>;
-
-export type LocationProperties = {
-  location?: 'left' | 'right'
-};
 
 export type InteractionButtonProperties = {
   icon: typeof Edit
