@@ -4,7 +4,8 @@ import { RotationDisplay } from './Rotation.display.tsx';
 import { RotationCard } from './Rotation.style.tsx';
 import { RotationEdit } from './Rotation.edit.tsx';
 
-export function Rotation({ atom }: RotationProperties) {
+export type RotationComponentProperties = Omit<RotationProperties, 'onToggle'>;
+export function Rotation({ atom }: RotationComponentProperties) {
   const [
     editing,
     setEditing,
