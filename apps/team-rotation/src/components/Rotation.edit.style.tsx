@@ -1,6 +1,8 @@
 import {
   Button,
   CardContent,
+  ListItem,
+  List,
   styled,
 } from '@mui/material';
 
@@ -50,4 +52,12 @@ export const RotationEditTeamAddButton = styled(Button)(({ theme }) => {
     padding: '2rem',
     fontSize: '2rem',
   });
+});
+
+export const RotationEditTeamMemberList = styled(List)({
+  flex: 1,
+});
+
+export const RotationEditTeamMemberListItem = styled(ListItem)({
+  paddingInline: 0,
 });
