@@ -1,27 +1,42 @@
+/* eslint-disable react/no-array-index-key */
 import {
+  useAtom,
   useAtomValue,
 } from 'jotai';
 import {
+  IconButton,
   ListItemText,
   Typography,
 } from '@mui/material';
-import { useMemo } from 'react';
+import {
+  useCallback,
+  useMemo,
+} from 'react';
 import { focusAtom } from 'jotai-optics';
 import { splitAtom } from 'jotai/utils';
 import dayjs from 'dayjs';
+import {
+  KeyboardArrowDown,
+  KeyboardArrowUp,
+} from '@mui/icons-material';
 import type {
   RotationTeamProperties,
   RotationProperties,
   RotationTeamListProperties,
-} from './Rotation.types.tsx';
+} from './Rotation.types.js';
 import {
   RotationDisplayList,
   RotationDisplayListCardContent,
   RotationDisplayListItem,
   RotationDisplayListsWrapper,
   RotationDisplayTeamName,
+  RotationDisplayTeamNameWrapper,
   RotationMetadataCard,
-} from './Rotation.display.style.tsx';
+} from './Rotation.display.style.js';
+import {
+  offsetListBy,
+  selectMemberForOffset,
+} from '../utils/arrays.js';
 
 type WeekNumberProperties = {
   weekNumber: number;
@@ -30,22 +45,6 @@ type WeekNumberProperties = {
 export type RotationDisplayTeamListProperties =
 & WeekNumberProperties
 & RotationTeamListProperties;
-
-const selectMemberForOffset = (
-  weekNumber: number,
-  total: number,
-  offset: number,
-) => {
-  const today = weekNumber % total;
-  if (offset === 0) {
-    return today;
-  }
-  const diff = today + offset;
-  if (diff < 0) {
-    return (total - Math.abs(diff)) % total;
-  }
-  return diff % total;
-};
 
 export function RotationDisplayTeamList({
   atom,
@@ -85,12 +84,41 @@ export function RotationDisplayTeamList({
       {atomsToRender.map(({
         member,
         level,
-      }) => (
-        <RotationDisplayListItem key={member} level={level}>
+      }, index) => (
+        <RotationDisplayListItem key={`${member}-${index}-${level}`} level={level}>
           <ListItemText>{member}</ListItemText>
         </RotationDisplayListItem>
       ))}
     </RotationDisplayList>
+  );
+}
+
+type RotationDisplayTeamShiftButtonProperties = {
+  offset: number
+} & RotationTeamListProperties;
+
+export function RotationDisplayTeamShiftButton({
+  atom,
+  offset,
+}: RotationDisplayTeamShiftButtonProperties) {
+  const [
+    ,setList,
+  ] = useAtom(atom);
+  const onShift = useCallback(
+    () => {
+      setList((oldList) => offsetListBy(oldList, offset));
+    },
+    [
+      setList,
+      offset,
+    ],
+  );
+  return (
+    <IconButton onClick={onShift}>
+      {offset > 0
+        ? <KeyboardArrowDown />
+        : <KeyboardArrowUp />}
+    </IconButton>
   );
 }
 
@@ -112,7 +140,13 @@ export function RotationDisplayTeam({
   );
   return (
     <RotationDisplayListCardContent>
-      <RotationDisplayTeamName variant="h6">{name}</RotationDisplayTeamName>
+      <RotationDisplayTeamNameWrapper>
+        <RotationDisplayTeamShiftButton atom={listAtom} offset={-1} />
+        <RotationDisplayTeamName variant="h6">
+          {name}
+        </RotationDisplayTeamName>
+        <RotationDisplayTeamShiftButton atom={listAtom} offset={1} />
+      </RotationDisplayTeamNameWrapper>
       <RotationDisplayTeamList atom={listAtom} weekNumber={weekNumber} />
     </RotationDisplayListCardContent>
   );
