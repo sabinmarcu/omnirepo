@@ -5,13 +5,14 @@ import type {
 } from '../state/types.ts';
 
 export type RotationProperties = {
-  atom: PrimitiveAtom<RotationType>
+  atom: PrimitiveAtom<RotationType>,
+  onToggle: () => void,
 };
 
 export type RotationTeamProperties = {
-  atom: PrimitiveAtom<RotationTeamType>
+  atom: PrimitiveAtom<RotationTeamType>,
 };
 
 export type RotationTeamListProperties = {
-  atom: PrimitiveAtom<RotationTeamType['list']>
+  atom: PrimitiveAtom<RotationTeamType['list']>,
 };

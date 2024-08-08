@@ -16,6 +16,7 @@ import { focusAtom } from 'jotai-optics';
 import { splitAtom } from 'jotai/utils';
 import dayjs from 'dayjs';
 import {
+  Edit,
   KeyboardArrowDown,
   KeyboardArrowUp,
 } from '@mui/icons-material';
@@ -25,6 +26,7 @@ import type {
   RotationTeamListProperties,
 } from './Rotation.types.js';
 import {
+  RotationDisplayEditButton,
   RotationDisplayList,
   RotationDisplayListCardContent,
   RotationDisplayListItem,
@@ -152,7 +154,10 @@ export function RotationDisplayTeam({
   );
 }
 
-export function RotationDisplay({ atom }: RotationProperties) {
+export function RotationDisplay({
+  atom,
+  onToggle,
+}: RotationProperties) {
   const {
     name,
     every,
@@ -184,6 +189,9 @@ export function RotationDisplay({ atom }: RotationProperties) {
           { 'starting on ' }
           <Typography color="text" component="span">{startDate}</Typography>
         </Typography>
+        <RotationDisplayEditButton onClick={onToggle}>
+          <Edit />
+        </RotationDisplayEditButton>
       </RotationMetadataCard>
       <RotationDisplayListsWrapper>
         {teams.map((teamAtom) => (
