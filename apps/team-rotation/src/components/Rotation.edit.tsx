@@ -62,6 +62,41 @@ export function RotationEditStartDateField({ atom }: RotationRootEditProperties)
   );
 }
 
+export function RotationEditEveryField({ atom }: RotationRootEditProperties) {
+  const everyAtom = useMemo(
+    () => focusAtom(
+      atom,
+      (optics) => optics.prop('every'),
+    ),
+    [atom],
+  );
+  const [
+    every,
+    setEvery,
+  ] = useAtom(everyAtom);
+  const [
+    input,
+    setInput,
+  ] = useState(`${every}`);
+  const onChange = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
+    setInput(value);
+  };
+  useEffect(
+    () => setEvery(Number.parseInt(input, 10)),
+    [
+      input,
+      setEvery,
+    ],
+  );
+  return (
+    <TextField
+      label="Happens Every X Weeks"
+      value={input}
+      onChange={onChange}
+    />
+  );
+}
+
 export function RotationEditNameField({ atom }: RotationRootEditProperties) {
   const nameAtom = useMemo(
     () => focusAtom(
@@ -93,6 +128,7 @@ export function RotationEdit({
     <>
       <CardContent>
         <RotationEditNameField atom={atom} />
+        <RotationEditEveryField atom={atom} />
         <RotationEditStartDateField atom={atom} />
       </CardContent>
       <CardActions>
