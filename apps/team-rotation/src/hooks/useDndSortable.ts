@@ -9,6 +9,7 @@ export const useDndSortable = <T extends { id: string }>(atom: PrimitiveAtom<T>)
     attributes,
     listeners,
     setNodeRef,
+    setActivatorNodeRef,
     transform,
     transition,
   } = useSortable({ id });
@@ -17,9 +18,14 @@ export const useDndSortable = <T extends { id: string }>(atom: PrimitiveAtom<T>)
     transition,
   };
   return {
-    ...attributes,
-    ...listeners,
-    ref: setNodeRef,
-    style,
+    dragHandleProps: {
+      ...attributes,
+      ...listeners,
+      ref: setActivatorNodeRef,
+    },
+    rootProps: {
+      ref: setNodeRef,
+      style,
+    },
   } as const;
 };

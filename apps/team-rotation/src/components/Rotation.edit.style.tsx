@@ -26,6 +26,7 @@ export const RotationEditCardEditWrapper = styled('div')(({ theme }) => ({
 export const RotationEditCardContent = styled(CardContent)({
   display: 'flex',
   flexFlow: 'column nowrap',
+  justifyContent: 'space-between',
   gap: '1rem',
 });
 
@@ -43,6 +44,7 @@ export const RotationEditTeamCardContent = styled(RotationEditCardContent)(({ th
 
   return ({
     background: `rgb(from ${theme.palette.background.default} ${background})`,
+    position: 'relative',
     [theme.breakpoints.down('lg')]: {
       marginBlockStart: '1rem',
       marginInline: '1rem',
@@ -54,6 +56,11 @@ export const RotationEditTeamCardContent = styled(RotationEditCardContent)(({ th
       },
     },
   });
+});
+
+export const RotationEditTeamCardEditing = styled('div')({
+  display: 'flex',
+  flexFlow: 'column nowrap',
 });
 
 export const RotationEditTeamAddButton = styled(Button)(({ theme }) => {

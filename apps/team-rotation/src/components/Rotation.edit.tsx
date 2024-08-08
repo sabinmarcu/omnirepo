@@ -43,6 +43,7 @@ import {
   RotationEditCardWrapper,
   RotationEditTeamAddButton,
   RotationEditTeamCardContent,
+  RotationEditTeamCardEditing,
   RotationEditTeamMemberAdd,
   RotationEditTeamMemberList,
   RotationEditTeamMemberListItem,
@@ -52,8 +53,13 @@ import {
   generateTeamMember,
 } from '../state/seed.js';
 import type { RotationTeamMemberType } from '../state/types.ts';
+import {
+  DndSort,
+  DndSortDragHandle,
+} from './DndSort.tsx';
+import { useDndSortable } from '../hooks/useDndSortable.ts';
 
-export type RotationRootEditProperties = Omit<RotationProperties, 'onToggle'>;
+export type RotationRootEditProperties = Omit<RotationProperties, 'onToggle' | 'dndProps'>;
 export type RotationEditTextFieldProperties = {
   atom: PrimitiveAtom<string>
 } & ComponentProps<typeof TextField>;
@@ -271,10 +277,17 @@ export function RotationEditTeamEdit({
     ),
     [atom],
   );
+  const {
+    rootProps,
+    dragHandleProps,
+  } = useDndSortable(atom);
   return (
-    <RotationEditTeamCardContent>
-      <RotationEditTextField atom={nameAtom} label={`Team #${index + 1} Name`} />
-      <RotationEditTeamList atom={listAtom} />
+    <RotationEditTeamCardContent {...rootProps}>
+      <DndSortDragHandle {...dragHandleProps} />
+      <RotationEditTeamCardEditing>
+        <RotationEditTextField atom={nameAtom} label={`Team #${index + 1} Name`} />
+        <RotationEditTeamList atom={listAtom} />
+      </RotationEditTeamCardEditing>
       <Button color="error" onClick={onRemove}>Remove Team</Button>
     </RotationEditTeamCardContent>
   );
@@ -311,7 +324,7 @@ export function RotationEditAllTeams({ atom }: RotationRootEditProperties) {
     [setTeamsList],
   );
   return (
-    <>
+    <DndSort atom={teamsListAtom}>
       {teamsList.map((team, index) => (
         <RotationEditTeamEdit
           atom={teams[index]}
@@ -323,7 +336,7 @@ export function RotationEditAllTeams({ atom }: RotationRootEditProperties) {
       <RotationEditTeamAddButton onClick={addTeam}>
         <PlusOne />
       </RotationEditTeamAddButton>
-    </>
+    </DndSort>
   );
 }
 
@@ -335,11 +348,13 @@ export function RotationEdit({
   atom,
   onToggle,
   onRemove,
+  dndProps,
 }: RotationEditProperties) {
   return (
     <RotationEditCardWrapper>
       <RotationEditCardEditWrapper>
         <RotationEditCardContent>
+          <DndSortDragHandle {...dndProps} />
           <RotationEditNameField atom={atom} />
           <RotationEditEveryField atom={atom} />
           <RotationEditStartDateField atom={atom} />

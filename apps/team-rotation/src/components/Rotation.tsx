@@ -15,14 +15,30 @@ export function Rotation({
     setEditing,
   ] = useState(false);
   const onToggle = () => setEditing((previous) => !previous);
-  const sortable = useDndSortable(atom);
+  const {
+    dragHandleProps,
+    rootProps,
+  } = useDndSortable(atom);
   return (
     <RotationCard
-      {...sortable}
+      {...rootProps}
     >
       {editing
-        ? <RotationEdit atom={atom} onToggle={onToggle} onRemove={onRemove} />
-        : <RotationDisplay atom={atom} onToggle={onToggle} />}
+        ? (
+          <RotationEdit
+            atom={atom}
+            onToggle={onToggle}
+            onRemove={onRemove}
+            dndProps={dragHandleProps}
+          />
+        )
+        : (
+          <RotationDisplay
+            atom={atom}
+            onToggle={onToggle}
+            dndProps={dragHandleProps}
+          />
+        )}
     </RotationCard>
   );
 }

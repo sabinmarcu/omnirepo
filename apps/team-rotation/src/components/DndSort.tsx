@@ -5,6 +5,7 @@ import {
   closestCenter,
 } from '@dnd-kit/core';
 import { SortableContext } from '@dnd-kit/sortable';
+import { styled } from '@mui/material';
 import { useDndSort } from '../hooks/useDndSort.ts';
 
 export type DndSortProperties<T extends { id: string } = { id:string }> = PropsWithChildren<{
@@ -29,3 +30,11 @@ export function DndSort<T extends { id: string }>({
     </DndContext>
   );
 }
+
+export const DndSortDragHandle = styled('div')({
+  position: 'absolute',
+  inset: 0,
+  '& ~ *': {
+    position: 'relative',
+  },
+});

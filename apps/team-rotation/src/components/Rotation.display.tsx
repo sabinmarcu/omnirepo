@@ -39,6 +39,7 @@ import {
   selectMemberForOffset,
 } from '../utils/arrays.js';
 import { parseDate } from '../utils/date.ts';
+import { DndSortDragHandle } from './DndSort.tsx';
 
 type WeekNumberProperties = {
   weekNumber: number;
@@ -158,6 +159,7 @@ export function RotationDisplayTeam({
 export function RotationDisplay({
   atom,
   onToggle,
+  dndProps,
 }: RotationProperties) {
   const {
     name,
@@ -189,6 +191,7 @@ export function RotationDisplay({
   return (
     <>
       <RotationMetadataCard>
+        <DndSortDragHandle {...dndProps} />
         <Typography color="text.secondary" gutterBottom>
           {`every ${every} weeks`}
         </Typography>

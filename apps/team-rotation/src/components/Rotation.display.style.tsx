@@ -136,7 +136,9 @@ export const RotationDisplayListItem = styled(ListItem)<{ level?: number }>(
 );
 
 export const RotationDisplayEditButton = styled(IconButton)({
-  position: 'absolute',
   insetBlockStart: '0.5rem',
   insetInlineStart: '0.5rem',
+  '&&': {
+    position: 'absolute',
+  },
 });
