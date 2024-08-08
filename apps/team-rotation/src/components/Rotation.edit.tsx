@@ -2,6 +2,9 @@ import {
   Button,
   CardActions,
   Divider,
+  IconButton,
+  List,
+  ListItem,
   TextField,
 } from '@mui/material';
 import {
@@ -24,7 +27,10 @@ import type { Dayjs } from 'dayjs';
 import { DatePicker } from '@mui/x-date-pickers';
 import { splitAtom } from 'jotai/utils';
 import type { PrimitiveAtom } from 'jotai/vanilla';
-import { PlusOne } from '@mui/icons-material';
+import {
+  Delete,
+  PlusOne,
+} from '@mui/icons-material';
 import type {
   RotationProperties,
   RotationTeamProperties,
@@ -39,10 +45,13 @@ import {
   RotationEditCardWrapper,
   RotationEditTeamAddButton,
   RotationEditTeamCardContent,
+  RotationEditTeamMemberList,
+  RotationEditTeamMemberListItem,
 } from './Rotation.edit.style.js';
 import {
   generateTeamList,
 } from '../state/seed.js';
+import type { RotationTeamMemberType } from '../state/types.ts';
 
 export type RotationRootEditProperties = Omit<RotationProperties, 'onToggle'>;
 export type RotationEditTextFieldProperties = {
@@ -158,6 +167,60 @@ export function RotationEditNameField({ atom }: RotationRootEditProperties) {
   );
 }
 
+export type RotationEditTeamMemberProperties = {
+  atom: PrimitiveAtom<RotationTeamMemberType>,
+  index: number
+};
+export function RotationEditTeamMember({
+  atom,
+  index,
+}: RotationEditTeamMemberProperties) {
+  const nameAtom = useMemo(
+    () => focusAtom(
+      atom,
+      (optics) => optics.prop('name'),
+    ),
+    [atom],
+  );
+  return (
+    <RotationEditTextField
+      label={`Member #${index + 1}`}
+      atom={nameAtom}
+    />
+  );
+}
+
+export type RotationEditTeamListProperties = {
+  atom: PrimitiveAtom<RotationTeamMemberType[]>
+};
+export function RotationEditTeamList({ atom }: RotationEditTeamListProperties) {
+  const [membersList] = useAtom(atom);
+  const membersListAtom = useMemo(
+    () => splitAtom(atom),
+    [atom],
+  );
+  const members = useAtomValue(membersListAtom);
+  return (
+    <RotationEditTeamMemberList>
+      {membersList.map((member, index) => (
+        <RotationEditTeamMemberListItem
+          key={member.id}
+          secondaryAction={(
+            <IconButton edge="end" aria-label="delete" color="error">
+              <Delete />
+            </IconButton>
+          )}
+        >
+          <RotationEditTeamMember
+            index={index}
+            atom={members[index]}
+          />
+        </RotationEditTeamMemberListItem>
+      ))}
+    </RotationEditTeamMemberList>
+  );
+}
+
 export type RotationEditTeamEditProperties = {
   index: number,
   onRemove: () => void
@@ -174,9 +237,17 @@ export function RotationEditTeamEdit({
     ),
     [atom],
   );
+  const listAtom = useMemo(
+    () => focusAtom(
+      atom,
+      (optics) => optics.prop('list'),
+    ),
+    [atom],
+  );
   return (
     <RotationEditTeamCardContent>
       <RotationEditTextField atom={nameAtom} label={`Team #${index + 1} Name`} />
+      <RotationEditTeamList atom={listAtom} />
       <Button color="error" onClick={onRemove}>Remove Team</Button>
     </RotationEditTeamCardContent>
   );
