@@ -1,4 +1,4 @@
-import { PrimitiveAtom, useAtom, useSetAtom } from "jotai";
+import { PrimitiveAtom, useAtom } from "jotai";
 import { useDndSensors } from "./useDndSensors.ts";
 import { useCallback } from "react";
 import { swapElementsInArray } from "../utils/arrays.ts";
