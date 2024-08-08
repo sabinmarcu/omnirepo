@@ -3,9 +3,6 @@ import {
   CardActions,
   Divider,
   IconButton,
-  List,
-  ListItem,
-  ListItemButton,
   TextField,
 } from '@mui/material';
 import {
@@ -357,4 +354,3 @@ export function RotationEdit({
     </RotationEditCardWrapper>
   );
 }
-
