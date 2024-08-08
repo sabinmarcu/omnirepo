@@ -1,7 +1,0 @@
-releases:
-  "@sabinmarcu/mui-material-theme": patch
-
-declined:
-  - "@sabinmarcu/docs"
-  - "@sabinmarcu/droprate"
-  - "@sabinmarcu/team-rotation"
