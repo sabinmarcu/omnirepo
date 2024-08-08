@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import {
   useAtom,
   useAtomValue,
@@ -88,8 +87,9 @@ export function RotationDisplayTeamList({
         member,
         level,
       }, index) => (
-        <RotationDisplayListItem key={`${member}-${index}-${level}`} level={level}>
-          <ListItemText>{member}</ListItemText>
+        // eslint-disable-next-line react/no-array-index-key
+        <RotationDisplayListItem key={`${member.id}-${index}`} level={level}>
+          <ListItemText>{member.name}</ListItemText>
         </RotationDisplayListItem>
       ))}
     </RotationDisplayList>

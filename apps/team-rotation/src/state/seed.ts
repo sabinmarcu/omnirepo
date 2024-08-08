@@ -42,11 +42,19 @@ const pickOneOf = (list: readonly string[]) => {
   return list[index];
 };
 
-export const generateList = () => {
+export const generateTeamMember = () => {
+  const name = `${pickOneOf(possibleNames)} ${pickOneOf(possibleSurnames)}`;
+  return {
+    name,
+    id: nanoid(),
+  };
+};
+
+export const generateTeamList = () => {
   const numberOfItems = getRandomInteger(5, 2);
 
   const list = Array.from({ length: numberOfItems }).map(
-    () => `${pickOneOf(possibleNames)} ${pickOneOf(possibleSurnames)}`,
+    () => generateTeamMember(),
   );
 
   const name = `Team ${String.fromCodePoint(getRandomInteger(25) + 65)}`;
@@ -72,7 +80,7 @@ export const generateRotation = ({
   const currentStartDate = startDate ?? dateToState(Date.now());
   const currentEvery = every ?? getRandomInteger(1, 12);
   const currentTeams = teams ?? Array.from({ length: getRandomInteger(1, 3) })
-    .map(() => generateList()) as RotationTeamType[];
+    .map(() => generateTeamList()) as RotationTeamType[];
   return {
     name: currentName,
     startDate: currentStartDate,
@@ -88,20 +96,20 @@ export const seedData = {
     generateRotation({
       name: 'Weeklies',
       every: 1,
-      teams: [generateList()],
+      teams: [generateTeamList()],
     }),
     generateRotation({
       name: 'Bi-Weeklies',
       every: 2,
       teams: [
-        generateList(),
-        generateList(),
+        generateTeamList(),
+        generateTeamList(),
       ],
     }),
     generateRotation({
       name: 'Monthlies',
       every: 4,
-      teams: [generateList()],
+      teams: [generateTeamList()],
     }),
   ],
 } satisfies StateType;

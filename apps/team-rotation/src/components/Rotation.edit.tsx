@@ -41,7 +41,7 @@ import {
   RotationEditTeamCardContent,
 } from './Rotation.edit.style.js';
 import {
-  generateList,
+  generateTeamList,
 } from '../state/seed.js';
 
 export type RotationRootEditProperties = Omit<RotationProperties, 'onToggle'>;
@@ -202,7 +202,7 @@ export function RotationEditAllTeams({ atom }: RotationRootEditProperties) {
   const addTeam = useCallback(
     () => setTeamsList((oldTeams) => [
       ...oldTeams,
-      generateList(),
+      generateTeamList(),
     ]),
     [setTeamsList],
   );

@@ -1,9 +1,14 @@
 import { z } from 'zod';
 
+export const rotationTeamMemberSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+});
+
 export const rotationTeamSchema = z.object({
   name: z.string(),
   id: z.string(),
-  list: z.array(z.string()),
+  list: z.array(rotationTeamMemberSchema),
 });
 
 export const rotationSchema = z.object({
