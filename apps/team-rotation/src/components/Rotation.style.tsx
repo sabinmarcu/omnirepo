@@ -11,4 +11,5 @@ export const RotationCard = styled(Card)(({ theme }) => ({
   [theme.breakpoints.down('lg')]: {
     flexFlow: 'column nowrap',
   },
+  position: 'relative',
 }));

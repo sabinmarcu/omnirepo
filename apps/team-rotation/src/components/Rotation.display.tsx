@@ -39,7 +39,10 @@ import {
   selectMemberForOffset,
 } from '../utils/arrays.js';
 import { parseDate } from '../utils/date.ts';
-import { DndSortDragHandle } from './DndSort.tsx';
+import {
+  DndSortDragHandleOverlay,
+  DndSortDragHandleVertical,
+} from './DndSort.tsx';
 
 type WeekNumberProperties = {
   weekNumber: number;
@@ -190,8 +193,11 @@ export function RotationDisplay({
   const teams = useAtomValue(teamsAtom);
   return (
     <>
+      <DndSortDragHandleVertical {...dndProps} />
+      <RotationDisplayEditButton onClick={onToggle}>
+        <Edit />
+      </RotationDisplayEditButton>
       <RotationMetadataCard>
-        <DndSortDragHandle {...dndProps} />
         <Typography color="text.secondary" gutterBottom>
           {`every ${every} weeks`}
         </Typography>
@@ -200,9 +206,6 @@ export function RotationDisplay({
           { 'starting on ' }
           <Typography color="text" component="span">{startDate}</Typography>
         </Typography>
-        <RotationDisplayEditButton onClick={onToggle}>
-          <Edit />
-        </RotationDisplayEditButton>
       </RotationMetadataCard>
       <RotationDisplayListsWrapper>
         {teams.map((teamAtom) => (

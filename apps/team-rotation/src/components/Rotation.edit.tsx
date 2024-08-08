@@ -43,10 +43,12 @@ import {
   RotationEditCardWrapper,
   RotationEditTeamAddButton,
   RotationEditTeamCardContent,
+  RotationEditTeamCardDragHandle,
   RotationEditTeamCardEditing,
   RotationEditTeamMemberAdd,
   RotationEditTeamMemberList,
   RotationEditTeamMemberListItem,
+  RotationEditTeamMemberListItemActions,
 } from './Rotation.edit.style.js';
 import {
   generateTeamList,
@@ -55,7 +57,8 @@ import {
 import type { RotationTeamMemberType } from '../state/types.ts';
 import {
   DndSort,
-  DndSortDragHandle,
+  DndSortDragHandleHorizontal,
+  DndSortDragHandleOverlay,
 } from './DndSort.tsx';
 import { useDndSortable } from '../hooks/useDndSortable.ts';
 
@@ -175,12 +178,15 @@ export function RotationEditNameField({ atom }: RotationRootEditProperties) {
 
 export type RotationEditTeamMemberProperties = {
   atom: PrimitiveAtom<RotationTeamMemberType>,
-  index: number
+  index: number,
+  onClick: () => void,
 };
 export function RotationEditTeamMember({
   atom,
   index,
+  onClick,
 }: RotationEditTeamMemberProperties) {
+  const { id } = useAtomValue(atom);
   const nameAtom = useMemo(
     () => focusAtom(
       atom,
@@ -188,12 +194,33 @@ export function RotationEditTeamMember({
     ),
     [atom],
   );
+  const {
+    rootProps, dragHandleProps,
+  } = useDndSortable(atom);
   return (
-    <RotationEditTextField
-      label={`Member #${index + 1}`}
-      atom={nameAtom}
-      fullWidth
-    />
+    <RotationEditTeamMemberListItem
+      key={id}
+      {...rootProps}
+      secondaryAction={(
+        <RotationEditTeamMemberListItemActions>
+          <IconButton
+            edge="end"
+            aria-label="delete"
+            color="error"
+            onClick={onClick}
+          >
+            <Delete />
+          </IconButton>
+          <DndSortDragHandleHorizontal {...dragHandleProps} />
+        </RotationEditTeamMemberListItemActions>
+      )}
+    >
+      <RotationEditTextField
+        label={`Member #${index + 1}`}
+        atom={nameAtom}
+        fullWidth
+      />
+    </RotationEditTeamMemberListItem>
   );
 }
 
@@ -224,33 +251,22 @@ export function RotationEditTeamList({ atom }: RotationEditTeamListProperties) {
   );
   const members = useAtomValue(membersListAtom);
   return (
-    <RotationEditTeamMemberList>
-      {membersList.map((member, index) => (
-        <RotationEditTeamMemberListItem
-          key={member.id}
-          secondaryAction={(
-            <IconButton
-              edge="end"
-              aria-label="delete"
-              color="error"
-              onClick={removeMember(member.id)}
-            >
-              <Delete />
-            </IconButton>
-          )}
-        >
+    <DndSort atom={atom}>
+      <RotationEditTeamMemberList>
+        {membersList.map((member, index) => (
           <RotationEditTeamMember
             index={index}
             atom={members[index]}
+            onClick={removeMember(member.id)}
           />
+        ))}
+        <RotationEditTeamMemberListItem>
+          <RotationEditTeamMemberAdd onClick={addMember}>
+            <PlusOne />
+          </RotationEditTeamMemberAdd>
         </RotationEditTeamMemberListItem>
-      ))}
-      <RotationEditTeamMemberListItem>
-        <RotationEditTeamMemberAdd onClick={addMember}>
-          <PlusOne />
-        </RotationEditTeamMemberAdd>
-      </RotationEditTeamMemberListItem>
-    </RotationEditTeamMemberList>
+      </RotationEditTeamMemberList>
+    </DndSort>
   );
 }
 
@@ -283,12 +299,12 @@ export function RotationEditTeamEdit({
   } = useDndSortable(atom);
   return (
     <RotationEditTeamCardContent {...rootProps}>
-      <DndSortDragHandle {...dragHandleProps} />
       <RotationEditTeamCardEditing>
         <RotationEditTextField atom={nameAtom} label={`Team #${index + 1} Name`} />
         <RotationEditTeamList atom={listAtom} />
+        <Button color="error" onClick={onRemove}>Remove Team</Button>
       </RotationEditTeamCardEditing>
-      <Button color="error" onClick={onRemove}>Remove Team</Button>
+      <RotationEditTeamCardDragHandle {...dragHandleProps} />
     </RotationEditTeamCardContent>
   );
 }
@@ -354,7 +370,7 @@ export function RotationEdit({
     <RotationEditCardWrapper>
       <RotationEditCardEditWrapper>
         <RotationEditCardContent>
-          <DndSortDragHandle {...dndProps} />
+          <DndSortDragHandleOverlay {...dndProps} />
           <RotationEditNameField atom={atom} />
           <RotationEditEveryField atom={atom} />
           <RotationEditStartDateField atom={atom} />

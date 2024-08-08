@@ -17,7 +17,6 @@ export const RotationMetadataCard = styled(CardContent)(({ theme }) => ({
   [theme.breakpoints.down('lg')]: {
     alignItems: 'center',
   },
-  position: 'relative',
 }));
 
 export const RotationDisplayListsWrapper = styled('div')(({ theme }) => ({

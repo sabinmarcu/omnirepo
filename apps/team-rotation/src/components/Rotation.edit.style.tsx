@@ -6,6 +6,7 @@ import {
   List,
   styled,
 } from '@mui/material';
+import { DndSortDragHandleVertical } from './DndSort.tsx';
 
 export const RotationEditCardWrapper = styled('div')({
   display: 'flex',
@@ -26,7 +27,6 @@ export const RotationEditCardEditWrapper = styled('div')(({ theme }) => ({
 export const RotationEditCardContent = styled(CardContent)({
   display: 'flex',
   flexFlow: 'column nowrap',
-  justifyContent: 'space-between',
   gap: '1rem',
 });
 
@@ -45,6 +45,7 @@ export const RotationEditTeamCardContent = styled(RotationEditCardContent)(({ th
   return ({
     background: `rgb(from ${theme.palette.background.default} ${background})`,
     position: 'relative',
+    flexFlow: 'row nowrap',
     [theme.breakpoints.down('lg')]: {
       marginBlockStart: '1rem',
       marginInline: '1rem',
@@ -61,6 +62,14 @@ export const RotationEditTeamCardContent = styled(RotationEditCardContent)(({ th
 export const RotationEditTeamCardEditing = styled('div')({
   display: 'flex',
   flexFlow: 'column nowrap',
+  flex: 1,
+  minWidth: '250px',
+});
+
+export const RotationEditTeamCardDragHandle = styled(DndSortDragHandleVertical)({
+  background: 'rgba(from black r g b / 0.2)',
+  marginBlock: '-1rem',
+  marginInlineEnd: '-1rem',
 });
 
 export const RotationEditTeamAddButton = styled(Button)(({ theme }) => {
@@ -96,4 +105,9 @@ export const RotationEditTeamMemberListItem = styled(ListItem)({
 
 export const RotationEditTeamMemberAdd = styled(ListItemButton)({
   justifyContent: 'center',
+});
+
+export const RotationEditTeamMemberListItemActions = styled('div')({
+  display: 'flex',
+  flexFlow: 'row nowrap',
 });

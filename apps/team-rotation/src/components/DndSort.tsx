@@ -1,11 +1,19 @@
 import type { PrimitiveAtom } from 'jotai';
-import type { PropsWithChildren } from 'react';
+import {
+  forwardRef,
+  type ComponentProps,
+  type PropsWithChildren,
+} from 'react';
 import {
   DndContext,
   closestCenter,
 } from '@dnd-kit/core';
 import { SortableContext } from '@dnd-kit/sortable';
 import { styled } from '@mui/material';
+import {
+  DragHandle,
+  DragIndicator,
+} from '@mui/icons-material';
 import { useDndSort } from '../hooks/useDndSort.ts';
 
 export type DndSortProperties<T extends { id: string } = { id:string }> = PropsWithChildren<{
@@ -31,10 +39,36 @@ export function DndSort<T extends { id: string }>({
   );
 }
 
-export const DndSortDragHandle = styled('div')({
+export const DndSortDragHandleOverlay = styled('div')({
   position: 'absolute',
   inset: 0,
   '& ~ *': {
     position: 'relative',
   },
 });
+
+export const DndSortDragHandleRaw = styled('div')({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '1rem',
+  background: 'rgba(from black r g b / 0.1)',
+});
+
+export const DndSortDragHandleVertical = forwardRef<
+  HTMLDivElement,
+  ComponentProps<typeof DndSortDragHandleRaw>
+>((properties) => (
+  <DndSortDragHandleRaw {...properties}>
+    <DragIndicator />
+  </DndSortDragHandleRaw>
+));
+
+export const DndSortDragHandleHorizontal = forwardRef<
+  HTMLDivElement,
+  ComponentProps<typeof DndSortDragHandleRaw>
+>((properties) => (
+  <DndSortDragHandleRaw {...properties}>
+    <DragHandle />
+  </DndSortDragHandleRaw>
+));
