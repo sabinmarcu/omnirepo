@@ -8,6 +8,7 @@ import {
 import {
   useAtom,
   useAtomValue,
+  useSetAtom,
 } from 'jotai';
 import type {
   ChangeEvent,
@@ -29,6 +30,7 @@ import {
   Delete,
   PlusOne,
 } from '@mui/icons-material';
+import { nanoid } from 'nanoid';
 import type {
   RotationProperties,
   RotationTeamProperties,
@@ -40,6 +42,7 @@ import {
 import {
   RotationEditCardContent,
   RotationEditCardEditWrapper,
+  RotationEditCardTeamWrapper,
   RotationEditCardWrapper,
   RotationEditTeamAddButton,
   RotationEditTeamCardContent,
@@ -58,9 +61,10 @@ import type { RotationTeamMemberType } from '../state/types.ts';
 import {
   DndSort,
   DndSortDragHandleHorizontal,
-  DndSortDragHandleOverlay,
+  DndSortDragHandleVertical,
 } from './DndSort.tsx';
 import { useDndSortable } from '../hooks/useDndSortable.ts';
+import { rotationsAtom } from '../state/atoms.ts';
 
 export type RotationRootEditProperties = Omit<RotationProperties, 'onToggle' | 'dndProps'>;
 export type RotationEditTextFieldProperties = {
@@ -252,7 +256,7 @@ export function RotationEditTeamList({ atom }: RotationEditTeamListProperties) {
   const members = useAtomValue(membersListAtom);
   return (
     <DndSort atom={atom}>
-      <RotationEditTeamMemberList>
+      <RotationEditTeamMemberList sx={{ flex: 1 }}>
         {membersList.map((member, index) => (
           <RotationEditTeamMember
             index={index}
@@ -260,6 +264,8 @@ export function RotationEditTeamList({ atom }: RotationEditTeamListProperties) {
             onClick={removeMember(member.id)}
           />
         ))}
+      </RotationEditTeamMemberList>
+      <RotationEditTeamMemberList>
         <RotationEditTeamMemberListItem>
           <RotationEditTeamMemberAdd onClick={addMember}>
             <PlusOne />
@@ -341,18 +347,45 @@ export function RotationEditAllTeams({ atom }: RotationRootEditProperties) {
   );
   return (
     <DndSort atom={teamsListAtom}>
-      {teamsList.map((team, index) => (
-        <RotationEditTeamEdit
-          atom={teams[index]}
-          onRemove={removeTeam(team.id)}
-          index={index}
-          key={team.id}
-        />
-      ))}
+      <RotationEditCardTeamWrapper>
+        {teamsList.map((team, index) => (
+          <RotationEditTeamEdit
+            atom={teams[index]}
+            onRemove={removeTeam(team.id)}
+            index={index}
+            key={team.id}
+          />
+        ))}
+      </RotationEditCardTeamWrapper>
       <RotationEditTeamAddButton onClick={addTeam}>
         <PlusOne />
       </RotationEditTeamAddButton>
     </DndSort>
+  );
+}
+
+export type RotationEditDuplicateProperties = {
+  onDuplicate: () => void;
+} & RotationRootEditProperties;
+
+export function RotationEditDuplicate({
+  atom,
+  onDuplicate,
+}: RotationEditDuplicateProperties) {
+  const setRotations = useSetAtom(rotationsAtom);
+  const rotation = useAtomValue(atom);
+  const duplicate = () => {
+    setRotations((oldRotations) => [
+      ...oldRotations,
+      {
+        ...rotation,
+        id: nanoid(),
+      },
+    ]);
+    onDuplicate();
+  };
+  return (
+    <Button color="secondary" onClick={duplicate}>Duplicate Rotation</Button>
   );
 }
 
@@ -369,8 +402,8 @@ export function RotationEdit({
   return (
     <RotationEditCardWrapper>
       <RotationEditCardEditWrapper>
+        <DndSortDragHandleVertical {...dndProps} />
         <RotationEditCardContent>
-          <DndSortDragHandleOverlay {...dndProps} />
           <RotationEditNameField atom={atom} />
           <RotationEditEveryField atom={atom} />
           <RotationEditStartDateField atom={atom} />
@@ -380,6 +413,7 @@ export function RotationEdit({
       <Divider />
       <CardActions sx={{ justifyContent: 'flex-end' }}>
         <Button color="error" onClick={onRemove}>Delete this Rotation</Button>
+        <RotationEditDuplicate atom={atom} onDuplicate={onToggle} />
         <Button color="primary" onClick={onToggle}>Done</Button>
       </CardActions>
     </RotationEditCardWrapper>

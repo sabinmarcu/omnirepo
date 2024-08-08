@@ -18,11 +18,14 @@ export const RotationEditCardEditWrapper = styled('div')(({ theme }) => ({
   flexFlow: 'row nowrap',
   gap: '0.2rem',
   [theme.breakpoints.down('lg')]: {
-    // gap: '1rem',
-    // padding: '1rem',
     flexFlow: 'column nowrap',
   },
 }));
+
+export const RotationEditCardTeamWrapper = styled(RotationEditCardEditWrapper)({
+  gap: 0,
+  overflow: 'hidden',
+});
 
 export const RotationEditCardContent = styled(CardContent)({
   display: 'flex',
@@ -96,7 +99,7 @@ export const RotationEditTeamAddButton = styled(Button)(({ theme }) => {
 });
 
 export const RotationEditTeamMemberList = styled(List)({
-  flex: 1,
+  overflow: 'hidden',
 });
 
 export const RotationEditTeamMemberListItem = styled(ListItem)({

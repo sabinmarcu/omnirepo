@@ -51,24 +51,38 @@ export const DndSortDragHandleRaw = styled('div')({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+});
+
+export const DndSortDragHandleVerticalRaw = styled(DndSortDragHandleRaw)({
   padding: '1rem',
   background: 'rgba(from black r g b / 0.1)',
+});
+
+export const DndSortDragHandleHorizontalRaw = styled(DndSortDragHandleRaw)({
+  paddingBlock: '1rem',
+  paddingInline: '1rem',
+  '&:first-child': {
+    paddingInlineStart: 0,
+  },
+  '&:last-child': {
+    paddingInlineEnd: 0,
+  },
 });
 
 export const DndSortDragHandleVertical = forwardRef<
   HTMLDivElement,
   ComponentProps<typeof DndSortDragHandleRaw>
 >((properties) => (
-  <DndSortDragHandleRaw {...properties}>
+  <DndSortDragHandleVerticalRaw {...properties}>
     <DragIndicator />
-  </DndSortDragHandleRaw>
+  </DndSortDragHandleVerticalRaw>
 ));
 
 export const DndSortDragHandleHorizontal = forwardRef<
   HTMLDivElement,
   ComponentProps<typeof DndSortDragHandleRaw>
 >((properties) => (
-  <DndSortDragHandleRaw {...properties}>
+  <DndSortDragHandleHorizontalRaw {...properties}>
     <DragHandle />
-  </DndSortDragHandleRaw>
+  </DndSortDragHandleHorizontalRaw>
 ));

@@ -5,7 +5,7 @@ import type { RotationEditProperties } from './Rotation.edit.tsx';
 import { RotationEdit } from './Rotation.edit.tsx';
 import { useDndSortable } from '../hooks/useDndSortable.ts';
 
-export type RotationComponentProperties = Omit<RotationEditProperties, 'onToggle'>;
+export type RotationComponentProperties = Omit<RotationEditProperties, 'onToggle' | 'dndProps'>;
 export function Rotation({
   atom,
   onRemove,

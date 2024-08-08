@@ -40,7 +40,6 @@ import {
 } from '../utils/arrays.js';
 import { parseDate } from '../utils/date.ts';
 import {
-  DndSortDragHandleOverlay,
   DndSortDragHandleVertical,
 } from './DndSort.tsx';
 
