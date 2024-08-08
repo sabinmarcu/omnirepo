@@ -1,4 +1,5 @@
 import {
+  Button,
   CardContent,
   styled,
 } from '@mui/material';
@@ -31,5 +32,22 @@ export const RotationEditTeamCardContent = styled(RotationEditCardContent)(({ th
 
   return ({
     background: `rgb(from ${theme.palette.background.default} ${background})`,
+  });
+});
+
+export const RotationEditTeamAddButton = styled(Button)(({ theme }) => {
+  const background = [
+    'r',
+    'g',
+    'b',
+  ].map(
+    (it) => `calc(${it} / 0.8)`,
+  ).join(' ');
+
+  return ({
+    background: `rgb(from ${theme.palette.background.default} ${background})`,
+    color: theme.palette.text.primary,
+    padding: '2rem',
+    fontSize: '2rem',
   });
 });
