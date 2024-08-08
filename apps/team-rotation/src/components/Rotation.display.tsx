@@ -39,6 +39,7 @@ import {
   offsetListBy,
   selectMemberForOffset,
 } from '../utils/arrays.js';
+import { parseDate } from '../utils/date.ts';
 
 type WeekNumberProperties = {
   weekNumber: number;
@@ -164,8 +165,15 @@ export function RotationDisplay({
     startDate,
   } = useAtomValue(atom);
   const weekNumber = useMemo(
-    () => dayjs(Date.now()).diff(startDate, 'week'),
-    [startDate],
+    () => {
+      const weekSinceStart = dayjs(Date.now()).diff(parseDate(startDate), 'week');
+      const rotationsSinceStart = Math.floor(weekSinceStart / every);
+      return rotationsSinceStart;
+    },
+    [
+      startDate,
+      every,
+    ],
   );
   const teamsAtom = useMemo(
     () => {
