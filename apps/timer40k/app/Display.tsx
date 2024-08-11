@@ -37,7 +37,7 @@ export function Display({
   const toRender = (isReleased ? yes : no) as any;
   const text = (isReleased
     ? String.raw`It's released, what are you doing here?`
-    : `Coming out in ${Number.parseInt(`${diff}`, 10)} days`
+    : `Coming out in ${Number.parseInt(`${0 - diff}`, 10)} days`
   )
   return (
     <>
