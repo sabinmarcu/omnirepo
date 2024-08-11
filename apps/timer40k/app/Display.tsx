@@ -33,7 +33,12 @@ export function Display({
     [],
   );
   const diff = dayjs(time).diff(dayjs(releaseDate), 'day', true);
-  const toRender = (diff >= 0 ? yes : no) as any;
+  const isReleased = diff >= 0;
+  const toRender = (isReleased ? yes : no) as any;
+  const text = (isReleased
+    ? String.raw`It's released, what are you doing here?`
+    : `Coming out in ${Number.parseInt(`${diff}`, 10)} days`
+  )
   return (
     <>
       <div className="background">
@@ -41,6 +46,7 @@ export function Display({
       </div>
       <div className="foreground">
         <Image {...toRender} alt="status" />
+        <h1>{text}</h1>
       </div>
     </>
   );
