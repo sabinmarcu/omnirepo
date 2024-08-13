@@ -58,8 +58,8 @@ export const DndSortDragHandleRaw = styled('div')({
 export const DndSortDragHandleVertical = forwardRef<
   HTMLDivElement,
   ComponentProps<typeof DndSortDragHandleRaw>
->((properties) => (
-  <DndSortDragHandleRaw {...properties}>
+>((properties, reference) => (
+  <DndSortDragHandleRaw {...properties} ref={reference}>
     <DragIndicator />
   </DndSortDragHandleRaw>
 ));
@@ -67,8 +67,8 @@ export const DndSortDragHandleVertical = forwardRef<
 export const DndSortDragHandleHorizontal = forwardRef<
   HTMLDivElement,
   ComponentProps<typeof DndSortDragHandleRaw>
->((properties) => (
-  <DndSortDragHandleRaw {...properties}>
+>((properties, reference) => (
+  <DndSortDragHandleRaw {...properties} ref={reference}>
     <DragHandle />
   </DndSortDragHandleRaw>
 ));
