@@ -9,14 +9,18 @@ import {
 import dayjs from 'dayjs';
 
 export type DisplayProperties = {
-  yes: Partial<ComponentProps<typeof Image>>,
-  no: Partial<ComponentProps<typeof Image>>,
+  releasedImage: Partial<ComponentProps<typeof Image>>,
+  earlyReleaseImage: Partial<ComponentProps<typeof Image>>,
+  upcomingImage: Partial<ComponentProps<typeof Image>>,
   releaseDate: string,
+  earlyReleaseDate: string,
 };
 export function Display({
-  yes,
-  no,
+  releasedImage,
+  earlyReleaseImage,
+  upcomingImage,
   releaseDate,
+  earlyReleaseDate,
 }: DisplayProperties) {
   const [
     time,
@@ -32,21 +36,32 @@ export function Display({
     },
     [],
   );
-  const diff = dayjs(time).diff(dayjs(releaseDate), 'day', true);
-  const isReleased = diff >= 0;
-  const toRender = (isReleased ? yes : no) as any;
-  const text = (isReleased
-    ? String.raw`It's released, what are you doing here?`
-    : `Coming out in ${Number.parseInt(`${0 - diff}`, 10)} days`
-  )
+  const releaseDiff = dayjs(time).diff(dayjs(releaseDate), 'day', true);
+  const earlyReleaseDiff = earlyReleaseDate ? dayjs(time).diff(dayjs(earlyReleaseDate), 'day', true) : 0 - Infinity;
+  const imageToRender = (
+    (releaseDiff >= 0 && releasedImage)
+    || (earlyReleaseDiff >= 0 && earlyReleaseImage)
+    || upcomingImage
+  ) as any;
   return (
     <>
       <div className="background">
-        <Image {...toRender} alt="status-bg" />
+        <Image {...imageToRender} alt="status-bg" />
       </div>
       <div className="foreground">
-        <Image {...toRender} alt="status" />
-        <h1>{text}</h1>
+        <Image {...imageToRender} alt="status" />
+        <h1>
+          {releaseDiff >= 0
+            ? String.raw`It's released, what are you doing here?`
+            : `Releasing in ${Number.parseInt(`${0 - releaseDiff}`, 10)} days`}
+        </h1>
+        {earlyReleaseDate && (
+          <h2>
+            {earlyReleaseDiff >= 0
+              ? String.raw`It's in early release. Go have fun, you wealthy git.`
+              : `Early release in in ${Number.parseInt(`${0 - earlyReleaseDiff}`, 10)} days`}
+          </h2>
+        )}
       </div>
     </>
   );
