@@ -23,6 +23,7 @@ const config = storybookPlugin
       rules: {
         ...storybookPlugin.configs.recommended.rules,
         'no-underscore-dangle': 'off',
+        'import/no-extraneous-dependencies': 'off',
       },
     }),
     makeConfigFactory(
