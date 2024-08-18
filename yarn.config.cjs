@@ -181,7 +181,10 @@ async function ensureStorybookDependencies({ Yarn }) {
     )) {
       continue;
     }
-    storybookWorkspace.set(`peerDependencies.${workspace.ident}`, WORKSPACE_PROTOCOL_RANGE);
+    const moonConfig = await getMoonConfigOf(workspace.cwd);
+    if (moonConfig.type === 'library') {
+      storybookWorkspace.set(`peerDependencies.${workspace.ident}`, WORKSPACE_PROTOCOL_RANGE);
+    }
   }
 }
 

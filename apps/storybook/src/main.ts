@@ -1,32 +1,58 @@
 import path from 'node:path';
 import { createRequire } from 'node:module';
-import packageJson from '../package.json' with { type: 'json' };
+import { fileURLToPath } from 'node:url';
+import { glob } from 'glob';
+import fs from 'node:fs';
 
 const localRequire = createRequire(import.meta.url);
-const dependencyDetectionPath = 'package.json'
-const dependencies = Object.entries(packageJson.peerDependencies ?? {})
-  .filter(([,resolution]) => resolution.includes('workspace:'))
-  .map(([name]) => localRequire.resolve(path.join(name, dependencyDetectionPath)))
-  .map((resolvedPath) => resolvedPath.replace(dependencyDetectionPath, ''));
+const getStories = async () => {
+  const rootPath = fileURLToPath(new URL('../../../', import.meta.url));
+  const workspacesMappings = {
+    Applications: 'apps/*',
+    Libraries: 'workspaces/components/*',
+  } as const;
 
-const storiesLocations = ['src/']
-const storiesPatterns = [
-  '**/*.mdx',
-  '**/*.stories.@(ts|tsx|cts|mts)'
-]
+  const workspacesRaw = await Promise.all(
+    Object.entries(workspacesMappings)
+      .flatMap(async ([
+        category,
+        paths,
+      ]) => {
+        const list = await glob(paths, { cwd: rootPath });
+        return Promise.all(list
+          .map((it) => path.join(rootPath, it))
+          .filter((it) => fs.statSync(it).isDirectory())
+          .map(async (it) => ({
+            directory: it,
+            titlePrefix: `${category}/`,
+          } as const)));
+      }),
+  );
+  const workspaces = workspacesRaw.flat().filter(Boolean);
 
-const stories: string[] = [];
-for (const dependency of dependencies) {
-  for (const location of storiesLocations) {
-    for (const pattern of storiesPatterns) {
-      stories.push([
-        dependency,
-        location,
-        pattern,
-      ].join(""))
+  const storiesLocations = ['src'];
+  const storiesPatterns = [
+    '**/*.mdx',
+    '**/*.stories.@(ts|tsx|cts|mts)',
+  ];
+
+  const stories: any[] = [];
+  for (const {
+    directory, ...rest
+  } of workspaces) {
+    for (const location of storiesLocations) {
+      for (const pattern of storiesPatterns) {
+        stories.push({
+          ...rest,
+          directory: path.join(directory, location),
+          files: pattern,
+        });
+      }
     }
   }
-}
+
+  return stories;
+};
 
 /**
  * This function is used to resolve the absolute path of a package.
@@ -38,7 +64,7 @@ function getAbsolutePath(value: string) {
 
 /** @type { import('@storybook/react-vite').StorybookConfig } */
 const config = {
-  stories,
+  stories: getStories,
   addons: [
     getAbsolutePath('@storybook/addon-onboarding'),
     getAbsolutePath('@storybook/addon-links'),
@@ -46,6 +72,9 @@ const config = {
     getAbsolutePath('@chromatic-com/storybook'),
     getAbsolutePath('@storybook/addon-interactions'),
   ],
+  docs: {
+    autodocs: 'tag',
+  },
   framework: {
     name: getAbsolutePath('@storybook/react-vite'),
     options: {},
