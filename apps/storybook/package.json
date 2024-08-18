@@ -1,0 +1,62 @@
+{
+  "name": "@sabinmarcu/storybook",
+  "packageManager": "yarn@4.0.1",
+  "devDependencies": {
+    "@chromatic-com/storybook": "^1.6.1",
+    "@sabinmarcu/types": "workspace:*",
+    "@sabinmarcu/utils-test": "workspace:*",
+    "@storybook/addon-essentials": "^8.2.9",
+    "@storybook/addon-interactions": "^8.2.9",
+    "@storybook/addon-links": "^8.2.9",
+    "@storybook/addon-onboarding": "^8.2.9",
+    "@storybook/blocks": "^8.2.9",
+    "@storybook/react": "^8.2.9",
+    "@storybook/react-vite": "^8.2.9",
+    "@storybook/test": "^8.2.9",
+    "@types/prop-types": "^15",
+    "prop-types": "^15.8.1",
+    "storybook": "^8.2.9"
+  },
+  "peerDependencies": {
+    "@sabinmarcu/docs": "workspace:*",
+    "@sabinmarcu/droprate": "workspace:*",
+    "@sabinmarcu/moving-mesh-background": "workspace:*",
+    "@sabinmarcu/mui-material-theme": "workspace:*",
+    "@sabinmarcu/team-rotation": "workspace:*",
+    "@sabinmarcu/timer40k": "workspace:*"
+  },
+  "scripts": {
+    "start": "storybook dev -c src -p 6006",
+    "build": "storybook build -c src"
+  },
+  "tscmono": {
+    "preset": "storybook"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./src/*": {
+      "import": "./src/*",
+      "default": "./src/*"
+    },
+    "./*": {
+      "import": "./dist/*.js",
+      "default": "./dist/*.js",
+      "types": "./dist/*.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "typeVersions": {
+    "*": {
+      "*": [
+        "./dist/*"
+      ]
+    }
+  },
+  "type": "module"
+}

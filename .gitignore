@@ -160,3 +160,5 @@ cjs
 # MacOS Stuff
 .DS_Store
 
+
+*storybook.log

@@ -1,5 +1,4 @@
 import config from '@sabinmarcu/eslint-config';
-import packageJson from './package.json' assert { type: 'json' };
 
 const eslintConfig = [
   ...config,

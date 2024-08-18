@@ -54,6 +54,7 @@ module.exports.FIELD_TSCMONO_CONFIG_MAP = {
   'apps/droprate': 'viteApp',
   'apps/team-rotation': 'viteApp',
   'apps/timer40k': 'nextApp',
+  'apps/storybook': 'storybook',
 };
 module.exports.REQUIRED_WORKSPACE_IGNORE_LIST = new Set([
   'root',

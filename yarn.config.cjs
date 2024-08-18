@@ -7,6 +7,8 @@ const { default: moize } = require('moize');
 const {
   DOCS_WORKSPACE_EXCLUDES,
   DOCS_WORKSPACE_NAME,
+  STORYBOOK_WORKSPACE_NAME,
+  STORYBOOK_WORKSPACE_PATHS,
 } = require('./.config/documentation.cjs');
 const {
   FIELD_IGNORE_LIST,
@@ -166,6 +168,23 @@ async function ensureDocsDependencies({ Yarn }) {
   }
 }
 
+// eslint-disable-next-line unicorn/prevent-abbreviations
+async function ensureStorybookDependencies({ Yarn }) {
+  // eslint-disable-next-line unicorn/prevent-abbreviations
+  const storybookWorkspace = Yarn.workspace({ ident: STORYBOOK_WORKSPACE_NAME });
+  for (const workspace of Yarn.workspaces()) {
+    if (workspace.ident === storybookWorkspace.ident) {
+      continue;
+    }
+    if (!STORYBOOK_WORKSPACE_PATHS.some(
+      (workspacePath) => workspace.cwd.includes(workspacePath)
+    )) {
+      continue;
+    }
+    storybookWorkspace.set(`peerDependencies.${workspace.ident}`, WORKSPACE_PROTOCOL_RANGE);
+  }
+}
+
 /**
  * Ensure each package has the correct homepage and repository fields
  *
@@ -214,6 +233,7 @@ async function constraints(context) {
   await ensureFieldConsistency(context);
   await ensureRequiredDependencies(context);
   await ensureDocsDependencies(context);
+  await ensureStorybookDependencies(context);
   await ensureHomepageAndRepository(context);
   await ensureTypeModule(context);
 }
