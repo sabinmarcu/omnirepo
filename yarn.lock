@@ -6309,8 +6309,6 @@ __metadata:
   peerDependencies:
     "@sabinmarcu/moving-mesh-background": "workspace:*"
     "@sabinmarcu/mui-material-theme": "workspace:*"
-    "@sabinmarcu/team-rotation": "workspace:*"
-    "@sabinmarcu/timer40k": "workspace:*"
   languageName: unknown
   linkType: soft
 

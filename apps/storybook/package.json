@@ -19,9 +19,7 @@
   },
   "peerDependencies": {
     "@sabinmarcu/moving-mesh-background": "workspace:*",
-    "@sabinmarcu/mui-material-theme": "workspace:*",
-    "@sabinmarcu/team-rotation": "workspace:*",
-    "@sabinmarcu/timer40k": "workspace:*"
+    "@sabinmarcu/mui-material-theme": "workspace:*"
   },
   "scripts": {
     "start": "storybook dev -c src -p 6006",
