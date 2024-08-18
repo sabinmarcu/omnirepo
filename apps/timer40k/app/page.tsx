@@ -1,3 +1,4 @@
+// eslint-disable-next-line unicorn/filename-case
 import { Display } from './Display';
 
 import { env as environment } from './env';
@@ -22,7 +23,7 @@ export default function Home() {
       },
       releaseDate: environment.TIMER_40K_RELEASE_DATE,
       earlyReleaseDate: environment.TIMER_40K_EARLY_RELEASE_DATE,
-    } as any}
+    }}
     />
   );
 }
