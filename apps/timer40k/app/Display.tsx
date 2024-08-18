@@ -13,7 +13,7 @@ export type DisplayProperties = {
   earlyReleaseImage: Partial<ComponentProps<typeof Image>>,
   upcomingImage: Partial<ComponentProps<typeof Image>>,
   releaseDate: string,
-  earlyReleaseDate: string,
+  earlyReleaseDate?: string,
 };
 
 const getNumber = (input: number) => Number.parseInt(`${Math.abs(input)}`, 10);
