@@ -1,0 +1,26 @@
+project:
+  name: storybook
+  description: Storybook for all components in this repo
+  channel: "#storybook"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: unknown
+
+tasks:
+  start:
+    command: "yarn start"
+    options:
+      cache: false
+  build:
+    command: "yarn build"
+    options:
+      cache: false
+      runInCI: false
+    deps:
+      - "^:build"
+
+workspace:
+  inheritedTasks:
+    include: []

@@ -9,6 +9,7 @@ import {
 } from 'react';
 import { usePrefersReducedMotion } from '@sabinmarcu/use-prefers-reduced-motion';
 import { useDuplicateRef } from '@sabinmarcu/use-duplicate-ref';
+import type { Simplify } from '@sabinmarcu/types';
 import { debounce } from './debounce.js';
 import type {
   CanvasProperties,
@@ -21,10 +22,11 @@ import { makeRenderer } from './renderer.js';
 
 const wnd = typeof window === 'undefined' ? undefined : window;
 
-export interface BackgroundProperties extends
-  Partial<RendererProperties>,
-  Partial<CanvasProperties>,
-  HTMLAttributes<HTMLCanvasElement> {}
+export type BackgroundProperties = Simplify<
+  & Partial<RendererProperties>
+  & Partial<CanvasProperties>
+  & HTMLAttributes<HTMLCanvasElement>
+>;
 
 export const Background = forwardRef<HTMLCanvasElement, BackgroundProperties>(
   (

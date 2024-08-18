@@ -88,3 +88,16 @@ presets:
       noUnusedLocals: true
       noUnusedParameters: true
       noFallthroughCasesInSwitch: true
+  storybook:
+    compilerOptions:
+      noEmit: true
+      baseUrl: "."
+      rootDir: "src"
+      tsBuildInfoFile: "./node_modules/.tmp/tsconfig.app.tsbuildInfo"
+    include:
+      - "src/**/*"
+    # TODO: Remove these once the tsconfig/tsconfig.build refactor is done
+    exclude:
+      - "src/**/*.spec.*"
+      - "src/**/__fixtures__/**/*"
+      - "src/**/__mocks__/**/*"
