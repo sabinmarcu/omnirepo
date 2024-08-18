@@ -1,0 +1,9 @@
+releases:
+  "@sabinmarcu/eslint-config": patch
+  "@sabinmarcu/moving-mesh-background": patch
+
+declined:
+  - "@sabinmarcu/docs"
+  - "@sabinmarcu/droprate"
+  - "@sabinmarcu/team-rotation"
+  - "@sabinmarcu/timer40k"
