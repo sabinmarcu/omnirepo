@@ -47,13 +47,20 @@ export const DndSortDragHandleOverlay = styled('div')({
   },
 });
 
-export const DndSortDragHandleRaw = styled('div')({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: '1rem',
-  background: 'rgba(from black r g b / 0.1)',
-});
+export type DndSortDragHandleRawProperties = {
+  transparent?: boolean,
+};
+export const DndSortDragHandleRaw = styled('div')<DndSortDragHandleRawProperties>(
+  ({ transparent }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '1rem',
+    background: !transparent
+      ? 'rgba(from black r g b / 0.1)'
+      : '',
+  }),
+);
 
 export const DndSortDragHandleVertical = forwardRef<
   HTMLDivElement,

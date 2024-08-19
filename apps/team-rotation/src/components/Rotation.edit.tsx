@@ -218,7 +218,7 @@ export function RotationEditTeamMember({
           >
             <Delete />
           </IconButton>
-          <RotationEditListDragHandle {...dragHandleProps} />
+          <RotationEditListDragHandle {...dragHandleProps} transparent />
         </RotationEditTeamMemberListItemActions>
       )}
     >
