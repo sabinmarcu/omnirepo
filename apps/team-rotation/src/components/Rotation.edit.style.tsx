@@ -115,6 +115,10 @@ export const RotationEditTeamMemberList = styled(List)({
 
 export const RotationEditTeamMemberListItem = styled(ListItem)({
   paddingInline: 0,
+  '& .MuiListItemSecondaryAction-root': {
+    right: 'auto',
+    insetInlineEnd: '1rem',
+  },
 });
 
 export const RotationEditTeamMemberAdd = styled(ListItemButton)({
