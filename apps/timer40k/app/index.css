@@ -58,6 +58,7 @@ html, body, #root {
     text-transform: uppercase;
     font-size: 2rem;
     text-shadow: 0 1px 5px black;
+    color: white;
 }
 
 .foreground h2 {
