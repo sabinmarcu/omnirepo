@@ -31,7 +31,7 @@
       ]
     }
   },
-  "packageManager": "yarn@3.3.0",
+  "packageManager": "yarn@4.1.1",
   "publishConfig": {
     "access": "public"
   },
