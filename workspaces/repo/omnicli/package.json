@@ -36,7 +36,7 @@
   "bin": {
     "omni": "./bin/omnicli.js"
   },
-  "packageManager": "yarn@3.3.0",
+  "packageManager": "yarn@4.1.1",
   "build": {
     "preset": "../../../.config/build.config.ts"
   },

@@ -1,6 +1,6 @@
 {
   "name": "root",
-  "packageManager": "yarn@4.0.1",
+  "packageManager": "yarn@4.1.1",
   "type": "module",
   "repository": {
     "type": "git",
@@ -60,6 +60,6 @@
     "./apps/*"
   ],
   "engines": {
-    "node": "20.0.0"
+    "node": "22.0.0"
   }
 }
