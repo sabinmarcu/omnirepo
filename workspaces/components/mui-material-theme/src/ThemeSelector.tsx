@@ -20,10 +20,7 @@ const getSelectionData = (input: Selections): (typeof selections)[number] => (
 );
 
 export function ThemeSelector() {
-  const [
-    selection,
-    setSelection,
-  ] = useThemeSelection();
+  const [selection, setSelection] = useThemeSelection();
 
   const {
     name: currentName, icon: CurrentIcon,
@@ -32,10 +29,7 @@ export function ThemeSelector() {
     [selection],
   );
 
-  const [
-    anchorElement,
-    setAnchorElement,
-  ] = useState<HTMLElement | undefined>(undefined);
+  const [anchorElement, setAnchorElement] = useState<HTMLElement | undefined>(undefined);
   const handleOpen = (event: MouseEvent<HTMLElement>) => setAnchorElement(event.currentTarget);
   const handleClose = () => setAnchorElement(undefined);
   const open = !!anchorElement;

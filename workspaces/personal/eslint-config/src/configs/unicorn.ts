@@ -1,41 +1,15 @@
 import unicornPlugin from 'eslint-plugin-unicorn';
-import type {
-  Config,
-} from '../types.js';
+import type { Config } from '../types.js';
+import unicornRulesConfig from '../rules/unicorn.js';
 
-import { makeConfigFactory } from '../utils/makeConfig.js';
-import { getLogger } from '../utils/debug.js';
-
-getLogger('plugin:unicorn').log('Loading Plugin and Rules');
-
-const config = [
+const unicornConfig = [
   {
-    name: 'Unicorn Config',
+    name: 'Unicorn Plugin',
     plugins: {
       unicorn: unicornPlugin,
     },
-    rules: {
-      ...unicornPlugin.configs.recommended.rules,
-      'unicorn/filename-case': [
-        'error',
-        { case: 'camelCase' },
-      ],
-      'unicorn/no-useless-undefined': 'off',
-      'unicorn/no-array-callback-reference': 'off',
-      'unicorn/no-array-reduce': 'off',
-      'unicorn/no-negated-condition': 'off',
-      'unicorn/prefer-string-raw': 'off',
-    },
   },
-  makeConfigFactory('*.jsx', '*.tsx')({
-    name: 'Unicorn JSX Overrides',
-    rules: {
-      'unicorn/filename-case': [
-        'error',
-        { case: 'pascalCase' },
-      ],
-    },
-  }),
-] satisfies Config[];
+  ...unicornRulesConfig,
+] as const satisfies Config[];
 
-export default config;
+export default unicornConfig;

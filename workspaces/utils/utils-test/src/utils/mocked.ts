@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 export const mocked = <
   Arguments extends any[],
   ReturnValue extends any,

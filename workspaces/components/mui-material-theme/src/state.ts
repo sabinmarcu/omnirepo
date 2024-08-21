@@ -11,14 +11,8 @@ import type {
 } from './types.js';
 
 export const useThemeState = () => {
-  const [
-    selection,
-    setSelection,
-  ] = useLocalStorage<Selections>('theme', 'system');
-  const prefersDarkColorScheme = useMatchMedia([
-    'prefers-color-scheme',
-    'dark',
-  ]);
+  const [selection, setSelection] = useLocalStorage<Selections>('theme', 'system');
+  const prefersDarkColorScheme = useMatchMedia(['prefers-color-scheme', 'dark']);
   const theme = useMemo(
     () => {
       if (selection === 'system') {
@@ -29,10 +23,7 @@ export const useThemeState = () => {
       }
       return selection;
     },
-    [
-      selection,
-      prefersDarkColorScheme,
-    ],
+    [selection, prefersDarkColorScheme],
   );
   return {
     selection,
@@ -55,10 +46,7 @@ export const useThemeSelection = () => {
     selection,
     setSelection,
   } = useContext(ThemeContext);
-  return [
-    selection,
-    setSelection,
-  ] as const;
+  return [selection, setSelection] as const;
 };
 
 export const useTheme = () => useContext(ThemeContext).theme;

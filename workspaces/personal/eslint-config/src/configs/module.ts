@@ -1,22 +1,10 @@
+import commonjsConfig from '../rules/commonjs.js';
+import esmConfig from '../rules/esm.js';
 import type { Config } from '../types.js';
 import { getLogger } from '../utils/debug.js';
-import { makeConfigFactory } from '../utils/makeConfig.js';
 
-getLogger('module:esm').log('Loading ESM rules');
+getLogger('module').log('Loading Module Types Config');
 
-const config = [
-  makeConfigFactory(
-    '*.mjs',
-    '*.mts',
-  )({
-    name: 'ESM Modules Overrides',
-    rules: {
-      'import/extensions': [
-        'error',
-        'always',
-      ],
-    },
-  }),
-] satisfies Config[];
+const moduleConfig = [...commonjsConfig, ...esmConfig] as const satisfies Config[];
 
-export default config;
+export default moduleConfig;

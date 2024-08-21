@@ -14,5 +14,5 @@ export const legacyPlugin = (name: string, alias = name) => {
     throw new Error(`Unable to resolve plugin ${name} and/or alias ${alias}`);
   }
 
-  return fixupPluginRules(plugin as any);
+  return fixupPluginRules(plugin as any) as any;
 };

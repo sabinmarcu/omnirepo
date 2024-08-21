@@ -1,4 +1,3 @@
-/* eslint-disable import/no-commonjs */
 /* eslint-disable unicorn/prefer-module */
 
 const { generateWorkspacesConfig } = require('./generateWorkspacesConfig.cjs');

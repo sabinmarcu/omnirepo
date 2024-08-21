@@ -3,3 +3,4 @@ import type {
 } from 'eslint';
 
 export type Config = Linter.Config;
+

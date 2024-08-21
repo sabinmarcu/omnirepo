@@ -1,31 +1,32 @@
-import type {
-  Config,
-} from './types.js';
+import type { Config } from './types.js';
 
-import parserConfig from './configs/parser.js';
-import jsConfig from './configs/js.js';
-import tsConfig from './configs/ts.js';
-import rootConfigsConfig from './configs/config.root.js';
-import jestConfigsConfig from './configs/config.jest.js';
+import jsConfig from './configs/jsConfig.js';
+import tsConfig from './configs/tsConfig.js';
+import jsxConfig from './configs/jsxConfig.js';
 import moduleConfig from './configs/module.js';
-import storybookConfig from './configs/storybook.js';
+import rootConfigsConfig from './configs/root.js';
+import jestConfig from './configs/jest.js';
 import unicornConfig from './configs/unicorn.js';
-import typeTestingConfig from './configs/typeTesting.js';
-import canonicalConfig from './configs/canonical.js';
-import importConfig from './configs/import.js';
 
-const config: Config[] = [
-  ...parserConfig,
+import { logConfigs } from './utils/logConfigs.js';
+import storybookConfig from './configs/storybook.js';
+import typeTestingConfig from './configs/typeTesting.js';
+
+export { compileConfigFilesConfig } from './configs/root.js';
+export { logConfigs } from './utils/logConfigs.js';
+
+const finalConfig = [
   ...jsConfig,
   ...tsConfig,
-  ...rootConfigsConfig,
-  ...jestConfigsConfig,
+  ...jsxConfig,
   ...moduleConfig,
-  ...storybookConfig,
+  ...rootConfigsConfig,
+  ...jestConfig,
   ...unicornConfig,
+  ...storybookConfig,
   ...typeTestingConfig,
-  ...canonicalConfig,
-  ...importConfig,
 ] as const satisfies Config[];
 
-export default config;
+logConfigs(finalConfig);
+export default finalConfig;
+export * from './types.js';
