@@ -5,6 +5,7 @@ import {
 import type {
   NestedDirectoryJSON,
   DirectoryJSON,
+// eslint-disable-next-line import/extensions
 } from 'memfs/lib/volume.js';
 
 export * from 'memfs';
