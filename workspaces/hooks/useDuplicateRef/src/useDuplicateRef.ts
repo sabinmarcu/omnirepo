@@ -20,10 +20,7 @@ export const useDuplicateRef = <T extends HTMLElement>(
         }
       }
     },
-    [
-      reference,
-      replicateReference,
-    ],
+    [reference, replicateReference],
   );
   return reference;
 };

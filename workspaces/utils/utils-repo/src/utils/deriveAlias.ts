@@ -7,10 +7,7 @@ export const deriveAlias = (
     maybeName,
   ] = name.match(/(@[^/]+\/)?(.*)/)!;
   if (maybeScope) {
-    return [
-      maybeName,
-      name,
-    ];
+    return [maybeName, name];
   }
   return [name];
 };

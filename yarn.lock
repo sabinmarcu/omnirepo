@@ -1242,17 +1242,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-syntax-import-assertions@npm:^7.20.0":
-  version: 7.20.0
-  resolution: "@babel/plugin-syntax-import-assertions@npm:7.20.0"
-  dependencies:
-    "@babel/helper-plugin-utils": "npm:^7.19.0"
-  peerDependencies:
-    "@babel/core": ^7.0.0-0
-  checksum: 6a86220e0aae40164cd3ffaf80e7c076a1be02a8f3480455dddbae05fda8140f429290027604df7a11b3f3f124866e8a6d69dbfa1dda61ee7377b920ad144d5b
-  languageName: node
-  linkType: hard
-
 "@babel/plugin-syntax-import-assertions@npm:^7.23.3":
   version: 7.23.3
   resolution: "@babel/plugin-syntax-import-assertions@npm:7.23.3"
@@ -6146,7 +6135,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/eslint-config@workspace:workspaces/personal/eslint-config"
   dependencies:
-    "@babel/plugin-syntax-import-assertions": "npm:^7.20.0"
     "@eslint/compat": "npm:^1.1.1"
     "@eslint/eslintrc": "npm:^3.1.0"
     "@sabinmarcu/types": "workspace:*"
@@ -6162,14 +6150,13 @@ __metadata:
     eslint-import-resolver-exports: "npm:^1.0.0-beta.5"
     eslint-import-resolver-typescript: "npm:^3.6.1"
     eslint-plugin-canonical: "npm:^4.18.1"
-    eslint-plugin-file-extension-in-import-ts: "npm:^2.1.0"
-    eslint-plugin-import: "patch:eslint-plugin-import@npm%3A2.29.1#~/.yarn/patches/eslint-plugin-import-npm-2.29.1-b94305f7dc.patch"
+    eslint-plugin-import: "npm:^2.29.1"
     eslint-plugin-unicorn: "npm:^55.0.0"
-    glob: "npm:^8.0.3"
+    glob: "npm:^10.3.10"
     globals: "npm:^15.9.0"
     ts-deepmerge: "npm:^7.0.1"
   peerDependencies:
-    "@babel/eslint-parser": ^7.25.1
+    eslint: ^9.9.0
     eslint-plugin-expect-type: ^0.4.0
     eslint-plugin-jsx-a11y: ^6.9.0
     eslint-plugin-react: ^7.35.0
@@ -6177,7 +6164,7 @@ __metadata:
     eslint-plugin-storybook: ^0.8.0
     typescript-eslint: ^8.0.0
   peerDependenciesMeta:
-    "@babel/eslint-parser":
+    eslint:
       optional: true
     eslint-plugin-expect-type:
       optional: true
@@ -13168,17 +13155,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-file-extension-in-import-ts@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "eslint-plugin-file-extension-in-import-ts@npm:2.1.0"
-  dependencies:
-    is-core-module: "npm:^2.13.1"
-    resolve: "npm:^1.22.8"
-  checksum: 3675971599b377d5fd6af530f694b7e784f1e641fac341c006bd210e2c40679cb6acf20801c7b5663820c63ddec9a9ef0f7e9c79ea898b744d0f97ab9a57e509
-  languageName: node
-  linkType: hard
-
-"eslint-plugin-import@npm:2.29.1, eslint-plugin-import@npm:^2.28.1":
+"eslint-plugin-import@npm:^2.28.1, eslint-plugin-import@npm:^2.29.1":
   version: 2.29.1
   resolution: "eslint-plugin-import@npm:2.29.1"
   dependencies:
@@ -13202,33 +13179,6 @@ __metadata:
   peerDependencies:
     eslint: ^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0 || ^8
   checksum: 5865f05c38552145423c535326ec9a7113ab2305c7614c8b896ff905cfabc859c8805cac21e979c9f6f742afa333e6f62f812eabf891a7e8f5f0b853a32593c1
-  languageName: node
-  linkType: hard
-
-"eslint-plugin-import@patch:eslint-plugin-import@npm%3A2.29.1#~/.yarn/patches/eslint-plugin-import-npm-2.29.1-b94305f7dc.patch":
-  version: 2.29.1
-  resolution: "eslint-plugin-import@patch:eslint-plugin-import@npm%3A2.29.1#~/.yarn/patches/eslint-plugin-import-npm-2.29.1-b94305f7dc.patch::version=2.29.1&hash=ba1016"
-  dependencies:
-    array-includes: "npm:^3.1.7"
-    array.prototype.findlastindex: "npm:^1.2.3"
-    array.prototype.flat: "npm:^1.3.2"
-    array.prototype.flatmap: "npm:^1.3.2"
-    debug: "npm:^3.2.7"
-    doctrine: "npm:^2.1.0"
-    eslint-import-resolver-node: "npm:^0.3.9"
-    eslint-module-utils: "npm:^2.8.0"
-    hasown: "npm:^2.0.0"
-    is-core-module: "npm:^2.13.1"
-    is-glob: "npm:^4.0.3"
-    minimatch: "npm:^3.1.2"
-    object.fromentries: "npm:^2.0.7"
-    object.groupby: "npm:^1.0.1"
-    object.values: "npm:^1.1.7"
-    semver: "npm:^6.3.1"
-    tsconfig-paths: "npm:^3.15.0"
-  peerDependencies:
-    eslint: ^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0 || ^8
-  checksum: 23564f427cbb3805a29b85d1ffd564d76ea73955aea14a30098365850e46b65577939a04e9687c4b07bc36e0999b9ecb8b19021d0b85080f43f13bc5068abe94
   languageName: node
   linkType: hard
 
@@ -14731,6 +14681,22 @@ __metadata:
     once: "npm:^1.3.0"
     path-is-absolute: "npm:^1.0.0"
   checksum: 59452a9202c81d4508a43b8af7082ca5c76452b9fcc4a9ab17655822e6ce9b21d4f8fbadabe4fe3faef448294cec249af305e2cd824b7e9aaf689240e5e96a7b
+  languageName: node
+  linkType: hard
+
+"glob@npm:^10.3.10":
+  version: 10.4.5
+  resolution: "glob@npm:10.4.5"
+  dependencies:
+    foreground-child: "npm:^3.1.0"
+    jackspeak: "npm:^3.1.2"
+    minimatch: "npm:^9.0.4"
+    minipass: "npm:^7.1.2"
+    package-json-from-dist: "npm:^1.0.0"
+    path-scurry: "npm:^1.11.1"
+  bin:
+    glob: dist/esm/bin.mjs
+  checksum: 698dfe11828b7efd0514cd11e573eaed26b2dff611f0400907281ce3eab0c1e56143ef9b35adc7c77ecc71fba74717b510c7c223d34ca8a98ec81777b293d4ac
   languageName: node
   linkType: hard
 
@@ -16580,6 +16546,19 @@ __metadata:
     "@pkgjs/parseargs":
       optional: true
   checksum: 6e6490d676af8c94a7b5b29b8fd5629f21346911ebe2e32931c2a54210134408171c24cee1a109df2ec19894ad04a429402a8438cbf5cc2794585d35428ace76
+  languageName: node
+  linkType: hard
+
+"jackspeak@npm:^3.1.2":
+  version: 3.4.3
+  resolution: "jackspeak@npm:3.4.3"
+  dependencies:
+    "@isaacs/cliui": "npm:^8.0.2"
+    "@pkgjs/parseargs": "npm:^0.11.0"
+  dependenciesMeta:
+    "@pkgjs/parseargs":
+      optional: true
+  checksum: 96f8786eaab98e4bf5b2a5d6d9588ea46c4d06bbc4f2eb861fdd7b6b182b16f71d8a70e79820f335d52653b16d4843b29dd9cdcf38ae80406756db9199497cf3
   languageName: node
   linkType: hard
 
@@ -20125,7 +20104,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"path-scurry@npm:^1.10.1":
+"path-scurry@npm:^1.10.1, path-scurry@npm:^1.11.1":
   version: 1.11.1
   resolution: "path-scurry@npm:1.11.1"
   dependencies:

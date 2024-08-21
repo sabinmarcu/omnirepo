@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { mutableStore } from '@sabinmarcu/utils-primitives';
 import { observableKeys } from './constants.js';
 import type {

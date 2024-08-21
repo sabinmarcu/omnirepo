@@ -88,10 +88,7 @@ export const Background = forwardRef<HTMLCanvasElement, BackgroundProperties>(
         wnd?.addEventListener('resize', renderFunction);
         return () => wnd?.removeEventListener('resize', renderFunction);
       },
-      [
-        renderer,
-        renderOnce,
-      ],
+      [renderer, renderOnce],
     );
 
     // Render Once?

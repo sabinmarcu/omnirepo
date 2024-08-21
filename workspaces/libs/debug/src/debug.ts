@@ -48,10 +48,7 @@ export const getOverrideForSubject = <T extends any>(
 ) => {
   const ownSubject = subject<T>(optionalInput);
   const output = config(defaultSubject, ownSubject);
-  return [
-    output,
-    ownSubject.next,
-  ] as const;
+  return [output, ownSubject.next] as const;
 };
 
 export const debug: DebugFactory = (
@@ -61,15 +58,9 @@ export const debug: DebugFactory = (
   const template = debugDefinitionFromInput(definition);
   const enabled = debugDefinitionEnabled(template as any);
 
-  const [
-    formatter,
-    setFormatter,
-  ] = getOverrideForSubject(globalFormatter, options.formatter);
+  const [formatter, setFormatter] = getOverrideForSubject(globalFormatter, options.formatter);
   const boundFormatter = formatter.map((it) => it?.(template as any));
-  const [
-    printFunction,
-    setPrintFunction,
-  ] = getOverrideForSubject(
+  const [printFunction, setPrintFunction] = getOverrideForSubject(
     globalPrintFunctions[template.channel],
     options.printFunction,
   );

@@ -2,12 +2,17 @@ import { getLogger } from './debug.js';
 
 const logger = getLogger('importer');
 
+const cache = new Map<string, any>();
 export const tryImport = async (what: string) => {
-  try {
-    const module = await import(what);
-    return module.default ?? module;
-  } catch {
-    logger.warn(`Could not import ${what}. If you need it, check that you have it installed.`);
+  if (!cache.has(what)) {
+    try {
+      const module = await import(what);
+      cache.set(what, module);
+    } catch {
+      cache.set(what, undefined);
+      logger.warn(`Could not import ${what}. If you need it, check that you have it installed.`);
+    }
   }
-  return undefined;
+  const module = cache.get(what);
+  return module;
 };

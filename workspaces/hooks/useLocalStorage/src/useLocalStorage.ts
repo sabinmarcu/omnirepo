@@ -21,15 +21,9 @@ export const useLocalStorage = <T extends unknown>(
     } catch {
       return initialValue;
     }
-  }, [
-    initialValue,
-    key,
-  ]);
+  }, [initialValue, key]);
 
-  const [
-    storedValue,
-    setStoredValue,
-  ] = useState<T>(getValueFromLocalStorage());
+  const [storedValue, setStoredValue] = useState<T>(getValueFromLocalStorage());
 
   useEffect(() => {
     const value = getValueFromLocalStorage();
@@ -67,14 +61,8 @@ export const useLocalStorage = <T extends unknown>(
       return true;
     }) satisfies Dispatch<SetStateAction<T>>;
 
-    return [
-      storedValue,
-      setValue,
-    ] as const;
-  }, [
-    storedValue,
-    key,
-  ]);
+    return [storedValue, setValue] as const;
+  }, [storedValue, key]);
 };
 
 export default useLocalStorage;

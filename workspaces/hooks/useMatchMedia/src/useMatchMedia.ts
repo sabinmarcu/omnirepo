@@ -8,17 +8,11 @@ import {
 export const useMatchMedia = (
   ...mediaQueries: (string | [string, string])[]
 ) => {
-  const [
-    matches,
-    setMatches,
-  ] = useState<boolean>(false);
+  const [matches, setMatches] = useState<boolean>(false);
   const queries = useMemo(
     () => mediaQueries.map((query) => {
       if (Array.isArray(query)) {
-        const [
-          key,
-          value,
-        ] = query;
+        const [key, value] = query;
         return `(${key}: ${value})`;
       }
       if (query.startsWith('(') && query.endsWith(')')) {
@@ -51,10 +45,7 @@ export const useMatchMedia = (
       handler(matchMedia);
       return () => matchMedia.removeEventListener('change', handler);
     },
-    [
-      matchMedia,
-      setMatches,
-    ],
+    [matchMedia, setMatches],
   );
   useDebugValue(matches);
   return matches;

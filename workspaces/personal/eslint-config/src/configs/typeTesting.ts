@@ -1,40 +1,27 @@
-import type {
-  Config,
-} from '../types.js';
+import { conditionalConfig } from '../utils/conditionalConfig.js';
 import { getLogger } from '../utils/debug.js';
-import { makeConfigFactory } from '../utils/makeConfig.js';
-import { tryImport } from '../utils/tryImport.js';
 
-const logger = getLogger('plugin:expect-type');
-const expectTypePlugin = await tryImport('eslint-plugin-expect-type');
+const logger = getLogger('config:type-testing');
+logger.log('Loading Type Testing Config');
 
-if (expectTypePlugin) {
-  logger.log('Loading Type Testing (expect-type)');
-} else {
-  logger.warn('Expect Type plugin not found. Skipping');
-}
+const typeTestingConfig = await conditionalConfig(
+  'eslint-plugin-expect-type',
+  () => logger.warn('Skipping Type Testing Configuration'),
+  async ({
+    'eslint-plugin-expect-type': expectTypePlugin,
+  }) => {
+    const typeTestingRulesConfig = await import('../rules/typeTesting.js');
 
-const config = expectTypePlugin
-  ? [
-    makeConfigFactory(
-      '*.type.spec.ts',
-      '*.type.spec.tsx',
-
-    )({
-      name: 'Expect Type Config (type unit testing)',
-      plugins: {
-        'expect-type': expectTypePlugin,
+    return [
+      {
+        name: 'Type Testing Plugin',
+        plugins: {
+          'expect-type': expectTypePlugin,
+        },
       },
-      rules: {
-        ...expectTypePlugin.configs.recommended.rules,
-        '@typescript-eslint/no-unused-vars': 0,
-        '@typescript-eslint/no-unused-expressions': 0,
-        '@typescript-eslint/naming-convention': 0,
-        'max-len': 0,
-        'no-lone-blocks': 0,
-      },
-    }),
-  ] as const satisfies Config[]
-  : [] satisfies Config[];
+      ...typeTestingRulesConfig.default,
+    ];
+  },
+);
 
-export default config;
+export default typeTestingConfig;

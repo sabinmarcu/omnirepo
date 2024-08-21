@@ -11,6 +11,7 @@ const makeLogger = ({
   logFunction?: typeof console.log,
 }) => {
   const logger = debug([
+    'platform24',
     'eslint-config',
     namespace,
     level,
