@@ -1,5 +1,4 @@
-/* eslint-disable unicorn/prefer-module */
-
+// eslint-disable-next-line import/extensions
 const { generateWorkspacesConfig } = require('./generateWorkspacesConfig.cjs');
 
 module.exports = generateWorkspacesConfig([
