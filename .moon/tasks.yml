@@ -103,6 +103,7 @@ tasks:
     type: test
     deps:
       - "~:build"
+      - "eslint-config:build"
     inputs:
       - "@globs(sources)"
 
