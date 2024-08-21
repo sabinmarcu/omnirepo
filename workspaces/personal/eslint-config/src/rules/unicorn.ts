@@ -37,6 +37,12 @@ const unicornRulesConfig = [
       'unicorn/filename-case': ['error', { case: 'pascalCase' }],
     },
   }),
+  compileConfigFor('*.cjs', '*.cts')({
+    name: 'Unicorn CJS Rules',
+    rules: {
+      'unicorn/prefer-module': 'off',
+    },
+  }),
 ] as const satisfies Config[];
 
 export default unicornRulesConfig;
