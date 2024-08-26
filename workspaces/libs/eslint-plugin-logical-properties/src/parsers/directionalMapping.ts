@@ -13,7 +13,7 @@ export const directionalMappingTransformerFactory: DirectionalTransformerFactory
   node,
   context,
   config: {
-    mappings,
+    mappings = {},
   },
 }) => (
   property,
@@ -35,6 +35,12 @@ export const directionalMappingTestGenerator: DirectionalTransformerTestsFactory
   options: inputOptions,
   config: { mappings },
 }) => {
+  if (!mappings) {
+    return {
+      valid: [],
+      invalid: [],
+    };
+  }
   const { functions: functionNames } = inputOptions;
   const options = [inputOptions];
   const { valid, invalid } = {
