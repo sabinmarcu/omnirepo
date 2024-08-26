@@ -6,7 +6,10 @@ import type {
   RuleTester,
 } from 'eslint';
 import { runEslintTests } from '../utils/runEslintTests.js';
-import type { DirectionalRuleConfig } from '../types.js';
+import type {
+  DirectionalRuleConfig,
+  PluginOptions,
+} from '../types.js';
 import { isValidProperty } from '../utils/isValidProperty.js';
 import {
   directionalMappingTestGenerator,
@@ -25,7 +28,12 @@ import {
   directionalDisableTestGenerator,
   directionalDisableTransformerFactory,
 } from './directionalDisable.js';
-import { defaultFunctionNames } from '../constants.js';
+import {
+  configSchema,
+  defaultFunctions,
+  defaultJsxAttributes,
+  defaultKeyframes,
+} from '../constants.js';
 
 export const transformDirectionalProperty = (
   node: ObjectExpression,
@@ -84,24 +92,40 @@ export const generateDirectionalRules = (config: DirectionalRuleConfig): Rule.Ru
   meta: {
     type: 'problem',
     fixable: 'code',
-    schema: {
-      type: 'array',
-      items: {
-        type: 'string',
-      },
-    },
+    schema: [configSchema],
   },
   create(context) {
-    const { options } = context;
-    const nodeNames = (options?.length > 0
-      ? options
-      : defaultFunctionNames as unknown as string[]
+    const { options } = context as unknown as { options: [ PluginOptions ] };
+
+    const [{ functions, jsxAttributes }] = options;
+    const nodeFunctionNames = (functions?.length > 0
+      ? functions
+      : defaultFunctions as unknown as string[]
+    );
+    const nodeJsxAttributesNames = (jsxAttributes?.length > 0
+      ? functions
+      : defaultJsxAttributes as unknown as string[]
     );
     return {
+      JSXAttribute(node: any) {
+        if (
+          node.type === 'JSXAttribute'
+          && node.name.type === 'JSXIdentifier'
+          && nodeJsxAttributesNames.includes(node.name.name)
+          && node.value.type === 'JSXExpressionContainer'
+          && node.value.expression.type === 'ObjectExpression'
+        ) {
+          transformDirectionalProperty(
+            node.value.expression,
+            context,
+            config,
+          );
+        }
+      },
       CallExpression(node) {
         if (
           node.callee.type === 'Identifier'
-          && nodeNames.includes(node.callee.name)
+          && nodeFunctionNames.includes(node.callee.name)
         ) {
           for (const rules of node.arguments) {
             if (rules.type === 'ArrayExpression') {
@@ -129,10 +153,18 @@ export const runDirectionalRulesTests = (
   rule: Rule.RuleModule,
   config: DirectionalRuleConfig,
 ) => {
-  const functionNames = [...defaultFunctionNames, 'customStyle'] as const;
+  const functions = [...defaultFunctions, 'customStyle'] as const;
+  const jsxAttributes = [...defaultJsxAttributes, 'customStyle'] as const;
+  const keyframes = [...defaultKeyframes, 'customKeyframes'] as const;
+  const options = {
+    functions,
+    jsxAttributes,
+    keyframes,
+  } as const satisfies PluginOptions;
+
   const generatorInput = {
     testName,
-    functionNames,
+    options,
     config,
   };
   const mappingTests = directionalMappingTestGenerator(generatorInput);

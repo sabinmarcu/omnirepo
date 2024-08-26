@@ -32,9 +32,11 @@ export const directionalMappingTransformerFactory: DirectionalTransformerFactory
 
 export const directionalMappingTestGenerator: DirectionalTransformerTestsFactory = ({
   testName: inputTestName,
-  functionNames,
+  options: inputOptions,
   config: { mappings },
 }) => {
+  const { functions: functionNames } = inputOptions;
+  const options = [inputOptions];
   const { valid, invalid } = {
     valid: [],
     invalid: [],
@@ -53,7 +55,7 @@ export const ${testName} = ${functionName}({
         ]
           .map((code) => ({
             code,
-            options: functionNames,
+            options,
           })),
       );
 
@@ -65,7 +67,7 @@ export const ${testName} = ${functionName}({
     ${source}: 5,
   });
   `,
-          options: functionNames,
+          options,
           errors: [
             {
               message: generateDirectionalPropertyError(source, target),
@@ -83,7 +85,7 @@ export const ${testName} = ${functionName}({
     ${source}: theme.padding,
   });
   `,
-          options: functionNames,
+          options,
           errors: [
             {
               message: generateDirectionalPropertyError(source, target),

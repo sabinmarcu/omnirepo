@@ -56,7 +56,7 @@ export const directionalShorthandTransformerFactory: DirectionalTransformerFacto
 
 export const directionalShorthandTestGenerator: DirectionalTransformerTestsFactory = ({
   testName: inputTestName,
-  functionNames,
+  options: inputOptions,
   config: { shorthands },
 }) => {
   if (!shorthands) {
@@ -65,6 +65,8 @@ export const directionalShorthandTestGenerator: DirectionalTransformerTestsFacto
       invalid: [],
     };
   }
+  const { functions: functionNames } = inputOptions;
+  const options = [inputOptions];
 
   const { valid, invalid } = {
     valid: [],
@@ -74,8 +76,8 @@ export const directionalShorthandTestGenerator: DirectionalTransformerTestsFacto
 
   for (const functionName of functionNames) {
     for (const [property, shorthandOptions] of Object.entries(shorthands)) {
-      for (const options of shorthandOptions) {
-        const ruleValues = Array.from({ length: options.length }).fill(0).map((_, index) => `value-${index}`);
+      for (const shorthandOption of shorthandOptions) {
+        const ruleValues = Array.from({ length: shorthandOption.length }).fill(0).map((_, index) => `value-${index}`);
         const quotesSet = [
           '"',
           '\'',
@@ -86,14 +88,14 @@ export const directionalShorthandTestGenerator: DirectionalTransformerTestsFacto
           for (const values of valuesSet) {
             const input = values.join(' ');
             const source = `${property}: ${quote}${input}${quote}`;
-            const results = expandShorthandOptions(options, values);
+            const results = expandShorthandOptions(shorthandOption, values);
             invalid.push({
               code: `
     export const ${testName} = ${functionName}({
       ${source},
     });
 `.trim(),
-              options: functionNames,
+              options,
               errors: [{ message: generateDirectionalShorthandError(source, results) }],
               output: `
     export const ${testName} = ${functionName}({
