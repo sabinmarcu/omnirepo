@@ -11,10 +11,11 @@ import type { configSchema } from './constants.js';
 export type DirectionalRuleShorthand = Array<Array<Array<string>>>;
 
 export type DirectionalRuleConfig = {
-  mappings: Record<string, string>,
+  mappings?: Record<string, string>,
   disabled?: string | string[],
   shorthands?: Record<string, DirectionalRuleShorthand>,
   shorthandMappings?: Record<string, string[]>,
+  values?: Record<string, Record<string, string>>,
 };
 
 export type ValidProperty = Property & {

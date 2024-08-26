@@ -34,6 +34,10 @@ import {
   defaultJsxAttributes,
   defaultKeyframes,
 } from '../constants.js';
+import {
+  directionalValueTestGenerator,
+  directionalValueTransformerFactory,
+} from './directionalValue.js';
 
 export const transformDirectionalProperty = (
   node: ObjectExpression,
@@ -42,14 +46,16 @@ export const transformDirectionalProperty = (
 ) => {
   const {
     disabled = [],
-    mappings,
+    mappings = {},
     shorthands = {},
     shorthandMappings = {},
+    values = {},
   } = config;
   const toDisable = Array.isArray(disabled) ? disabled : [disabled];
   const mappingsSources = Object.keys(mappings);
   const shorthandSources = Object.keys(shorthands);
   const shorthandMappingsSources = Object.keys(shorthandMappings);
+  const valueSources = Object.keys(values);
   const transformerFactoryInput = {
     node,
     context,
@@ -67,6 +73,9 @@ export const transformDirectionalProperty = (
   const directionalDisableTransformer = directionalDisableTransformerFactory(
     transformerFactoryInput,
   );
+  const directionalValueTransformer = directionalValueTransformerFactory(
+    transformerFactoryInput,
+  );
   for (const property of node.properties) {
     if (isValidProperty(property)) {
       try {
@@ -76,6 +85,8 @@ export const transformDirectionalProperty = (
           directionalShorthandTransformer(property);
         } else if (shorthandMappingsSources.includes(property.key.name)) {
           directionalShorthandMappingTransformer(property);
+        } else if (valueSources.includes(property.key.name)) {
+          directionalValueTransformer(property);
         } else if (toDisable.includes(property.key.name)) {
           throw new MustDisablePropertyError();
         }
@@ -95,11 +106,13 @@ export const generateDirectionalRules = (config: DirectionalRuleConfig): Rule.Ru
     schema: [configSchema],
   },
   create(context) {
-    const { options } = context as unknown as { options: [ PluginOptions ] };
+    const [options = {}] = context.options ?? [];
 
-    const [{
-      functions, jsxAttributes, keyframes,
-    }] = options;
+    const {
+      functions,
+      jsxAttributes,
+      keyframes,
+    } = options as unknown as PluginOptions;
     const nodeFunctionNames = (functions?.length > 0
       ? functions
       : defaultFunctions as unknown as string[]
@@ -193,17 +206,20 @@ export const runDirectionalRulesTests = (
   const shorthandTests = directionalShorthandTestGenerator(generatorInput);
   const shorthandMappingTests = directionalShorthandMappingTestGenerator(generatorInput);
   const disableTests = directionalDisableTestGenerator(generatorInput);
+  const valueTests = directionalValueTestGenerator(generatorInput);
   const valid: Array<RuleTester.ValidTestCase> = [
     ...mappingTests.valid,
     ...shorthandTests.valid,
     ...shorthandMappingTests.valid,
     ...disableTests.valid,
+    ...valueTests.valid,
   ];
   const invalid: Array<RuleTester.InvalidTestCase> = [
     ...mappingTests.invalid,
     ...shorthandTests.invalid,
     ...shorthandMappingTests.invalid,
     ...disableTests.invalid,
+    ...valueTests.invalid,
   ];
 
   runEslintTests(testName, rule, {
