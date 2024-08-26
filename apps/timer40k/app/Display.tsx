@@ -1,12 +1,13 @@
 'use client';
 
-import Image from 'next/image.js';
+import Image from 'next/image';
 import {
   useState,
   useEffect,
   type ComponentProps,
 } from 'react';
 import dayjs from 'dayjs';
+import style from './Display.css';
 
 export type DisplayProperties = {
   releasedImage: Partial<ComponentProps<typeof Image>>,
@@ -70,18 +71,18 @@ export function Display({
     : undefined;
   return (
     <>
-      <div className="background">
-        <Image {...imageToRender} alt="status-bg" />
+      <div className={style.background}>
+        <Image {...imageToRender} alt="status-bg" className={ style.backgroundImage }/>
       </div>
-      <div className="foreground">
-        <Image {...imageToRender} alt="status" />
-        <h1>
+      <div className={ style.foreground }>
+        <Image {...imageToRender} alt="status" className={style.foregroundImage} />
+        <h1 className={style.releaseText}>
           {releaseDiff >= 0
             ? String.raw`It's released, what are you doing here?`
             : `Releasing in ${releaseText}`}
         </h1>
         {earlyReleaseDate && (
-          <h2>
+          <h2 className={style.earlyReleaseText}>
             {earlyReleaseDiff >= 0
               ? String.raw`It's in early release. Go have fun, you wealthy git.`
               : `Early release in in ${earlyReleaseText}`}
