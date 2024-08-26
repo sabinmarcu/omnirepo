@@ -1,7 +1,13 @@
+import type { Rule } from 'eslint';
+import type {
+  Expression,
+  TemplateElement,
+} from 'estree';
 import type {
   DirectionalTransformerFactory,
   DirectionalTransformerTestsFactory,
   TestInput,
+  ValidProperty,
 } from '../types.js';
 import { MustDisablePropertyError } from '../utils/mustDisablePropertyError.js';
 
@@ -25,6 +31,52 @@ const expandShorthandOptions = (
   return results;
 };
 
+const getReplacement = (index = 0) => {
+  const tag = `<!replaceme-${index}>`;
+  return tag;
+};
+
+const getPropertyValues = (
+  context: Rule.RuleContext,
+  property: ValidProperty,
+) => {
+  let propertyValue: string;
+  const replacements: [string, string][] = [];
+
+  if (property.value.type === 'TemplateLiteral') {
+    const { value } = property;
+    const quasis = [...value.quasis];
+    const expressions = [...value.expressions];
+    const propertyValuePieces: string[] = [];
+    let pointer: TemplateElement[] | Expression[] = quasis;
+
+    while (quasis.length + expressions.length) {
+      const current = pointer.shift();
+      if (current?.type === 'TemplateElement') {
+        propertyValuePieces.push(context.sourceCode.getText(current));
+        pointer = expressions;
+      } else {
+        const tag = getReplacement(replacements.length);
+        propertyValuePieces.push(tag);
+        replacements.push([tag, context.sourceCode.getText(current)]);
+        pointer = quasis;
+      }
+    }
+    propertyValue = propertyValuePieces.join('');
+  } else {
+    propertyValue = context.sourceCode.getText(property.value);
+  }
+
+  propertyValue = propertyValue
+    .replace(/^["'`]/, '')
+    .replace(/["'`]$/, '');
+  const values = propertyValue.split(' ');
+  return {
+    values,
+    replacements,
+  };
+};
+
 export const directionalShorthandTransformerFactory: DirectionalTransformerFactory = ({
   node,
   context,
@@ -34,16 +86,23 @@ export const directionalShorthandTransformerFactory: DirectionalTransformerFacto
 }) => (
   property,
 ) => {
-  const propertyValue = context.sourceCode.getText(property.value)
-    .replace(/^["'`]/, '')
-    .replace(/["'`]$/, '');
-  const values = propertyValue.split(' ');
+  const {
+    values,
+    replacements,
+  } = getPropertyValues(context, property);
   const options = shorthands[property.key.name][values.length - 1];
   if (!options) {
     throw new MustDisablePropertyError();
   }
   const sourceText = context.sourceCode.getText(property);
-  const results = expandShorthandOptions(options, values);
+  const results = expandShorthandOptions(options, values)
+    .map((it) => {
+      let final = it;
+      for (const [target, value] of replacements) {
+        final = final.replace(target, value);
+      }
+      return final;
+    });
 
   context.report({
     node,
