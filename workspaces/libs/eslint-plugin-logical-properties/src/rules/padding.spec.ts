@@ -6,12 +6,12 @@ import { runEslintTests } from '../utils/runEslintTests.js';
 
 describe('Padding Rule', () => {
   runDirectionalRulesTests('paddingRule', rule, ruleConfig);
-  const [a, b, c, d] = [
-    '${a + 1}', '${b + 2}', '${c + 3}', '${d + 4}'
-
-  ] as const;
   const tests = [
     (() => {
+      const [a, b, c, d] = [
+        '${a + 1}', '${b + 2}', '${c + 3}', '${d + 4}'
+
+      ] as const;
       const source = `\`${a} ${b} ${c} ${d}\``
       const results = [
         `paddingBlockStart: \`${a}\``,
@@ -31,6 +31,10 @@ describe('Padding Rule', () => {
       return test;
     })(),
     (() => {
+      const [a, b] = [
+        '${a + 1}', '${b + 2}',
+
+      ] as const;
       const source = `\`${a} ${b}\``
       const results = [
         `paddingBlockStart: \`${a}\``,
@@ -49,6 +53,75 @@ describe('Padding Rule', () => {
       } satisfies RuleTester.InvalidTestCase
       return test;
     })(),
+    (() => {
+      const [a, b, c] = [
+        '${a + 1}', '${b + 2}', '${c + 3}'
+
+      ] as const;
+      const source = `\`${a} ${c} ${b}\``
+      const results = [
+        `paddingBlockStart: \`${a}\``,
+        `paddingInlineStart: \`${c}\``,
+        `paddingInlineEnd: \`${c}\``,
+        `paddingBlockEnd: \`${b}\``,
+      ];
+      const test = {
+        code: `style({ padding: ${source} })`,
+        errors: [{ message: generateDirectionalShorthandError(
+          `padding: ${source}`,
+          results,
+        )}],
+        output: `style({ ${results.join(", ")} })`,
+        options: [{}],
+      } satisfies RuleTester.InvalidTestCase
+      return test;
+    })(),
+    (() => {
+      const [a, b,] = [
+        'calc(a + 1)', 'calc(b + 2)',
+
+      ] as const;
+      const source = `\`${a} ${b}\``
+      const results = [
+        `paddingBlockStart: \`${a}\``,
+        `paddingBlockEnd: \`${a}\``,
+        `paddingInlineStart: \`${b}\``,
+        `paddingInlineEnd: \`${b}\``,
+      ];
+      const test = {
+        code: `style({ padding: ${source} })`,
+        errors: [{ message: generateDirectionalShorthandError(
+          `padding: ${source}`,
+          results,
+        )}],
+        output: `style({ ${results.join(", ")} })`,
+        options: [{}],
+      } satisfies RuleTester.InvalidTestCase
+      return test;
+    })(),
+    (() => {
+      const [a, b] = [
+        'calc(a + 1)', 'calc(b + var(c) / 3)',
+
+      ] as const;
+      const source = `\`${a} ${b}\``
+      const results = [
+        `paddingBlockStart: \`${a}\``,
+        `paddingBlockEnd: \`${a}\``,
+        `paddingInlineStart: \`${b}\``,
+        `paddingInlineEnd: \`${b}\``,
+      ];
+      const test = {
+        code: `style({ padding: ${source} })`,
+        errors: [{ message: generateDirectionalShorthandError(
+          `padding: ${source}`,
+          results,
+        )}],
+        output: `style({ ${results.join(", ")} })`,
+        options: [{}],
+      } satisfies RuleTester.InvalidTestCase
+      return test;
+    })()
   ]
   runEslintTests(
     'manual padding template strings', 

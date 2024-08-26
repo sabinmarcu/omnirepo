@@ -1,15 +1,15 @@
 import type { Rule } from 'eslint';
 import type {
-  Expression,
-  TemplateElement,
-} from 'estree';
-import type {
   DirectionalTransformerFactory,
   DirectionalTransformerTestsFactory,
   TestInput,
   ValidProperty,
 } from '../types.js';
 import { MustDisablePropertyError } from '../utils/mustDisablePropertyError.js';
+import {
+  stringToTemplate,
+  tokenizeString,
+} from '../utils/tokenizeString.js';
 
 export const generateDirectionalShorthandError = (
   source: string,
@@ -31,50 +31,22 @@ const expandShorthandOptions = (
   return results;
 };
 
-const getReplacement = (index = 0) => {
-  const tag = `<!replaceme-${index}>`;
-  return tag;
-};
-
 const getPropertyValues = (
   context: Rule.RuleContext,
   property: ValidProperty,
 ) => {
-  let propertyValue: string;
-  const replacements: [string, string][] = [];
+  const stringToTokenize = stringToTemplate(
+    context.sourceCode.getText(property.value)
+      .replace(/^["'`]/, '')
+      .replace(/["'`]$/, ''),
+  );
+  const { output, tokens } = tokenizeString(stringToTokenize);
 
-  if (property.value.type === 'TemplateLiteral') {
-    const { value } = property;
-    const quasis = [...value.quasis];
-    const expressions = [...value.expressions];
-    const propertyValuePieces: string[] = [];
-    let pointer: TemplateElement[] | Expression[] = quasis;
-
-    while (quasis.length + expressions.length) {
-      const current = pointer.shift();
-      if (current?.type === 'TemplateElement') {
-        propertyValuePieces.push(context.sourceCode.getText(current));
-        pointer = expressions;
-      } else {
-        const tag = getReplacement(replacements.length);
-        propertyValuePieces.push(tag);
-        replacements.push([tag, context.sourceCode.getText(current)]);
-        pointer = quasis;
-      }
-    }
-    propertyValue = propertyValuePieces.join('');
-  } else {
-    propertyValue = context.sourceCode.getText(property.value);
-  }
-
-  propertyValue = propertyValue
-    .replace(/^["'`]/, '')
-    .replace(/["'`]$/, '');
-  const values = propertyValue.split(' ');
+  const values = output.split(' ');
   return {
     values,
-    replacements,
-  };
+    replacements: tokens,
+  } as const;
 };
 
 export const directionalShorthandTransformerFactory: DirectionalTransformerFactory = ({
