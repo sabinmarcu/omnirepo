@@ -39,7 +39,7 @@ export const directionalShorthandMappingTransformerFactory: DirectionalTransform
 
 export const directionalShorthandMappingTestGenerator: DirectionalTransformerTestsFactory = ({
   testName: inputTestName,
-  functionNames,
+  options: inputOptions,
   config: { shorthandMappings },
 }) => {
   if (!shorthandMappings) {
@@ -48,6 +48,8 @@ export const directionalShorthandMappingTestGenerator: DirectionalTransformerTes
       invalid: [],
     };
   }
+  const { functions: functionNames } = inputOptions;
+  const options = [inputOptions];
 
   const { valid, invalid } = {
     valid: [],
@@ -69,7 +71,7 @@ export const directionalShorthandMappingTestGenerator: DirectionalTransformerTes
           '`',
         ];
         for (const quote of quotesSet) {
-          const value = `${quote}${input}${quote}`;
+          const value = `${quote}${input} => ${functionName}${quote}`;
           const source = `${property}: ${value}`;
           const results = generateShorthandMappings(value, propertyMappings);
           invalid.push({
@@ -78,7 +80,7 @@ export const directionalShorthandMappingTestGenerator: DirectionalTransformerTes
       ${source},
     });
 `.trim(),
-            options: functionNames,
+            options,
             errors: [{ message: generateDirectionalShorthandError(source, results) }],
             output: `
     export const ${testName} = ${functionName}({

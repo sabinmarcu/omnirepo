@@ -22,7 +22,7 @@ export const directionalDisableTransformerFactory: DirectionalTransformerFactory
 
 export const directionalDisableTestGenerator: DirectionalTransformerTestsFactory = ({
   testName: inputTestName,
-  functionNames,
+  options: { functions: functionNames },
   config: { disabled = [] },
 }) => {
   const { valid, invalid } = {

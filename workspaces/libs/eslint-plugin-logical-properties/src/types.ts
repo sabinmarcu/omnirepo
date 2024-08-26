@@ -6,6 +6,7 @@ import type {
   ObjectExpression,
   Property,
 } from 'estree';
+import type { configSchema } from './constants.js';
 
 export type DirectionalRuleShorthand = Array<Array<Array<string>>>;
 
@@ -27,6 +28,10 @@ export type DirectionalTransformer = (
   property: ValidProperty,
 ) => void;
 
+export type PluginOptions = {
+  [Key in keyof typeof configSchema['properties']]: string[] | Readonly<string[]>
+};
+
 export type DirectionalTransformerFactory = (input: {
   node: ObjectExpression,
   context: Rule.RuleContext,
@@ -43,6 +48,6 @@ export type TestInput = {
 
 export type DirectionalTransformerTestsFactory = (input: {
   testName: string,
-  functionNames: string[] | Readonly<string[]>,
+  options: PluginOptions,
   config: DirectionalRuleConfig,
 }) => Required<TestInput>;
