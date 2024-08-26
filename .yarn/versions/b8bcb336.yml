@@ -1,0 +1,6 @@
+releases:
+  eslint-plugin-logical-properties: major
+
+declined:
+  - "@sabinmarcu/docs"
+  - "@sabinmarcu/timer40k"
