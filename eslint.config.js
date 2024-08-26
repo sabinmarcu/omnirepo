@@ -21,7 +21,7 @@ const eslintConfig = [
     },
   },
   {
-    files: ['**/isspacemarine2outyet/**/*.tsx', '**/isdarktideoutyet/**/*.tsx'],
+    files: ['**/timer40k/**/*.tsx'],
     rules: {
       'unicorn/filename-case': 'off',
     },
