@@ -19,7 +19,7 @@ import {
   directionalShorthandTestGenerator,
   directionalShorthandTransformerFactory,
 } from './directionalShorthand.js';
-import { MustDisablePropertyError } from '../utils/mustDisablePropertyError.js';
+import { MustDisablePropertyError } from '../utils/MustDisablePropertyError.js';
 import {
   directionalShorthandMappingTestGenerator,
   directionalShorthandMappingTransformerFactory,
