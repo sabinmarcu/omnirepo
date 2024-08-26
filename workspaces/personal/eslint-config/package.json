@@ -98,5 +98,5 @@
     "type": "git",
     "directory": "workspaces/personal/eslint-config"
   },
-  "homepage": "https://sabinmarcu.dev//api/eslint-config"
+  "homepage": "https:/sabinmarcu.dev/api/eslint-config"
 }

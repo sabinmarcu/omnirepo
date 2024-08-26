@@ -66,5 +66,5 @@
     "type": "git",
     "directory": "workspaces/personal/commitlint-config-workspaces"
   },
-  "homepage": "https://sabinmarcu.dev//api/commitlint-config-workspaces"
+  "homepage": "https:/sabinmarcu.dev/api/commitlint-config-workspaces"
 }

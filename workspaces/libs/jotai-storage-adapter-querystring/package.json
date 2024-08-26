@@ -62,5 +62,5 @@
     "type": "git",
     "directory": "workspaces/libs/jotai-storage-adapter-querystring"
   },
-  "homepage": "https://sabinmarcu.dev//api/jotai-storage-adapter-querystring"
+  "homepage": "https:/sabinmarcu.dev/api/jotai-storage-adapter-querystring"
 }

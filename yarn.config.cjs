@@ -19,7 +19,6 @@ const {
   FIELD_TSCMONO_PRESET_KEY,
   FIELD_TSCMONO_PRESETS_KEY,
   MODULE_DEPENDENCY_ENFORCEMENT_FIELD_LIST,
-  FIELD_REMOVE_MAP,
   TREAT_AS_CJS,
   CJS_FIELD_UPDATE_MAP,
 } = require('./.config/manifest.cjs');
@@ -33,6 +32,7 @@ const { WORKSPACE_PROTOCOL_RANGE } = require('./.config/yarn.cjs');
 
 const getMoonConfigOf = moize.promise(async (path) => {
   const { readFileSync } = await import('node:fs');
+  // eslint-disable-next-line unicorn/import-style
   const { resolve } = await import('node:path');
   const { parse } = await import('yaml');
 
@@ -64,7 +64,8 @@ const shouldSkipConsistentDependencyEnforcement = (dependency) => {
   if (!dependency.workspace.pkg[dependency.type]?.[dependency.ident]) {
     return true;
   }
-}
+  return false;
+};
 /**
  * This rule will enforce that a workspace MUST depend on the same version of
  * a dependency as the one used by the other workspaces.
@@ -106,7 +107,7 @@ async function ensureFieldConsistency({ Yarn }) {
     }
 
     if (matches.length > 0) {
-      const [[,match]] = matches.sort(([a], [b]) => b.length - a.length);
+      const [[, match]] = matches.sort(([a], [b]) => b.length - a.length);
       if (Array.isArray(match)) {
         for (const [index, value] of Object.entries(match)) {
           workspace.set(`${FIELD_TSCMONO_PRESETS_KEY}[${index}]`, value);
@@ -160,7 +161,7 @@ async function ensureDocsDependencies({ Yarn }) {
     if (DOCS_WORKSPACE_EXCLUDES.includes(workspace.ident)) {
       continue;
     }
-    // eslint-disable-next-line no-await-in-loop
+
     const moonConfig = await getMoonConfigOf(workspace.cwd);
     if (moonConfig.type === 'library') {
       docsWorkspace.set(`devDependencies.${workspace.ident}`, WORKSPACE_PROTOCOL_RANGE);
@@ -168,16 +169,14 @@ async function ensureDocsDependencies({ Yarn }) {
   }
 }
 
-// eslint-disable-next-line unicorn/prevent-abbreviations
 async function ensureStorybookDependencies({ Yarn }) {
-  // eslint-disable-next-line unicorn/prevent-abbreviations
   const storybookWorkspace = Yarn.workspace({ ident: STORYBOOK_WORKSPACE_NAME });
   for (const workspace of Yarn.workspaces()) {
     if (workspace.ident === storybookWorkspace.ident) {
       continue;
     }
     if (!STORYBOOK_WORKSPACE_PATHS.some(
-      (workspacePath) => workspace.cwd.includes(workspacePath)
+      (workspacePath) => workspace.cwd.includes(workspacePath),
     )) {
       continue;
     }
@@ -195,15 +194,17 @@ async function ensureStorybookDependencies({ Yarn }) {
  */
 async function ensureHomepageAndRepository({ Yarn }) {
   const rootWorkspace = Yarn.workspace({ ident: 'root' });
-  const {homepage,repository}= rootWorkspace?.manifest;
+  const { homepage, repository } = rootWorkspace?.manifest ?? {};
   for (const workspace of Yarn.workspaces()) {
     if (workspace.ident !== 'root' && !workspace.cwd.includes('apps')) {
-      const workspaceHomepage = `${homepage}/api/${workspace.ident?.split('/')[1]}`;
+      const workspaceSplit = workspace.ident?.split('/') ?? [];
+      const workspaceHomepage = `${homepage}/api/${workspaceSplit.at(-1)}`
+        .replaceAll(/\/{2,}/g, '/');
       workspace.set('repository.url', repository.url);
       workspace.set('repository.directory', workspace.cwd);
       workspace.set('repository.type', repository.type);
       workspace.set('homepage', workspaceHomepage);
-    }   
+    }
   }
 }
 
