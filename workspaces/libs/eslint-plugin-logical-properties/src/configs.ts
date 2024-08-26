@@ -1,9 +1,9 @@
 import type { ESLint } from 'eslint';
-import { createRecommendedConfig } from './utils/createRecommendedConfig.js';
+import { createLogicalPropertiesConfig } from './utils/createLogicalPropertiesConfig.js';
 
-const recommended = createRecommendedConfig();
-const warning = createRecommendedConfig('warn');
-const disable = createRecommendedConfig('off');
+const recommended = createLogicalPropertiesConfig();
+const warning = createLogicalPropertiesConfig('warn');
+const disable = createLogicalPropertiesConfig('off');
 
 export const configs = {
   recommended,
