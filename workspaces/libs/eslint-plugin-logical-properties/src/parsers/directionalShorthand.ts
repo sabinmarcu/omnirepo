@@ -5,7 +5,7 @@ import type {
   TestInput,
   ValidProperty,
 } from '../types.js';
-import { MustDisablePropertyError } from '../utils/mustDisablePropertyError.js';
+import { MustDisablePropertyError } from '../utils/MustDisablePropertyError.js';
 import {
   stringToTemplate,
   tokenizeString,
