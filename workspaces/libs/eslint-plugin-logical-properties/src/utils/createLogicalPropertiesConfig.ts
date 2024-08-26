@@ -14,7 +14,7 @@ const getOptional = (
   fallback: string[] | Readonly<string[]>,
 ): string[] => ((input?.length ?? 0) > 0 ? input : fallback) as unknown as string[];
 
-export const createRecommendedConfig = <
+export const createLogicalPropertiesConfig = <
   Severity extends Linter.RuleSeverity = 'error',
   Options extends Partial<PluginOptions> = {},
 >(
