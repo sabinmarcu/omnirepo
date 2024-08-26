@@ -42,7 +42,6 @@ presets:
         - dom
         - dom.iterable
         - esnext
-      rootDir: './app'
       allowJs: true
       skipLibCheck: true
       strict: true
