@@ -97,10 +97,16 @@ export const generateDirectionalRules = (config: DirectionalRuleConfig): Rule.Ru
   create(context) {
     const { options } = context as unknown as { options: [ PluginOptions ] };
 
-    const [{ functions, jsxAttributes }] = options;
+    const [{
+      functions, jsxAttributes, keyframes,
+    }] = options;
     const nodeFunctionNames = (functions?.length > 0
       ? functions
       : defaultFunctions as unknown as string[]
+    );
+    const nodeKeyframesNames = (keyframes?.length > 0
+      ? keyframes
+      : defaultKeyframes as unknown as string[]
     );
     const nodeJsxAttributesNames = (jsxAttributes?.length > 0
       ? functions
@@ -140,6 +146,22 @@ export const generateDirectionalRules = (config: DirectionalRuleConfig): Rule.Ru
               }
             } else if (rules.type === 'ObjectExpression') {
               transformDirectionalProperty(rules, context, config);
+            }
+          }
+        } else if (
+          node.callee.type === 'Identifier'
+          && nodeKeyframesNames.includes(node.callee.name)
+        ) {
+          for (const argument of node.arguments) {
+            if (argument.type === 'ObjectExpression') {
+              for (const property of argument.properties) {
+                if (
+                  property.type === 'Property'
+                  && property.value.type === 'ObjectExpression'
+                ) {
+                  transformDirectionalProperty(property.value, context, config);
+                }
+              }
             }
           }
         }
