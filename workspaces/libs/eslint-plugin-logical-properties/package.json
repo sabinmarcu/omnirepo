@@ -52,5 +52,21 @@
     "directory": "workspaces/libs/eslint-plugin-logical-properties",
     "type": "git"
   },
-  "homepage": "https:/sabinmarcu.dev/api/eslint-plugin-logical-properties"
+  "homepage": "https:/sabinmarcu.dev/api/eslint-plugin-logical-properties",
+  "keywords": [
+    "eslint",
+    "eslint-plugin",
+    "eslintplugin",
+    "logical-properties",
+    "logicalproperties",
+    "css-logical-properties",
+    "csslogical-properties",
+    "csslogicalproperties",
+    "vanilla-extract",
+    "vanillaextract",
+    "vanilla",
+    "jsx",
+    "linter",
+    "lint"
+  ]
 }
