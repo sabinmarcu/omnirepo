@@ -1,7 +1,0 @@
-releases:
-  "@sabinmarcu/eslint-config": patch
-  eslint-plugin-logical-properties: patch
-
-declined:
-  - "@sabinmarcu/docs"
-  - "@sabinmarcu/timer40k"
