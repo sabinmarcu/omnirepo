@@ -6432,7 +6432,7 @@ __metadata:
     eslint-import-resolver-typescript: "npm:^3.6.1"
     eslint-plugin-canonical: "npm:^4.18.1"
     eslint-plugin-import: "npm:^2.29.1"
-    eslint-plugin-logical-properties: "workspace:^"
+    eslint-plugin-logical-properties: "workspace:*"
     eslint-plugin-unicorn: "npm:^55.0.0"
     glob: "npm:^10.3.10"
     globals: "npm:^15.9.0"
@@ -13689,7 +13689,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-logical-properties@workspace:*, eslint-plugin-logical-properties@workspace:^, eslint-plugin-logical-properties@workspace:workspaces/libs/eslint-plugin-logical-properties":
+"eslint-plugin-logical-properties@workspace:*, eslint-plugin-logical-properties@workspace:workspaces/libs/eslint-plugin-logical-properties":
   version: 0.0.0-use.local
   resolution: "eslint-plugin-logical-properties@workspace:workspaces/libs/eslint-plugin-logical-properties"
   dependencies:
