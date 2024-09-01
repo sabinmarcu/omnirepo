@@ -7,10 +7,6 @@ const eslintConfig = [
     ignores: [
       '**/dist',
       '**/jest.config.mjs',
-      // TODO: Remove these once the tsconfig/tsconfig.build refactor is done
-      '**/src/**/*.spec.*',
-      '**/src/**/__fixtures__/**/*',
-      '**/src/**/__mocks__/**/*',
     ],
   },
   {

@@ -6,11 +6,6 @@ presets:
   lib:
     include:
       - "src/**/*"
-    # TODO: Remove these once the tsconfig/tsconfig.build refactor is done
-    exclude:
-      - "src/**/*.spec.*"
-      - "src/**/__fixtures__/**/*"
-      - "src/**/__mocks__/**/*"
     compilerOptions:
       composite: true
       incremental: true
@@ -30,7 +25,8 @@ presets:
       tsBuildInfoFile: "./node_modules/.tmp/tsconfig.app.tsbuildInfo"
     include:
       - "src/**/*"
-    # TODO: Remove these once the tsconfig/tsconfig.build refactor is done
+  build:
+    extends: "./tsconfig.json"
     exclude:
       - "src/**/*.spec.*"
       - "src/**/__fixtures__/**/*"
@@ -101,3 +97,7 @@ presets:
       - "src/**/*.spec.*"
       - "src/**/__fixtures__/**/*"
       - "src/**/__mocks__/**/*"
+
+files:
+  build:
+    preset: build
