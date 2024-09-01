@@ -5,7 +5,6 @@ import type {
   HSLAObject,
   HSLColor,
   HSLString,
-  HSLValueMatch,
   HSLPatternSL,
   // HSLAFromObject,
   // HSLFromPatternH,
@@ -13,18 +12,6 @@ import type {
   // HSLFromString,
 } from './hsl.js';
 import type { ColorFunctions } from './functions.js';
-
-type HSLValueMatchTest1 = HSLValueMatch<'0'>;
-//    ^? type HSLValueMatchTest1 = "0"
-
-type HSLValueMatchTest2 = HSLValueMatch<'10'>;
-//    ^? type HSLValueMatchTest2 = "10"
-
-type HSLValueMatchTest3 = HSLValueMatch<'-10'>;
-//    ^? type HSLValueMatchTest3 = never
-
-type HSLValueMatchTest4 = HSLValueMatch<'256'>;
-//    ^? type HSLValueMatchTest4 = never
 
 type HPatternTest1 = HSLPatternH<'0'>;
 //    ^? type HPatternTest1 = {

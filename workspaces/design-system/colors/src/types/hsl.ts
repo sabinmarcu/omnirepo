@@ -10,6 +10,7 @@ import type {
 } from './functions.js';
 
 export type HSLFunctionNames = 'hsl' | 'hsla';
+
 export type CSSFunctionsH = AngleFunctions | MathFunctions;
 export type CSSFunctionsSL = MathFunctions;
 export type CSSFunctionsA = MathFunctions;
@@ -18,8 +19,6 @@ export type HSLValues = `${NumbersArray<101>[number]}`;
 export type DegValues = `${NumbersArray<361>[number]}`;
 export type DecimalValues = '0' | `${'0'}.${number}` | '1';
 export type RadValues = '0' | `${NumbersArray<7>[number]}.${number}` | `${NumbersArray<7>[number]}`;
-
-export type HSLValueMatch<T extends string> = T extends HSLValues ? T : never;
 
 export type HUnits = 'deg' | 'rad';
 export type HType<
