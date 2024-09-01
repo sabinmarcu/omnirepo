@@ -1,0 +1,5 @@
+camel: theseThreeWords
+pascal: TheseThreeWords
+snake: these_three_words
+kebab: these-three-words
+screamingSnake: THESE_THREE_WORDS

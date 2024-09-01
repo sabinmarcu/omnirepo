@@ -1,3 +1,3 @@
-# @sabinmarcu/utils-fs
+# @sabinmarcu/utils-string
 
-Contains a few path-related utility functions.
+Contains a few string-related utils.
