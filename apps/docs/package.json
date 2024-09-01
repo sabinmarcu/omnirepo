@@ -50,6 +50,7 @@
     "@sabinmarcu/utils-path": "workspace:*",
     "@sabinmarcu/utils-primitives": "workspace:*",
     "@sabinmarcu/utils-repo": "workspace:*",
+    "@sabinmarcu/utils-string": "workspace:*",
     "@sabinmarcu/utils-test": "workspace:*",
     "eslint-plugin-logical-properties": "workspace:*",
     "typescript": "5.5.4"

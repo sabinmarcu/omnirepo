@@ -6756,6 +6756,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@sabinmarcu/utils-string@workspace:workspaces/utils/utils-string":
+  version: 0.0.0-use.local
+  resolution: "@sabinmarcu/utils-string@workspace:workspaces/utils/utils-string"
+  dependencies:
+    "@sabinmarcu/types": "workspace:*"
+    "@sabinmarcu/utils-test": "workspace:*"
+  languageName: unknown
+  linkType: soft
 "@sabinmarcu/utils-test@workspace:*, @sabinmarcu/utils-test@workspace:workspaces/utils/utils-test":
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/utils-test@workspace:workspaces/utils/utils-test"

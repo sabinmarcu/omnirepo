@@ -1,0 +1,7 @@
+releases:
+  "@sabinmarcu/colors": major
+  "@sabinmarcu/theme-core": major
+  "@sabinmarcu/utils-string": major
+
+declined:
+  - "@sabinmarcu/docs"
