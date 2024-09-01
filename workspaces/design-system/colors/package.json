@@ -1,0 +1,62 @@
+{
+  "name": "@sabinmarcu/colors",
+  "version": "0.0.1",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "module": "./esm/index.mjs",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "main": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./src/*": {
+      "import": "./src/*",
+      "main": "./src/*",
+      "default": "./src/*"
+    },
+    "./*": {
+      "import": "./dist/*.js",
+      "types": "./dist/*.d.ts",
+      "main": "./dist/*.js",
+      "default": "./dist/*.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./esm/*"
+      ]
+    }
+  },
+  "packageManager": "yarn@4.1.1",
+  "publishConfig": {
+    "access": "public"
+  },
+  "build": {
+    "preset": "../../../.config/build.config.ts"
+  },
+  "devDependencies": {
+    "@sabinmarcu/types": "workspace:*",
+    "@sabinmarcu/utils-test": "workspace:*"
+  },
+  "tscmono": {
+    "preset": "lib"
+  },
+  "typeVersions": {
+    "*": {
+      "*": [
+        "./dist/*"
+      ]
+    }
+  },
+  "repository": {
+    "url": "git+https://github.com/sabinmarcu/omnirepo.git",
+    "type": "git",
+    "directory": "workspaces/design-system/colors"
+  },
+  "homepage": "https:/sabinmarcu.dev/api/colors"
+}

@@ -31,6 +31,7 @@
     "@docusaurus/module-type-aliases": "3.4.0",
     "@docusaurus/tsconfig": "3.4.0",
     "@docusaurus/types": "3.4.0",
+    "@sabinmarcu/colors": "workspace:*",
     "@sabinmarcu/commitlint-config-workspaces": "workspace:*",
     "@sabinmarcu/config": "workspace:*",
     "@sabinmarcu/debug": "workspace:*",

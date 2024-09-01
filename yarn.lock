@@ -6304,6 +6304,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sabinmarcu/colors@workspace:*, @sabinmarcu/colors@workspace:workspaces/design-system/colors":
+  version: 0.0.0-use.local
+  resolution: "@sabinmarcu/colors@workspace:workspaces/design-system/colors"
+  dependencies:
+    "@sabinmarcu/types": "workspace:*"
+    "@sabinmarcu/utils-test": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
 "@sabinmarcu/commitlint-config-workspaces@workspace:*, @sabinmarcu/commitlint-config-workspaces@workspace:workspaces/personal/commitlint-config-workspaces":
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/commitlint-config-workspaces@workspace:workspaces/personal/commitlint-config-workspaces"
@@ -6350,6 +6359,7 @@ __metadata:
     "@docusaurus/tsconfig": "npm:3.4.0"
     "@docusaurus/types": "npm:3.4.0"
     "@mdx-js/react": "npm:^3.0.0"
+    "@sabinmarcu/colors": "workspace:*"
     "@sabinmarcu/commitlint-config-workspaces": "workspace:*"
     "@sabinmarcu/config": "workspace:*"
     "@sabinmarcu/debug": "workspace:*"

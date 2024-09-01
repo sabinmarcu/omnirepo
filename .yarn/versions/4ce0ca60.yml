@@ -1,0 +1,5 @@
+releases:
+  "@sabinmarcu/colors": major
+
+undecided:
+  - "@sabinmarcu/docs"
