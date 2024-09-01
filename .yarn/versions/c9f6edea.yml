@@ -1,0 +1,7 @@
+declined:
+  - "@sabinmarcu/commitlint-config-workspaces"
+
+undecided:
+  - "@sabinmarcu/docs"
+  - "@sabinmarcu/colors"
+  - "@sabinmarcu/types"

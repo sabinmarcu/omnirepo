@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import {
   setupFsMockAll,
   vol,
@@ -50,7 +51,7 @@ describe('generateWorkspacesConfig', () => {
             extraScopes,
             path,
             withAliases,
-          )
+          );
           expect(result.rules['scope-enum'][2]).toEqual(outcome.scopes);
         });
       }
