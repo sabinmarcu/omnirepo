@@ -1,7 +1,10 @@
-import type { IsUnknown } from 'type-fest';
+import type {
+  IsNever,
+  IsUnknown,
+} from 'type-fest';
 
 export type IsKnown<T> =
-  [T] extends [never]
+  IsNever<T> extends true
     ? false
     : IsUnknown<T> extends true
       ? false
