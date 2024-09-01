@@ -1,5 +1,5 @@
 {
-  "name": "@sabinmarcu/colors",
+  "name": "@sabinmarcu/theme-core",
   "version": "0.0.1",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -56,7 +56,7 @@
   "repository": {
     "url": "git+https://github.com/sabinmarcu/omnirepo.git",
     "type": "git",
-    "directory": "workspaces/design-system/colors"
+    "directory": "workspaces/design-system/theme"
   },
-  "homepage": "https:/sabinmarcu.dev/api/colors"
+  "homepage": "https:/sabinmarcu.dev/api/theme-core"
 }

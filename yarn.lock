@@ -6629,6 +6629,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@sabinmarcu/theme-core@workspace:workspaces/design-system/theme":
+  version: 0.0.0-use.local
+  resolution: "@sabinmarcu/theme-core@workspace:workspaces/design-system/theme"
+  dependencies:
+    "@sabinmarcu/types": "workspace:*"
+    "@sabinmarcu/utils-test": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
 "@sabinmarcu/timer40k@workspace:apps/timer40k":
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/timer40k@workspace:apps/timer40k"

@@ -40,6 +40,7 @@
     "@sabinmarcu/moving-mesh-background": "workspace:*",
     "@sabinmarcu/mui-material-theme": "workspace:*",
     "@sabinmarcu/observable": "workspace:*",
+    "@sabinmarcu/theme-core": "workspace:*",
     "@sabinmarcu/types": "workspace:*",
     "@sabinmarcu/use-duplicate-ref": "workspace:*",
     "@sabinmarcu/use-local-storage": "workspace:*",
