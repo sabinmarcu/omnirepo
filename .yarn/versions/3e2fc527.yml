@@ -1,0 +1,9 @@
+declined:
+  - "@sabinmarcu/config"
+
+undecided:
+  - "@sabinmarcu/docs"
+  - "@sabinmarcu/colors"
+  - eslint-plugin-logical-properties
+  - "@sabinmarcu/types"
+  - "@sabinmarcu/commitlint-config-workspaces"
