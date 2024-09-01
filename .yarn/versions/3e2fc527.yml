@@ -1,9 +1,10 @@
 declined:
   - "@sabinmarcu/config"
+  - eslint-plugin-logical-properties
+  - "@sabinmarcu/commitlint-config-workspaces"
+patch:
+  - "@sabinmarcu/types"
 
 undecided:
   - "@sabinmarcu/docs"
   - "@sabinmarcu/colors"
-  - eslint-plugin-logical-properties
-  - "@sabinmarcu/types"
-  - "@sabinmarcu/commitlint-config-workspaces"
