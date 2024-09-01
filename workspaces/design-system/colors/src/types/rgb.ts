@@ -79,7 +79,7 @@ export type RGBAStringOf<T extends RGBAObject> = (
   `rgba(${T['r']}, ${T['g']}, ${T['b']} ${T['a']})`
 );
 
-export type RGBColor<
+export type RGBColorCheck<
   T extends string,
   RGBValue extends RGBAObject | never = RGBAString<T>,
 > = (

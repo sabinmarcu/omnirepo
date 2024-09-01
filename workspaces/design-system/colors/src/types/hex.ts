@@ -40,7 +40,7 @@ export type HexString<
     : HexStringValue
 );
 
-export type HexColor<
+export type HexColorCheck<
   T extends string,
   HexValue = HexString<HexColorStringOf<T>>,
 > = (

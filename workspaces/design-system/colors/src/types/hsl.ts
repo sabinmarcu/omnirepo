@@ -129,7 +129,7 @@ export type HSLStringOf<
   `hsla(${HValue}, ${SValue}, ${LValue}, ${AValue})`
 );
 
-export type HSLColor<
+export type HSLColorCheck<
   T extends string,
   HSLValue extends HSLAObject | never = HSLString<T>,
 > = (

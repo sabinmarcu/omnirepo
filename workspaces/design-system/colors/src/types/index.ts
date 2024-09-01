@@ -1,3 +1,4 @@
-export type { HexColor } from './hex.js';
-export type { HSLColor } from './hsl.js';
-export type { RGBColor } from './rgb.js';
+export type { HexColorCheck } from './hex.js';
+export type { HSLColorCheck } from './hsl.js';
+export type { RGBColorCheck } from './rgb.js';
+export * from './primitives.js';

@@ -2,7 +2,7 @@ import type {
   AlphaPattern,
   RGBAObject,
   RGBAString,
-  RGBColor,
+  RGBColorCheck,
   RGBPattern,
 } from './rgb.js';
 
@@ -89,11 +89,11 @@ type RGBAStringTest4 = RGBAString<'rgb(10, calc(100 / 10), 100, 0.7)'>;
 type RGBAStringTest5 = RGBAString<'rgb(256, calc(100 / 10), 100, 0.7)'>;
 //    ^? type RGBAStringTest5 = never
 
-type RGBColorTest1 = RGBColor<'rgb(10, 50, 100)'>;
-//    ^? type RGBColorTest1 = "rgb(10, 50, 100)"
+type RGBColorCheckTest1 = RGBColorCheck<'rgb(10, 50, 100)'>;
+//    ^? type RGBColorCheckTest1 = "rgb(10, 50, 100)"
 
-type RGBColorTest2 = RGBColor<'rgb(10, calc(100 / 10), 100, 0.7)'>;
-//    ^? type RGBColorTest2 = "rgb(10, calc(100 / 10), 100, 0.7)"
+type RGBColorCheckTest2 = RGBColorCheck<'rgb(10, calc(100 / 10), 100, 0.7)'>;
+//    ^? type RGBColorCheckTest2 = "rgb(10, calc(100 / 10), 100, 0.7)"
 
-type RGBColorTest3 = RGBColor<'rgb(256, calc(100 / 10), 100, 0.7)'>;
-//    ^? type RGBColorTest3 = never
+type RGBColorCheckTest3 = RGBColorCheck<'rgb(256, calc(100 / 10), 100, 0.7)'>;
+//    ^? type RGBColorCheckTest3 = never

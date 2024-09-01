@@ -3,7 +3,7 @@ import type {
   HSLPatternA,
   HSLPatternH,
   HSLAObject,
-  HSLColor,
+  HSLColorCheck,
   HSLString,
   HSLPatternSL,
   // HSLAFromObject,
@@ -158,52 +158,52 @@ type HSLStringTest9 = HSLString<'hsl(none calc(thing * 2), calc(thing / 2), 70%)
 //           a: "0.7";
 //       }
 
-type HSLColorTest1 = HSLColor<'hsl(0, 0%, 100%)'>;
+type HSLColorTest1 = HSLColorCheck<'hsl(0, 0%, 100%)'>;
 //    ^? type HSLColorTest1 = "hsla(0deg, 0%, 100%, 1)"
 
-type HSLColorTest2 = HSLColor<'hsl(0 0% 100%)'>;
+type HSLColorTest2 = HSLColorCheck<'hsl(0 0% 100%)'>;
 //    ^? type HSLColorTest2 = never
 
-type HSLColorTest3 = HSLColor<'hsl(120deg 0% 100%)'>;
+type HSLColorTest3 = HSLColorCheck<'hsl(120deg 0% 100%)'>;
 //    ^? type HSLColorTest3 = never
 
-type HSLColorTest4 = HSLColor<'hsl(6rad 0% 100%)'>;
+type HSLColorTest4 = HSLColorCheck<'hsl(6rad 0% 100%)'>;
 //    ^? type HSLColorTest4 = never
 
-type HSLColorTest5 = HSLColor<'hsl(none 0% 100%)'>;
+type HSLColorTest5 = HSLColorCheck<'hsl(none 0% 100%)'>;
 //    ^? type HSLColorTest5 = never
 
-type HSLColorTest6 = HSLColor<'hsl(none, 0% 100%)'>;
+type HSLColorTest6 = HSLColorCheck<'hsl(none, 0% 100%)'>;
 //    ^? type HSLColorTest6 = never
 
-type HSLColorTest7 = HSLColor<'hsl(none, 0% 110%)'>;
+type HSLColorTest7 = HSLColorCheck<'hsl(none, 0% 110%)'>;
 //    ^? type HSLColorTest7 = never
 
-type HSLColorTest8 = HSLColor<'hsl(none 0%, 100%, 0.5)'>;
+type HSLColorTest8 = HSLColorCheck<'hsl(none 0%, 100%, 0.5)'>;
 //    ^? type HSLColorTest8 = "hsla(0deg, 0%, 100%, 0.5)"
 
-type HSLColorTest9 = HSLColor<'hsl(none, 0%, 100%, 0.5)'>;
+type HSLColorTest9 = HSLColorCheck<'hsl(none, 0%, 100%, 0.5)'>;
 //    ^? type HSLColorTest9 = "hsla(0deg, 0%, 100%, 0.5)"
 
-type HSLColorTest10 = HSLColor<'hsl(none 0%, 100%, 70%)'>;
+type HSLColorTest10 = HSLColorCheck<'hsl(none 0%, 100%, 70%)'>;
 //    ^? type HSLColorTest10 = "hsla(0deg, 0%, 100%, 0.7)"
 
-type HSLColorTest11 = HSLColor<'hsl(none, 0%, 100%, 1.5)'>;
+type HSLColorTest11 = HSLColorCheck<'hsl(none, 0%, 100%, 1.5)'>;
 //    ^? type HSLColorTest11 = never
 
-type HSLColorTest12 = HSLColor<'hsl(asin(120deg) 0% 100%)'>;
+type HSLColorTest12 = HSLColorCheck<'hsl(asin(120deg) 0% 100%)'>;
 //    ^? type HSLColorTest12 = never
 
-type HSLColorTest13 = HSLColor<'hsl(atan(120deg), 0%, 100%)'>;
+type HSLColorTest13 = HSLColorCheck<'hsl(atan(120deg), 0%, 100%)'>;
 //    ^? type HSLColorTest13 = "hsla(atan(120deg), 0%, 100%, 1)"
 
-type HSLColorTest14 = HSLColor<'hsl(sin(120deg), 0%, 100%, 0.5)'>;
+type HSLColorTest14 = HSLColorCheck<'hsl(sin(120deg), 0%, 100%, 0.5)'>;
 //    ^? type HSLColorTest14 = "hsla(sin(120deg), 0%, 100%, 0.5)"
 
-type HSLColorTest15 = HSLColor<'hsl(var(--thing), 0%, 100%, 0.5)'>;
+type HSLColorTest15 = HSLColorCheck<'hsl(var(--thing), 0%, 100%, 0.5)'>;
 //    ^? type HSLColorTest15 = "hsla(var(--thing), 0%, 100%, 0.5)"
 
-type HSLColorTest16 = HSLColor<'hsl(var(--h), var(--s), var(--l), var(--a))'>;
+type HSLColorTest16 = HSLColorCheck<'hsl(var(--h), var(--s), var(--l), var(--a))'>;
 //    ^? type HSLColorTest16 = "hsla(var(--h), var(--s), var(--l), var(--a))"
 
 // TODO: Figure out how to properly infer from syntax
