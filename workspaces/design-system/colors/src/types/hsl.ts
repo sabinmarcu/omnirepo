@@ -129,13 +129,22 @@ export type HSLStringOf<
   `hsla(${HValue}, ${SValue}, ${LValue}, ${AValue})`
 );
 
-export type HSLColorCheck<
+export type ParseHSLColor<
   T extends string,
   HSLValue extends HSLAObject | never = HSLString<T>,
 > = (
   IsNever<HSLValue> extends true
     ? never
     : HSLStringOf<HSLValue>
+);
+
+export type HSLColorCheck<
+  T extends string,
+  Parsed = ParseHSLColor<T>,
+> = (
+  IsNever<Parsed> extends true
+    ? never
+    : unknown
 );
 
 // TODO: Figure out how to properly infer from syntax

@@ -40,11 +40,20 @@ export type HexString<
     : HexStringValue
 );
 
-export type HexColorCheck<
+export type ParseHexColor<
   T extends string,
   HexValue = HexString<HexColorStringOf<T>>,
 > = (
   IsNever<HexValue> extends false
     ? T
     : never
+);
+
+export type HexColorCheck<
+  T extends string,
+  Parsed = ParseHexColor<T>,
+> = (
+  IsNever<Parsed> extends true
+    ? never
+    : unknown
 );

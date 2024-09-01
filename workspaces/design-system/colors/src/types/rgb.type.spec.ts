@@ -1,5 +1,6 @@
 import type {
   AlphaPattern,
+  ParseRGBColor,
   RGBAObject,
   RGBAString,
   RGBColorCheck,
@@ -89,11 +90,20 @@ type RGBAStringTest4 = RGBAString<'rgb(10, calc(100 / 10), 100, 0.7)'>;
 type RGBAStringTest5 = RGBAString<'rgb(256, calc(100 / 10), 100, 0.7)'>;
 //    ^? type RGBAStringTest5 = never
 
+type ParseRGBColorTest1 = ParseRGBColor<'rgb(10, 50, 100)'>;
+//    ^? type ParseRGBColorTest1 = "rgb(10, 50, 100)"
+
+type ParseRGBColorTest2 = ParseRGBColor<'rgb(10, calc(100 / 10), 100, 0.7)'>;
+//    ^? type ParseRGBColorTest2 = "rgb(10, calc(100 / 10), 100, 0.7)"
+
+type ParseRGBColorTest3 = ParseRGBColor<'rgb(256, calc(100 / 10), 100, 0.7)'>;
+//    ^? type ParseRGBColorTest3 = never
+
 type RGBColorCheckTest1 = RGBColorCheck<'rgb(10, 50, 100)'>;
-//    ^? type RGBColorCheckTest1 = "rgb(10, 50, 100)"
+//    ^? type RGBColorCheckTest1 = unknown
 
 type RGBColorCheckTest2 = RGBColorCheck<'rgb(10, calc(100 / 10), 100, 0.7)'>;
-//    ^? type RGBColorCheckTest2 = "rgb(10, calc(100 / 10), 100, 0.7)"
+//    ^? type RGBColorCheckTest2 = unknown
 
 type RGBColorCheckTest3 = RGBColorCheck<'rgb(256, calc(100 / 10), 100, 0.7)'>;
 //    ^? type RGBColorCheckTest3 = never

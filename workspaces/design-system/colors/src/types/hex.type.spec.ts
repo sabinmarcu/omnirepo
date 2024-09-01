@@ -5,6 +5,7 @@ import type {
   HexColorStringOf,
   HexString,
   HexStringMatch,
+  ParseHexColor,
 } from './hex.js';
 
 type HexColorValueOfTest1 = HexColorStringOf<'#fff'>;
@@ -43,18 +44,32 @@ type HexStringTest3 = HexString<'ffffff'>;
 type HexStringTest4 = HexString<'ffffffff'>;
 //    ^? type HexStringTest4 = "ffffffff"
 
-type HexColorTest1 = HexColorCheck<'#fff'>;
-//    ^? type HexColorTest1 = "#fff"
+type ParseHexColorTest1 = ParseHexColor<'#fff'>;
+//    ^? type ParseHexColorTest1 = "#fff"
 
-type HexColorTest2 = HexColorCheck<'#ffff'>;
-//    ^? type HexColorTest2 = "#ffff"
+type ParseHexColorTest2 = ParseHexColor<'#ffff'>;
+//    ^? type ParseHexColorTest2 = "#ffff"
 
-type HexColorTest3 = HexColorCheck<'#ffffff'>;
-//    ^? type HexColorTest3 = "#ffffff"
+type ParseHexColorTest3 = ParseHexColor<'#ffffff'>;
+//    ^? type ParseHexColorTest3 = "#ffffff"
 
-type HexColorTest4 = HexColorCheck<'#ffffffff'>;
-//    ^? type HexColorTest4 = "#ffffffff"
+type ParseHexColorTest4 = ParseHexColor<'#ffffffff'>;
+//    ^? type ParseHexColorTest4 = "#ffffffff"
 
-type HexColorTest5 = HexColorCheck<'#0cfg'>;
-//    ^? type HexColorTest5 = never
+type ParseHexColorTest5 = ParseHexColor<'#0cfg'>;
+//    ^? type ParseHexColorTest5 = never
 
+type HexColorCheckTest1 = HexColorCheck<'#fff'>;
+//    ^? type HexColorCheckTest1 = unknown
+
+type HexColorCheckTest2 = HexColorCheck<'#ffff'>;
+//    ^? type HexColorCheckTest2 = unknown
+
+type HexColorCheckTest3 = HexColorCheck<'#ffffff'>;
+//    ^? type HexColorCheckTest3 = unknown
+
+type HexColorCheckTest4 = HexColorCheck<'#ffffffff'>;
+//    ^? type HexColorCheckTest4 = unknown
+
+type HexColorCheckTest5 = HexColorCheck<'#0cfg'>;
+//    ^? type HexColorCheckTest5 = never
