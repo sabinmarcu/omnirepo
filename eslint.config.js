@@ -41,6 +41,15 @@ const eslintConfig = [
       ],
     },
   },
+  {
+    files: [
+      '**/isspacemarine2outyet/**/*.tsx',
+      '**/isdarktideoutyet/**/*.tsx',
+    ],
+    rules: {
+      "unicorn/filename-case": "off",
+    },
+  },
 ];
 
 export default eslintConfig;

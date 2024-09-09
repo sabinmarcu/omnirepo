@@ -1,0 +1,26 @@
+project:
+  name: isspacemarine2outyet
+  description: Timer App for Space Marine 2
+  channel: "#isspacemarine2outyet"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: application
+
+tasks:
+  start:
+    command: "yarn dev"
+    options:
+      cache: false
+  build:
+    command: "yarn build"
+    options:
+      cache: false
+      runInCI: false
+    deps:
+      - "^:build"
+
+workspace:
+  inheritedTasks:
+    include: []
