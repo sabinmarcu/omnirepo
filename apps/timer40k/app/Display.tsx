@@ -1,15 +1,16 @@
 'use client';
 
-import Image from 'next/image';
+import Image from 'next/image.js';
 import {
   useState,
   useEffect,
+  type ComponentProps,
 } from 'react';
 import dayjs from 'dayjs';
 
 export type DisplayProperties = {
-  yes: string,
-  no: string,
+  yes: Partial<ComponentProps<typeof Image>>,
+  no: Partial<ComponentProps<typeof Image>>,
   releaseDate: string,
 };
 export function Display({
@@ -32,14 +33,14 @@ export function Display({
     [],
   );
   const diff = dayjs(time).diff(dayjs(releaseDate), 'day', true);
-  const toRender = diff >= 0 ? yes : no;
+  const toRender = (diff >= 0 ? yes : no) as any;
   return (
     <>
       <div className="background">
-        <Image src={toRender} alt="status-bg" />
+        <Image {...toRender} alt="status-bg" />
       </div>
       <div className="foreground">
-        <Image src={toRender} alt="status" />
+        <Image {...toRender} alt="status" />
       </div>
     </>
   );

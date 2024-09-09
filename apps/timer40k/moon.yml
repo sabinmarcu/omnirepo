@@ -1,7 +1,7 @@
 project:
-  name: isdarktideoutyet
-  description: Timer App for Darktide
-  channel: "#isdarktideoutyet"
+  name: 40ktimer
+  description: Timer App for 40K Games
+  channel: "#40ktimer"
   maintainers:
     - Sabin Marcu
   owner: Sabin Marcu

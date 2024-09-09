@@ -36,6 +36,7 @@ presets:
       - "src/**/__fixtures__/**/*"
       - "src/**/__mocks__/**/*"
   nextApp:
+    extends: "./tsconfig.next.json"
     compilerOptions:
       lib:
         - dom
