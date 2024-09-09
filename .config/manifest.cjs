@@ -54,6 +54,7 @@ module.exports.FIELD_TSCMONO_CONFIG_MAP = {
   'apps/droprate': 'viteApp',
   'apps/team-rotation': 'viteApp',
   'apps/isspacemarine2outyet': 'nextApp',
+  'apps/isdarktideoutyet': 'nextApp',
 };
 module.exports.REQUIRED_WORKSPACE_IGNORE_LIST = new Set([
   'root',
