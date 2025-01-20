@@ -6469,8 +6469,11 @@ __metadata:
   dependencies:
     "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
+    js-base64: "npm:^3.7.7"
   peerDependencies:
+    "@types/pako": "*"
     jotai: "*"
+    pako: "*"
     zod: "*"
   languageName: unknown
   linkType: soft
@@ -6600,6 +6603,7 @@ __metadata:
     "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/use-match-media": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
+    "@types/pako": "npm:^2"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
     "@vitejs/plugin-react": "npm:^4.3.1"
@@ -6611,6 +6615,7 @@ __metadata:
     jotai-optics: "npm:^0.4.0"
     nanoid: "npm:^5.0.7"
     optics-ts: "npm:^2.4.1"
+    pako: "npm:^2.1.0"
     react: "npm:^18.0.0"
     react-dom: "npm:^18.0.0"
     typescript: "npm:5.5.4"
@@ -8397,6 +8402,13 @@ __metadata:
   version: 2.4.1
   resolution: "@types/normalize-package-data@npm:2.4.1"
   checksum: e87bccbf11f95035c89a132b52b79ce69a1e3652fe55962363063c9c0dae0fe2477ebc585e03a9652adc6f381d24ba5589cc5e51849df4ced3d3e004a7d40ed5
+  languageName: node
+  linkType: hard
+
+"@types/pako@npm:^2, @types/pako@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "@types/pako@npm:2.0.3"
+  checksum: afa618a0a05a931216703a30f4cba6902ce5cd4db8170a480f95bc8e268afebb3bb8deea4444e8292aba86348e400e068af1b5f4c75b9185b3a7efd1999fb78e
   languageName: node
   linkType: hard
 
@@ -17625,6 +17637,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-base64@npm:^3.7.7":
+  version: 3.7.7
+  resolution: "js-base64@npm:3.7.7"
+  checksum: 185e34c536a6b1c4e1ad8bd96d25b49a9ea4e6803e259eaaaca95f1b392a0d590b2933c5ca8580c776f7279507944b81ff1faf889d84baa5e31f026e96d676a5
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^3.0.0 || ^4.0.0, js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -20443,6 +20462,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pako@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "pako@npm:2.1.0"
+  checksum: 38a04991d0ec4f4b92794a68b8c92bf7340692c5d980255c92148da96eb3e550df7a86a7128b5ac0c65ecddfe5ef3bbe9c6dab13e1bc315086e759b18f7c1401
+  languageName: node
+  linkType: hard
+
 "param-case@npm:^3.0.4":
   version: 3.0.4
   resolution: "param-case@npm:3.0.4"
@@ -23218,6 +23244,7 @@ __metadata:
     "@types/inquirer": "npm:^8"
     "@types/jest": "npm:^29.2.4"
     "@types/minimist": "npm:^1"
+    "@types/pako": "npm:^2.0.3"
     "@yarnpkg/types": "npm:^4.0.0"
     babel-plugin-module-rewrite: "npm:^0.2.0"
     commitizen: "npm:^4.3.0"
@@ -23235,6 +23262,7 @@ __metadata:
     minimist: "npm:^1.2.7"
     mkdist: "npm:^1.5.4"
     moize: "patch:moize@npm%3A6.1.4#~/.yarn/patches/moize-npm-6.1.4-85c2846283.patch"
+    pako: "npm:^2.1.0"
     ts-jest: "npm:^29.2.4"
     ts-node: "npm:^10.9.2"
     typescript: "npm:5.5.4"
