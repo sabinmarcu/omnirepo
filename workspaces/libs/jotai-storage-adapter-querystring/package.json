@@ -54,7 +54,9 @@
     }
   },
   "peerDependencies": {
+    "@types/pako": "*",
     "jotai": "*",
+    "pako": "*",
     "zod": "*"
   },
   "repository": {
@@ -62,5 +64,8 @@
     "type": "git",
     "directory": "workspaces/libs/jotai-storage-adapter-querystring"
   },
-  "homepage": "https:/sabinmarcu.dev/api/jotai-storage-adapter-querystring"
+  "homepage": "https:/sabinmarcu.dev/api/jotai-storage-adapter-querystring",
+  "dependencies": {
+    "js-base64": "^3.7.7"
+  }
 }

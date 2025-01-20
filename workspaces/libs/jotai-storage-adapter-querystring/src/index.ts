@@ -7,3 +7,7 @@ export {
   b64Encoder,
   b64EncoderFromSchema,
 } from './encoders/b64.js';
+export {
+  pakoEncoder,
+  pakoEncoderFromSchema,
+} from './encoders/pako.js';
