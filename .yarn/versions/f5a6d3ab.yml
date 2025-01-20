@@ -1,7 +1,0 @@
-releases:
-  "@sabinmarcu/jotai-storage-adapter-querystring": minor
-
-declined:
-  - "@sabinmarcu/docs"
-  - "@sabinmarcu/droprate"
-  - "@sabinmarcu/team-rotation"
