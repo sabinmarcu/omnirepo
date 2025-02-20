@@ -31,6 +31,12 @@ const unicornRulesConfig = [
     name: 'Unicorn Rules',
     rules: unicornRules,
   },
+  compileConfigFor('*.js', '*.ts', '*.mjs', '*.mts')({
+    name: 'Unicorn TS and JS Rules',
+    rules: {
+      'unicorn/filename-case': ['off'],
+    },
+  }),
   compileConfigFor('*.jsx', '*.tsx')({
     name: 'Unicorn JSX Rules',
     rules: {
