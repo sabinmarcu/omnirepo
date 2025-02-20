@@ -3,6 +3,8 @@ import type {
   DirectionalTransformerTestsFactory,
   TestInput,
 } from '../types.js';
+import { getValidPropertyName } from '../utils/getValidPropertyName.js';
+import { generateObjectStringTestCases } from '../utils/propertyTraverse.utils.js';
 
 export const generateDirectionalPropertyError = (
   source: string,
@@ -18,14 +20,15 @@ export const directionalMappingTransformerFactory: DirectionalTransformerFactory
 }) => (
   property,
 ) => {
-  const [source, target] = [property.key.name, mappings[property.key.name]];
+  const propertyName = getValidPropertyName(property)!;
+  const [source, target] = [propertyName, mappings[propertyName]];
   const value = context.sourceCode.getText(property.value);
 
   context.report({
     node,
     message: generateDirectionalPropertyError(source, target),
     fix(fixer) {
-      return fixer.replaceText(property, `${target}: ${value}`);
+      return fixer.replaceText(property, `"${target}":${value}`);
     },
   });
 };
@@ -41,7 +44,7 @@ export const directionalMappingTestGenerator: DirectionalTransformerTestsFactory
       invalid: [],
     };
   }
-  const { functions: functionNames } = inputOptions;
+  const { functions: functionNames = [], resolvers = [] } = inputOptions;
   const options = [inputOptions];
   const { valid, invalid } = {
     valid: [],
@@ -50,59 +53,46 @@ export const directionalMappingTestGenerator: DirectionalTransformerTestsFactory
   const testName = `${inputTestName}Mapping`;
   for (const functionName of functionNames) {
     for (const [source, target] of Object.entries(mappings)) {
+      const testCaseGenerator = generateObjectStringTestCases.bind(undefined, {
+        resolvers,
+        testName,
+        functionName,
+      });
       // Valid Cases
+      const validInputs = testCaseGenerator({
+        input: { [target]: 42 },
+      });
+
       valid.push(
-        ...[
-          `
-export const ${testName} = ${functionName}({
-  ${target}: 5,
-});
-`,
-        ]
-          .map((code) => ({
-            code,
-            options,
-          })),
+        ...validInputs.map(({ code }) => ({
+          code,
+          options,
+        })),
       );
 
       // Invalid Cases
+      const invalidObjects = [
+        {
+          input: ({ [source]: 42 }),
+          output: ({ [target]: 42 }),
+        },
+        {
+          input: ({ [source]: 'theme.padding' }),
+          output: ({ [target]: 'theme.padding' }),
+        },
+      ] as const;
+      const invalidInputs = invalidObjects.flatMap((input) => testCaseGenerator(input));
       invalid.push(
-        {
-          code: `
-  export const ${testName} = ${functionName}({
-    ${source}: 5,
-  });
-  `,
+        ...invalidInputs.map(({ code, output }) => ({
+          code,
           options,
           errors: [
             {
               message: generateDirectionalPropertyError(source, target),
             },
           ],
-          output: `
-  export const ${testName} = ${functionName}({
-    ${target}: 5,
-  });
-  `,
-        },
-        {
-          code: `
-  export const ${testName} = ${functionName}({
-    ${source}: theme.padding,
-  });
-  `,
-          options,
-          errors: [
-            {
-              message: generateDirectionalPropertyError(source, target),
-            },
-          ],
-          output: `
-  export const ${testName} = ${functionName}({
-    ${target}: theme.padding,
-  });
-  `,
-        },
+          output,
+        })),
       );
     }
   }

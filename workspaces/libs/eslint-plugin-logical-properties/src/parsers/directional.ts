@@ -29,20 +29,24 @@ import {
   directionalDisableTransformerFactory,
 } from './directionalDisable.js';
 import {
-  configSchema,
   defaultFunctions,
   defaultJsxAttributes,
   defaultKeyframes,
+  defaultResolvers,
 } from '../constants.js';
 import {
   directionalValueTestGenerator,
   directionalValueTransformerFactory,
 } from './directionalValue.js';
+import { configSchema } from '../config.js';
+import { propertyTraverseSet } from '../utils/propertyTraverse.js';
+import { getValidPropertyName } from '../utils/getValidPropertyName.js';
 
 export const transformDirectionalProperty = (
   node: ObjectExpression,
   context: Rule.RuleContext,
   config: DirectionalRuleConfig,
+  resolvers: Exclude<PluginOptions['resolvers'], undefined>,
 ) => {
   const {
     disabled = [],
@@ -78,16 +82,17 @@ export const transformDirectionalProperty = (
   );
   for (const property of node.properties) {
     if (isValidProperty(property)) {
+      const propertyName = getValidPropertyName(property)!;
       try {
-        if (mappingsSources.includes(property.key.name)) {
+        if (mappingsSources.includes(propertyName)) {
           directionalMappingTransformer(property);
-        } else if (shorthandSources.includes(property.key.name)) {
+        } else if (shorthandSources.includes(propertyName)) {
           directionalShorthandTransformer(property);
-        } else if (shorthandMappingsSources.includes(property.key.name)) {
+        } else if (shorthandMappingsSources.includes(propertyName)) {
           directionalShorthandMappingTransformer(property);
-        } else if (valueSources.includes(property.key.name)) {
+        } else if (valueSources.includes(propertyName)) {
           directionalValueTransformer(property);
-        } else if (toDisable.includes(property.key.name)) {
+        } else if (toDisable.includes(propertyName)) {
           throw new MustDisablePropertyError();
         }
       } catch (error: unknown) {
@@ -96,6 +101,11 @@ export const transformDirectionalProperty = (
         }
       }
     }
+  }
+
+  const resolvedObjects = propertyTraverseSet(node, resolvers);
+  for (const object of resolvedObjects) {
+    transformDirectionalProperty(object, context, config, resolvers);
   }
 };
 
@@ -109,21 +119,26 @@ export const generateDirectionalRules = (config: DirectionalRuleConfig): Rule.Ru
     const [options = {}] = context.options ?? [];
 
     const {
-      functions,
-      jsxAttributes,
-      keyframes,
+      functions = [],
+      jsxAttributes = [],
+      keyframes = [],
+      resolvers = [],
     } = options as unknown as PluginOptions;
     const nodeFunctionNames = (functions?.length > 0
       ? functions
-      : defaultFunctions as unknown as string[]
+      : defaultFunctions
     );
     const nodeKeyframesNames = (keyframes?.length > 0
       ? keyframes
-      : defaultKeyframes as unknown as string[]
+      : defaultKeyframes
     );
     const nodeJsxAttributesNames = (jsxAttributes?.length > 0
       ? functions
-      : defaultJsxAttributes as unknown as string[]
+      : defaultJsxAttributes
+    );
+    const nodeResolvers = (resolvers?.length > 0
+      ? resolvers
+      : defaultResolvers
     );
     return {
       JSXAttribute(node: any) {
@@ -138,6 +153,7 @@ export const generateDirectionalRules = (config: DirectionalRuleConfig): Rule.Ru
             node.value.expression,
             context,
             config,
+            nodeResolvers,
           );
         }
       },
@@ -154,11 +170,17 @@ export const generateDirectionalRules = (config: DirectionalRuleConfig): Rule.Ru
                     ruleSet,
                     context,
                     config,
+                    [],
                   );
                 }
               }
             } else if (rules.type === 'ObjectExpression') {
-              transformDirectionalProperty(rules, context, config);
+              transformDirectionalProperty(
+                rules,
+                context,
+                config,
+                nodeResolvers,
+              );
             }
           }
         } else if (
@@ -172,7 +194,12 @@ export const generateDirectionalRules = (config: DirectionalRuleConfig): Rule.Ru
                   property.type === 'Property'
                   && property.value.type === 'ObjectExpression'
                 ) {
-                  transformDirectionalProperty(property.value, context, config);
+                  transformDirectionalProperty(
+                    property.value,
+                    context,
+                    config,
+                    nodeResolvers,
+                  );
                 }
               }
             }
@@ -191,10 +218,12 @@ export const runDirectionalRulesTests = (
   const functions = [...defaultFunctions, 'customStyle'] as const;
   const jsxAttributes = [...defaultJsxAttributes, 'customStyle'] as const;
   const keyframes = [...defaultKeyframes, 'customKeyframes'] as const;
+  const resolvers = [...defaultResolvers, 'custom.property', 'custom.wildcard.*'] as const;
   const options = {
     functions,
     jsxAttributes,
     keyframes,
+    resolvers,
   } as const satisfies PluginOptions;
 
   const generatorInput = {
@@ -207,6 +236,7 @@ export const runDirectionalRulesTests = (
   const shorthandMappingTests = directionalShorthandMappingTestGenerator(generatorInput);
   const disableTests = directionalDisableTestGenerator(generatorInput);
   const valueTests = directionalValueTestGenerator(generatorInput);
+
   const valid: Array<RuleTester.ValidTestCase> = [
     ...mappingTests.valid,
     ...shorthandTests.valid,

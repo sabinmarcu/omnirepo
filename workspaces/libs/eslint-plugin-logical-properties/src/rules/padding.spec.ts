@@ -14,18 +14,18 @@ describe('Padding Rule', () => {
       ] as const;
       const source = `\`${a} ${b} ${c} ${d}\``
       const results = [
-        `paddingBlockStart: \`${a}\``,
-        `paddingInlineEnd: \`${b}\``,
-        `paddingBlockEnd: \`${c}\``,
-        `paddingInlineStart: \`${d}\``,
+        `"paddingBlockStart":\`${a}\``,
+        `"paddingInlineEnd":\`${b}\``,
+        `"paddingBlockEnd":\`${c}\``,
+        `"paddingInlineStart":\`${d}\``,
       ];
       const test = {
-        code: `style({ padding: ${source} })`,
+        code: `style({padding: ${source}})`,
         errors: [{ message: generateDirectionalShorthandError(
           `padding: ${source}`,
           results,
         )}],
-        output: `style({ ${results.join(", ")} })`,
+        output: `style({${results.join(",")}})`,
         options: [{}],
       } satisfies RuleTester.InvalidTestCase
       return test;
@@ -37,18 +37,18 @@ describe('Padding Rule', () => {
       ] as const;
       const source = `\`${a} ${b}\``
       const results = [
-        `paddingBlockStart: \`${a}\``,
-        `paddingBlockEnd: \`${a}\``,
-        `paddingInlineStart: \`${b}\``,
-        `paddingInlineEnd: \`${b}\``,
+        `"paddingBlockStart":\`${a}\``,
+        `"paddingBlockEnd":\`${a}\``,
+        `"paddingInlineStart":\`${b}\``,
+        `"paddingInlineEnd":\`${b}\``,
       ];
       const test = {
-        code: `style({ padding: ${source} })`,
+        code: `style({padding: ${source}})`,
         errors: [{ message: generateDirectionalShorthandError(
           `padding: ${source}`,
           results,
         )}],
-        output: `style({ ${results.join(", ")} })`,
+        output: `style({${results.join(",")}})`,
         options: [{}],
       } satisfies RuleTester.InvalidTestCase
       return test;
@@ -60,18 +60,18 @@ describe('Padding Rule', () => {
       ] as const;
       const source = `\`${a} ${c} ${b}\``
       const results = [
-        `paddingBlockStart: \`${a}\``,
-        `paddingInlineStart: \`${c}\``,
-        `paddingInlineEnd: \`${c}\``,
-        `paddingBlockEnd: \`${b}\``,
+        `"paddingBlockStart":\`${a}\``,
+        `"paddingInlineStart":\`${c}\``,
+        `"paddingInlineEnd":\`${c}\``,
+        `"paddingBlockEnd":\`${b}\``,
       ];
       const test = {
-        code: `style({ padding: ${source} })`,
+        code: `style({padding: ${source}})`,
         errors: [{ message: generateDirectionalShorthandError(
           `padding: ${source}`,
           results,
         )}],
-        output: `style({ ${results.join(", ")} })`,
+        output: `style({${results.join(",")}})`,
         options: [{}],
       } satisfies RuleTester.InvalidTestCase
       return test;
@@ -79,22 +79,21 @@ describe('Padding Rule', () => {
     (() => {
       const [a, b,] = [
         'calc(a + 1)', 'calc(b + 2)',
-
       ] as const;
       const source = `\`${a} ${b}\``
       const results = [
-        `paddingBlockStart: \`${a}\``,
-        `paddingBlockEnd: \`${a}\``,
-        `paddingInlineStart: \`${b}\``,
-        `paddingInlineEnd: \`${b}\``,
+        `"paddingBlockStart":\`${a}\``,
+        `"paddingBlockEnd":\`${a}\``,
+        `"paddingInlineStart":\`${b}\``,
+        `"paddingInlineEnd":\`${b}\``,
       ];
       const test = {
-        code: `style({ padding: ${source} })`,
+        code: `style({padding: ${source}})`,
         errors: [{ message: generateDirectionalShorthandError(
           `padding: ${source}`,
           results,
         )}],
-        output: `style({ ${results.join(", ")} })`,
+        output: `style({${results.join(",")}})`,
         options: [{}],
       } satisfies RuleTester.InvalidTestCase
       return test;
@@ -102,22 +101,21 @@ describe('Padding Rule', () => {
     (() => {
       const [a, b] = [
         'calc(a + 1)', 'calc(b + var(c) / 3)',
-
       ] as const;
       const source = `\`${a} ${b}\``
       const results = [
-        `paddingBlockStart: \`${a}\``,
-        `paddingBlockEnd: \`${a}\``,
-        `paddingInlineStart: \`${b}\``,
-        `paddingInlineEnd: \`${b}\``,
+        `"paddingBlockStart":\`${a}\``,
+        `"paddingBlockEnd":\`${a}\``,
+        `"paddingInlineStart":\`${b}\``,
+        `"paddingInlineEnd":\`${b}\``,
       ];
       const test = {
-        code: `style({ padding: ${source} })`,
+        code: `style({padding: ${source}})`,
         errors: [{ message: generateDirectionalShorthandError(
           `padding: ${source}`,
           results,
         )}],
-        output: `style({ ${results.join(", ")} })`,
+        output: `style({${results.join(",")}})`,
         options: [{}],
       } satisfies RuleTester.InvalidTestCase
       return test;

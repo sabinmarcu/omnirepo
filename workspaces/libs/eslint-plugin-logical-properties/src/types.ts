@@ -6,7 +6,8 @@ import type {
   ObjectExpression,
   Property,
 } from 'estree';
-import type { configSchema } from './constants.js';
+import type { configSchema } from './config.js';
+import type { JSONSchemaToType } from './config.type.js';
 
 export type DirectionalRuleShorthand = Array<Array<Array<string>>>;
 
@@ -18,20 +19,30 @@ export type DirectionalRuleConfig = {
   values?: Record<string, Record<string, string>>,
 };
 
-export type ValidProperty = Property & {
-  type: 'Property',
-  key: {
-    type: 'Identifier'
-  }
-};
+export type ValidProperty = (
+  & Property
+  & { type: 'Property' }
+  & (
+    | {
+      key: {
+        type: 'Identifier'
+        name: string,
+      }
+    }
+    | {
+      key: {
+        type: 'Literal',
+        value: string,
+      }
+    }
+  )
+);
 
 export type DirectionalTransformer = (
   property: ValidProperty,
 ) => void;
 
-export type PluginOptions = {
-  [Key in keyof typeof configSchema['properties']]: string[] | Readonly<string[]>
-};
+export type PluginOptions = Partial<JSONSchemaToType<typeof configSchema>>;
 
 export type DirectionalTransformerFactory = (input: {
   node: ObjectExpression,

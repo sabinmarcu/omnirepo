@@ -3,6 +3,8 @@ import type {
   DirectionalTransformerTestsFactory,
   TestInput,
 } from '../types.js';
+import { getValidPropertyName } from '../utils/getValidPropertyName.js';
+import { generateObjectStringTestCases } from '../utils/propertyTraverse.utils.js';
 
 export const generateDirectionalDisableError = (source: string) => (
   `${source} is disallowed as it does not adapt to writing direction changes`
@@ -14,17 +16,19 @@ export const directionalDisableTransformerFactory: DirectionalTransformerFactory
 }) => (
   property,
 ) => {
+  const propertyName = getValidPropertyName(property)!;
   context.report({
     node,
-    message: generateDirectionalDisableError(property.key.name),
+    message: generateDirectionalDisableError(propertyName),
   });
 };
 
 export const directionalDisableTestGenerator: DirectionalTransformerTestsFactory = ({
   testName: inputTestName,
-  options: { functions: functionNames },
+  options,
   config: { disabled = [] },
 }) => {
+  const { functions: functionNames = [], resolvers = [] } = options;
   const { valid, invalid } = {
     valid: [],
     invalid: [],
@@ -33,20 +37,25 @@ export const directionalDisableTestGenerator: DirectionalTransformerTestsFactory
   for (const functionName of functionNames) {
     const toBeDisabled = Array.isArray(disabled) ? disabled : [disabled];
     for (const disabledProperty of toBeDisabled) {
+      const invalidInputs = generateObjectStringTestCases({
+        testName,
+        functionName,
+        resolvers,
+      }, {
+        input: {
+          [disabledProperty]: 'disableMe',
+        },
+      });
       invalid.push(
-        {
-          code: `
-  export const ${testName} = ${functionName}({
-    ${disabledProperty}: disableMe,
-  });
-  `,
+        ...invalidInputs.map(({ code }) => ({
+          code,
           options: functionNames,
           errors: [
             {
               message: generateDirectionalDisableError(disabledProperty),
             },
           ],
-        },
+        })),
       );
     }
   }
