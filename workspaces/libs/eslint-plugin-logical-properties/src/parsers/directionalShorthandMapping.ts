@@ -3,12 +3,14 @@ import type {
   DirectionalTransformerTestsFactory,
   TestInput,
 } from '../types.js';
+import { getValidPropertyName } from '../utils/getValidPropertyName.js';
+import { generateObjectStringTestCases } from '../utils/propertyTraverse.utils.js';
 import { generateDirectionalShorthandError } from './directionalShorthand.js';
 
 const generateShorthandMappings = (
   value: string,
   mappings: Array<string>,
-) => mappings.map((it) => `${it}: ${value}`);
+) => mappings.map((it) => `"${it}":${value}`);
 
 export const directionalShorthandMappingTransformerFactory: DirectionalTransformerFactory = ({
   node,
@@ -22,9 +24,10 @@ export const directionalShorthandMappingTransformerFactory: DirectionalTransform
   if (!shorthandMappings) {
     return;
   }
+  const propertyName = getValidPropertyName(property)!;
   const [source, target] = [
     context.sourceCode.getText(property),
-    shorthandMappings[property.key.name],
+    shorthandMappings[propertyName],
   ];
   const value = context.sourceCode.getText(property.value);
   const replacements = generateShorthandMappings(value, target);
@@ -32,7 +35,7 @@ export const directionalShorthandMappingTransformerFactory: DirectionalTransform
     node,
     message: generateDirectionalShorthandError(source, replacements),
     fix(fixer) {
-      return fixer.replaceText(property, replacements.join(', '));
+      return fixer.replaceText(property, replacements.join(','));
     },
   });
 };
@@ -48,7 +51,7 @@ export const directionalShorthandMappingTestGenerator: DirectionalTransformerTes
       invalid: [],
     };
   }
-  const { functions: functionNames } = inputOptions;
+  const { functions: functionNames = [], resolvers = [] } = inputOptions;
   const options = [inputOptions];
 
   const { valid, invalid } = {
@@ -58,6 +61,11 @@ export const directionalShorthandMappingTestGenerator: DirectionalTransformerTes
   const testName = `${inputTestName}ShorthandMapping`;
 
   for (const functionName of functionNames) {
+    const testCaseGenerator = generateObjectStringTestCases.bind(undefined, {
+      testName,
+      functionName,
+      resolvers,
+    });
     const inputs = [
       'awesome',
       'awesome sauce',
@@ -72,22 +80,20 @@ export const directionalShorthandMappingTestGenerator: DirectionalTransformerTes
         ];
         for (const quote of quotesSet) {
           const value = `${quote}${input} => ${functionName}${quote}`;
-          const source = `${property}: ${value}`;
+          const source = `"${property}":${value}`;
           const results = generateShorthandMappings(value, propertyMappings);
-          invalid.push({
-            code: `
-    export const ${testName} = ${functionName}({
-      ${source},
-    });
-`.trim(),
-            options,
-            errors: [{ message: generateDirectionalShorthandError(source, results) }],
-            output: `
-    export const ${testName} = ${functionName}({
-      ${results.join(', ')},
-    });
-`,
+          const invalidInputs = testCaseGenerator({
+            input: `{${source}}`,
+            output: `{${results.join(',')}}`,
           });
+          invalid.push(
+            ...invalidInputs.map(({ code, output }) => ({
+              code,
+              options,
+              errors: [{ message: generateDirectionalShorthandError(source, results) }],
+              output,
+            })),
+          );
         }
       }
     }

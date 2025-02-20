@@ -10,6 +10,8 @@ import {
   stringToTemplate,
   tokenizeString,
 } from '../utils/tokenizeString.js';
+import { getValidPropertyName } from '../utils/getValidPropertyName.js';
+import { generateObjectStringTestCases } from '../utils/propertyTraverse.utils.js';
 
 export const generateDirectionalShorthandError = (
   source: string,
@@ -25,7 +27,7 @@ const expandShorthandOptions = (
   const results: string[] = [];
   for (const [index, value] of Object.entries(values)) {
     const localMappings = options[+index];
-    const localResult = localMappings.map((mapping) => `${mapping}: \`${value}\``);
+    const localResult = localMappings.map((mapping) => `"${mapping}":\`${value}\``);
     results.push(...localResult);
   }
   return results;
@@ -58,11 +60,12 @@ export const directionalShorthandTransformerFactory: DirectionalTransformerFacto
 }) => (
   property,
 ) => {
+  const propertyName = getValidPropertyName(property)!;
   const {
     values,
     replacements,
   } = getPropertyValues(context, property);
-  const options = shorthands[property.key.name][values.length - 1];
+  const options = shorthands[propertyName][values.length - 1];
   if (!options) {
     throw new MustDisablePropertyError();
   }
@@ -80,7 +83,7 @@ export const directionalShorthandTransformerFactory: DirectionalTransformerFacto
     node,
     message: generateDirectionalShorthandError(sourceText, results),
     fix(fixer) {
-      return fixer.replaceText(property, results.join(', '));
+      return fixer.replaceText(property, results.join(','));
     },
   });
 };
@@ -96,7 +99,7 @@ export const directionalShorthandTestGenerator: DirectionalTransformerTestsFacto
       invalid: [],
     };
   }
-  const { functions: functionNames } = inputOptions;
+  const { functions: functionNames = [], resolvers = [] } = inputOptions;
   const options = [inputOptions];
 
   const { valid, invalid } = {
@@ -106,6 +109,11 @@ export const directionalShorthandTestGenerator: DirectionalTransformerTestsFacto
   const testName = `${inputTestName}Shorthand`;
 
   for (const functionName of functionNames) {
+    const testCaseGenerator = generateObjectStringTestCases.bind(undefined, {
+      testName,
+      functionName,
+      resolvers,
+    });
     for (const [property, shorthandOptions] of Object.entries(shorthands)) {
       for (const shorthandOption of shorthandOptions) {
         const ruleValues = Array.from({ length: shorthandOption.length }).fill(0).map((_, index) => `value-${index}`);
@@ -118,22 +126,20 @@ export const directionalShorthandTestGenerator: DirectionalTransformerTestsFacto
         for (const quote of quotesSet) {
           for (const values of valuesSet) {
             const input = values.join(' ');
-            const source = `${property}: ${quote}${input}${quote}`;
+            const source = `"${property}":${quote}${input}${quote}`;
             const results = expandShorthandOptions(shorthandOption, values);
-            invalid.push({
-              code: `
-    export const ${testName} = ${functionName}({
-      ${source},
-    });
-`.trim(),
-              options,
-              errors: [{ message: generateDirectionalShorthandError(source, results) }],
-              output: `
-    export const ${testName} = ${functionName}({
-      ${results.join(', ')},
-    });
-`,
+            const invalidInputs = testCaseGenerator({
+              input: `{${source}}`,
+              output: `{${results.join(',')}}`,
             });
+            invalid.push(
+              ...invalidInputs.map(({ code, output }) => ({
+                code,
+                options,
+                errors: [{ message: generateDirectionalShorthandError(source, results) }],
+                output,
+              })),
+            );
           }
         }
       }
