@@ -2,6 +2,7 @@ import {
   useMemo,
   type PropsWithChildren,
 } from 'react';
+import { deepmerge as deepMerge } from 'deepmerge-ts';
 import { ThemeProvider as MUIThemeProvider } from '@mui/material';
 import {
   ThemeContext,
@@ -9,11 +10,20 @@ import {
 } from './state.js';
 import { themes } from './themes.js';
 
-export function ThemeProvider({ children }: PropsWithChildren) {
+export namespace ThemeProvider {
+  export type Props = PropsWithChildren<{
+    theme?: Partial<typeof themes[keyof typeof themes]>
+  }>;
+}
+
+export function ThemeProvider({
+  children,
+  theme: inputTheme = {},
+}: ThemeProvider.Props) {
   const state = useThemeState();
   const variant = state.theme;
   const theme = useMemo(
-    () => themes[variant],
+    () => deepMerge(inputTheme, themes[variant]),
     [variant],
   );
   return (

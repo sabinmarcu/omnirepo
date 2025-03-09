@@ -6501,6 +6501,7 @@ __metadata:
     "@sabinmarcu/use-local-storage": "workspace:*"
     "@sabinmarcu/use-match-media": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
+    deepmerge-ts: "npm:^7.1.5"
   peerDependencies:
     "@mui/icons-material": "*"
     "@mui/material": "*"
@@ -12355,6 +12356,13 @@ __metadata:
   version: 1.1.9
   resolution: "deep-object-diff@npm:1.1.9"
   checksum: b9771cc1ca08a34e408309eaab967bd2ab697684abdfa1262f4283ced8230a9ace966322f356364ff71a785c6e9cc356b7596582e900da5726e6b87d4b2a1463
+  languageName: node
+  linkType: hard
+
+"deepmerge-ts@npm:^7.1.5":
+  version: 7.1.5
+  resolution: "deepmerge-ts@npm:7.1.5"
+  checksum: f86d1a0b3b803cbae749ebaabf2c6db388abec57d77a4003829ecf987504f3c93b01d1ff86ef89a5d56e2b06d7402ea2a7502f0d044f19e036ada1f543e78d3d
   languageName: node
   linkType: hard
 

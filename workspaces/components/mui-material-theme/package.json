@@ -81,6 +81,7 @@
   },
   "dependencies": {
     "@sabinmarcu/use-local-storage": "workspace:*",
-    "@sabinmarcu/use-match-media": "workspace:*"
+    "@sabinmarcu/use-match-media": "workspace:*",
+    "deepmerge-ts": "^7.1.5"
   }
 }
