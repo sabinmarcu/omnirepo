@@ -9,9 +9,11 @@ language: typescript
 type: library
 tasks:
   build:
-    deps: ["eslint-plugin-logical-properties:build"]
+    deps:
+      - eslint-plugin-logical-properties:build
     options:
       mergeDeps: replace
 dependsOn:
+  - eslint-plugin-logical-properties
   - "@sabinmarcu/types"
   - "@sabinmarcu/utils-test"

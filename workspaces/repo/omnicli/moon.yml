@@ -10,3 +10,8 @@ type: tool
 workspace:
   inheritedTasks:
     include: []
+dependsOn:
+  - "@sabinmarcu/utils-fs"
+  - "@sabinmarcu/utils-repo"
+  - "@sabinmarcu/types"
+  - "@sabinmarcu/utils-test"

@@ -8,7 +8,7 @@ project:
 language: typescript
 type: library
 dependsOn:
-  - "@sabinmarcu/use-duplicate-ref"
-  - "@sabinmarcu/use-prefers-reduced-motion"
+  - "@sabinmarcu/use-local-storage"
+  - "@sabinmarcu/use-match-media"
   - "@sabinmarcu/types"
   - "@sabinmarcu/utils-test"

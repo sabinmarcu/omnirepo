@@ -7,20 +7,25 @@ project:
   owner: Sabin Marcu
 language: typescript
 type: application
-
 tasks:
   start:
-    command: "yarn dev"
+    command: yarn dev
     options:
       cache: false
   build:
-    command: "yarn build"
+    command: yarn build
     options:
       cache: false
       runInCI: false
     deps:
-      - "^:build"
-
+      - ^:build
 workspace:
   inheritedTasks:
     include: []
+dependsOn:
+  - "@sabinmarcu/jotai-storage-adapter-querystring"
+  - "@sabinmarcu/moving-mesh-background"
+  - "@sabinmarcu/mui-material-theme"
+  - "@sabinmarcu/use-match-media"
+  - "@sabinmarcu/types"
+  - "@sabinmarcu/utils-test"

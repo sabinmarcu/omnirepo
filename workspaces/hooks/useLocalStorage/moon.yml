@@ -8,6 +8,5 @@ project:
 language: typescript
 type: library
 dependsOn:
-  - "@sabinmarcu/use-match-media"
   - "@sabinmarcu/types"
   - "@sabinmarcu/utils-test"

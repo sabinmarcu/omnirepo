@@ -12,3 +12,6 @@ tasks:
     deps: []
     options:
       mergeDeps: replace
+dependsOn:
+  - "@sabinmarcu/types"
+  - "@sabinmarcu/utils-test"

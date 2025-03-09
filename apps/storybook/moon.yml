@@ -7,20 +7,23 @@ project:
   owner: Sabin Marcu
 language: typescript
 type: unknown
-
 tasks:
   start:
-    command: "yarn start"
+    command: yarn start
     options:
       cache: false
   build:
-    command: "yarn build"
+    command: yarn build
     options:
       cache: false
       runInCI: false
     deps:
-      - "^:build"
-
+      - ^:build
 workspace:
   inheritedTasks:
     include: []
+dependsOn:
+  - "@sabinmarcu/types"
+  - "@sabinmarcu/utils-test"
+  - "@sabinmarcu/moving-mesh-background"
+  - "@sabinmarcu/mui-material-theme"

@@ -32,7 +32,6 @@ tasks:
       - utils-test:build
       - utils-repo:build
       - utils-test:build
-
 dependsOn:
   - "@sabinmarcu/utils-repo"
   - "@sabinmarcu/types"

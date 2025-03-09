@@ -7,22 +7,40 @@ project:
   owner: Sabin Marcu
 language: typescript
 type: application
-
 tasks:
   start:
-    command: "yarn start"
+    command: yarn start
     options:
       cache: false
     deps:
-      - "^:dev"
+      - ^:dev
   build:
-    command: "yarn build"
+    command: yarn build
     options:
       cache: false
       runInCI: false
     deps:
-      - "^:build"
-
+      - ^:build
 workspace:
   inheritedTasks:
     include: []
+dependsOn:
+  - "@sabinmarcu/utils-repo"
+  - "@sabinmarcu/commitlint-config-workspaces"
+  - "@sabinmarcu/config"
+  - "@sabinmarcu/debug"
+  - "@sabinmarcu/eslint-config"
+  - "@sabinmarcu/jotai-storage-adapter-querystring"
+  - "@sabinmarcu/moving-mesh-background"
+  - "@sabinmarcu/mui-material-theme"
+  - "@sabinmarcu/observable"
+  - "@sabinmarcu/types"
+  - "@sabinmarcu/use-duplicate-ref"
+  - "@sabinmarcu/use-local-storage"
+  - "@sabinmarcu/use-match-media"
+  - "@sabinmarcu/use-prefers-reduced-motion"
+  - "@sabinmarcu/utils-fs"
+  - "@sabinmarcu/utils-path"
+  - "@sabinmarcu/utils-primitives"
+  - "@sabinmarcu/utils-test"
+  - eslint-plugin-logical-properties
