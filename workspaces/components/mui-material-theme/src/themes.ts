@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material';
+import type { createTheme } from '@mui/material';
 import {
   AutoMode,
   DarkMode,
@@ -10,7 +10,7 @@ import type {
 } from './types.js';
 
 export const themes = {
-  light: createTheme({
+  light: {
     palette: {
       mode: 'light',
       background: {
@@ -18,8 +18,8 @@ export const themes = {
         paper: '#FFFFFF',
       },
     },
-  }),
-  dark: createTheme({
+  },
+  dark: {
     palette: {
       mode: 'dark',
       background: {
@@ -27,8 +27,8 @@ export const themes = {
         paper: '#1E1E1E',
       },
     },
-  }),
-} as const satisfies Record<Variants, ReturnType<typeof createTheme>>;
+  },
+} as const satisfies Record<Variants, Parameters<typeof createTheme>[0]>;
 
 export const selections = [
   {
@@ -46,4 +46,8 @@ export const selections = [
     name: 'System Determined',
     icon: AutoMode,
   },
-] as const satisfies { value: Selections, name: string, icon: typeof LightMode }[];
+] as const satisfies {
+  value: Selections;
+  name: string;
+  icon: typeof LightMode;
+}[];
