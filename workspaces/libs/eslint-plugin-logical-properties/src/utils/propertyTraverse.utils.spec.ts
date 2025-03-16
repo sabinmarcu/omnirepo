@@ -65,7 +65,7 @@ describe('propertyTraverse.utils', () => {
         expect(packer.pack(input)).toEqual(output)
       })
     })
-    describe('packer.unpack', () => {
+    describe.only('packer.unpack', () => {
       it('should be a function', () => {
         expect(packer.unpack).toBeInstanceOf(Function)
       })
@@ -77,6 +77,10 @@ describe('propertyTraverse.utils', () => {
         { input: '{ "awesome": "sauce" }', output: {awesome: 'sauce' } },
         { input: '{ "awesome": `stuff` }', output: {awesome: '`stuff`'} },
         { input: '{ "awesome": \'stuff\' }', output: {awesome: '\'stuff\''} },
+        { input: '{ "awesome": stuff }', output: {awesome: 'stuff'} },
+        { input: '{ "awesome": theme.stuff }', output: {awesome: 'theme.stuff'} },
+        { input: '{ "awesome": awesome-sauce }', output: {awesome: 'awesome-sauce'} },
+        { input: '{ "awesome": `${stuff}` }', output: {awesome: "\`${stuff}\`"} },
       ])(`packer.unpack($input) = $output`, ({ input, output }) => {
         expect(packer.unpack(input)).toEqual(output)
       })
