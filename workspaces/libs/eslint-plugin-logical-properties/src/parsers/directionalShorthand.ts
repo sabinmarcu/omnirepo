@@ -23,11 +23,17 @@ export const generateDirectionalShorthandError = (
 const expandShorthandOptions = (
   options: Array<Array<string>>,
   values: Array<string>,
+  isTemplateString = false,
 ) => {
   const results: string[] = [];
   for (const [index, value] of Object.entries(values)) {
     const localMappings = options[+index];
-    const localResult = localMappings.map((mapping) => `"${mapping}":\`${value}\``);
+    const localResult = localMappings.map((mapping) => {
+      const localValue = isTemplateString
+        ? `\`${value}\``
+        : `${value}`;
+      return `"${mapping}":${localValue}`;
+    });
     results.push(...localResult);
   }
   return results;
@@ -37,8 +43,17 @@ const getPropertyValues = (
   context: Rule.RuleContext,
   property: ValidProperty,
 ) => {
+  const sourceCode = context.sourceCode.getText(property.value);
+  if (!/^["'`].*["'`]$/.test(sourceCode)) {
+    return {
+      isTemplateString: false,
+      values: [sourceCode] as unknown as string[],
+      replacements: [] as unknown as [string, string][],
+    } as const;
+  }
+
   const stringToTokenize = stringToTemplate(
-    context.sourceCode.getText(property.value)
+    sourceCode
       .replace(/^["'`]/, '')
       .replace(/["'`]$/, ''),
   );
@@ -46,6 +61,7 @@ const getPropertyValues = (
 
   const values = output.split(' ');
   return {
+    isTemplateString: true,
     values,
     replacements: tokens,
   } as const;
@@ -64,13 +80,14 @@ export const directionalShorthandTransformerFactory: DirectionalTransformerFacto
   const {
     values,
     replacements,
+    isTemplateString,
   } = getPropertyValues(context, property);
   const options = shorthands[propertyName][values.length - 1];
   if (!options) {
     throw new MustDisablePropertyError();
   }
   const sourceText = context.sourceCode.getText(property);
-  const results = expandShorthandOptions(options, values)
+  const results = expandShorthandOptions(options, values, isTemplateString)
     .map((it) => {
       let final = it;
       for (const [target, value] of replacements) {
@@ -127,7 +144,7 @@ export const directionalShorthandTestGenerator: DirectionalTransformerTestsFacto
           for (const values of valuesSet) {
             const input = values.join(' ');
             const source = `"${property}":${quote}${input}${quote}`;
-            const results = expandShorthandOptions(shorthandOption, values);
+            const results = expandShorthandOptions(shorthandOption, values, true);
             const invalidInputs = testCaseGenerator({
               input: `{${source}}`,
               output: `{${results.join(',')}}`,

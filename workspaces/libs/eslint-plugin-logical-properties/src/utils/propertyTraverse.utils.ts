@@ -50,12 +50,17 @@ export const packer = {
     const normalized = normlizePackInput(
       normlizePackInput(input, '`'),
       '\'',
-    );
+    )
+      .replaceAll(/":\s*([\d.A-Za-z-]+)\s*/g, '":"$1"')
+      .replaceAll(/":\s*\${([\d.A-Za-z-]+)\s*}/g, '":"$1"');
     try {
       const parsed = JSON.parse(normalized);
       return parsed;
     } catch {
-      throw new Error(normalized);
+      throw new Error(JSON.stringify({
+        input,
+        normalized,
+      }, undefined, 2));
     }
   },
   pack: (input: any) => {
