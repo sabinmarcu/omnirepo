@@ -1,4 +1,5 @@
 releases:
+  "@sabinmarcu/commitlint-config-workspaces": patch
   "@sabinmarcu/config": patch
   "@sabinmarcu/debug": patch
   "@sabinmarcu/jotai-storage-adapter-querystring": patch
@@ -25,7 +26,6 @@ undecided:
   - "@sabinmarcu/storybook-addon-split-toolbars"
   - "@sabinmarcu/storybook-addon-theme-overrider"
   - "@sabinmarcu/stylesheet"
-  - "@sabinmarcu/commitlint-config-workspaces"
   - "@sabinmarcu/eslint-config"
   - "@sabinmarcu/omnicli"
   - "@sabinmarcu/utils-fs"

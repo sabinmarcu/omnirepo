@@ -2,8 +2,10 @@ import {
   setupFsMockAll,
   vol,
 } from '@sabinmarcu/utils-test';
+// eslint-disable-next-line import/extensions
 import { generateWorkspacesScopes } from './generateWorkspacesScopes.cjs';
 
+// eslint-disable-next-line import/extensions
 import compileFixtures from './__mocks__/index.cjs';
 
 const fixtures = compileFixtures();

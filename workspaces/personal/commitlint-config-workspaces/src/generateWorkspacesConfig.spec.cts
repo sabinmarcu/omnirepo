@@ -2,8 +2,10 @@ import {
   setupFsMockAll,
   vol,
 } from '@sabinmarcu/utils-test';
+// eslint-disable-next-line import/extensions
 import { generateWorkspacesConfig } from './generateWorkspacesConfig.cjs';
 
+// eslint-disable-next-line import/extensions
 import compileFixtures from './__mocks__/index.cjs';
 
 const fixtures = compileFixtures();
@@ -50,7 +52,7 @@ describe('generateWorkspacesConfig', () => {
             extraScopes,
             path,
             withAliases,
-          )
+          );
           expect(result.rules['scope-enum'][2]).toEqual(outcome.scopes);
         });
       }
