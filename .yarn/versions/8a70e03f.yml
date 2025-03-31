@@ -1,12 +1,14 @@
 releases:
   "@sabinmarcu/moving-mesh-background": patch
 
+declined:
+  - "@sabinmarcu/mui-material-theme"
+
 undecided:
   - "@sabinmarcu/docs"
   - "@sabinmarcu/droprate"
   - "@sabinmarcu/team-rotation"
   - "@sabinmarcu/timer40k"
-  - "@sabinmarcu/mui-material-theme"
   - "@sabinmarcu/theme"
   - "@sabinmarcu/theme-storybook"
   - "@sabinmarcu/use-duplicate-ref"
