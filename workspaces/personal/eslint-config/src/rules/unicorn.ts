@@ -4,12 +4,13 @@ import { compileConfigFor } from '../utils/compileConfig.js';
 
 export const unicornRules = {
   ...unicornPlugin.configs.recommended.rules,
-  'unicorn/filename-case': ['error', { case: 'camelCase' }],
+  'unicorn/filename-case': 'off',
   'unicorn/no-useless-undefined': 'off',
   'unicorn/no-array-callback-reference': 'off',
   'unicorn/no-array-reduce': 'off',
   'unicorn/no-negated-condition': 'off',
   'unicorn/prefer-string-raw': 'off',
+  'unicorn/no-null': 'off',
   'unicorn/prevent-abbreviations': [
     'error',
     {
@@ -31,28 +32,10 @@ const unicornRulesConfig = [
     name: 'Unicorn Rules',
     rules: unicornRules,
   },
-  compileConfigFor('*.js', '*.ts', '*.mjs', '*.mts')({
-    name: 'Unicorn TS and JS Rules',
-    rules: {
-      'unicorn/filename-case': ['off'],
-    },
-  }),
-  compileConfigFor('*.jsx', '*.tsx')({
-    name: 'Unicorn JSX Rules',
-    rules: {
-      'unicorn/filename-case': ['error', { case: 'pascalCase' }],
-    },
-  }),
   compileConfigFor('*.cjs', '*.cts')({
     name: 'Unicorn CJS Rules',
     rules: {
       'unicorn/prefer-module': 'off',
-    },
-  }),
-  compileConfigFor('*.css.*')({
-    name: 'Unicorn Vanilla CSS Rules',
-    rules: {
-      'unicorn/filename-case': ['error', { case: 'pascalCase' }],
     },
   }),
 ] as const satisfies Config[];

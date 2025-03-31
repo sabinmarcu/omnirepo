@@ -2,6 +2,7 @@ releases:
   "@sabinmarcu/commitlint-config-workspaces": patch
   "@sabinmarcu/config": patch
   "@sabinmarcu/debug": patch
+  "@sabinmarcu/eslint-config": patch
   "@sabinmarcu/jotai-storage-adapter-querystring": patch
   "@sabinmarcu/moving-mesh-background": patch
   "@sabinmarcu/observable": patch
@@ -26,7 +27,6 @@ undecided:
   - "@sabinmarcu/storybook-addon-split-toolbars"
   - "@sabinmarcu/storybook-addon-theme-overrider"
   - "@sabinmarcu/stylesheet"
-  - "@sabinmarcu/eslint-config"
   - "@sabinmarcu/omnicli"
   - "@sabinmarcu/utils-fs"
   - "@sabinmarcu/utils-path"
