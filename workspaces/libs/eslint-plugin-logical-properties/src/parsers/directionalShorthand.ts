@@ -43,7 +43,7 @@ const getPropertyValues = (
   context: Rule.RuleContext,
   property: ValidProperty,
 ) => {
-  const sourceCode = context.sourceCode.getText(property.value);
+  const sourceCode = context.sourceCode.getText(property.value as any);
   if (!/^["'`].*["'`]$/.test(sourceCode)) {
     return {
       isTemplateString: false,
@@ -86,7 +86,7 @@ export const directionalShorthandTransformerFactory: DirectionalTransformerFacto
   if (!options) {
     throw new MustDisablePropertyError();
   }
-  const sourceText = context.sourceCode.getText(property);
+  const sourceText = context.sourceCode.getText(property as any);
   const results = expandShorthandOptions(options, values, isTemplateString)
     .map((it) => {
       let final = it;
@@ -97,7 +97,7 @@ export const directionalShorthandTransformerFactory: DirectionalTransformerFacto
     });
 
   context.report({
-    node,
+    node: node as any,
     message: generateDirectionalShorthandError(sourceText, results),
     fix(fixer) {
       return fixer.replaceText(property, results.join(','));

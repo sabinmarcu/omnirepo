@@ -29,7 +29,7 @@ export const directionalValueTransformerFactory: DirectionalTransformerFactory =
 ) => {
   const propertyName = getValidPropertyName(property)!;
   const [source, target] = [
-    context.sourceCode.getText(property.value)
+    context.sourceCode.getText(property.value as any)
       .replace(/^["'`]/, '')
       .replace(/["'`]$/, ''),
     values[propertyName],
@@ -37,7 +37,7 @@ export const directionalValueTransformerFactory: DirectionalTransformerFactory =
   if (Object.keys(target).includes(source)) {
     const replacement = target[source];
     context.report({
-      node,
+      node: node as any,
       message: generateDirectionalValueError(propertyName, source, replacement),
       fix(fixer) {
         return fixer.replaceText(property.value, `"${replacement}"`);

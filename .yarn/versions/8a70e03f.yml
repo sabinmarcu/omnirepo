@@ -1,6 +1,8 @@
 releases:
   "@sabinmarcu/config": patch
+  "@sabinmarcu/debug": patch
   "@sabinmarcu/moving-mesh-background": patch
+  eslint-plugin-logical-properties: patch
 
 declined:
   - "@sabinmarcu/mui-material-theme"
@@ -16,8 +18,6 @@ undecided:
   - "@sabinmarcu/timer40k"
   - "@sabinmarcu/theme"
   - "@sabinmarcu/theme-storybook"
-  - "@sabinmarcu/debug"
-  - eslint-plugin-logical-properties
   - "@sabinmarcu/jotai-storage-adapter-querystring"
   - "@sabinmarcu/observable"
   - "@sabinmarcu/storybook-addon-mirror-preview"

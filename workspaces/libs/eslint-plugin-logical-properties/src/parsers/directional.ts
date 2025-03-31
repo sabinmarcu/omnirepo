@@ -167,7 +167,7 @@ export const generateDirectionalRules = (config: DirectionalRuleConfig): Rule.Ru
               for (const ruleSet of rules.elements) {
                 if (ruleSet?.type === 'ObjectExpression') {
                   transformDirectionalProperty(
-                    ruleSet,
+                    ruleSet as any,
                     context,
                     config,
                     [],
@@ -176,7 +176,7 @@ export const generateDirectionalRules = (config: DirectionalRuleConfig): Rule.Ru
               }
             } else if (rules.type === 'ObjectExpression') {
               transformDirectionalProperty(
-                rules,
+                rules as any,
                 context,
                 config,
                 nodeResolvers,
@@ -195,7 +195,7 @@ export const generateDirectionalRules = (config: DirectionalRuleConfig): Rule.Ru
                   && property.value.type === 'ObjectExpression'
                 ) {
                   transformDirectionalProperty(
-                    property.value,
+                    property.value as any,
                     context,
                     config,
                     nodeResolvers,

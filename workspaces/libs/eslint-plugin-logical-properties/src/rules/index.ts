@@ -9,7 +9,6 @@ import marginRule from './margin.js';
 import paddingRule from './padding.js';
 import floatRule from './float.js';
 import clearRule from './clear.js';
-import textAlignRule from './textAlign.js';
 import { prefixRules } from '../utils/prefixRule.js';
 
 const rules = {
@@ -23,7 +22,6 @@ const rules = {
   size: sizeRule,
   float: floatRule,
   clear: clearRule,
-  textAlign: textAlignRule,
 } as const satisfies ESLint.Plugin['rules'];
 
 export const prefixedRules = prefixRules(rules);
