@@ -1,5 +1,5 @@
-export * from 'type-fest';
+export type * from 'type-fest';
 
-export * from './predicates.js';
-export * from './errors.js';
-export * from './basics.js';
+export type * from './predicates.js';
+export type * from './errors.js';
+export type * from './basics.js';
