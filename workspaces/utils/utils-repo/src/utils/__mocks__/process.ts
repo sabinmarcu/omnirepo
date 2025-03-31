@@ -7,7 +7,7 @@ export default {
   input: [
     '/path',
     () => true,
-    (value) => `processed ${value}`,
+    (value: any) => `processed ${value}`,
   ],
   output: 'processed /path',
 } satisfies WalkFsFixture;

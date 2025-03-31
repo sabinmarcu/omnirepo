@@ -8,7 +8,7 @@ import {
   predicate,
 } from './workspacesRoot.js';
 
-import compileFixtures from './__mocks__/workspacesRoot.js';
+import compileFixtures from './__mocks__/workspacesRoot/index.js';
 
 const fixtures = compileFixtures();
 

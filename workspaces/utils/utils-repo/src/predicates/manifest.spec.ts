@@ -8,7 +8,7 @@ import {
   predicate,
 } from './manifest.js';
 
-import compileFixtures from './__mocks__/manifest.js';
+import compileFixtures from './__mocks__/manifest/index.js';
 
 const fixtures = compileFixtures();
 
