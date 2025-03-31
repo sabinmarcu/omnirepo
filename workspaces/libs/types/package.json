@@ -32,7 +32,7 @@
       ]
     }
   },
-  "packageManager": "yarn@4.1.1",
+  "packageManager": "yarn@4.5.1",
   "publishConfig": {
     "access": "public"
   },
@@ -40,7 +40,7 @@
     "preset": "../../../.config/build.config.ts"
   },
   "dependencies": {
-    "type-fest": "^4.23.0"
+    "type-fest": "^4.38.0"
   },
   "tscmono": {
     "preset": "lib"

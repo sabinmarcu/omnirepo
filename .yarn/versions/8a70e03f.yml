@@ -4,6 +4,7 @@ releases:
   "@sabinmarcu/jotai-storage-adapter-querystring": patch
   "@sabinmarcu/moving-mesh-background": patch
   "@sabinmarcu/observable": patch
+  "@sabinmarcu/types": patch
   eslint-plugin-logical-properties: patch
 
 declined:
@@ -24,7 +25,6 @@ undecided:
   - "@sabinmarcu/storybook-addon-split-toolbars"
   - "@sabinmarcu/storybook-addon-theme-overrider"
   - "@sabinmarcu/stylesheet"
-  - "@sabinmarcu/types"
   - "@sabinmarcu/commitlint-config-workspaces"
   - "@sabinmarcu/eslint-config"
   - "@sabinmarcu/omnicli"
