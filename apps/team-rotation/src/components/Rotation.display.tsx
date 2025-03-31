@@ -38,12 +38,12 @@ import {
   offsetListBy,
   selectMemberForOffset,
 } from '../utils/arrays.js';
-import { parseDate } from '../utils/date.ts';
+import { parseDate } from '../utils/date.js';
 import {
   DndSortDragHandleHorizontal,
   DndSortDragHandleVertical,
-} from './DndSort.tsx';
-import { useIsBelowLg } from '../hooks/useIsBelowLg.ts';
+} from './DndSort.jsx';
+import { useIsBelowLg } from '../hooks/useIsBelowLg.js';
 
 type WeekNumberProperties = {
   weekNumber: number;
@@ -92,7 +92,6 @@ export function RotationDisplayTeamList({
         member,
         level,
       }, index) => (
-        // eslint-disable-next-line react/no-array-index-key
         <RotationDisplayListItem key={`${member.id}-${index}`} level={level}>
           <ListItemText>{member.name}</ListItemText>
         </RotationDisplayListItem>

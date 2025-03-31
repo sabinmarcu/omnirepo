@@ -35,3 +35,4 @@ export const RotationCard = styled(Card)<RotationCardProperties>(
     };
   },
 );
+

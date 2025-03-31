@@ -7,14 +7,14 @@ import { useCallback } from 'react';
 import {
   rotationsAtom,
   rotationsListAtom,
-} from '../state/atoms.ts';
+} from '../state/atoms.js';
 import {
   RotationListAddButton,
   RotationsListWrapper,
-} from './RotationsList.style.tsx';
-import { Rotation } from './Rotation.tsx';
-import { generateRotation } from '../state/seed.ts';
-import { DndSort } from './DndSort.tsx';
+} from './RotationsList.style.jsx';
+import { Rotation } from './Rotation.jsx';
+import { generateRotation } from '../state/seed.js';
+import { DndSort } from './DndSort.jsx';
 
 export function RotationsList() {
   const [

@@ -3,13 +3,34 @@ import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { glob } from 'glob';
 import fs from 'node:fs';
+import themeOverride from '@sabinmarcu/storybook-addon-theme-overrider';
+import mirrorPreview from '@sabinmarcu/storybook-addon-mirror-preview';
+import { theme } from '@sabinmarcu/theme/theme';
+
+themeOverride.config = {
+  pageBackground: theme.colors.background.page,
+  baseBackground: theme.colors.background.surface,
+  secondaryBackground: theme.colors.background.depressed,
+  border: theme.colors.background.elevated,
+  color: theme.colors.background.text,
+};
+
+mirrorPreview.config = [
+  {
+    selector: '[data-stylesheet="themeValues"]',
+    id: 'data-stylesheet',
+  },
+];
 
 const localRequire = createRequire(import.meta.url);
 const getStories = async () => {
   const rootPath = fileURLToPath(new URL('../../../', import.meta.url));
   const workspacesMappings = {
     Applications: 'apps/*',
-    Libraries: 'workspaces/components/*',
+    Components: 'workspaces/components/*',
+    Libraries: 'workspaces/libs/*',
+    Personal: 'workspaces/personal/*',
+    'Design System': 'workspaces/design-system/*',
   } as const;
 
   const workspacesRaw = await Promise.all(
@@ -71,13 +92,26 @@ const config = {
     getAbsolutePath('@storybook/addon-essentials'),
     getAbsolutePath('@chromatic-com/storybook'),
     getAbsolutePath('@storybook/addon-interactions'),
+    getAbsolutePath('@sabinmarcu/theme-storybook'),
+    getAbsolutePath('@sabinmarcu/storybook-addon-theme-overrider'),
+    getAbsolutePath('@sabinmarcu/storybook-addon-mirror-preview'),
   ],
-  docs: {
-    autodocs: 'tag',
-  },
+  docs: {},
   framework: {
     name: getAbsolutePath('@storybook/react-vite'),
-    options: {},
+    options: {
+      builder: {
+        viteConfigPath: path.resolve(
+          fileURLToPath(new URL('.', import.meta.url)),
+          './vite.config.ts',
+        ),
+      },
+    },
   },
+  previewHead: themeOverride.preview,
+  managerHead: (head: string) => (
+    mirrorPreview.manager(themeOverride.manager(head))
+  ),
 };
+
 export default config;

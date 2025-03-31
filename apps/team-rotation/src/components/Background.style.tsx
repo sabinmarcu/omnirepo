@@ -26,3 +26,4 @@ export const StyledBackground = styled(MeshBackground)(({ theme }) => ({
   opacity: 0.3,
   '--render-color': theme.palette.primary.main,
 }));
+

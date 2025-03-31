@@ -23,12 +23,20 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "eslint": "^8",
+    "eslint": "^9.23.0",
     "eslint-config-next": "14.2.5",
-    "typescript": "^5"
+    "typescript": "^5.8.2"
   },
   "tscmono": {
-    "preset": "nextApp"
+    "preset": "nextApp",
+    "files": {
+      "build": {
+        "presets": [
+          "nextApp",
+          "build"
+        ]
+      }
+    }
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

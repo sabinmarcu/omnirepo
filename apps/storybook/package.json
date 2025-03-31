@@ -1,25 +1,39 @@
 {
   "name": "@sabinmarcu/storybook",
-  "packageManager": "yarn@4.1.1",
+  "packageManager": "yarn@4.5.1",
   "devDependencies": {
-    "@chromatic-com/storybook": "^1.6.1",
+    "@chromatic-com/storybook": "^3.2.6",
     "@sabinmarcu/types": "workspace:*",
     "@sabinmarcu/utils-test": "workspace:*",
-    "@storybook/addon-essentials": "^8.2.9",
-    "@storybook/addon-interactions": "^8.2.9",
-    "@storybook/addon-links": "^8.2.9",
-    "@storybook/addon-onboarding": "^8.2.9",
-    "@storybook/blocks": "^8.2.9",
-    "@storybook/react": "^8.2.9",
-    "@storybook/react-vite": "^8.2.9",
-    "@storybook/test": "^8.2.9",
+    "@storybook/addon-essentials": "^8.6.11",
+    "@storybook/addon-interactions": "^8.6.11",
+    "@storybook/addon-links": "^8.6.11",
+    "@storybook/addon-onboarding": "^8.6.11",
+    "@storybook/blocks": "^8.6.11",
+    "@storybook/react": "^8.6.11",
+    "@storybook/react-vite": "^8.6.11",
+    "@storybook/test": "^8.6.11",
     "@types/prop-types": "^15",
     "prop-types": "^15.8.1",
-    "storybook": "^8.2.9"
+    "storybook": "^8.6.11"
   },
   "peerDependencies": {
+    "@sabinmarcu/commitlint-config-workspaces": "workspace:*",
+    "@sabinmarcu/config": "workspace:*",
+    "@sabinmarcu/debug": "workspace:*",
+    "@sabinmarcu/eslint-config": "workspace:*",
+    "@sabinmarcu/jotai-storage-adapter-querystring": "workspace:*",
     "@sabinmarcu/moving-mesh-background": "workspace:*",
-    "@sabinmarcu/mui-material-theme": "workspace:*"
+    "@sabinmarcu/mui-material-theme": "workspace:*",
+    "@sabinmarcu/observable": "workspace:*",
+    "@sabinmarcu/storybook-addon-mirror-preview": "workspace:*",
+    "@sabinmarcu/storybook-addon-split-toolbars": "workspace:*",
+    "@sabinmarcu/storybook-addon-theme-overrider": "workspace:*",
+    "@sabinmarcu/stylesheet": "workspace:*",
+    "@sabinmarcu/theme": "workspace:*",
+    "@sabinmarcu/types": "workspace:*",
+    "@storybook/blocks": "*",
+    "eslint-plugin-logical-properties": "workspace:*"
   },
   "scripts": {
     "start": "storybook dev -c src -p 6006",
@@ -56,6 +70,8 @@
   },
   "type": "module",
   "dependencies": {
+    "@storybook/theming": "^8.6.11",
+    "@vanilla-extract/vite-plugin": "^5.0.1",
     "glob": "^11.0.0"
   }
 }

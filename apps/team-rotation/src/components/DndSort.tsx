@@ -14,7 +14,7 @@ import {
   DragHandle,
   DragIndicator,
 } from '@mui/icons-material';
-import { useDndSort } from '../hooks/useDndSort.ts';
+import { useDndSort } from '../hooks/useDndSort.js';
 
 export type DndSortProperties<T extends { id: string } = { id:string }> = PropsWithChildren<{
   atom: PrimitiveAtom<T[]>
@@ -79,3 +79,4 @@ export const DndSortDragHandleHorizontal = forwardRef<
     <DragHandle />
   </DndSortDragHandleRaw>
 ));
+
