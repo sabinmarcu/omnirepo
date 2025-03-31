@@ -1,0 +1,12 @@
+project:
+  name: stylesheet
+  description: Configurable Stylesheet (SSR + Runtime updates)
+  channel: "#ui"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: library
+dependsOn:
+  - "@sabinmarcu/types"
+  - "@sabinmarcu/utils-test"
