@@ -20,6 +20,7 @@ declined:
   - "@sabinmarcu/use-prefers-reduced-motion"
   - "@sabinmarcu/utils-fs"
   - "@sabinmarcu/utils-primitives"
+  - "@sabinmarcu/utils-test"
 
 undecided:
   - "@sabinmarcu/docs"
@@ -32,4 +33,3 @@ undecided:
   - "@sabinmarcu/storybook-addon-split-toolbars"
   - "@sabinmarcu/storybook-addon-theme-overrider"
   - "@sabinmarcu/stylesheet"
-  - "@sabinmarcu/utils-test"
