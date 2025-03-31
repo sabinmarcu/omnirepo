@@ -5,6 +5,8 @@ declined:
   - "@sabinmarcu/mui-material-theme"
   - "@sabinmarcu/use-duplicate-ref"
   - "@sabinmarcu/use-local-storage"
+  - "@sabinmarcu/use-match-media"
+  - "@sabinmarcu/use-prefers-reduced-motion"
 
 undecided:
   - "@sabinmarcu/docs"
@@ -13,8 +15,6 @@ undecided:
   - "@sabinmarcu/timer40k"
   - "@sabinmarcu/theme"
   - "@sabinmarcu/theme-storybook"
-  - "@sabinmarcu/use-match-media"
-  - "@sabinmarcu/use-prefers-reduced-motion"
   - "@sabinmarcu/config"
   - "@sabinmarcu/debug"
   - eslint-plugin-logical-properties
