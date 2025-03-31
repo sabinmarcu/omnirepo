@@ -11,6 +11,7 @@ releases:
   "@sabinmarcu/storybook-addon-split-toolbars": major
   "@sabinmarcu/storybook-addon-theme-overrider": major
   "@sabinmarcu/stylesheet": major
+  "@sabinmarcu/theme": major
   "@sabinmarcu/theme-storybook": major
   "@sabinmarcu/types": patch
   "@sabinmarcu/utils-path": patch
@@ -32,4 +33,3 @@ undecided:
   - "@sabinmarcu/droprate"
   - "@sabinmarcu/team-rotation"
   - "@sabinmarcu/timer40k"
-  - "@sabinmarcu/theme"
