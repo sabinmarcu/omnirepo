@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-global-this */
 import type { SyncStorage } from 'jotai/vanilla/utils/atomWithStorage';
 import type { Encoder } from './types.js';
 
