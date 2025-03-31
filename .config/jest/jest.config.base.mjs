@@ -21,6 +21,10 @@ const config = {
     ]
   },
   moduleNameMapper: {
+    // No idea why this is needed
+    [String.raw`^\.\/std__path\/(.*)$`]: "./std__path/$1",
+
+    // Proper maps
     [String.raw`^(\.\.?\/.+)\.js(x)?$`]: "$1",
     [String.raw`^(\.\.?\/.+)\.(m|c)js$`]: "$1.$2ts",
   },

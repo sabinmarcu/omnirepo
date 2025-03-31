@@ -1,5 +1,6 @@
 import config from '@sabinmarcu/eslint-config';
 
+/** @type {import('@typescript-eslint/utils').TSESLint.FlatConfig.ConfigFile} */
 const eslintConfig = [
   ...config,
   {
@@ -7,10 +8,6 @@ const eslintConfig = [
     ignores: [
       '**/dist',
       '**/jest.config.mjs',
-      // TODO: Remove these once the tsconfig/tsconfig.build refactor is done
-      '**/src/**/*.spec.*',
-      '**/src/**/__fixtures__/**/*',
-      '**/src/**/__mocks__/**/*',
     ],
   },
   {
@@ -20,6 +17,16 @@ const eslintConfig = [
       'unicorn/filename-case': ['error', { case: 'pascalCase' }],
     },
   },
+  // {
+  //   name: 'Typescript TSConfig',
+  //   languageOptions: {
+  //     parserOptions: {
+  //       projectService: false,
+  //       project: './tsconfig.eslint.json',
+  //     },
+  //   },
+  //
+  // },
   {
     files: ['**/timer40k/**/*.tsx'],
     rules: {

@@ -33,11 +33,11 @@ tasks:
     options:
       runDepsInParallel: false
   buildAll:
-    command: tsc -b ./tsconfig.json
+    command: tsc -b ./tsconfig.build.json
     inputs: []
     local: true
   devAll:
-    command: tsc -b ./tsconfig.json --watch
+    command: tsc -b ./tsconfig.build.json --watch
     inputs: []
     local: true
   cleanAll:
