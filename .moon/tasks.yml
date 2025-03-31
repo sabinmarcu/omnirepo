@@ -16,12 +16,15 @@ fileGroups:
 tasks:
   fixDependsOn:
     command: "omni fix moon dependsOn"
+    deps: 
+      - "utils-repo:build"
     inputs:
       - package.json
     outputs:
       - package.json
     options:
       cache: false
+      runInCI: false
 
   # fixExports:
   #   command: "omni fix exports"
