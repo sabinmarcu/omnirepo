@@ -38,7 +38,7 @@ import type {
 import {
   dateToState,
   parseDate,
-} from '../utils/date.ts';
+} from '../utils/date.js';
 import {
   RotationEditCardContent,
   RotationEditCardEditWrapper,
@@ -59,15 +59,15 @@ import {
   generateTeamList,
   generateTeamMember,
 } from '../state/seed.js';
-import type { RotationTeamMemberType } from '../state/types.ts';
+import type { RotationTeamMemberType } from '../state/types.js';
 import {
   DndSort,
   DndSortDragHandleHorizontal,
   DndSortDragHandleVertical,
-} from './DndSort.tsx';
-import { useDndSortable } from '../hooks/useDndSortable.ts';
-import { rotationsAtom } from '../state/atoms.ts';
-import { useIsBelowLg } from '../hooks/useIsBelowLg.ts';
+} from './DndSort.jsx';
+import { useDndSortable } from '../hooks/useDndSortable.js';
+import { rotationsAtom } from '../state/atoms.js';
+import { useIsBelowLg } from '../hooks/useIsBelowLg.js';
 
 export type RotationRootEditProperties = Omit<RotationProperties, 'onToggle' | 'dndProps'>;
 export type RotationEditTextFieldProperties = {
@@ -309,10 +309,8 @@ export function RotationEditTeamEdit({
   const isBelowLg = useIsBelowLg();
   const DragHandleHorizontal = isBelowLg
     ? RotationEditTeamCardDragHorizontalHandle
-    // eslint-disable-next-line react/jsx-no-useless-fragment
     : () => (<></>);
   const DragHandleVertical = isBelowLg
-    // eslint-disable-next-line react/jsx-no-useless-fragment
     ? () => (<></>)
     : RotationEditTeamCardDragVerticalHandle;
   return (

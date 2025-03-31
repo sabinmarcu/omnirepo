@@ -9,7 +9,7 @@ import {
 import {
   DndSortDragHandleVertical,
   DndSortDragHandleHorizontal,
-} from './DndSort.tsx';
+} from './DndSort.jsx';
 
 export const RotationEditCardWrapper = styled('div')({
   display: 'flex',

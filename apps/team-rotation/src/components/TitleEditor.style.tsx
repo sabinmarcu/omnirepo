@@ -13,3 +13,4 @@ export const TitleEditorWrapper = styled('div')<LocationProperties>(({ location 
   paddingBlock: '0.2rem',
   flex: 1,
 }));
+

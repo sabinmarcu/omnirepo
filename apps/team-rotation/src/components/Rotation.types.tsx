@@ -2,8 +2,8 @@ import type { PrimitiveAtom } from 'jotai';
 import type {
   RotationTeamType,
   RotationType,
-} from '../state/types.ts';
-import type { useDndSortable } from '../hooks/useDndSortable.ts';
+} from '../state/types.js';
+import type { useDndSortable } from '../hooks/useDndSortable.js';
 
 export type RotationProperties = {
   atom: PrimitiveAtom<RotationType>,

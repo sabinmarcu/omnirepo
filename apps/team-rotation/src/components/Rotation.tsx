@@ -4,12 +4,12 @@ import {
 } from 'react';
 import dayjs from 'dayjs';
 import { useAtomValue } from 'jotai';
-import { RotationDisplay } from './Rotation.display.tsx';
-import { RotationCard } from './Rotation.style.tsx';
-import type { RotationEditProperties } from './Rotation.edit.tsx';
-import { RotationEdit } from './Rotation.edit.tsx';
-import { useDndSortable } from '../hooks/useDndSortable.ts';
-import { parseDate } from '../utils/date.ts';
+import { RotationDisplay } from './Rotation.display.jsx';
+import { RotationCard } from './Rotation.style.jsx';
+import type { RotationEditProperties } from './Rotation.edit.jsx';
+import { RotationEdit } from './Rotation.edit.jsx';
+import { useDndSortable } from '../hooks/useDndSortable.js';
+import { parseDate } from '../utils/date.js';
 
 export type RotationComponentProperties = Omit<RotationEditProperties, 'onToggle' | 'dndProps'>;
 export function Rotation({

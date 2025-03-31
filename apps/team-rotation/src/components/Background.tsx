@@ -3,7 +3,7 @@ import {
   AppWrapper,
   BackgroundWrapper,
   StyledBackground,
-} from './Background.style.tsx';
+} from './Background.style.js';
 
 export function Background({ children }: PropsWithChildren) {
   return (
@@ -15,3 +15,4 @@ export function Background({ children }: PropsWithChildren) {
     </AppWrapper>
   );
 }
+

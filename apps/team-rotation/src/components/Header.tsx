@@ -2,14 +2,14 @@ import {
   Container,
 } from '@mui/material';
 import { ThemeSelector } from '@sabinmarcu/mui-material-theme';
-import { TitleEditor } from './TitleEditor.tsx';
+import { TitleEditor } from './TitleEditor.jsx';
 import {
   HeaderAppBar,
   HeaderToolbar,
-} from './Header.style.tsx';
+} from './Header.style.jsx';
 import {
   pageTitleAtom,
-} from '../state/atoms.ts';
+} from '../state/atoms.js';
 
 export function Header() {
   return (

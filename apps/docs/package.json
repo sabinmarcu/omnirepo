@@ -39,6 +39,12 @@
     "@sabinmarcu/moving-mesh-background": "workspace:*",
     "@sabinmarcu/mui-material-theme": "workspace:*",
     "@sabinmarcu/observable": "workspace:*",
+    "@sabinmarcu/storybook-addon-mirror-preview": "workspace:*",
+    "@sabinmarcu/storybook-addon-split-toolbars": "workspace:*",
+    "@sabinmarcu/storybook-addon-theme-overrider": "workspace:*",
+    "@sabinmarcu/stylesheet": "workspace:*",
+    "@sabinmarcu/theme": "workspace:*",
+    "@sabinmarcu/theme-storybook": "workspace:*",
     "@sabinmarcu/types": "workspace:*",
     "@sabinmarcu/use-duplicate-ref": "workspace:*",
     "@sabinmarcu/use-local-storage": "workspace:*",
@@ -50,7 +56,7 @@
     "@sabinmarcu/utils-repo": "workspace:*",
     "@sabinmarcu/utils-test": "workspace:*",
     "eslint-plugin-logical-properties": "workspace:*",
-    "typescript": "5.5.4"
+    "typescript": "5.8.2"
   },
   "browserslist": {
     "production": [
@@ -68,6 +74,15 @@
     "node": ">= 20.0.0"
   },
   "tscmono": {
-    "preset": "docusaurus"
+    "preset": "docusaurus",
+    "files": {
+      "build": {
+        "presets": [
+          "docusaurus",
+          "build",
+          "docusaurusBuild"
+        ]
+      }
+    }
   }
 }

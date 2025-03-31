@@ -21,8 +21,8 @@ import {
   useState,
 } from 'react';
 import type { PrimitiveAtom } from 'jotai';
-import type { LocationProperties } from './TitleEditor.style.tsx';
-import { TitleEditorWrapper } from './TitleEditor.style.tsx';
+import type { LocationProperties } from './TitleEditor.style.jsx';
+import { TitleEditorWrapper } from './TitleEditor.style.jsx';
 
 export type Encoder = {
   encode: (input: string) => string,
@@ -176,3 +176,4 @@ export function TitleEditor({
     </TitleEditorWrapper>
   );
 }
+
