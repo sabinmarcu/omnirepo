@@ -1,0 +1,77 @@
+{
+  "name": "@sabinmarcu/storybook-addon-theme-overrider",
+  "packageManager": "yarn@4.0.1",
+  "version": "0.0.1",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "main": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./src/*": {
+      "import": "./src/*",
+      "main": "./src/*",
+      "default": "./src/*"
+    },
+    "./*": {
+      "import": "./dist/*.js",
+      "types": "./dist/*.d.ts",
+      "main": "./dist/*.js",
+      "default": "./dist/*.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./esm/*"
+      ]
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "build": {
+    "preset": "../../../.config/build.config.ts"
+  },
+  "devDependencies": {
+    "@sabinmarcu/types": "workspace:*",
+    "@sabinmarcu/utils-test": "workspace:*"
+  },
+  "tscmono": {
+    "preset": "lib",
+    "presets": [
+      "lib",
+      "react"
+    ]
+  },
+  "typeVersions": {
+    "*": {
+      "*": [
+        "./dist/*"
+      ]
+    }
+  },
+  "peerDependencies": {
+    "@storybook/core": "*",
+    "@storybook/react": "*",
+    "react": "*",
+    "storybook": "*"
+  },
+  "repository": {
+    "url": "git+https://github.com/sabinmarcu/omnirepo.git",
+    "type": "git",
+    "directory": "workspaces/libs/storybook-addon-theme-overrider"
+  },
+  "homepage": "https:/sabinmarcu.dev/api/storybook-addon-theme-overrider",
+  "dependencies": {
+    "@sabinmarcu/stylesheet": "workspace:*",
+    "@vanilla-extract/css": "^1.17.1",
+    "@vanilla-extract/dynamic": "^2.1.2",
+    "ts-deepmerge": "^7.0.2"
+  }
+}
