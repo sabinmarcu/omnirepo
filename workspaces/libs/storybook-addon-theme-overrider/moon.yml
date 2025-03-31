@@ -1,0 +1,12 @@
+project:
+  name: storybook-addon-theme-overrider
+  description: Storybook addon used to override theme colors with your live theme
+  channel: "#ui"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: library
+dependsOn:
+  - "@sabinmarcu/types"
+  - "@sabinmarcu/utils-test"
