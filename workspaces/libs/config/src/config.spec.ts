@@ -2,8 +2,8 @@ import {
   isObservable,
 } from '@sabinmarcu/observable';
 import { config } from './config.js';
-import { generateComplexTests } from './config.map.spec.partial';
-import { generateSimpleTests } from './config.list.spec.partial';
+import { generateComplexTests } from './config.map.spec.partial.js';
+import { generateSimpleTests } from './config.list.spec.partial.js';
 
 describe('config', () => {
   it('should be a function', () => {

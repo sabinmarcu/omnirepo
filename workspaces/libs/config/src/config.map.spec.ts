@@ -5,8 +5,8 @@ import {
   complexConfig,
   projectMapInput,
   projectMapInputItem,
-} from './config.map';
-import { generateComplexTests } from './config.map.spec.partial';
+} from './config.map.js';
+import { generateComplexTests } from './config.map.spec.partial.js';
 
 describe('projectMapInputItem', () => {
   it('should be a function', () => {
