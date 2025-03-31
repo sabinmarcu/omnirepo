@@ -8,7 +8,7 @@ import {
   predicate,
 } from './git.js';
 
-import compileFixtures from './__mocks__/git.js';
+import compileFixtures from './__mocks__/git/index.js';
 
 const fixtures = compileFixtures();
 

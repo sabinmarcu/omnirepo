@@ -1,5 +1,5 @@
 import { compileFixtures } from '@sabinmarcu/utils-test';
-import type { PathWalkerFunction } from '../../types';
+import type { PathWalkerFunction } from '../../types.js';
 
 export type WalkFsFixture = {
   setup: Record<string, any>,

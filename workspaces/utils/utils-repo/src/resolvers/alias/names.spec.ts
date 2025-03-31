@@ -8,7 +8,7 @@ import {
   getAliasesNamesSync,
 } from './names.js';
 
-import compileFixtures from './__mocks__.js';
+import compileFixtures from './__mocks__/index.js';
 
 const fixtures = compileFixtures();
 
