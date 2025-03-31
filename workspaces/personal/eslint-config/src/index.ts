@@ -31,4 +31,4 @@ const finalConfig = [
 
 logConfigs(finalConfig);
 export default finalConfig;
-export * from './types.js';
+export type * from './types.js';

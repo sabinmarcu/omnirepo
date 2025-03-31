@@ -13,6 +13,7 @@ const tsParserConfig = await conditionalConfig(
         parser: typescriptParser.parser,
         parserOptions: {
           projectService: true,
+          sourceType: 'module',
         },
       },
     },
