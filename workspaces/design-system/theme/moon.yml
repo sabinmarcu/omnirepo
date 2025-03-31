@@ -8,5 +8,6 @@ project:
 language: typescript
 type: library
 dependsOn:
+  - "@sabinmarcu/stylesheet"
   - "@sabinmarcu/types"
   - "@sabinmarcu/utils-test"
