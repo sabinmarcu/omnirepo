@@ -6,8 +6,8 @@ import {
 import {
   simpleConfig,
   projectListInput,
-} from './config.list';
-import { generateSimpleTests } from './config.list.spec.partial';
+} from './config.list.js';
+import { generateSimpleTests } from './config.list.spec.partial.js';
 
 describe('projectListInput', () => {
   it('should be a function', () => {

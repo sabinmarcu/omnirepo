@@ -3,7 +3,7 @@ import {
   observable,
   subject,
 } from '@sabinmarcu/observable';
-import { simpleConfig } from './config.list';
+import { simpleConfig } from './config.list.js';
 
 export const generateSimpleTests = (config = simpleConfig) => {
   it('should return an observable with the correct value', () => {

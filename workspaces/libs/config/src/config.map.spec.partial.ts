@@ -1,5 +1,5 @@
 import { subject } from '@sabinmarcu/observable';
-import { complexConfig } from './config.map';
+import { complexConfig } from './config.map.js';
 
 export const generateComplexTests = (config = complexConfig) => {
   it('should return an observable with the correct value', () => {

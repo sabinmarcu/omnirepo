@@ -322,54 +322,54 @@ declare const config: ConfigFunction;
 // --------------------------------------------------------------------------------------
 
 const testConfigMap = config(testConfigParametersMap);
-//    ^? const testConfigMap: Observable<{
+//    ^? const testConfigMap: Observable<MapConfigMapParameterToValues<{
 //           readonly first: 21;
 //           readonly fourth: Observable<number>;
-//       }>
+//       }>>
 
 const testConfigList = config(...testConfigParametersList);
 //    ^? const testConfigList: Observable<number>
 
 const testConfigFailMap = config(testConfigParametersFailMap);
-//    ^? const testConfigFailMap: Observable<{
+//    ^? const testConfigFailMap: Observable<MapConfigMapParameterToValues<{
 //           readonly first: 41;
 //           readonly second: "stuff";
-//       }>
+//       }>>
 
 const testConfigFailList = config(...testConfigParametersFailList);
 //    ^? const testConfigFailList: TypeError<"Config result cannot be derived from inconsistent input">
 
 const testConfigExactNumberMap = config(testConfigParametersExactNumberMap);
-//    ^? const testConfigExactNumberMap: Observable<{
+//    ^? const testConfigExactNumberMap: Observable<MapConfigMapParameterToValues<{
 //           readonly first: 41;
 //           readonly second: Observable<42>;
 //           readonly third: 35;
-//       }>
+//       }>>
 
 const testConfigExactNumberList = config(...testConfigParametersExactNumberList);
 //    ^? const testConfigExactNumberList: TypeError<"Config result cannot be derived from inconsistent input">
 
 const testConfigExactStringMap = config(testConfigParametersExactStringMap);
-//    ^? const testConfigExactStringMap: Observable<{
+//    ^? const testConfigExactStringMap: Observable<MapConfigMapParameterToValues<{
 //           readonly first: "awesome";
 //           readonly second: Observable<"stuff">;
-//       }>
+//       }>>
 
 const testConfigExactStringList = config(...testConfigParametersExactStringList);
 //    ^? const testConfigExactStringList: TypeError<"Config result cannot be derived from inconsistent input">
 
 // TODO: Find a solution for this issue.
 // Required: config('a', 'b') should turn input params into 'never' to cause
-// typescript to not compile the code, and force the developer to better think about
+// typescript to not compile the code, and force the developer to split think about
 // the code they are writing. So far, best one could do is return a TypeError type
 // and hope the code crashes somewhere else. (ie: expecting a string, received TypeError)
 const testConfigExactStringListHardcoded = config('something', 'else');
 //    ^? const testConfigExactStringListHardcoded: TypeError<"Config result cannot be derived from inconsistent input">
 
 const testConfigOneObject = config({ test: 21 });
-//    ^? const testConfigOneObject: Observable<{
+//    ^? const testConfigOneObject: Observable<MapConfigMapParameterToValues<{
 //           readonly test: 21;
-//       }>
+//       }>>
 
 // --------------------------------------------------------------------------------------
 

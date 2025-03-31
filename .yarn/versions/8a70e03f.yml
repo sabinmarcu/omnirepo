@@ -1,4 +1,5 @@
 releases:
+  "@sabinmarcu/config": patch
   "@sabinmarcu/moving-mesh-background": patch
 
 declined:
@@ -15,7 +16,6 @@ undecided:
   - "@sabinmarcu/timer40k"
   - "@sabinmarcu/theme"
   - "@sabinmarcu/theme-storybook"
-  - "@sabinmarcu/config"
   - "@sabinmarcu/debug"
   - eslint-plugin-logical-properties
   - "@sabinmarcu/jotai-storage-adapter-querystring"
