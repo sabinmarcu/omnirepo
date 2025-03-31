@@ -36,7 +36,7 @@ tasks:
   #     - "~:fixDependsOn"
 
   build:
-    command: "tsc -b tsconfig.json"
+    command: "tsc -b tsconfig.build.json"
     type: build
     deps:
       - "root:init"
@@ -74,7 +74,7 @@ tasks:
   #     - "~:fixDependsOn"
 
   dev:
-    command: "tsc -b tsconfig.json --watch"
+    command: "tsc -b tsconfig.build.json --watch"
     deps:
       - "root:init"
       # - "~:devExports"

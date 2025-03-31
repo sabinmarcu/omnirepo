@@ -2,21 +2,26 @@ baseConfig: "tsconfig.base.json"
 mode: loose
 defaultFileMode: default
 generatePaths: true
+files: 
+  build: 
+    presets: 
+      - build
 presets:
-  lib:
-    include:
-      - "src/**/*"
-    # TODO: Remove these once the tsconfig/tsconfig.build refactor is done
+  build:
     exclude:
       - "src/**/*.spec.*"
       - "src/**/__fixtures__/**/*"
       - "src/**/__mocks__/**/*"
+  lib:
+    include:
+      - "src/**/*"
     compilerOptions:
       composite: true
       incremental: true
       rootDir: "./src"
       outDir: "./dist"
       tsBuildInfoFile: "./dist/.tsbuildinfo"
+
   commonjs:
     compilerOptions:
       module: "Node16"
@@ -30,11 +35,9 @@ presets:
       tsBuildInfoFile: "./node_modules/.tmp/tsconfig.app.tsbuildInfo"
     include:
       - "src/**/*"
-    # TODO: Remove these once the tsconfig/tsconfig.build refactor is done
-    exclude:
-      - "src/**/*.spec.*"
-      - "src/**/__fixtures__/**/*"
-      - "src/**/__mocks__/**/*"
+  docusaurusBuild:
+    exclude: 
+      - "src/**/*"
   nextApp:
     extends: "./tsconfig.next.json"
     compilerOptions:
@@ -48,6 +51,7 @@ presets:
       noEmit: true
       esModuleInterop: true
       module: esnext
+      moduleResolution: Node
       resolveJsonModule: true
       isolatedModules: true
       jsx: preserve
@@ -96,8 +100,3 @@ presets:
       tsBuildInfoFile: "./node_modules/.tmp/tsconfig.app.tsbuildInfo"
     include:
       - "src/**/*"
-    # TODO: Remove these once the tsconfig/tsconfig.build refactor is done
-    exclude:
-      - "src/**/*.spec.*"
-      - "src/**/__fixtures__/**/*"
-      - "src/**/__mocks__/**/*"
