@@ -8,5 +8,7 @@ project:
 language: typescript
 type: library
 dependsOn:
+  - "@sabinmarcu/storybook-addon-split-toolbars"
+  - "@sabinmarcu/theme"
   - "@sabinmarcu/types"
   - "@sabinmarcu/utils-test"

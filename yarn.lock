@@ -7093,7 +7093,7 @@ __metadata:
     babel-plugin-parameter-decorator: "npm:*"
     clipanion: "npm:^3.2.0-rc.14"
     glob: "npm:^8.0.3"
-    jiti: "npm:^1.16.1"
+    jiti: "npm:^2.4.2"
     memfs: "npm:^3.4.12"
     moize: "patch:moize@npm%3A6.1.4#~/.yarn/patches/moize-npm-6.1.4-85c2846283.patch"
     typanion: "npm:^3.12.1"
@@ -18726,7 +18726,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jiti@npm:^1.16.1, jiti@npm:^1.18.2, jiti@npm:^1.20.0":
+"jiti@npm:^1.18.2, jiti@npm:^1.20.0":
   version: 1.21.0
   resolution: "jiti@npm:1.21.0"
   bin:
@@ -18741,6 +18741,15 @@ __metadata:
   bin:
     jiti: bin/jiti.js
   checksum: 289b124cea411c130a14ffe88e3d38376ab44b6695616dfa0a1f32176a8f20ec90cdd6d2b9d81450fc6467cfa4d865f04f49b98452bff0f812bc400fd0ae78d6
+  languageName: node
+  linkType: hard
+
+"jiti@npm:^2.4.2":
+  version: 2.4.2
+  resolution: "jiti@npm:2.4.2"
+  bin:
+    jiti: lib/jiti-cli.mjs
+  checksum: e2b07eb2e3fbb245e29ad288dddecab31804967fc84d5e01d39858997d2743b5e248946defcecf99272275a00284ecaf7ec88b8c841331324f0c946d8274414b
   languageName: node
   linkType: hard
 

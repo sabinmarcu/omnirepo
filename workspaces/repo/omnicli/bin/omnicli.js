@@ -1,9 +1,7 @@
 #!/usr/bin/env node
- 
 
 const url = await import('node:url');
-const { default: jiti } = (await import('jiti'));
-const { transform } = await import('../bin-src/transform.mjs');
+const { createJiti } = (await import('jiti'));
 
 let filename = '';
 try {
@@ -13,6 +11,10 @@ try {
   filename = url.pathToFileURL(__filename);
 }
 
+const jiti = createJiti(filename, {
+  sourceMaps: true,
+});
+
 const toPath = (path) => url.fileURLToPath(
   new URL(
     path,
@@ -20,7 +22,4 @@ const toPath = (path) => url.fileURLToPath(
   ),
 );
 
-jiti(toPath('../src'), {
-  sourceMaps: true,
-  transform,
-})('./cli.ts');
+jiti.import(toPath('../src/cli.ts'));

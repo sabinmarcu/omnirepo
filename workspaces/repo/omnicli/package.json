@@ -55,7 +55,7 @@
     "babel-plugin-parameter-decorator": "*",
     "clipanion": "^3.2.0-rc.14",
     "glob": "^8.0.3",
-    "jiti": "^1.16.1",
+    "jiti": "^2.4.2",
     "memfs": "^3.4.12",
     "moize": "patch:moize@npm%3A6.1.4#~/.yarn/patches/moize-npm-6.1.4-85c2846283.patch",
     "typanion": "^3.12.1",
