@@ -1,3 +1,5 @@
+/* eslint-disable unicorn/no-instanceof-builtins */
+/* eslint-disable unicorn/prefer-global-this */
 import {
   useCallback,
   useEffect,
