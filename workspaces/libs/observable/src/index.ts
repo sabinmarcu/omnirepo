@@ -1,6 +1,6 @@
 export * from './observable.js';
 export * from './subject.js';
-export * from './types.js';
+export type * from './types.js';
 export * from './utils.js';
 
 export * from './observableSet.js';

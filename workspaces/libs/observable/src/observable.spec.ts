@@ -335,7 +335,7 @@ describe('isObservable', () => {
 
     {
       description: 'null',
-      // eslint-disable-next-line unicorn/no-null
+
       given: null,
       expected: false,
     },

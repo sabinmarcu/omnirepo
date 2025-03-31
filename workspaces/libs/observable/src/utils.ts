@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prevent-abbreviations */
 import type {
   MutableStore,
 } from '@sabinmarcu/utils-primitives';
