@@ -42,14 +42,14 @@ module.exports.FIELD_REMOVE_MAP = [
   'exports.["./src/*"].main',
 ];
 module.exports.TREAT_AS_CJS = [
-  "@sabinmarcu/commitlint-config-workspaces",
-]
+  '@sabinmarcu/commitlint-config-workspaces',
+];
 module.exports.FIELD_TSCMONO_PRESET_KEY = 'tscmono.preset';
 module.exports.FIELD_TSCMONO_PRESETS_KEY = 'tscmono.presets';
 module.exports.FIELD_TSCMONO_CONFIG_MAP = {
   workspaces: 'lib',
   'workspaces/components': ['lib', 'react'],
-  'workspaces/personal/commitlint-config-workspaces': ["lib", "commonjs"],
+  'workspaces/personal/commitlint-config-workspaces': ['lib', 'commonjs'],
   'apps/docs': 'docusaurus',
   'apps/droprate': 'viteApp',
   'apps/team-rotation': 'viteApp',
@@ -70,4 +70,4 @@ module.exports.REQUIRED_WORKSPACE_DEPENDENCIES = {
 module.exports.MODULE_DEPENDENCY_ENFORCEMENT_FIELD_LIST = [
   'peerDependencies',
   'optionalDependencies',
-]
+];
