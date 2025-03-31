@@ -21,7 +21,6 @@ presets:
       rootDir: "./src"
       outDir: "./dist"
       tsBuildInfoFile: "./dist/.tsbuildinfo"
-
   commonjs:
     compilerOptions:
       module: "Node16"

@@ -9,9 +9,10 @@ language: typescript
 type: unknown
 tasks:
   start:
-    command: yarn start
+    command: storybook dev -c src -p 6006
     options:
       cache: false
+    type: run
   build:
     command: yarn build
     options:
@@ -21,9 +22,14 @@ tasks:
       - ^:build
 workspace:
   inheritedTasks:
-    include: []
+    include: 
+      - debugPrint
 dependsOn:
   - "@sabinmarcu/types"
   - "@sabinmarcu/utils-test"
   - "@sabinmarcu/moving-mesh-background"
   - "@sabinmarcu/mui-material-theme"
+toolchain:
+  default: node
+  node:
+    version: '22'

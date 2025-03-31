@@ -5,7 +5,7 @@ import type {
 import { ThemeOverriderDecorator } from './addon.js';
 
 const preview: ProjectAnnotations<Renderer> = {
-  decorators: [ThemeOverriderDecorator],
+  decorators: [ThemeOverriderDecorator as any],
 };
 
 export default preview;

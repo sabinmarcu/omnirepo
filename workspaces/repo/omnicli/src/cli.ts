@@ -3,7 +3,8 @@ import path from 'node:path';
 import { compileContext } from './features/index.js';
 import { commands } from './commands/index.js';
 
-import manifest from '../package.json' with { type: 'json' };
+// @ts-ignore
+import manifest from '../package.json';
 
 const {
   name,

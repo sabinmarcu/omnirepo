@@ -7,7 +7,6 @@ tasks:
     inputs: []
     options:
       cache: false
-      runInCI: false
   coverage:
     command: yarn coverage
     inputs: []

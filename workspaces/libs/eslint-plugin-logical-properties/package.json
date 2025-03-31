@@ -1,7 +1,7 @@
 {
   "name": "eslint-plugin-logical-properties",
   "version": "2.0.1",
-  "packageManager": "yarn@4.0.1",
+  "packageManager": "yarn@4.5.1",
   "tscmono": {
     "preset": "lib"
   },
