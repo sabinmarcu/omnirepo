@@ -1,0 +1,69 @@
+{
+  "name": "@sabinmarcu/storybook-addon-mirror-preview",
+  "packageManager": "yarn@4.0.1",
+  "version": "0.0.1",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "main": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./src/*": {
+      "import": "./src/*",
+      "main": "./src/*",
+      "default": "./src/*"
+    },
+    "./*": {
+      "import": "./dist/*.js",
+      "types": "./dist/*.d.ts",
+      "main": "./dist/*.js",
+      "default": "./dist/*.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./esm/*"
+      ]
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "build": {
+    "preset": "../../../.config/build.config.ts"
+  },
+  "devDependencies": {
+    "@sabinmarcu/types": "workspace:*",
+    "@sabinmarcu/utils-test": "workspace:*"
+  },
+  "tscmono": {
+    "preset": "lib",
+    "presets": [
+      "lib",
+      "react"
+    ]
+  },
+  "typeVersions": {
+    "*": {
+      "*": [
+        "./dist/*"
+      ]
+    }
+  },
+  "peerDependencies": {
+    "react": "*",
+    "storybook": "*"
+  },
+  "repository": {
+    "url": "git+https://github.com/sabinmarcu/omnirepo.git",
+    "type": "git",
+    "directory": "workspaces/libs/storybook-addon-mirror-preview"
+  },
+  "homepage": "https:/sabinmarcu.dev/api/storybook-addon-mirror-preview"
+}

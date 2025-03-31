@@ -1,0 +1,12 @@
+project:
+  name: storybook-addon-mirror-preview
+  description: Storybook addon used to mirror preview DOM nodes to manager
+  channel: "#ui"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: library
+dependsOn:
+  - "@sabinmarcu/types"
+  - "@sabinmarcu/utils-test"
