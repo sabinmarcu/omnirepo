@@ -1,0 +1,33 @@
+releases:
+  "@sabinmarcu/moving-mesh-background": patch
+
+undecided:
+  - "@sabinmarcu/docs"
+  - "@sabinmarcu/droprate"
+  - "@sabinmarcu/team-rotation"
+  - "@sabinmarcu/timer40k"
+  - "@sabinmarcu/mui-material-theme"
+  - "@sabinmarcu/theme"
+  - "@sabinmarcu/theme-storybook"
+  - "@sabinmarcu/use-duplicate-ref"
+  - "@sabinmarcu/use-local-storage"
+  - "@sabinmarcu/use-match-media"
+  - "@sabinmarcu/use-prefers-reduced-motion"
+  - "@sabinmarcu/config"
+  - "@sabinmarcu/debug"
+  - eslint-plugin-logical-properties
+  - "@sabinmarcu/jotai-storage-adapter-querystring"
+  - "@sabinmarcu/observable"
+  - "@sabinmarcu/storybook-addon-mirror-preview"
+  - "@sabinmarcu/storybook-addon-split-toolbars"
+  - "@sabinmarcu/storybook-addon-theme-overrider"
+  - "@sabinmarcu/stylesheet"
+  - "@sabinmarcu/types"
+  - "@sabinmarcu/commitlint-config-workspaces"
+  - "@sabinmarcu/eslint-config"
+  - "@sabinmarcu/omnicli"
+  - "@sabinmarcu/utils-fs"
+  - "@sabinmarcu/utils-path"
+  - "@sabinmarcu/utils-primitives"
+  - "@sabinmarcu/utils-repo"
+  - "@sabinmarcu/utils-test"

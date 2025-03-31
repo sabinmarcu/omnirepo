@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-global-this */
 import type {
   CSSProperties,
   HTMLAttributes,
