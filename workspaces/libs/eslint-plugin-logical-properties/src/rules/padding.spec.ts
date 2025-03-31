@@ -1,6 +1,6 @@
+import type { RuleTester } from 'eslint';
 import rule, { ruleConfig } from './padding.js';
 import { runDirectionalRulesTests } from '../parsers/directional.js';
-import { RuleTester } from 'eslint';
 import { generateDirectionalShorthandError } from '../parsers/directionalShorthand.js';
 import { runEslintTests } from '../utils/runEslintTests.js';
 
@@ -9,10 +9,11 @@ describe('Padding Rule', () => {
   const tests = [
     (() => {
       const [a, b, c, d] = [
-        '${a + 1}', '${b + 2}', '${c + 3}', '${d + 4}'
+        // eslint-disable-next-line no-template-curly-in-string
+        '${a + 1}', '${b + 2}', '${c + 3}', '${d + 4}',
 
       ] as const;
-      const source = `\`${a} ${b} ${c} ${d}\``
+      const source = `\`${a} ${b} ${c} ${d}\``;
       const results = [
         `"paddingBlockStart":\`${a}\``,
         `"paddingInlineEnd":\`${b}\``,
@@ -21,21 +22,24 @@ describe('Padding Rule', () => {
       ];
       const test = {
         code: `style({padding: ${source}})`,
-        errors: [{ message: generateDirectionalShorthandError(
-          `padding: ${source}`,
-          results,
-        )}],
-        output: `style({${results.join(",")}})`,
+        errors: [{
+          message: generateDirectionalShorthandError(
+            `padding: ${source}`,
+            results,
+          ),
+        }],
+        output: `style({${results.join(',')}})`,
         options: [{}],
-      } satisfies RuleTester.InvalidTestCase
+      } satisfies RuleTester.InvalidTestCase;
       return test;
     })(),
     (() => {
       const [a, b] = [
+        // eslint-disable-next-line no-template-curly-in-string
         '${a + 1}', '${b + 2}',
 
       ] as const;
-      const source = `\`${a} ${b}\``
+      const source = `\`${a} ${b}\``;
       const results = [
         `"paddingBlockStart":\`${a}\``,
         `"paddingBlockEnd":\`${a}\``,
@@ -44,21 +48,24 @@ describe('Padding Rule', () => {
       ];
       const test = {
         code: `style({padding: ${source}})`,
-        errors: [{ message: generateDirectionalShorthandError(
-          `padding: ${source}`,
-          results,
-        )}],
-        output: `style({${results.join(",")}})`,
+        errors: [{
+          message: generateDirectionalShorthandError(
+            `padding: ${source}`,
+            results,
+          ),
+        }],
+        output: `style({${results.join(',')}})`,
         options: [{}],
-      } satisfies RuleTester.InvalidTestCase
+      } satisfies RuleTester.InvalidTestCase;
       return test;
     })(),
     (() => {
       const [a, b, c] = [
-        '${a + 1}', '${b + 2}', '${c + 3}'
+        // eslint-disable-next-line no-template-curly-in-string
+        '${a + 1}', '${b + 2}', '${c + 3}',
 
       ] as const;
-      const source = `\`${a} ${c} ${b}\``
+      const source = `\`${a} ${c} ${b}\``;
       const results = [
         `"paddingBlockStart":\`${a}\``,
         `"paddingInlineStart":\`${c}\``,
@@ -67,20 +74,22 @@ describe('Padding Rule', () => {
       ];
       const test = {
         code: `style({padding: ${source}})`,
-        errors: [{ message: generateDirectionalShorthandError(
-          `padding: ${source}`,
-          results,
-        )}],
-        output: `style({${results.join(",")}})`,
+        errors: [{
+          message: generateDirectionalShorthandError(
+            `padding: ${source}`,
+            results,
+          ),
+        }],
+        output: `style({${results.join(',')}})`,
         options: [{}],
-      } satisfies RuleTester.InvalidTestCase
+      } satisfies RuleTester.InvalidTestCase;
       return test;
     })(),
     (() => {
-      const [a, b,] = [
+      const [a, b] = [
         'calc(a + 1)', 'calc(b + 2)',
       ] as const;
-      const source = `\`${a} ${b}\``
+      const source = `\`${a} ${b}\``;
       const results = [
         `"paddingBlockStart":\`${a}\``,
         `"paddingBlockEnd":\`${a}\``,
@@ -89,20 +98,22 @@ describe('Padding Rule', () => {
       ];
       const test = {
         code: `style({padding: ${source}})`,
-        errors: [{ message: generateDirectionalShorthandError(
-          `padding: ${source}`,
-          results,
-        )}],
-        output: `style({${results.join(",")}})`,
+        errors: [{
+          message: generateDirectionalShorthandError(
+            `padding: ${source}`,
+            results,
+          ),
+        }],
+        output: `style({${results.join(',')}})`,
         options: [{}],
-      } satisfies RuleTester.InvalidTestCase
+      } satisfies RuleTester.InvalidTestCase;
       return test;
     })(),
     (() => {
       const [a, b] = [
         'calc(a + 1)', 'calc(b + var(c) / 3)',
       ] as const;
-      const source = `\`${a} ${b}\``
+      const source = `\`${a} ${b}\``;
       const results = [
         `"paddingBlockStart":\`${a}\``,
         `"paddingBlockEnd":\`${a}\``,
@@ -111,19 +122,21 @@ describe('Padding Rule', () => {
       ];
       const test = {
         code: `style({padding: ${source}})`,
-        errors: [{ message: generateDirectionalShorthandError(
-          `padding: ${source}`,
-          results,
-        )}],
-        output: `style({${results.join(",")}})`,
+        errors: [{
+          message: generateDirectionalShorthandError(
+            `padding: ${source}`,
+            results,
+          ),
+        }],
+        output: `style({${results.join(',')}})`,
         options: [{}],
-      } satisfies RuleTester.InvalidTestCase
+      } satisfies RuleTester.InvalidTestCase;
       return test;
-    })()
-  ]
+    })(),
+  ];
   runEslintTests(
-    'manual padding template strings', 
-    rule, 
-    { invalid: tests }
+    'manual padding template strings',
+    rule,
+    { invalid: tests },
   );
 });

@@ -26,13 +26,13 @@ export const directionalShorthandMappingTransformerFactory: DirectionalTransform
   }
   const propertyName = getValidPropertyName(property)!;
   const [source, target] = [
-    context.sourceCode.getText(property),
+    context.sourceCode.getText(property as any),
     shorthandMappings[propertyName],
   ];
-  const value = context.sourceCode.getText(property.value);
+  const value = context.sourceCode.getText(property.value as any);
   const replacements = generateShorthandMappings(value, target);
   context.report({
-    node,
+    node: node as any,
     message: generateDirectionalShorthandError(source, replacements),
     fix(fixer) {
       return fixer.replaceText(property, replacements.join(','));
