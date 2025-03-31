@@ -1,0 +1,12 @@
+project:
+  name: theme
+  description: Personal Vanilla Extract theme config
+  channel: "#ui"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: library
+dependsOn:
+  - "@sabinmarcu/types"
+  - "@sabinmarcu/utils-test"
