@@ -4,4 +4,5 @@ export {
 export {
   toPath,
 } from './toPath.js';
-export * from './types.js';
+
+export type * from './types.js';

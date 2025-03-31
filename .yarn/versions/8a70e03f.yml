@@ -8,6 +8,7 @@ releases:
   "@sabinmarcu/observable": patch
   "@sabinmarcu/omnicli": patch
   "@sabinmarcu/types": patch
+  "@sabinmarcu/utils-path": patch
   eslint-plugin-logical-properties: patch
 
 declined:
@@ -29,7 +30,6 @@ undecided:
   - "@sabinmarcu/storybook-addon-split-toolbars"
   - "@sabinmarcu/storybook-addon-theme-overrider"
   - "@sabinmarcu/stylesheet"
-  - "@sabinmarcu/utils-path"
   - "@sabinmarcu/utils-primitives"
   - "@sabinmarcu/utils-repo"
   - "@sabinmarcu/utils-test"
