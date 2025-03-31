@@ -4,6 +4,7 @@ releases:
 declined:
   - "@sabinmarcu/mui-material-theme"
   - "@sabinmarcu/use-duplicate-ref"
+  - "@sabinmarcu/use-local-storage"
 
 undecided:
   - "@sabinmarcu/docs"
@@ -12,7 +13,6 @@ undecided:
   - "@sabinmarcu/timer40k"
   - "@sabinmarcu/theme"
   - "@sabinmarcu/theme-storybook"
-  - "@sabinmarcu/use-local-storage"
   - "@sabinmarcu/use-match-media"
   - "@sabinmarcu/use-prefers-reduced-motion"
   - "@sabinmarcu/config"
