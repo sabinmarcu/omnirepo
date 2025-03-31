@@ -3,6 +3,7 @@ releases:
   "@sabinmarcu/debug": patch
   "@sabinmarcu/jotai-storage-adapter-querystring": patch
   "@sabinmarcu/moving-mesh-background": patch
+  "@sabinmarcu/observable": patch
   eslint-plugin-logical-properties: patch
 
 declined:
@@ -19,7 +20,6 @@ undecided:
   - "@sabinmarcu/timer40k"
   - "@sabinmarcu/theme"
   - "@sabinmarcu/theme-storybook"
-  - "@sabinmarcu/observable"
   - "@sabinmarcu/storybook-addon-mirror-preview"
   - "@sabinmarcu/storybook-addon-split-toolbars"
   - "@sabinmarcu/storybook-addon-theme-overrider"
