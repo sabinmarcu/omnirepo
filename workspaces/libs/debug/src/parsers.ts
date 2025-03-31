@@ -39,7 +39,7 @@ export const parseDebugStringFragment = (
       enabled = false;
     }
     const channelIndex = stringToProcess.lastIndexOf('#');
-    if (channelIndex >= 0) {
+    if (channelIndex !== -1) {
       channel = stringToProcess.slice(Math.max(0, channelIndex + 1));
       if (channel === '') {
         throw new InvalidDebugStringError('Channel Empty');
@@ -53,7 +53,7 @@ export const parseDebugStringFragment = (
       stringToProcess = stringToProcess.slice(0, Math.max(0, channelIndex));
     }
     const namespaceIndex = stringToProcess.indexOf(':');
-    if (namespaceIndex >= 0) {
+    if (namespaceIndex !== -1) {
       namespace = stringToProcess.slice(0, Math.max(0, namespaceIndex));
       if (namespace === '') {
         throw new InvalidDebugStringError('Namespace empty');
