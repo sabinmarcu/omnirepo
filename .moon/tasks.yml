@@ -26,24 +26,14 @@ tasks:
       cache: false
       runInCI: false
 
-  # fixExports:
-  #   command: "omni fix exports"
-  #   inputs:
-  #     - package.json
-  #   outputs:
-  #     - package.json
-  #   options:
-  #     cache: false
-  #   deps:
-  #     - "^:fixExports"
-  #     - "~:fixDependsOn"
+  debugPrint: 
+    script: "echo Yarn: $(yarn --version) Node: $(node --version)"
 
   build:
     command: "tsc -b tsconfig.build.json"
     type: build
     deps:
       - "root:init"
-      # - "~:fixExports"
     inputs:
       - "@globs(sources)"
       - "@files(buildConfig)"
@@ -61,26 +51,10 @@ tasks:
     inputs:
       - "@globs(sources)"
 
-  # devExports:
-  #   command: "omni fix exports"
-  #   args:
-  #     - --dev
-  #   inputs:
-  #     - package.json
-  #   outputs:
-  #     - package.json
-  #   options:
-  #     cache: false
-  #     runInCI: false
-  #   deps:
-  #     - "^:devExports"
-  #     - "~:fixDependsOn"
-
   dev:
     command: "tsc -b tsconfig.build.json --watch"
     deps:
       - "root:init"
-      # - "~:devExports"
     inputs:
       - "@globs(sources)"
       - "@files(buildConfig)"
