@@ -2,7 +2,7 @@
 
 import path from 'node:path';
 import fs from 'node:fs';
-import util from 'node:util';
+import { promisify } from 'node:util';
 import glob from 'glob';
 import url from 'node:url';
 import { config } from './jest.config.base.mjs';
@@ -20,21 +20,24 @@ const configRelativePath = path.relative(
   configDirectory,
 );
 
-const globPromised = util.promisify(glob);
+const globPromised = promisify(glob);
 
 /**
  * Generate a list of setup files with given glob
  * @param {string} inputGlob Glob to be checked against
  * @returns Promise<string[]>
  */
-const globSetupFiles = async (inputGlob) => (await globPromised(
-  inputGlob,
-  { cwd: configDirectory },
-)).map((file) => path.join(
-  '<rootDir>',
-  configRelativePath,
-  file,
-));
+const globSetupFiles = async (inputGlob) => {
+  const rawFiles = await globPromised(
+    inputGlob,
+    { cwd: configDirectory },
+  );
+  return rawFiles.map((file) => path.join(
+    '<rootDir>',
+    configRelativePath,
+    file,
+  ));
+};
 
 const setupFiles = await globSetupFiles('setupFiles/**/*');
 const setupFilesAfterEnv = await globSetupFiles('setupFilesAfterEnv/**/*');
@@ -76,7 +79,10 @@ const generateFromPath = (
     ],
     displayName: name,
     rootDir: rootRelativePath,
-    ...(extra?.({ rootRelativePath, relativePath })),
+    ...(extra?.({
+      rootRelativePath,
+      relativePath,
+    })),
   };
 
   return packageConfig;

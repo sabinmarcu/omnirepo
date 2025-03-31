@@ -5,5 +5,7 @@ module.exports.DOCS_WORKSPACE_EXCLUDES = [
 module.exports.STORYBOOK_WORKSPACE_NAME = '@sabinmarcu/storybook';
 module.exports.STORYBOOK_WORKSPACE_PATHS = [
   'apps',
-  'workspaces/components'
+  'workspaces/components',
+  'workspaces/personal',
+  'workspaces/libs',
 ];
