@@ -7,6 +7,7 @@ releases:
   "@sabinmarcu/moving-mesh-background": patch
   "@sabinmarcu/observable": patch
   "@sabinmarcu/omnicli": patch
+  "@sabinmarcu/storybook-addon-split-toolbars": major
   "@sabinmarcu/storybook-addon-theme-overrider": major
   "@sabinmarcu/stylesheet": major
   "@sabinmarcu/types": patch
@@ -32,4 +33,3 @@ undecided:
   - "@sabinmarcu/theme"
   - "@sabinmarcu/theme-storybook"
   - "@sabinmarcu/storybook-addon-mirror-preview"
-  - "@sabinmarcu/storybook-addon-split-toolbars"

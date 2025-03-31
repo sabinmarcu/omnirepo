@@ -1,0 +1,12 @@
+project:
+  name: storybook-addon-split-toolbars
+  description: Storybook addon with split toolbar support
+  channel: "#ui"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: library
+dependsOn:
+  - "@sabinmarcu/types"
+  - "@sabinmarcu/utils-test"
