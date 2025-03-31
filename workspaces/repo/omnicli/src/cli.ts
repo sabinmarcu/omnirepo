@@ -3,11 +3,12 @@ import path from 'node:path';
 import { compileContext } from './features/index.js';
 import { commands } from './commands/index.js';
 
-import {
+import manifest from '../package.json' with { type: 'json' };
+
+const {
   name,
   version,
-  // @ts-ignore
-} from '../package.json';
+} = manifest;
 
 const [node, app, ...rest] = process.argv;
 

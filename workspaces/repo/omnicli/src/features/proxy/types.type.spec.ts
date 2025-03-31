@@ -1,12 +1,12 @@
-import type { PrimaryPathsOfCommand } from '../paths';
+import type { PrimaryPathsOfCommand } from '../paths/index.js';
 import type {
   FindKV,
   KVSubcommandsList,
   MapOfSubcommandsList,
 } from './types.js';
-import type { testSubcommands } from '../__mocks__/list';
-import type { Test1 } from '../__mocks__/test1';
-import type { Test2 } from '../__mocks__/test2';
+import type { testSubcommands } from '../__mocks__/list.js';
+import type { Test1 } from '../__mocks__/test1.js';
+import type { Test2 } from '../__mocks__/test2.js';
 
 type PrimaryPathOfCommandTest1 = PrimaryPathsOfCommand<typeof Test1>;
 //    ^? type PrimaryPathOfCommandTest1 = "test1"
