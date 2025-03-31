@@ -1,6 +1,6 @@
 $schema: "https://moonrepo.dev/schemas/toolchain.json"
 node:
-  version: "21.0.0"
+  version: "22.0.0"
   packageManager: "yarn"
   yarn:
     version: "4.5.1"
