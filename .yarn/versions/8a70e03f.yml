@@ -16,6 +16,7 @@ declined:
   - "@sabinmarcu/use-local-storage"
   - "@sabinmarcu/use-match-media"
   - "@sabinmarcu/use-prefers-reduced-motion"
+  - "@sabinmarcu/utils-fs"
 
 undecided:
   - "@sabinmarcu/docs"
@@ -28,7 +29,6 @@ undecided:
   - "@sabinmarcu/storybook-addon-split-toolbars"
   - "@sabinmarcu/storybook-addon-theme-overrider"
   - "@sabinmarcu/stylesheet"
-  - "@sabinmarcu/utils-fs"
   - "@sabinmarcu/utils-path"
   - "@sabinmarcu/utils-primitives"
   - "@sabinmarcu/utils-repo"
