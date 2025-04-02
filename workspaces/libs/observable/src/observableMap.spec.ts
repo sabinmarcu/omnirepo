@@ -1,4 +1,10 @@
 import {
+  describe,
+  it,
+  expect,
+  vi,
+} from 'vitest';
+import {
   observableMap,
 } from './observableMap.js';
 
@@ -34,7 +40,7 @@ describe('observableMap', () => {
         1,
       ],
     ]));
-    const subscriber = jest.fn();
+    const subscriber = vi.fn();
 
     map.subscribe({ next: subscriber });
     expect(subscriber).toHaveBeenCalledTimes(1);
@@ -68,7 +74,7 @@ describe('observableMap', () => {
         2,
       ],
     ]));
-    const subscriber = jest.fn();
+    const subscriber = vi.fn();
 
     map.subscribe({ next: subscriber });
     expect(subscriber).toHaveBeenCalledTimes(1);
@@ -102,7 +108,7 @@ describe('observableMap', () => {
         2,
       ],
     ]));
-    const subscriber = jest.fn();
+    const subscriber = vi.fn();
 
     map.subscribe({ next: subscriber });
     expect(subscriber).toHaveBeenCalledTimes(1);
@@ -191,7 +197,7 @@ describe('observableMap', () => {
         2,
       ],
     ]));
-    const callback = jest.fn();
+    const callback = vi.fn();
 
     // eslint-disable-next-line unicorn/no-array-for-each
     map.forEach(callback);

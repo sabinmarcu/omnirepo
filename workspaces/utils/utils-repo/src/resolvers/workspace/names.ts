@@ -22,7 +22,7 @@ const moize = moizeImport as unknown as Moize;
 export const getWorkspacesNames = moize.promise(async (
   from: string,
 ) => {
-  const paths = await getWorkspacesPaths.sync(from);
+  const paths = await getWorkspacesPaths.async(from);
   const root = walker.sync(
     from,
     test.sync,

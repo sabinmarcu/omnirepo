@@ -27,6 +27,10 @@ tasks:
       runInCI: false
 
   debugPrint: 
+    local: true
+    options:
+      cache: false
+      runInCI: false
     script: "echo Yarn: $(yarn --version) Node: $(node --version)"
 
   build:
@@ -42,15 +46,6 @@ tasks:
     options:
       cache: true
 
-  test:
-    command: "jest"
-    args:
-      - --passWithNoTests
-    deps:
-      - "~:build"
-    inputs:
-      - "@globs(sources)"
-
   dev:
     command: "tsc -b tsconfig.build.json --watch"
     deps:
@@ -64,16 +59,44 @@ tasks:
       runInCI: false
       persistent: false
 
-  testDev:
-    command: "jest"
+  testRaw:
+    command: "moon root:testWorkspace"
+    args: 
+      - --
+      - --project 
+      - $VITEST_PROJECT
     type: test
-    args:
-      - --watch
     inputs:
       - "@globs(sources)"
     options:
-      cache: false
+      internal: true
+      envFile: '.env'
+
+  test:
+    extends: testRaw
+    args:
+      - --run
+    options:
+      internal: false
+      persistent: false
+
+  testDev:
+    extends: testRaw
+    options:
+      internal: false
       runInCI: false
+      cache: false
+      persistent: true
+
+  testUi:
+    extends: testRaw
+    args: 
+      - --ui
+    options:
+      internal: false
+      runInCI: false
+      cache: false
+      persistent: true
 
   lint:
     command: "eslint"

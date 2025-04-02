@@ -1,7 +1,7 @@
 import type { Rule } from 'eslint';
 import {
-  RuleTester,
-} from 'eslint';
+  run,
+} from 'eslint-vitest-rule-tester';
 import type { TestInput } from '../types.js';
 
 const trimTestInput = (input: any[]) => input.map(({
@@ -25,14 +25,13 @@ export const runEslintTests = (
     invalid = [],
   }: TestInput,
 ) => {
-  const ruleTester = new RuleTester({
-    languageOptions: {
+  run({
+    name: testName,
+    rule,
+    parserOptions: {
       ecmaVersion: 2020,
       sourceType: 'module',
     },
-  });
-
-  ruleTester.run(testName, rule, {
     valid: trimTestInput(valid),
     invalid: trimTestInput(invalid),
   });

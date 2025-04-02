@@ -1,6 +1,12 @@
 import {
+  vi,
+  describe,
+  it,
+  expect,
+} from 'vitest';
+
+import {
   setupFsMockAll,
-  compileFixtures,
 } from '@sabinmarcu/utils-test';
 import {
   readJson,
@@ -15,12 +21,32 @@ export type ReadJsonFixtures = {
   | { error: string }
 );
 
-const fixtures = compileFixtures<ReadJsonFixtures>(
-  new URL('__mocks__/readJson', import.meta.url),
-);
+const fixtures = await vi.hoisted(async () => {
+  const {
+    compileFixtures,
+  } = await import('@sabinmarcu/utils-test');
+  return compileFixtures<ReadJsonFixtures>(
+    new URL('__mocks__/readJson', import.meta.url),
+    undefined,
+  );
+});
 
-jest.mock('node:fs', jest.requireActual('@sabinmarcu/utils-test').mockFs);
-jest.mock('node:fs/promises', jest.requireActual('@sabinmarcu/utils-test').mockFsPromises);
+vi.mock('node:fs', async () => {
+  const utilitiesTest: any = await vi.importActual('@sabinmarcu/utils-test');
+  const fsMock = utilitiesTest.mockFs();
+  return {
+    default: fsMock,
+    ...fsMock,
+  };
+});
+vi.mock('node:fs/promises', async () => {
+  const utilitiesTest: any = await vi.importActual('@sabinmarcu/utils-test');
+  const fsMock = utilitiesTest.mockFsPromises();
+  return {
+    default: fsMock,
+    ...fsMock,
+  };
+});
 
 describe('readJson', () => {
   describe.each(fixtures)(

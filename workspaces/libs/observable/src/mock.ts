@@ -1,3 +1,7 @@
+import {
+  afterEach,
+  beforeEach,
+} from 'vitest';
 import { mutableStore } from '@sabinmarcu/utils-primitives';
 import { observableKeys } from './constants.js';
 import type {

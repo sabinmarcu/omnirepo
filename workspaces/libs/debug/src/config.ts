@@ -1,3 +1,4 @@
+import { afterEach } from 'vitest';
 import {
   subject,
 } from '@sabinmarcu/observable';

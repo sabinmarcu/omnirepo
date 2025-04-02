@@ -1,7 +1,7 @@
-import { compileFixtures } from '@sabinmarcu/utils-test';
 import type { PathWalkerFunction } from '../../types.js';
 
 export type WalkFsFixture = {
+  name: string,
   setup: Record<string, any>,
   input: Parameters<PathWalkerFunction>,
 } & (
@@ -9,9 +9,42 @@ export type WalkFsFixture = {
   | { error: string }
 );
 
-const fixtures = () => compileFixtures<WalkFsFixture>(
-  new URL('.', import.meta.url),
-  ['index.ts'],
-);
+const fixtures = () => [
+  {
+    name: 'error',
+    setup: {
+      '/path': '',
+    },
+    input: [
+      '/path',
+      () => false,
+    ],
+    error: 'Reached root',
+  },
+  {
+    name: 'process',
+    setup: {
+      '/path': '',
+    },
+    input: [
+      '/path',
+      () => true,
+      (value: any) => `processed ${value}`,
+    ],
+    output: 'processed /path',
+  },
+  {
+    name: 'valid',
+
+    setup: {
+      '/path': '',
+    },
+    input: [
+      '/path',
+      () => true,
+    ],
+    output: '/path',
+  },
+] as const satisfies WalkFsFixture[];
 
 export default fixtures;

@@ -1,3 +1,8 @@
+import {
+  describe,
+  it,
+  expect,
+} from 'vitest';
 import { toPath } from './toPath.js';
 
 describe('toPath', () => {

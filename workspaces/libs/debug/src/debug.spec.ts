@@ -1,3 +1,8 @@
+import {
+  describe,
+  it,
+  expect,
+} from 'vitest';
 import { subject } from '@sabinmarcu/observable';
 import {
   debugDefinitionFromInput,

@@ -1,6 +1,8 @@
 // @ts-check
 /* eslint-disable no-continue */
 
+const fs = require('node:fs/promises');
+const path = require('node:path');
 const { defineConfig } = require('@yarnpkg/types');
 const { default: moize } = require('moize');
 
@@ -30,13 +32,13 @@ const { WORKSPACE_PROTOCOL_RANGE } = require('./.config/yarn.cjs');
  * @typedef {import('@yarnpkg/types').Yarn.Constraints.Context} Context
  */
 
-const getMoonConfigOf = moize.promise(async (path) => {
+const getMoonConfigOf = moize.promise(async (workspacePath) => {
   const { readFileSync } = await import('node:fs');
   // eslint-disable-next-line unicorn/import-style
   const { resolve } = await import('node:path');
   const { parse } = await import('yaml');
 
-  const moonConfig = parse(readFileSync(resolve(path, 'moon.yml'), 'utf8'));
+  const moonConfig = parse(readFileSync(resolve(workspacePath, 'moon.yml'), 'utf8'));
 
   return moonConfig;
 });
@@ -59,9 +61,6 @@ async function ensureWorkspaceProtocol({ Yarn }) {
 
 const shouldSkipConsistentDependencyEnforcement = (dependency) => {
   if (MODULE_DEPENDENCY_ENFORCEMENT_FIELD_LIST.includes(dependency.type)) {
-    return true;
-  }
-  if (!dependency.workspace.pkg[dependency.type]?.[dependency.ident]) {
     return true;
   }
   return false;
@@ -227,6 +226,22 @@ async function ensureTypeModule({ Yarn }) {
 }
 
 /**
+ * Ensure that all are type:module unless otherwise specified
+ *
+ * @param {Context} context
+ */
+async function ensureEnvVariable({ Yarn }) {
+  for (const workspace of Yarn.workspaces()) {
+    const envPath = path.resolve(workspace.cwd, '.env');
+    await fs.writeFile(
+      envPath,
+      `VITEST_PROJECT=${workspace.ident}`,
+      'utf8',
+    );
+  }
+}
+
+/**
  * A collection of all constraints defined in this file
  *
  * @param {Context} context
@@ -240,6 +255,7 @@ async function constraints(context) {
   await ensureStorybookDependencies(context);
   await ensureHomepageAndRepository(context);
   await ensureTypeModule(context);
+  await ensureEnvVariable(context);
 }
 
 module.exports = defineConfig({

@@ -22,14 +22,27 @@ tasks:
       - ^:build
 workspace:
   inheritedTasks:
-    include: 
+    include:
       - debugPrint
+      - fixDependsOn
 dependsOn:
   - "@sabinmarcu/types"
   - "@sabinmarcu/utils-test"
+  - "@sabinmarcu/commitlint-config-workspaces"
+  - "@sabinmarcu/config"
+  - "@sabinmarcu/debug"
+  - "@sabinmarcu/eslint-config"
+  - "@sabinmarcu/jotai-storage-adapter-querystring"
   - "@sabinmarcu/moving-mesh-background"
   - "@sabinmarcu/mui-material-theme"
+  - "@sabinmarcu/observable"
+  - "@sabinmarcu/storybook-addon-mirror-preview"
+  - "@sabinmarcu/storybook-addon-split-toolbars"
+  - "@sabinmarcu/storybook-addon-theme-overrider"
+  - "@sabinmarcu/stylesheet"
+  - "@sabinmarcu/theme"
+  - eslint-plugin-logical-properties
 toolchain:
   default: node
   node:
-    version: '22'
+    version: "23"

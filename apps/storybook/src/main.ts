@@ -1,11 +1,14 @@
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
-import { glob } from 'glob';
+import glob from 'glob';
 import fs from 'node:fs';
 import themeOverride from '@sabinmarcu/storybook-addon-theme-overrider';
 import mirrorPreview from '@sabinmarcu/storybook-addon-mirror-preview';
 import { theme } from '@sabinmarcu/theme/theme';
+import { promisify } from 'node:util';
+
+const globPromisified = promisify(glob);
 
 themeOverride.config = {
   pageBackground: theme.colors.background.page,
@@ -39,7 +42,7 @@ const getStories = async () => {
         category,
         paths,
       ]) => {
-        const list = await glob(paths, { cwd: rootPath });
+        const list = await globPromisified(paths, { cwd: rootPath });
         return Promise.all(list
           .map((it) => path.join(rootPath, it))
           .filter((it) => fs.statSync(it).isDirectory())

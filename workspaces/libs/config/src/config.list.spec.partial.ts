@@ -1,3 +1,8 @@
+import {
+  it,
+  expect,
+  vi,
+} from 'vitest';
 import type { Observable } from '@sabinmarcu/observable';
 import {
   observable,
@@ -10,7 +15,7 @@ export const generateSimpleTests = (config = simpleConfig) => {
     const expectedValue = { foo: 'bar' };
     const result = config(expectedValue);
     expect(result.value).toEqual(expectedValue);
-    const next = jest.fn();
+    const next = vi.fn();
     result.subscribe({ next });
     expect(next).toHaveBeenCalledWith(expectedValue);
   });
@@ -26,7 +31,7 @@ export const generateSimpleTests = (config = simpleConfig) => {
       observable.from(undefined),
     ) as Observable<number>;
     expect(result.value).toEqual(5);
-    const next = jest.fn();
+    const next = vi.fn();
     result.subscribe({ next });
     expect(next).toHaveBeenCalledWith(5);
   });
@@ -37,7 +42,7 @@ export const generateSimpleTests = (config = simpleConfig) => {
       observable.from(undefined),
     ) as Observable<number>;
     expect(result.value).toEqual(undefined);
-    const next = jest.fn();
+    const next = vi.fn();
     result.subscribe({ next });
     expect(next).toHaveBeenCalledWith(undefined);
   });
@@ -49,7 +54,7 @@ export const generateSimpleTests = (config = simpleConfig) => {
     expect(result.value).toEqual(11);
     expect(testSubject.value).toEqual(undefined);
 
-    const next = jest.fn();
+    const next = vi.fn();
     result.subscribe({ next });
     expect(next).toHaveBeenLastCalledWith(11);
 
@@ -69,7 +74,7 @@ export const generateSimpleTests = (config = simpleConfig) => {
     const subject2 = subject(21);
     const result = config(11, subject1, subject2);
     expect(result.value).toEqual(21);
-    const next = jest.fn();
+    const next = vi.fn();
     result.subscribe({ next });
     expect(next).toHaveBeenLastCalledWith(21);
     next.mockClear();

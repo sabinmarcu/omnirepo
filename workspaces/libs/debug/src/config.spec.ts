@@ -1,4 +1,10 @@
 import {
+  describe,
+  it,
+  expect,
+  vi,
+} from 'vitest';
+import {
   isObservable,
 } from '@sabinmarcu/observable';
 import {
@@ -53,7 +59,7 @@ describe('debugString', () => {
 
   it('should emit a string when a new value is pushed to the subject', () => {
     const expectedOutput = 'test';
-    const next = jest.fn();
+    const next = vi.fn();
     debugString.subscribe({ next });
 
     expect(debugString.value).toBe(environment.DEBUG);
@@ -63,15 +69,6 @@ describe('debugString', () => {
 
     expect(debugString.value).toBe(expectedOutput);
     expect(next).toHaveBeenLastCalledWith(expectedOutput);
-  });
-});
-
-describe('debugString', () => {
-  it('should be a string', () => {
-    expect(typeof debugString).toBe('object');
-  });
-  it('should be an observable', () => {
-    expect(isObservable(debugString)).toBe(true);
   });
 });
 
@@ -101,7 +98,7 @@ describe('debugRules', () => {
         channel: undefined,
       },
     ];
-    const next = jest.fn();
+    const next = vi.fn();
     debugRules.subscribe({ next });
 
     expect(debugString.value).toBe(environment.DEBUG);

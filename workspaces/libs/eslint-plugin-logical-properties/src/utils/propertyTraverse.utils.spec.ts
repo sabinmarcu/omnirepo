@@ -1,4 +1,8 @@
-/* eslint-disable unicorn/prevent-abbreviations */
+import {
+  describe,
+  it,
+  expect,
+} from 'vitest';
 import { propertyTraverseWildcard } from './propertyTraverse.constants.js';
 import {
   generateObjectStringFromPath,
@@ -216,7 +220,7 @@ describe('propertyTraverse.utils', () => {
       expect(generateObjectStringsFromPaths(inputs, JSON.stringify(insert))).toEqual(outputs);
     });
     it('should properly combine all test case inputs without empty input into outputs', () => {
-      const filteredInputs = inputs.filter((it) => !!it);
+      const filteredInputs = inputs.filter((input) => !!input);
       expect(generateObjectStringsFromPaths(
         filteredInputs,
         JSON.stringify(insert),

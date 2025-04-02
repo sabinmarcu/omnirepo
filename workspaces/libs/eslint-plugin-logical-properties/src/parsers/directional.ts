@@ -3,29 +3,23 @@ import type {
 } from 'estree';
 import type {
   Rule,
-  RuleTester,
 } from 'eslint';
-import { runEslintTests } from '../utils/runEslintTests.js';
 import type {
   DirectionalRuleConfig,
   PluginOptions,
 } from '../types.js';
 import { isValidProperty } from '../utils/isValidProperty.js';
 import {
-  directionalMappingTestGenerator,
   directionalMappingTransformerFactory,
 } from './directionalMapping.js';
 import {
-  directionalShorthandTestGenerator,
   directionalShorthandTransformerFactory,
 } from './directionalShorthand.js';
 import { MustDisablePropertyError } from '../utils/MustDisablePropertyError.js';
 import {
-  directionalShorthandMappingTestGenerator,
   directionalShorthandMappingTransformerFactory,
 } from './directionalShorthandMapping.js';
 import {
-  directionalDisableTestGenerator,
   directionalDisableTransformerFactory,
 } from './directionalDisable.js';
 import {
@@ -35,7 +29,6 @@ import {
   defaultResolvers,
 } from '../constants.js';
 import {
-  directionalValueTestGenerator,
   directionalValueTransformerFactory,
 } from './directionalValue.js';
 import { configSchema } from '../config.js';
@@ -209,51 +202,3 @@ export const generateDirectionalRules = (config: DirectionalRuleConfig): Rule.Ru
     };
   },
 });
-
-export const runDirectionalRulesTests = (
-  testName: string,
-  rule: Rule.RuleModule,
-  config: DirectionalRuleConfig,
-) => {
-  const functions = [...defaultFunctions, 'customStyle'] as const;
-  const jsxAttributes = [...defaultJsxAttributes, 'customStyle'] as const;
-  const keyframes = [...defaultKeyframes, 'customKeyframes'] as const;
-  const resolvers = [...defaultResolvers, 'custom.property', 'custom.wildcard.*'] as const;
-  const options = {
-    functions,
-    jsxAttributes,
-    keyframes,
-    resolvers,
-  } as const satisfies PluginOptions;
-
-  const generatorInput = {
-    testName,
-    options,
-    config,
-  };
-  const mappingTests = directionalMappingTestGenerator(generatorInput);
-  const shorthandTests = directionalShorthandTestGenerator(generatorInput);
-  const shorthandMappingTests = directionalShorthandMappingTestGenerator(generatorInput);
-  const disableTests = directionalDisableTestGenerator(generatorInput);
-  const valueTests = directionalValueTestGenerator(generatorInput);
-
-  const valid: Array<RuleTester.ValidTestCase> = [
-    ...mappingTests.valid,
-    ...shorthandTests.valid,
-    ...shorthandMappingTests.valid,
-    ...disableTests.valid,
-    ...valueTests.valid,
-  ];
-  const invalid: Array<RuleTester.InvalidTestCase> = [
-    ...mappingTests.invalid,
-    ...shorthandTests.invalid,
-    ...shorthandMappingTests.invalid,
-    ...disableTests.invalid,
-    ...valueTests.invalid,
-  ];
-
-  runEslintTests(testName, rule, {
-    valid,
-    invalid,
-  });
-};

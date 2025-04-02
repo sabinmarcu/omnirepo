@@ -1,6 +1,11 @@
 import {
+  vi,
+  describe,
+  it,
+  expect,
+} from 'vitest';
+import {
   setupFsMockAll,
-  vol,
 } from '@sabinmarcu/utils-test';
 import {
   resolver as getWorkspacesMap,
@@ -8,15 +13,37 @@ import {
   getWorkspacesMapSync,
 } from './map.js';
 
-import compileFixtures from './__mocks__/index.js';
+const fixtures = await vi.hoisted(async () => {
+  const compileFixtures = await import('./__mocks__/index.js');
+  return compileFixtures.default();
+});
 
-const fixtures = compileFixtures();
-
-jest.mock('node:fs', jest.requireActual('@sabinmarcu/utils-test').mockFs);
-jest.mock('node:fs/promises', jest.requireActual('@sabinmarcu/utils-test').mockFsPromises);
-jest.mock('glob', () => (
-  jest.requireActual('@sabinmarcu/utils-test').mockGlob(vol, jest.requireActual('glob'))
-));
+vi.mock('node:fs', async () => {
+  const utilitiesTest: any = await vi.importActual('@sabinmarcu/utils-test');
+  const fsMock = utilitiesTest.mockFs();
+  return {
+    default: fsMock,
+    ...fsMock,
+  };
+});
+vi.mock('node:fs/promises', async () => {
+  const utilitiesTest: any = await vi.importActual('@sabinmarcu/utils-test');
+  const fsMock = utilitiesTest.mockFsPromises();
+  return {
+    default: fsMock,
+    ...fsMock,
+  };
+});
+vi.mock('glob', async (importOriginal) => {
+  const utilitiesTest: any = await vi.importActual('@sabinmarcu/utils-test');
+  const originalGlob: any = await importOriginal();
+  const globMock = utilitiesTest.mockGlob(utilitiesTest.vol, originalGlob.default);
+  return {
+    ...originalGlob,
+    glob: globMock,
+    default: globMock,
+  };
+});
 
 describe('getWorkspaces.paths', () => {
   describe('getWorkspacesMapSync', () => {

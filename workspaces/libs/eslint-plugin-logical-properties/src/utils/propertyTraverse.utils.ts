@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/prevent-abbreviations */
 import { propertyTraverseWildcard } from './propertyTraverse.constants.js';
 
 export const pathToSegments = (path: string) => (

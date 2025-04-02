@@ -14,9 +14,9 @@
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-logical-properties": "workspace:*",
     "eslint-plugin-unicorn": "^58.0.0",
-    "glob": "^10.3.10",
+    "glob": "^8.0.3",
     "globals": "^15.9.0",
-    "ts-deepmerge": "^7.0.1"
+    "ts-deepmerge": "^7.0.2"
   },
   "devDependencies": {
     "@sabinmarcu/types": "workspace:*",

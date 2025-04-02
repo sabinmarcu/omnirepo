@@ -1,3 +1,8 @@
+import {
+  describe,
+  it,
+  expect,
+} from 'vitest';
 import { getValidPropertyName } from './getValidPropertyName.js';
 
 describe('getValidPropertyName', () => {

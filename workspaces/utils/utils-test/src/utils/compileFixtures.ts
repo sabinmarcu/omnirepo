@@ -1,11 +1,18 @@
-import fs from 'node:fs';
-import path from 'node:path';
+import nodeFs from 'node:fs';
+import nodePath from 'node:path';
 import url from 'node:url';
 import yaml from 'yaml';
 import { createRequire } from 'node:module';
 
 export type FixtureBase = { name: string };
 export type Fixture<T> = FixtureBase & T;
+
+const mockEscape = {
+  fs: nodeFs,
+  path: nodePath,
+} as const;
+
+export type MockEscape = Partial<typeof mockEscape>;
 
 const jsParser = <T extends unknown>(
   rootPath: string,
@@ -20,7 +27,14 @@ const jsParser = <T extends unknown>(
 const jsonParser = <T extends unknown>(
   rootPath: string,
   filePath: string,
-): T => yaml.parse(fs.readFileSync(filePath, 'utf8'));
+  options?: MockEscape,
+): T => {
+  const { fs } = {
+    ...mockEscape,
+    ...options,
+  };
+  return yaml.parse(fs.readFileSync(filePath, 'utf8'));
+};
 
 const getParsers = <T extends unknown>() => ({
   '.js': jsParser<T>,
@@ -46,7 +60,12 @@ const getParsers = <T extends unknown>() => ({
 export const compileFixtures = <T extends unknown>(
   inputCwd: string | URL,
   excludes: (string | RegExp)[] = [],
+  options?: MockEscape,
 ): Fixture<T>[] => {
+  const { fs, path } = {
+    ...mockEscape,
+    ...options,
+  };
   const cwd = (inputCwd instanceof URL)
     ? url.fileURLToPath(inputCwd)
     : inputCwd;
@@ -69,7 +88,7 @@ export const compileFixtures = <T extends unknown>(
       const parser = parse[
         supportedExtensions.find((extension) => it.endsWith(extension)) as keyof typeof parse
       ];
-      const fixture = parser(cwd, path.resolve(cwd, it));
+      const fixture = parser(cwd, path.resolve(cwd, it), options);
       const name = ((fixture as any)?.name as string | undefined)
         ? ((fixture as any).name as string | undefined)
         : it.replace(/\.[^.]+$/, '').replaceAll(/[.-]/g, ' ');
