@@ -1,3 +1,8 @@
+import {
+  describe,
+  it,
+  expect,
+} from 'vitest';
 import { definitionIsEnabled } from './enabled.js';
 import type {
   DebugDefinition,

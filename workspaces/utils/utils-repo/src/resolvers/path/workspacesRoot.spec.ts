@@ -1,12 +1,33 @@
+import {
+  describe,
+  it,
+  expect,
+  vi,
+} from 'vitest';
 import { setupFsMockAll } from '@sabinmarcu/utils-test';
 import { resolver } from './workspacesRoot.js';
 
-import compileFixtures from './__mocks__/index.js';
+const testCases = await vi.hoisted(async () => {
+  const compileFixtures = await import('./__mocks__/index.js');
+  return compileFixtures.default();
+});
 
-const testCases = compileFixtures();
-
-jest.mock('node:fs', jest.requireActual('@sabinmarcu/utils-test').mockFs);
-jest.mock('node:fs/promises', jest.requireActual('@sabinmarcu/utils-test').mockFsPromises);
+vi.mock('node:fs', async () => {
+  const utilitiesTest: any = await vi.importActual('@sabinmarcu/utils-test');
+  const fsMock = utilitiesTest.mockFs();
+  return {
+    default: fsMock,
+    ...fsMock,
+  };
+});
+vi.mock('node:fs/promises', async () => {
+  const utilitiesTest: any = await vi.importActual('@sabinmarcu/utils-test');
+  const fsMock = utilitiesTest.mockFsPromises();
+  return {
+    default: fsMock,
+    ...fsMock,
+  };
+});
 
 describe('resolver.workspacesRoot', () => {
   describe('sync', () => {

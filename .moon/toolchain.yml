@@ -1,6 +1,7 @@
 $schema: "https://moonrepo.dev/schemas/toolchain.json"
+
 node:
-  version: "20"
+  version: "22"
   packageManager: "yarn"
   yarn:
     version: "4.5.1"
@@ -9,7 +10,6 @@ node:
   dependencyVersionFormat: workspace
   inferTasksFromScripts: false
   syncProjectWorkspaceDependencies: false
-  syncVersionManagerConfig: "nvm"
   rootPackageOnly: true
 
 typescript:

@@ -1,4 +1,10 @@
 import {
+  describe,
+  it,
+  expect,
+  vi,
+} from 'vitest';
+import {
   setupFsMockAll,
 } from '@sabinmarcu/utils-test';
 
@@ -8,12 +14,27 @@ import {
   predicate,
 } from './manifest.js';
 
-import compileFixtures from './__mocks__/manifest/index.js';
+const fixtures = await vi.hoisted(async () => {
+  const compileFixtures = await import('./__mocks__/manifest/index.js');
+  return compileFixtures.default();
+});
 
-const fixtures = compileFixtures();
-
-jest.mock('node:fs', jest.requireActual('@sabinmarcu/utils-test').mockFs);
-jest.mock('node:fs/promises', jest.requireActual('@sabinmarcu/utils-test').mockFsPromises);
+vi.mock('node:fs', async () => {
+  const utilitiesTest: any = await vi.importActual('@sabinmarcu/utils-test');
+  const fsMock = utilitiesTest.mockFs();
+  return {
+    default: fsMock,
+    ...fsMock,
+  };
+});
+vi.mock('node:fs/promises', async () => {
+  const utilitiesTest: any = await vi.importActual('@sabinmarcu/utils-test');
+  const fsMock = utilitiesTest.mockFsPromises();
+  return {
+    default: fsMock,
+    ...fsMock,
+  };
+});
 
 describe('predicates.manifest', () => {
   describe('testSync', () => {

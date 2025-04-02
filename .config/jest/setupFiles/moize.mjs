@@ -1,7 +1,10 @@
-/* eslint-disable no-undef */
-jest.mock('moize', () => {
-  const { mockMoize } = jest.requireActual('@sabinmarcu/utils-test');
-  const moizeActual = jest.requireActual('moize');
+import { vi } from 'vitest';
+
+vi.mock('moize', async (importOriginal) => {
+  const { mockMoize } = await vi.importActual('@sabinmarcu/utils-test');
+  const { default: moizeActual } = await importOriginal();
   const patchedMoize = mockMoize(moizeActual);
-  return patchedMoize;
+  return {
+    default: patchedMoize,
+  };
 });

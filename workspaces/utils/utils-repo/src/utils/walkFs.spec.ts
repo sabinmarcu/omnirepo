@@ -1,3 +1,8 @@
+import {
+  describe,
+  it,
+  expect,
+} from 'vitest';
 import compileFixtures from './__mocks__/index.js';
 import {
   walker,

@@ -1,6 +1,9 @@
+import {
+  describe,
+} from 'vitest';
 import type { RuleTester } from 'eslint';
 import rule, { ruleConfig } from './padding.js';
-import { runDirectionalRulesTests } from '../parsers/directional.js';
+import { runDirectionalRulesTests } from '../parsers/directional.utils.js';
 import { generateDirectionalShorthandError } from '../parsers/directionalShorthand.js';
 import { runEslintTests } from '../utils/runEslintTests.js';
 

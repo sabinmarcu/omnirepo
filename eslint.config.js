@@ -7,7 +7,6 @@ const eslintConfig = [
     name: 'Root Config',
     ignores: [
       '**/dist',
-      '**/jest.config.mjs',
     ],
   },
   {

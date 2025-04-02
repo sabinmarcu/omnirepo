@@ -1,3 +1,11 @@
+import {
+  describe,
+  it,
+  expect,
+  beforeEach,
+  beforeAll,
+  vi,
+} from 'vitest';
 import { mock } from './mock.js';
 import {
   isObservable,
@@ -65,7 +73,7 @@ describe('observable', () => {
       it('should empty with the correct method', () => {
         const obs = observable(({ next }) => { nextFunction = next; });
         expect(mock.subscriptionPool.value?.size).toBe(0);
-        const next = jest.fn();
+        const next = vi.fn();
         obs.subscribe({ next });
         expect(next).toHaveBeenCalledWith(undefined);
         expect(next).toHaveBeenCalledTimes(1);
@@ -103,7 +111,7 @@ describe('observable', () => {
     });
 
     it('should call next when next is called', () => {
-      const next = jest.fn();
+      const next = vi.fn();
       obs.subscribe({ next });
       expect(next).toHaveBeenCalledWith(42);
       nextFunction(1);
@@ -111,7 +119,7 @@ describe('observable', () => {
     });
 
     it('should call complete when complete is called', () => {
-      const complete = jest.fn();
+      const complete = vi.fn();
       obs.subscribe({ complete });
       expect(complete).not.toHaveBeenCalled();
       completeFunction();
@@ -119,7 +127,7 @@ describe('observable', () => {
     });
 
     it('should call error when error is called', () => {
-      const error = jest.fn();
+      const error = vi.fn();
       obs.subscribe({ error });
       expect(error).not.toHaveBeenCalled();
       errorFunction(new Error('test'));
@@ -127,8 +135,8 @@ describe('observable', () => {
     });
 
     it('should stop propagation after complete', () => {
-      const next = jest.fn();
-      const complete = jest.fn();
+      const next = vi.fn();
+      const complete = vi.fn();
       obs.subscribe({
         complete,
         next,
@@ -304,7 +312,7 @@ describe('observable', () => {
     });
 
     it('should filter by even and then map to double', () => {
-      const spy = jest.fn();
+      const spy = vi.fn();
       const sub = obs.filter((v) => v! % 2 === 1).map((v) => v! * 2);
       sub.subscribe({ next: spy });
       expect(sub.value).toEqual(initialValue * 2);

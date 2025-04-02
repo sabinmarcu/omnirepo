@@ -1,3 +1,9 @@
+import {
+  describe,
+  it,
+  expect,
+  vi,
+} from 'vitest';
 import { mock } from './mock.js';
 import {
   isObservable,
@@ -24,7 +30,7 @@ describe('subject', () => {
   it('should respond to subcribers value when changed', () => {
     const initialValue = 42;
     const subj = subject(initialValue);
-    const next = jest.fn();
+    const next = vi.fn();
     const sub = subj.subscribe({ next });
     expect(subj.value).toBe(initialValue);
     expect(next).toHaveBeenCalledWith(initialValue);
@@ -59,7 +65,7 @@ describe('subject', () => {
       it('should empty with the correct method', () => {
         const obs = subject();
         expect(mock.subscriptionPool.value?.size).toBe(0);
-        const next = jest.fn();
+        const next = vi.fn();
         obs.subscribe({ next });
         expect(next).toHaveBeenCalledWith(undefined);
         expect(next).toHaveBeenCalledTimes(1);

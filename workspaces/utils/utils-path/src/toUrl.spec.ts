@@ -1,3 +1,8 @@
+import {
+  describe,
+  it,
+  expect,
+} from 'vitest';
 import { toUrl } from './toUrl.js';
 
 describe('toUrl', () => {

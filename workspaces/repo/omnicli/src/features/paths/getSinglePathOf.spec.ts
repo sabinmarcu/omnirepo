@@ -1,3 +1,8 @@
+import {
+  describe,
+  it,
+  expect,
+} from 'vitest';
 import { getSinglePathOf } from './getSinglePathOf.js';
 
 describe('getSinglePathOf', () => {
@@ -8,10 +13,22 @@ describe('getSinglePathOf', () => {
     expect(getSinglePathOf.length).toBe(1);
   });
   it.each([
-    { input: ['a'], output: 'a' },
-    { input: ['a', 'b'], output: 'a:b' },
-    { input: [], output: '' },
-    { input: ['a', 'b', 'c'], output: 'a:b:c' },
+    {
+      input: ['a'],
+      output: 'a',
+    },
+    {
+      input: ['a', 'b'],
+      output: 'a:b',
+    },
+    {
+      input: [],
+      output: '',
+    },
+    {
+      input: ['a', 'b', 'c'],
+      output: 'a:b:c',
+    },
   ])(
     'getSinglePathOf($input) = $output',
     ({ input, output }) => {

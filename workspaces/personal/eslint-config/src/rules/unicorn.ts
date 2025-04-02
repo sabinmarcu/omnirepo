@@ -23,6 +23,7 @@ export const unicornRules = {
         prop: false,
         props: false,
       },
+      checkFilenames: false,
     },
   ],
 } as const satisfies Config['rules'];

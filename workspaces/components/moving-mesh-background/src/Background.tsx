@@ -43,7 +43,7 @@ export const Background = forwardRef<HTMLCanvasElement, BackgroundProperties>(
     outerReference,
   ) => {
     const renderOnce = usePrefersReducedMotion();
-    const renderer = useRef<ReturnType<typeof makeRenderer>>();
+    const renderer = useRef<ReturnType<typeof makeRenderer>>(null);
     const reference = useDuplicateRef(outerReference);
 
     // Do Render

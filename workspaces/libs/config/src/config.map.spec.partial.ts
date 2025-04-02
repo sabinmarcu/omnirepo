@@ -1,3 +1,8 @@
+import {
+  it,
+  expect,
+  vi,
+} from 'vitest';
 import { subject } from '@sabinmarcu/observable';
 import { complexConfig } from './config.map.js';
 
@@ -6,7 +11,7 @@ export const generateComplexTests = (config = complexConfig) => {
     const expectedValue = { foo: 'bar' };
     const result = config(expectedValue);
     expect(result.value).toEqual(expectedValue);
-    const next = jest.fn();
+    const next = vi.fn();
     result.subscribe({ next });
     expect(next).toHaveBeenCalledWith(expectedValue);
   });
@@ -22,7 +27,7 @@ export const generateComplexTests = (config = complexConfig) => {
       subject1: 'awesome',
       subject2: 21,
     });
-    const next = jest.fn();
+    const next = vi.fn();
     result.subscribe({ next });
     expect(next).toHaveBeenLastCalledWith({
       subject1: 'awesome',
@@ -59,7 +64,7 @@ export const generateComplexTests = (config = complexConfig) => {
       subject1: 'awesome',
       nested: { subject2: 21 },
     });
-    const next = jest.fn();
+    const next = vi.fn();
     result.subscribe({ next });
     expect(next).toHaveBeenLastCalledWith({
       subject1: 'awesome',

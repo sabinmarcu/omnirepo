@@ -1,7 +1,13 @@
 import {
+  describe,
+  afterEach,
+  it,
+  expect,
+  vi,
+} from 'vitest';
+import {
   setupFsMock,
   resetFsMock,
-  compileFixtures,
 } from '@sabinmarcu/utils-test';
 import {
   exists,
@@ -13,12 +19,31 @@ export type ExistsFixtures = {
   expected: boolean,
 };
 
-const fixtures = compileFixtures<ExistsFixtures>(
-  new URL('__mocks__/exists', import.meta.url),
-);
+const fixtures = await vi.hoisted(async () => {
+  const {
+    compileFixtures,
+  } = await import('@sabinmarcu/utils-test');
+  return compileFixtures<ExistsFixtures>(
+    new URL('__mocks__/exists', import.meta.url),
+  );
+});
 
-jest.mock('node:fs', jest.requireActual('@sabinmarcu/utils-test').mockFs);
-jest.mock('node:fs/promises', jest.requireActual('@sabinmarcu/utils-test').mockFsPromises);
+vi.mock('node:fs', async () => {
+  const utilitiesTest: any = await vi.importActual('@sabinmarcu/utils-test');
+  const fsMock = utilitiesTest.mockFs();
+  return {
+    default: fsMock,
+    ...fsMock,
+  };
+});
+vi.mock('node:fs/promises', async () => {
+  const utilitiesTest: any = await vi.importActual('@sabinmarcu/utils-test');
+  const fsMock = utilitiesTest.mockFsPromises();
+  return {
+    default: fsMock,
+    ...fsMock,
+  };
+});
 
 describe('exists', () => {
   afterEach(resetFsMock);

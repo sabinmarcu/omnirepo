@@ -1,4 +1,9 @@
 import {
+  describe,
+  it,
+  expect,
+} from 'vitest';
+import {
   isObservable,
 } from '@sabinmarcu/observable';
 import { config } from './config.js';

@@ -1,3 +1,8 @@
+import {
+  describe,
+  it,
+  expect,
+} from 'vitest';
 import { deriveAlias } from './deriveAlias.js';
 
 describe('deriveAlias', () => {

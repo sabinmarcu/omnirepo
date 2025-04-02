@@ -1,7 +1,16 @@
+/* eslint-disable import/no-extraneous-dependencies */
+import {
+  vi,
+  describe,
+  it,
+  expect,
+} from 'vitest';
 import {
   setupFsMockAll,
   vol,
+  // @ts-ignore It's a test. This will work just fine
 } from '@sabinmarcu/utils-test';
+
 // eslint-disable-next-line import/extensions
 import { generateWorkspacesConfig } from './generateWorkspacesConfig.cjs';
 
@@ -10,14 +19,25 @@ import compileFixtures from './__mocks__/index.cjs';
 
 const fixtures = compileFixtures();
 
-jest.mock('node:fs', jest.requireActual('@sabinmarcu/utils-test').mockFs);
-jest.mock('node:fs/promises', jest.requireActual('@sabinmarcu/utils-test').mockFsPromises);
-jest.mock('glob', () => (
-  jest.requireActual('@sabinmarcu/utils-test').mockGlob(
-    vol,
-    jest.requireActual('glob'),
-  )
-));
+vi.mock('node:fs', async () => {
+  const utilitiesTest = await vi.importActual('@sabinmarcu/utils-test');
+  return { default: utilitiesTest.mockFs };
+});
+vi.mock('node:fs/promises', async () => {
+  const utilitiesTest = await vi.importActual('@sabinmarcu/utils-test');
+  return { default: utilitiesTest.mockFsPromises };
+});
+vi.mock('glob', async () => {
+  const utilitiesTest = await vi.importActual('@sabinmarcu/utils-test');
+  const glob = await vi.importActual('glob');
+  return {
+    // @ts-ignore It's fine!
+    default: utilitiesTest.mockGlob(
+      vol,
+      glob,
+    ),
+  };
+});
 
 describe('generateWorkspacesConfig', () => {
   it('should be a function', () => {

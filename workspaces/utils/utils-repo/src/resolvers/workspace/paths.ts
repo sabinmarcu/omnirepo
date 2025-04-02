@@ -1,7 +1,7 @@
 import glob from 'glob';
-import { promisify } from 'node:util';
 import path from 'node:path';
 import moizeImport, { type Moize } from 'moize';
+import { promisify } from 'node:util';
 import { testWorkspaces as test } from '../../predicates/index.js';
 import { walker } from '../../utils/walkFs.js';
 import { resolveWorkspaces as resolve } from '../path/index.js';
@@ -12,8 +12,7 @@ import type {
 } from '../../types.js';
 
 const moize = moizeImport as unknown as Moize;
-
-const globPromised = promisify(glob);
+const globPromisified = promisify(glob);
 
 export const getWorkspacesPaths = moize.promise(async (
   from: string,
@@ -38,7 +37,7 @@ export const getWorkspacesPaths = moize.promise(async (
   }
   const packageJsonListMap = await Promise.all(
     workspacesList.map(
-      (workspace) => globPromised(
+      async (workspace) => globPromisified(
         path.join(workspace, 'package.json'),
         { cwd: root },
       ),

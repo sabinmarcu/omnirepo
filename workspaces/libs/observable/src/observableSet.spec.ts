@@ -1,9 +1,15 @@
+import {
+  describe,
+  it,
+  expect,
+  vi,
+} from 'vitest';
 import { observableSet } from './observableSet.js';
 
 describe('observableSet', () => {
   it('should emit a new value when a new item is added', () => {
     const set = observableSet(new Set<number>());
-    const subscriber = jest.fn();
+    const subscriber = vi.fn();
     set.subscribe({ next: subscriber });
     expect(subscriber).toHaveBeenCalledTimes(1);
     expect(subscriber).toHaveBeenCalledWith(new Set());
@@ -19,7 +25,7 @@ describe('observableSet', () => {
       2,
       3,
     ]));
-    const subscriber = jest.fn();
+    const subscriber = vi.fn();
     set.subscribe({ next: subscriber });
     expect(subscriber).toHaveBeenCalledTimes(1);
     expect(subscriber).toHaveBeenCalledWith(new Set([
@@ -42,7 +48,7 @@ describe('observableSet', () => {
       2,
       3,
     ]));
-    const subscriber = jest.fn();
+    const subscriber = vi.fn();
     set.subscribe({ next: subscriber });
     expect(subscriber).toHaveBeenCalledTimes(1);
     expect(subscriber).toHaveBeenCalledWith(new Set([
@@ -62,7 +68,7 @@ describe('observableSet', () => {
       2,
       3,
     ]));
-    const subscriber = jest.fn();
+    const subscriber = vi.fn();
     set.subscribe({ next: subscriber });
     expect(subscriber).toHaveBeenCalledTimes(1);
     expect(subscriber).toHaveBeenCalledWith(new Set([

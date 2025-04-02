@@ -20,13 +20,19 @@ tasks:
     options:
       runDepsInParallel: false
   testAll:
-    command: jest
+    command: vitest --run
     inputs: []
     local: true
     options:
       runDepsInParallel: false
   testAllDev:
-    command: jest --watch
+    command: vitest
+    inputs: []
+    local: true
+    options:
+      runDepsInParallel: false
+  testWorkspace:
+    command: vitest
     inputs: []
     local: true
     options:

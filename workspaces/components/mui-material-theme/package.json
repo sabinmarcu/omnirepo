@@ -67,10 +67,6 @@
     "directory": "workspaces/components/mui-material-theme"
   },
   "homepage": "https:/sabinmarcu.dev/api/mui-material-theme",
-  "optionalDependencies": {
-    "@mui/icons-material": "^5.16.6",
-    "@mui/material": "^5.16.6"
-  },
   "peerDependenciesMeta": {
     "@mui/icons-material": {
       "optional": true

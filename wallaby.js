@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 // eslint-disable-next-line import/extensions
-import { coverageExcludes } from './jest.options.mjs';
+import vitestConfig from './vitest.config.mjs';
+const { test: { coverage: { exclude: coverageExcludes }} } = vitestConfig;
 
 const packageJson = JSON.parse(
   await fs.readFile(new URL('package.json', import.meta.url), 'utf8'),
@@ -22,13 +23,10 @@ export default () => ({
   name: 'omniRepo',
   files,
   tests,
-  autoDetect: ['jest'],
+  autoDetect: ['vitest'],
   filesWithNoCoverageCalculated,
   runAllTestsWhenNoAffectedTests: true,
   runAllTestsInAffectedTestFile: true,
-  testFramework: {
-    config: './jest.config.mjs',
-  },
   env: {
     params: {
       env: 'DEBUG=',
