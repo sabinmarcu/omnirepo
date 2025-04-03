@@ -68,6 +68,8 @@ tasks:
     type: test
     inputs:
       - "@globs(sources)"
+    deps: 
+      - "~:build"
     options:
       internal: true
       envFile: '.env'
