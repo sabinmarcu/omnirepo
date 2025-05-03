@@ -11,7 +11,7 @@ import {
 import { createThemeFamily } from '../family.js';
 import { ThemeMetadataSymbol } from './theme.js';
 
-export const root = createThemeFamily('does', 'not', 'matter');
+export const root = createThemeFamily('blue', 'red', 'green');
 
 export const ThemeShowcase = memo(({
   theme,

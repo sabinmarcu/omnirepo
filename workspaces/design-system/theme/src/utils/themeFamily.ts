@@ -13,7 +13,10 @@ import {
   ThemeMetadataSymbol,
 } from '../contracts/theme.js';
 import { themeContractLayer } from '../styles/layers.constants.js';
-import { rootNode } from '../constants.js';
+import {
+  rootNode,
+  themeFamilyDataAttribute,
+} from '../constants.js';
 
 export const baseKey = 'base';
 
@@ -45,6 +48,10 @@ export type FamilyConfig<Families extends string> = (
   }
 );
 
+export function selectorOfFamily<Families extends string>(family: Families) {
+  return `[data-${themeFamilyDataAttribute}="${family}"]`;
+}
+
 export const createThemeFamily = <
   const Families extends string,
 >(
@@ -56,16 +63,6 @@ export const createThemeFamily = <
   for (const family of families) {
     familyUpdaters[family] = createThemeVariant(family);
   }
-
-  const updaterRaw: ThemeFamilyUpdater<Families> = (input, selector, updateFunction) => {
-    const { base: baseInput, ...familiesInput } = input;
-    baseUpdater(baseInput, selector, updateFunction);
-    for (const family of families) {
-      const { [family]: partialInput } = familiesInput;
-      const mergedInput = deepMerge(baseInput, partialInput ?? {});
-      familyUpdaters[family](mergedInput as any, selector, updateFunction);
-    }
-  };
 
   const picker: ThemeFamilyPicker<Families> = (
     family,
@@ -84,6 +81,18 @@ export const createThemeFamily = <
       '@layer': themeContractLayer,
       ...values,
     });
+  };
+
+  const updaterRaw: ThemeFamilyUpdater<Families> = (input, selector, updateFunction) => {
+    const { base: baseInput, ...familiesInput } = input;
+    baseUpdater(baseInput, selector, updateFunction);
+    picker('base', selectorOfFamily('base'), updateFunction);
+    for (const family of families) {
+      const { [family]: partialInput } = familiesInput;
+      const mergedInput = deepMerge(baseInput, partialInput ?? {});
+      picker(family, selectorOfFamily(family), updateFunction);
+      familyUpdaters[family](mergedInput as any, selector, updateFunction);
+    }
   };
 
   const updater: FamilyConfig<Families> = updaterRaw as any;
