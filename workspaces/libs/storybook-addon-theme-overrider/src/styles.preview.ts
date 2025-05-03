@@ -29,6 +29,7 @@ globalStyle('.sbdocs.sbdocs-content', {
 globalStyle('.sb-unstyled', {
   fontSize: theme.unstyled.font.size,
   fontFamily: theme.unstyled.font.family,
+  fontWeight: theme.unstyled.font.weight,
 });
 
 // Storybook Theme Style
@@ -179,7 +180,8 @@ const commonStyles = {
   color: 'inherit',
 } as const;
 
-globalStyle('.sbdocs.sbdocs-wrapper * h1', {
+const previewMask = ':where(.sbdocs-content, .sbdocs-content > *) >';
+globalStyle(`.sbdocs.sbdocs-wrapper ${previewMask} h1:first-of-type`, {
   ...commonStyles,
   fontSize: theme.headings.h1.size,
   fontWeight: theme.headings.h1.weight,
@@ -193,12 +195,12 @@ globalStyle('.sbdocs.sbdocs-wrapper * h1', {
   color: theme.headings.h1.color,
 });
 
-globalStyle('.sbdocs.sbdocs-wrapper * h1:first-of-type', {
+globalStyle(`.sbdocs.sbdocs-wrapper ${previewMask} h2`, {
   marginBlockStart: 0,
   paddingBlockStart: 0,
 });
 
-globalStyle('.sbdocs.sbdocs-wrapper * h2', {
+globalStyle(`.sbdocs.sbdocs-wrapper ${previewMask} h2`, {
   ...commonStyles,
   fontSize: theme.headings.h2.size,
   fontWeight: theme.headings.h2.weight,
@@ -212,7 +214,7 @@ globalStyle('.sbdocs.sbdocs-wrapper * h2', {
   color: theme.headings.h2.color,
 });
 
-globalStyle('.sbdocs.sbdocs-wrapper * h3', {
+globalStyle(`.sbdocs.sbdocs-wrapper ${previewMask} h3`, {
   ...commonStyles,
   fontSize: theme.headings.h3.size,
   fontWeight: theme.headings.h3.weight,
@@ -226,7 +228,7 @@ globalStyle('.sbdocs.sbdocs-wrapper * h3', {
   color: theme.headings.h3.color,
 });
 
-globalStyle('.sbdocs.sbdocs-wrapper * h4', {
+globalStyle(`.sbdocs.sbdocs-wrapper ${previewMask} h4`, {
   ...commonStyles,
   fontSize: theme.headings.h4.size,
   fontWeight: theme.headings.h4.weight,
@@ -240,7 +242,7 @@ globalStyle('.sbdocs.sbdocs-wrapper * h4', {
   color: theme.headings.h4.color,
 });
 
-globalStyle('.sbdocs.sbdocs-wrapper * h5', {
+globalStyle(`.sbdocs.sbdocs-wrapper ${previewMask} h5`, {
   ...commonStyles,
   fontSize: theme.headings.h5.size,
   fontWeight: theme.headings.h5.weight,
@@ -254,7 +256,7 @@ globalStyle('.sbdocs.sbdocs-wrapper * h5', {
   color: theme.headings.h5.color,
 });
 
-globalStyle('.sbdocs.sbdocs-wrapper * h6', {
+globalStyle(`.sbdocs.sbdocs-wrapper ${previewMask} h6`, {
   ...commonStyles,
   fontSize: theme.headings.h6.size,
   fontWeight: theme.headings.h6.weight,
