@@ -1,0 +1,7 @@
+releases:
+  "@sabinmarcu/storybook-addon-theme-overrider": minor
+  "@sabinmarcu/theme": minor
+  "@sabinmarcu/theme-storybook": minor
+
+declined:
+  - "@sabinmarcu/docs"
