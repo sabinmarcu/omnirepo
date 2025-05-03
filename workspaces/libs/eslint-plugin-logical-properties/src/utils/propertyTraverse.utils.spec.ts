@@ -14,7 +14,7 @@ import {
   segmentsToPath,
 } from './propertyTraverse.utils.js';
 
-const insert = { result: 42 };
+const insert = { result: '42' };
 const testCases = [
   {
     input: '',
@@ -81,7 +81,7 @@ describe('propertyTraverse.utils', () => {
         expect(packer.pack(input)).toEqual(output);
       });
     });
-    describe.only('packer.unpack', () => {
+    describe('packer.unpack', () => {
       it('should be a function', () => {
         expect(packer.unpack).toBeInstanceOf(Function);
       });
