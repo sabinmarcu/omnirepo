@@ -99,3 +99,6 @@ presets:
       tsBuildInfoFile: "./node_modules/.tmp/tsconfig.app.tsbuildInfo"
     include:
       - "src/**/*"
+  storybookLib:
+    compilerOptions:
+      jsx: 'react'
