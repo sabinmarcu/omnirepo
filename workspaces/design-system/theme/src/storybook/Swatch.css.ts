@@ -44,7 +44,7 @@ globalStyle(`${swatchColorStyle} span`, {
   background: 'inherit',
   backgroundClip: 'text',
   color: 'transparent',
-  filter: 'invert(1) grayscale(1) contrast(15)',
+  filter: 'invert(1) grayscale(1) contrast(100)',
 });
 
 globalStyle(`${swatchColorStyle} span:first-child`, {
