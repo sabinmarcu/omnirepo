@@ -6,7 +6,7 @@ project:
     - Sabin Marcu
   owner: Sabin Marcu
 language: typescript
-type: unknown
+type: application
 tasks:
   start:
     command: storybook dev -c src -p 6006
