@@ -108,10 +108,18 @@ const minimalPageBackground = (
 ): InputOptions => (background
   ? {
     surfaces: {
-      page: {
+      preview: {
         background,
       },
       panel: {
+        background,
+      },
+      argsTable: {
+        body: {
+          background,
+        },
+      },
+      story: {
         background,
       },
     },
@@ -175,15 +183,7 @@ const minimalBaseBackground = (
       preview: {
         background,
       },
-      argsTable: {
-        body: {
-          background,
-        },
-      },
       separator: background,
-      story: {
-        background,
-      },
     },
     headings: {
       h2: {
