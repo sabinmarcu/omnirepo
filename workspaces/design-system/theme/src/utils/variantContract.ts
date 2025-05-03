@@ -83,11 +83,11 @@ export function variantContract<
     values,
     selector = rootNode,
     updateFunction = createGlobalTheme,
-    variantPrefix?: string,
+    family?: string,
   ) => {
-    const prefixedContract = contractCache(variantPrefix);
+    const prefixedContract = contractCache(family);
 
-    const prefixedLightDarkValues = contractValuesCache(variantPrefix);
+    const prefixedLightDarkValues = contractValuesCache(family);
     updateFunction(selector, {
       '@layer': themeVariantsLayer,
       ...prefixedContract,
@@ -105,7 +105,7 @@ export function variantContract<
         valuesToRender = values;
       }
 
-      const prefixedVariant = contractVariantValuesCaches[variant](variantPrefix);
+      const prefixedVariant = contractVariantValuesCaches[variant](family);
       updateFunction(selectorOfVariant(variant), {
         '@layer': themeVariantsLayer,
         ...prefixedContract,
@@ -114,7 +114,7 @@ export function variantContract<
         ...prefixedVariant,
       } as any);
 
-      updaters[variant](valuesToRender, selector, updateFunction, variantPrefix);
+      updaters[variant](valuesToRender, selector, updateFunction, family);
     }
   };
 

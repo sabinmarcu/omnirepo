@@ -30,10 +30,10 @@ export function rawContract<
     input,
     selector = rootNode,
     updateFunction = createGlobalTheme,
-    variantPrefix?: string,
+    family?: string,
   ) => {
     const values = generator(input);
-    const prefixedContract = contractCache(variantPrefix);
+    const prefixedContract = contractCache(family);
     updateFunction(selector, {
       '@layer': themeValuesLayer,
       ...prefixedContract,
