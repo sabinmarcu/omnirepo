@@ -1,3 +1,4 @@
+import type { Preview } from '@storybook/react';
 import {
   Title,
   Subtitle,
@@ -7,13 +8,13 @@ import {
   Stories,
 } from '@storybook/blocks';
 
-/** @type { import('@storybook/react').Preview } */
-const preview = {
+const preview: Preview = {
   parameters: {
     options: {
       storyStort: {
         order: [
           'Design System',
+          ['Theme', 'Theme Family'],
           'Components',
         ],
       },
@@ -24,9 +25,8 @@ const preview = {
         date: /date$/i,
       },
     },
-  },
-  docs: {
-    page: () => (
+    docs: {
+      page: () => (
       <>
         <Title />
         <Subtitle />
@@ -35,7 +35,8 @@ const preview = {
         <Controls />
         <Stories includePrimary={false} />
       </>
-    ),
+      ),
+    },
   },
 };
 
