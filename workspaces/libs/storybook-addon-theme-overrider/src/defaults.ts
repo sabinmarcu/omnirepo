@@ -28,6 +28,7 @@ export const defaultOptions = {
     font: {
       size: '1rem',
       family: defaultFontFamily,
+      weight: '16px',
     },
   },
   surfaces: {
