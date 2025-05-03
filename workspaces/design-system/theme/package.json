@@ -13,6 +13,8 @@
       "ssr": "./dist/ssr.js",
       "runtime": "./dist/runtime.js",
       "theme": "./dist/theme.js",
+      "family": "./dist/family.js",
+      "family.runtime": "./dist/family.runtime.js",
       "default": "./dist/index.js"
     },
     "./src/*": {

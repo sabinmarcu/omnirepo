@@ -10,6 +10,7 @@ import { themeValuesLayer } from '../styles/layers.js';
 import type { UpdaterFunction } from './types.js';
 import { rootNode } from '../constants.js';
 import { prefixCache } from './prefixCache.js';
+import { prefixContractValues } from './prefixContractValues.js';
 
 export function rawContract<
   const Generator extends ThemeGenerator<any>,
@@ -34,14 +35,14 @@ export function rawContract<
   ) => {
     const values = generator(input, (contract as any)[generator.default]);
     const prefixedContract = contractCache(family);
+    const prefixedValues = prefixContractValues(values as any, family);
     updateFunction(selector, {
       '@layer': themeValuesLayer,
       ...prefixedContract,
     }, {
       '@layer': themeValuesLayer,
-      ...values,
+      ...prefixedValues,
     } as any);
   };
   return [contract, update, prefix] as const;
 }
-

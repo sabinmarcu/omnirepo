@@ -2,7 +2,13 @@
 import { createStylesheet } from '@sabinmarcu/stylesheet';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { rootNode } from '../constants.js';
-import { setupTheme } from './theme.js';
+import {
+  setupTheme,
+} from './theme.js';
+import type {
+  FamilyConfig,
+  ThemeFamilyUpdater,
+} from '../utils/themeFamily.js';
 
 export const ThemeStylesheet = createStylesheet({
   debugId: 'themeValues',
@@ -58,4 +64,35 @@ export const setupThemeRuntime = (
 ) => {
   ThemeStylesheet.legacyRender(document);
   updateThemeRuntime(input, selector, themeUpdater);
+};
+
+export const updateThemeFamilyRuntime = <
+  Families extends string,
+>(
+    themeFamily: FamilyConfig<Families>,
+    input: Parameters<ThemeFamilyUpdater<Families>>[0],
+    selector?: Parameters<ThemeFamilyUpdater<Families>>[1],
+  ) => {
+  themeFamily(input, selector, updateThemeRuntimeFunction as any);
+};
+
+export const setupThemeFamilyRuntime = <
+  Families extends string,
+>(
+    themeFamily: FamilyConfig<Families>,
+    input: Parameters<ThemeFamilyUpdater<Families>>[0],
+    selector?: Parameters<ThemeFamilyUpdater<Families>>[1],
+  ) => {
+  ThemeStylesheet.legacyRender(document);
+  updateThemeFamilyRuntime(themeFamily, input, selector);
+};
+
+export const pickThemeFamilyRuntime = <
+  Families extends string,
+>(
+    themeFamily: FamilyConfig<Families>,
+    family: Families,
+    selector?: Parameters<ThemeFamilyUpdater<Families>>[1],
+  ) => {
+  themeFamily.pick(family, selector, updateThemeRuntimeFunction as any);
 };
