@@ -63,6 +63,9 @@ const shouldSkipConsistentDependencyEnforcement = (dependency) => {
   if (MODULE_DEPENDENCY_ENFORCEMENT_FIELD_LIST.includes(dependency.type)) {
     return true;
   }
+  if (!dependency.workspace.manifest.version) {
+    return true;
+  }
   return false;
 };
 /**
