@@ -5,8 +5,10 @@ import React, {
   useEffect,
 } from 'react';
 import type { Globals } from '@storybook/types';
-import { rootNode } from '@sabinmarcu/theme/constants';
-import { pickThemeFamily } from '@sabinmarcu/theme/family.runtime';
+import {
+  rootNode,
+  themeFamilyDataAttribute,
+} from '@sabinmarcu/theme/constants';
 import {
   addons,
   types,
@@ -29,6 +31,8 @@ export const THEME_FAMILY_GLOBAL_ID = 'themeFamily';
 export const THEME_FAMILY_ADDON_ID = `${THEME_FAMILY_GLOBAL_ID}.addon`;
 export const THEME_FAMILY_TOOL_ID = `${THEME_FAMILY_GLOBAL_ID}.tool`;
 
+const dataAttribute = `data-${themeFamilyDataAttribute}`;
+
 type ThemeFamilySelectorProps = PropsWithChildren<{
   globals: Globals
 }>;
@@ -39,7 +43,9 @@ const ThemeFamilySelector = memo(({ globals, children }: ThemeFamilySelectorProp
       const target = document.querySelector(rootNode);
       if (!target) return;
       if (themes.families.includes(selection)) {
-        pickThemeFamily(themes as any, selection);
+        target.setAttribute(dataAttribute, selection);
+      } else {
+        target.removeAttribute(dataAttribute);
       }
     },
   );
