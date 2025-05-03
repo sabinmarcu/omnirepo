@@ -9,7 +9,7 @@ import { extensions } from './extensions/index.js';
 import './config/defaultTheme.js';
 
 const previewPartials = extensions
-  .map(({ preview: extensionPreview }) => extensionPreview)
+  .map((extension) => ('preview' in extension ? extension.preview : undefined))
   .filter(Boolean);
 
 const preview: ProjectAnnotations<Renderer> = deepMerge(

@@ -60,6 +60,7 @@
   "peerDependencies": {
     "@storybook/manager-api": "*",
     "@storybook/react": "*",
+    "@storybook/react-vite": "*",
     "@storybook/theming": "*",
     "react": "*"
   },
