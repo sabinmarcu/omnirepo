@@ -180,7 +180,7 @@ const minimalBaseBackground = (
           background,
         },
       },
-      preview: {
+      page: {
         background,
       },
       separator: background,
