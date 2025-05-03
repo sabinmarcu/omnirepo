@@ -1,17 +1,13 @@
 import {
-  setupTheme,
-} from '@sabinmarcu/theme/runtime';
+  pickThemeFamily,
+  setupThemeFamily,
+} from '@sabinmarcu/theme/family.runtime';
+import { themes } from './themes.js';
+import { themeValues } from './themes.values.js';
 
-setupTheme({
-  primary: '#0cf',
-  secondary: '#f0c',
-  background: {
-    light: '#e0e0e0',
-    dark: '#202020',
-  },
-  success: 'green',
-  info: 'blue',
-  warning: 'yellow',
-  error: 'red',
-  grid: 16,
-});
+setupThemeFamily(
+  themes,
+  themeValues,
+);
+
+pickThemeFamily(themes as any, 'base');
