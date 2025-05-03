@@ -6895,7 +6895,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/theme-storybook@workspace:workspaces/design-system/theme-storybook"
   dependencies:
+    "@sabinmarcu/storybook-addon-mirror-preview": "workspace:*"
     "@sabinmarcu/storybook-addon-split-toolbars": "workspace:*"
+    "@sabinmarcu/storybook-addon-theme-overrider": "workspace:*"
     "@sabinmarcu/theme": "workspace:*"
     "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
@@ -6904,6 +6906,7 @@ __metadata:
   peerDependencies:
     "@storybook/manager-api": "*"
     "@storybook/react": "*"
+    "@storybook/react-vite": "*"
     "@storybook/theming": "*"
     react: "*"
   languageName: unknown
