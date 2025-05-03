@@ -32,6 +32,7 @@
     "@sabinmarcu/storybook-addon-theme-overrider": "workspace:*",
     "@sabinmarcu/stylesheet": "workspace:*",
     "@sabinmarcu/theme": "workspace:*",
+    "@sabinmarcu/theme-storybook": "workspace:*",
     "@sabinmarcu/types": "workspace:*",
     "@storybook/blocks": "*",
     "eslint-plugin-logical-properties": "workspace:*"
