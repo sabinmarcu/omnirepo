@@ -27,11 +27,11 @@ const gridOfIndex = (index: number) => {
 
 const rem = (input: number) => (`${input / defaultRemSize}rem`);
 
-// @ts-ignore
 export const gridGenerator = <Amount extends number = 3>(
   amount: Amount = 3 as any,
-) => (
-    (
+) => {
+  const fixedGenerator = ((() => {
+    const generator = (
       inputSize: number,
     ): Grid<Amount> => {
       let result: Grid<Amount> = {
@@ -53,5 +53,10 @@ export const gridGenerator = <Amount extends number = 3>(
       }
 
       return result;
-      // @ts-ignore
-    }) satisfies ThemeGenerator<number>;
+    };
+    generator.default = 'm';
+    return generator;
+    // @ts-ignore
+  })()) satisfies ThemeGenerator<number>;
+  return fixedGenerator;
+};
