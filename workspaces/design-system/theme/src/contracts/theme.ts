@@ -10,15 +10,20 @@ import {
 } from './palette.js';
 import { backgroundContract } from './surface.js';
 
-export const [themeContract, setupTheme, themeRaw] = createThemeContract({
-  colors: {
-    primary: primaryContract,
-    secondary: secondaryContract,
-    info: infoContract,
-    success: successContract,
-    warning: warningContract,
-    error: errorContract,
-    background: backgroundContract,
-  },
-  grid: gridContract,
-});
+export const createThemeVariant = (variant: string) => (
+  createThemeContract({
+    colors: {
+      primary: primaryContract,
+      secondary: secondaryContract,
+      info: infoContract,
+      success: successContract,
+      warning: warningContract,
+      error: errorContract,
+      background: backgroundContract,
+    },
+    grid: gridContract,
+  }, variant)
+);
+
+export const [themeContract, setupTheme, themeRaw] = createThemeVariant(undefined as any);
+

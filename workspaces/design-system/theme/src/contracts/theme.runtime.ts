@@ -46,14 +46,16 @@ const updateThemeRuntimeFunction = (<ThemeContract extends Contract>(
 export const updateThemeRuntime = (
   input: Parameters<typeof setupTheme>[0],
   selector?: Parameters<typeof setupTheme>[1],
+  themeUpdater = setupTheme,
 ) => {
-  setupTheme(input, selector, updateThemeRuntimeFunction as any);
+  themeUpdater(input, selector, updateThemeRuntimeFunction as any);
 };
 
 export const setupThemeRuntime = (
   input: Parameters<typeof setupTheme>[0],
   selector?: Parameters<typeof setupTheme>[1],
+  themeUpdater = setupTheme,
 ) => {
   ThemeStylesheet.legacyRender(document);
-  updateThemeRuntime(input, selector);
+  updateThemeRuntime(input, selector, themeUpdater);
 };
