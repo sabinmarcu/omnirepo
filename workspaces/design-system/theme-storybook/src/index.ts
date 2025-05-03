@@ -1,1 +1,1 @@
-console.log('WIP');
+export { withManager } from './managerObject.js';
