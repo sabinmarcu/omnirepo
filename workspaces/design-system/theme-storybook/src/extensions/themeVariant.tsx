@@ -14,7 +14,7 @@ import {
 import type { Globals } from 'storybook/internal/types';
 import type { Decorator } from '@storybook/react';
 import type { PropsWithChildren } from 'react';
-import {
+import React, {
   memo,
   useEffect,
 } from 'react';

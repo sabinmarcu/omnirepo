@@ -1,3 +1,5 @@
+import themeOverrider from '@sabinmarcu/storybook-addon-theme-overrider/preview';
+
 import { deepmerge as deepMerge } from 'deepmerge-ts';
 import type {
   Renderer,
@@ -10,6 +12,9 @@ const previewPartials = extensions
   .map(({ preview: extensionPreview }) => extensionPreview)
   .filter(Boolean);
 
-const preview: ProjectAnnotations<Renderer> = deepMerge(...previewPartials) as any;
+const preview: ProjectAnnotations<Renderer> = deepMerge(
+  ...previewPartials,
+  themeOverrider,
+) as any;
 
 export default preview;

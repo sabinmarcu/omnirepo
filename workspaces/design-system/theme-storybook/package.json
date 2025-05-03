@@ -47,7 +47,7 @@
     "preset": "lib",
     "presets": [
       "lib",
-      "react"
+      "storybookLib"
     ]
   },
   "typeVersions": {
@@ -70,7 +70,9 @@
   },
   "homepage": "https:/sabinmarcu.dev/api/theme-storybook",
   "dependencies": {
+    "@sabinmarcu/storybook-addon-mirror-preview": "workspace:*",
     "@sabinmarcu/storybook-addon-split-toolbars": "workspace:*",
+    "@sabinmarcu/storybook-addon-theme-overrider": "workspace:*",
     "@sabinmarcu/theme": "workspace:*",
     "deepmerge-ts": "^7.1.5"
   }
