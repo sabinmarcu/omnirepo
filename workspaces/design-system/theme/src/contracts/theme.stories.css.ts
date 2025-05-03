@@ -2,8 +2,12 @@ import {
   globalStyle,
   style,
 } from '@vanilla-extract/css';
-import { themeContract } from './theme.js';
+import {
+  setupTheme,
+  ThemeMetadataSymbol,
+} from './theme.js';
 
+const { contract: themeContract } = setupTheme[ThemeMetadataSymbol];
 export const swatchSet = style({
   display: 'grid',
   gridTemplateColumns: 'minmax(5cqw, 10cqw) auto',

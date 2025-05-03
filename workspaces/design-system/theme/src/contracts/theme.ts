@@ -10,7 +10,7 @@ import {
 } from './palette.js';
 import { backgroundContract } from './surface.js';
 
-export const createThemeVariant = (variant: string) => (
+export const createThemeVariantRaw = (variant: string) => (
   createThemeContract({
     colors: {
       primary: primaryContract,
@@ -25,5 +25,30 @@ export const createThemeVariant = (variant: string) => (
   }, variant)
 );
 
-export const [themeContract, setupTheme, themeRaw] = createThemeVariant(undefined as any);
+export const ThemeMetadataSymbol = Symbol('metadata');
+export type ThemeMetadataConfig = {
+  [ThemeMetadataSymbol]: {
+    contract: ReturnType<typeof createThemeVariantRaw>[0],
+    raw: ReturnType<typeof createThemeVariantRaw>[2],
+  }
+};
+export type ThemeConfig = (
+  & ReturnType<typeof createThemeVariantRaw>[1]
+  & ThemeMetadataConfig
+);
 
+export const createThemeVariant = (variant: string) => {
+  const [contract, updater, raw] = createThemeVariantRaw(variant);
+  const config: ThemeConfig = updater as any;
+
+  config[ThemeMetadataSymbol] = {
+    contract,
+    raw,
+  };
+
+  return config;
+};
+
+export const setupTheme = createThemeVariant(undefined as any);
+
+export const setupVariant = createThemeVariant('awesome');

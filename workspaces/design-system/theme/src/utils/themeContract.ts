@@ -12,7 +12,6 @@ import type { UpdaterFunction } from './types.js';
 import { rootNode } from '../constants.js';
 import { themeContractLayer } from '../styles/layers.js';
 import {
-  prefixCache,
   prefixValueCache,
 } from './prefixCache.js';
 
@@ -54,26 +53,25 @@ export function createThemeContract<
   const contract = createGlobalThemeContract(
     // @ts-ignore
     contractVariables,
-    (_, paths) => ['theme', ...paths].join('-'),
+    (_, paths) => ['theme', family, ...paths].filter(Boolean).join('-'),
   ) as any;
 
-  const contractCache = prefixCache(contract);
   const contractValuesCache = prefixValueCache(contractVariables as any);
   const updater: UpdaterFunction<MapThemeToUpdateInput<Theme>> = (
     input,
     selector = rootNode,
     updateFunction = createGlobalTheme,
   ) => {
-    const prefixedContract = contractCache(family);
     const prefixedValues = contractValuesCache(family);
 
     updateFunction(selector, {
       '@layer': themeContractLayer,
-      ...prefixedContract,
+      ...contract,
     }, {
       '@layer': themeContractLayer,
       ...prefixedValues,
     });
+
     // @ts-ignore
     for (const [,contractUpdater, contractName] of contracts) {
       const { [contractName]: values } = input as any;
