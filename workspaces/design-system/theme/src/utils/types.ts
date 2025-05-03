@@ -5,5 +5,5 @@ export type UpdaterFunction<Input extends unknown = unknown> = (
   input: Input,
   selector?: string,
   updateFunction?: ThemeUpdateFunction,
-  variantPrefix?: string
+  family?: string
 ) => void;

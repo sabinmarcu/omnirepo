@@ -44,7 +44,7 @@ export function extractContracts<
 
 export function createThemeContract<
   Theme extends ThemeStructureType,
->(theme: Theme, variant?: string): [
+>(theme: Theme, family?: string): [
   MapThemeToContract<Theme>,
   UpdaterFunction<MapThemeToUpdateInput<Theme>>,
   Theme,
@@ -64,8 +64,8 @@ export function createThemeContract<
     selector = rootNode,
     updateFunction = createGlobalTheme,
   ) => {
-    const prefixedContract = contractCache(variant);
-    const prefixedValues = contractValuesCache(variant);
+    const prefixedContract = contractCache(family);
+    const prefixedValues = contractValuesCache(family);
 
     updateFunction(selector, {
       '@layer': themeContractLayer,
@@ -77,7 +77,7 @@ export function createThemeContract<
     // @ts-ignore
     for (const [,contractUpdater, contractName] of contracts) {
       const { [contractName]: values } = input as any;
-      contractUpdater(values, selector, updateFunction, variant);
+      contractUpdater(values, selector, updateFunction, family);
     }
   };
 
