@@ -11,6 +11,10 @@ import type {
 import type { UpdaterFunction } from './types.js';
 import { rootNode } from '../constants.js';
 import { themeContractLayer } from '../styles/layers.js';
+import {
+  prefixCache,
+  prefixValueCache,
+} from './prefixCache.js';
 
 export function mapThemeToContract<
   Theme extends ThemeStructureType,
@@ -40,7 +44,7 @@ export function extractContracts<
 
 export function createThemeContract<
   Theme extends ThemeStructureType,
->(theme: Theme): [
+>(theme: Theme, variant?: string): [
   MapThemeToContract<Theme>,
   UpdaterFunction<MapThemeToUpdateInput<Theme>>,
   Theme,
@@ -53,22 +57,27 @@ export function createThemeContract<
     (_, paths) => ['theme', ...paths].join('-'),
   ) as any;
 
+  const contractCache = prefixCache(contract);
+  const contractValuesCache = prefixValueCache(contractVariables as any);
   const updater: UpdaterFunction<MapThemeToUpdateInput<Theme>> = (
     input,
     selector = rootNode,
     updateFunction = createGlobalTheme,
   ) => {
+    const prefixedContract = contractCache(variant);
+    const prefixedValues = contractValuesCache(variant);
+
     updateFunction(selector, {
       '@layer': themeContractLayer,
-      ...contract,
+      ...prefixedContract,
     }, {
       '@layer': themeContractLayer,
-      ...contractVariables,
+      ...prefixedValues,
     });
     // @ts-ignore
     for (const [,contractUpdater, contractName] of contracts) {
       const { [contractName]: values } = input as any;
-      contractUpdater(values, selector, updateFunction);
+      contractUpdater(values, selector, updateFunction, variant);
     }
   };
 

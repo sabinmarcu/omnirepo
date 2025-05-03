@@ -18,6 +18,10 @@ import type {
   UpdaterInputOfVariantContractVariants,
   UpdatersOfVariantContract,
 } from './variantContract.type.js';
+import {
+  prefixCache,
+  prefixValueCache,
+} from './prefixCache.js';
 
 const inputHasVariants = <
   const Generator extends ThemeGenerator<any>,
@@ -64,6 +68,12 @@ export function variantContract<
     })`;
   }
 
+  const contractCache = prefixCache(rootContract);
+  const contractValuesCache = prefixValueCache(lightDarkValues);
+  const contractVariantValuesCaches = {
+    light: prefixValueCache(variants['light'] as any),
+    dark: prefixValueCache(variants['dark'] as any),
+  } satisfies Record<typeof themeVariants[number], ReturnType<typeof prefixValueCache>>;
   const updateVariants: UpdaterFunction<
     Record<
       typeof themeVariants[number],
@@ -73,13 +83,17 @@ export function variantContract<
     values,
     selector = rootNode,
     updateFunction = createGlobalTheme,
+    variantPrefix?: string,
   ) => {
+    const prefixedContract = contractCache(variantPrefix);
+
+    const prefixedLightDarkValues = contractValuesCache(variantPrefix);
     updateFunction(selector, {
       '@layer': themeVariantsLayer,
-      ...rootContract,
+      ...prefixedContract,
     }, {
       '@layer': themeVariantsLayer,
-      ...lightDarkValues,
+      ...prefixedLightDarkValues,
     } as any);
 
     for (const variant of themeVariants) {
@@ -91,15 +105,16 @@ export function variantContract<
         valuesToRender = values;
       }
 
+      const prefixedVariant = contractVariantValuesCaches[variant](variantPrefix);
       updateFunction(selectorOfVariant(variant), {
         '@layer': themeVariantsLayer,
-        ...rootContract,
+        ...prefixedContract,
       }, {
         '@layer': themeVariantsLayer,
-        ...variants[variant],
+        ...prefixedVariant,
       } as any);
 
-      updaters[variant](valuesToRender, selector, updateFunction);
+      updaters[variant](valuesToRender, selector, updateFunction, variantPrefix);
     }
   };
 

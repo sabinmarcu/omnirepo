@@ -9,6 +9,7 @@ import type {
 import { themeValuesLayer } from '../styles/layers.js';
 import type { UpdaterFunction } from './types.js';
 import { rootNode } from '../constants.js';
+import { prefixCache } from './prefixCache.js';
 
 export function rawContract<
   const Generator extends ThemeGenerator<any>,
@@ -23,18 +24,22 @@ export function rawContract<
     raw as any,
     (_, path) => [prefix, ...path].join('-'),
   );
+
+  const contractCache = prefixCache(contract);
   const update: UpdaterFunction<TypeOfThemeGenerator<Generator>> = (
     input,
     selector = rootNode,
     updateFunction = createGlobalTheme,
+    variantPrefix?: string,
   ) => {
-    const colors = generator(input);
+    const values = generator(input);
+    const prefixedContract = contractCache(variantPrefix);
     updateFunction(selector, {
       '@layer': themeValuesLayer,
-      ...contract,
+      ...prefixedContract,
     }, {
       '@layer': themeValuesLayer,
-      ...colors,
+      ...values,
     } as any);
   };
   return [contract, update, prefix] as const;
