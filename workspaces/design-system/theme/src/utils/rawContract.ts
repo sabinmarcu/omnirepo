@@ -32,7 +32,7 @@ export function rawContract<
     updateFunction = createGlobalTheme,
     family?: string,
   ) => {
-    const values = generator(input);
+    const values = generator(input, (contract as any)[generator.default]);
     const prefixedContract = contractCache(family);
     updateFunction(selector, {
       '@layer': themeValuesLayer,
