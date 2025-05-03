@@ -40,7 +40,7 @@
     "yaml": "^2.5.0"
   },
   "scripts": {
-    "coverage": "jest --coverage",
+    "coverage": "vitest --run --coverage",
     "dev": "yarn moon run :dev",
     "lint": "yarn moon run :lint",
     "moon": "$(yarn bin moon)",
