@@ -21,7 +21,10 @@ export function argsTable(
   globalStyle(`${rootSelector} .docblock-argstable`, {
     color: localStyles.color,
   });
-  globalStyle(`${rootSelector} .docblock-argstable-body tr, .sbdocs.sbdocs-wrapper .docblock-argstable-body td`, {
+  globalStyle([
+    `${rootSelector} .docblock-argstable-body tr`,
+    `${rootSelector} .docblock-argstable-body td`,
+  ].join(', '), {
     borderColor: localStyles.border,
   });
   globalStyle(`${rootSelector} .docblock-argstable-body td`, {

@@ -72,7 +72,7 @@ export const defaultOptions = {
       color: '#fff',
     },
     page: {
-      background: '#222',
+      background: '#555',
       color: '#fff',
       link: {
         base: '#0cf',
@@ -81,7 +81,7 @@ export const defaultOptions = {
       },
     },
     preview: {
-      background: '#555',
+      background: '#222',
       color: '#fff',
       bar: {
         background: '#333',
@@ -98,7 +98,7 @@ export const defaultOptions = {
       color: '#fff',
       border: '#7b7b7b',
       body: {
-        background: '#555',
+        background: '#222',
         code: {
           background: '#7b7b7b',
           color: '#fff',
@@ -117,7 +117,7 @@ export const defaultOptions = {
     },
     separator: '#555',
     story: {
-      background: '#555',
+      background: '#222',
       color: '#fff',
       font: {
         family: defaultFontFamily,
