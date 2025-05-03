@@ -93,8 +93,6 @@ const config = {
     getAbsolutePath('@chromatic-com/storybook'),
     getAbsolutePath('@storybook/addon-interactions'),
     getAbsolutePath('@sabinmarcu/theme-storybook'),
-    getAbsolutePath('@sabinmarcu/storybook-addon-theme-overrider'),
-    getAbsolutePath('@sabinmarcu/storybook-addon-mirror-preview'),
   ],
   docs: {},
   framework: {
