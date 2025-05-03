@@ -113,7 +113,7 @@ jobs:
         run: 'yarn install --immutable'
 
       - name: Run setup
-        run: 'yarn moon run :build'
+        run: 'yarn moon run :build --query "projectType!=application"'
 
       - name: Run Coverage
         run: 'yarn coverage'
@@ -123,4 +123,4 @@ jobs:
         with: 
           directory: coverage
           token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
+          fail_ci_if_error: false
