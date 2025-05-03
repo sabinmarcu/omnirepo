@@ -3,6 +3,7 @@ import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { glob } from 'glob';
 import fs from 'node:fs';
+import { withManager } from '@sabinmarcu/theme-storybook';
 
 const localRequire = createRequire(import.meta.url);
 const getStories = async () => {
@@ -66,7 +67,7 @@ function getAbsolutePath(value: string) {
 }
 
 /** @type { import('@storybook/react-vite').StorybookConfig } */
-const config = {
+const config = withManager({
   stories: getStories,
   addons: [
     getAbsolutePath('@storybook/addon-onboarding'),
@@ -88,6 +89,6 @@ const config = {
       },
     },
   },
-};
+});
 
 export default config;
