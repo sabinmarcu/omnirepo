@@ -46,7 +46,7 @@
     "preset": "lib",
     "presets": [
       "lib",
-      "react"
+      "storybookLib"
     ]
   },
   "typeVersions": {

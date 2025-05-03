@@ -11,5 +11,5 @@ addons.register(TOOLBAR_ID, () => addons.add(TOOLBAR_ID, {
   title: TOOLBAR_ID,
   type: types.TOOL,
   match: ({ tabId }) => !tabId,
-  render: () => <ToolbarManager />,
+  render: ToolbarManager,
 }));
