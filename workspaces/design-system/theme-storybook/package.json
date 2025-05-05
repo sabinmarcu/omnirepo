@@ -58,7 +58,6 @@
     }
   },
   "peerDependencies": {
-    "@sabinmarcu/website": "workspace:*",
     "@storybook/manager-api": "*",
     "@storybook/react": "*",
     "@storybook/react-vite": "*",
@@ -76,6 +75,7 @@
     "@sabinmarcu/storybook-addon-split-toolbars": "workspace:*",
     "@sabinmarcu/storybook-addon-theme-overrider": "workspace:*",
     "@sabinmarcu/theme": "workspace:*",
+    "@sabinmarcu/website-theme": "workspace:*",
     "deepmerge-ts": "^7.1.5"
   }
 }

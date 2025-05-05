@@ -4,7 +4,7 @@ import {
 import {
   setupTheme as websiteThemes,
   themeColors as websiteThemeValues,
-} from '@sabinmarcu/website/theme';
+} from '@sabinmarcu/website-theme';
 import { themes } from './themes.js';
 import { themeValues } from './themes.values.js';
 
