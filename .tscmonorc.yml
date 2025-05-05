@@ -1,7 +1,6 @@
 baseConfig: "tsconfig.base.json"
 mode: loose
 defaultFileMode: default
-generatePaths: true
 files: 
   build: 
     presets: 
@@ -50,7 +49,7 @@ presets:
       noEmit: true
       esModuleInterop: true
       module: esnext
-      moduleResolution: Node
+      moduleResolution: Bundler
       resolveJsonModule: true
       isolatedModules: true
       jsx: preserve
