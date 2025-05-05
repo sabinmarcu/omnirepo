@@ -7007,7 +7007,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@sabinmarcu/moving-mesh-background@workspace:*, @sabinmarcu/moving-mesh-background@workspace:^, @sabinmarcu/moving-mesh-background@workspace:workspaces/components/moving-mesh-background":
+"@sabinmarcu/moving-mesh-background@workspace:*, @sabinmarcu/moving-mesh-background@workspace:workspaces/components/moving-mesh-background":
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/moving-mesh-background@workspace:workspaces/components/moving-mesh-background"
   dependencies:
@@ -7236,7 +7236,7 @@ __metadata:
     "@storybook/types": "npm:^8.6.11"
     deepmerge-ts: "npm:^7.1.5"
   peerDependencies:
-    "@sabinmarcu/website": "workspace:^"
+    "@sabinmarcu/website": "workspace:*"
     "@storybook/manager-api": "*"
     "@storybook/react": "*"
     "@storybook/react-vite": "*"
@@ -7399,7 +7399,7 @@ __metadata:
   resolution: "@sabinmarcu/website@workspace:apps/website"
   dependencies:
     "@eslint/eslintrc": "npm:^3"
-    "@sabinmarcu/moving-mesh-background": "workspace:^"
+    "@sabinmarcu/moving-mesh-background": "workspace:*"
     "@sabinmarcu/theme": "workspace:*"
     "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
