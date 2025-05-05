@@ -1,15 +1,15 @@
-import { LandingCard } from './LandingCard';
+import { LandingCard } from './components/LandingCard';
+import { LandingCardList } from './components/LandingCardList';
+import { LandingLogo } from './components/LandingLogo';
 import {
-  landingPageList,
-  landingPageLogo,
   landingPageWrapper,
 } from './page.css';
 
 export default function Home() {
   return (
     <main className={landingPageWrapper}>
-      <div className={landingPageLogo} />
-      <section className={landingPageList}>
+      <LandingLogo />
+      <LandingCardList>
         <LandingCard theme="personal" wip>
           <h1>About Me</h1>
         </LandingCard>
@@ -25,7 +25,7 @@ export default function Home() {
         <LandingCard theme="snippets" wip>
           <h1>Snippets</h1>
         </LandingCard>
-      </section>
+      </LandingCardList>
     </main>
   );
 }

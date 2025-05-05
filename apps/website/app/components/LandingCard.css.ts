@@ -1,5 +1,6 @@
 import {
   createVar,
+  keyframes,
   style,
 } from '@vanilla-extract/css';
 import { theme } from '@sabinmarcu/theme';
@@ -78,9 +79,28 @@ const wipMeshSteps = [
   'transparent 45%',
 ].join(', ');
 
+const onFrames = {
+  opacity: 1,
+} satisfies Parameters<typeof keyframes>[0][string];
+
+const offFrames = {
+  opacity: 0.8,
+} satisfies Parameters<typeof keyframes>[0][string];
+
+const flickerAnimation = keyframes({
+  ...Object.fromEntries(
+    [0, 19, 21, 23, 25, 54, 56, 100].map((percent) => [`${percent}%`, onFrames]),
+  ),
+  ...Object.fromEntries(
+    [20, 24, 55].map((percent) => [`${percent}%`, offFrames]),
+  ),
+});
+
 export const wipStyle = style({
   cursor: 'not-allowed',
   position: 'relative',
+  animation: `${flickerAnimation} 20s infinite alternate`,
+  animationDelay: 'attr(data-rand ms)',
   ':before': {
     content: '',
     position: 'absolute',
