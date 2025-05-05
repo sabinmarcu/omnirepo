@@ -16,20 +16,17 @@ const eslintConfig = [
       'unicorn/filename-case': ['error', { case: 'pascalCase' }],
     },
   },
-  // {
-  //   name: 'Typescript TSConfig',
-  //   languageOptions: {
-  //     parserOptions: {
-  //       projectService: false,
-  //       project: './tsconfig.eslint.json',
-  //     },
-  //   },
-  //
-  // },
   {
     files: ['**/timer40k/**/*.tsx'],
     rules: {
       'unicorn/filename-case': 'off',
+    },
+  },
+  {
+    name: 'Website ignores (thanks, nextjs)',
+    files: ['**/website/**/*.tsx', '**/website/**/*.ts'],
+    rules: {
+      'import/extensions': ['off'],
     },
   },
 ];
