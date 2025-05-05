@@ -30,4 +30,10 @@ globalStyle('*', {
 
 globalStyle('*, *::before, *::after', {
   transition: 'all 0.3s ease-out',
+  '@media': {
+    '(prefers-reduced-motion: reduce)': {
+      transition: 'none !important',
+      animation: 'none !important',
+    },
+  },
 });

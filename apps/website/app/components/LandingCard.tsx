@@ -1,6 +1,6 @@
 import { themeFamilyDataAttribute } from '@sabinmarcu/theme/constants';
 import type { PropsWithChildren } from 'react';
-import type { setupTheme } from '@/config/theme';
+import type { setupTheme } from '@sabinmarcu/website-theme';
 import {
   wrapperStyle,
   wipStyle,
@@ -23,6 +23,7 @@ export async function LandingCard({
     <article
       {...themeParam}
       className={[wrapperStyle, wip && wipStyle].filter(Boolean).join(' ')}
+      data-rand={Math.random() * 3000}
     >
       {wip ? <p className={wipTip}>Under Construction</p> : null}
       {children}
