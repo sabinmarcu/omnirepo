@@ -37,7 +37,6 @@ export function rawContract<
     const prefixedContract = contractCache(family);
     const prefixedValues = prefixContractValues(values as any, family);
     updateFunction(selector, {
-      '@layer': themeValuesLayer,
       ...prefixedContract,
     }, {
       '@layer': themeValuesLayer,

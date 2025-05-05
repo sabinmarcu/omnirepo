@@ -89,7 +89,6 @@ export function variantContract<
 
     const prefixedLightDarkValues = contractValuesCache(family);
     updateFunction(selector, {
-      '@layer': themeVariantsLayer,
       ...prefixedContract,
     }, {
       '@layer': themeVariantsLayer,
@@ -107,7 +106,6 @@ export function variantContract<
 
       const prefixedVariant = contractVariantValuesCaches[variant](family);
       updateFunction(selectorOfVariant(variant), {
-        '@layer': themeVariantsLayer,
         ...prefixedContract,
       }, {
         '@layer': themeVariantsLayer,

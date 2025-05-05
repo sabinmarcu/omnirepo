@@ -64,13 +64,14 @@ export function createThemeContract<
   ) => {
     const prefixedValues = contractValuesCache(family);
 
-    updateFunction(selector, {
-      '@layer': themeContractLayer,
+    const localContract = {
       ...contract,
-    }, {
+    };
+    const localValues = {
       '@layer': themeContractLayer,
       ...prefixedValues,
-    });
+    };
+    updateFunction(selector, localContract, localValues);
 
     // @ts-ignore
     for (const [,contractUpdater, contractName] of contracts) {

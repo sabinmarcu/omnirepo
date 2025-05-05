@@ -25,7 +25,7 @@
     "./*": {
       "import": "./dist/*.js",
       "types": "./dist/*.d.ts",
-      "main": "./dist/*.js",
+      "main": "./dist/*",
       "default": "./dist/*.js"
     },
     "./package.json": "./package.json"

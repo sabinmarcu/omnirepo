@@ -1,3 +1,5 @@
+import './styles/index.css.js';
+
 export * from './index.js';
 export {
   setupThemeRuntime as setupTheme,

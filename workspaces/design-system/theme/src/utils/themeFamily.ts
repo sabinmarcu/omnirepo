@@ -75,7 +75,6 @@ export const createThemeFamily = <
     const { contract } = rootUpdater[ThemeMetadataSymbol];
 
     updateFunction(selector, {
-      '@layer': themeContractLayer,
       ...contract,
     } as any, {
       '@layer': themeContractLayer,
@@ -93,6 +92,7 @@ export const createThemeFamily = <
       picker(family, selectorOfFamily(family), updateFunction);
       familyUpdaters[family](mergedInput as any, selector, updateFunction);
     }
+    picker('base', undefined, updateFunction);
   };
 
   const updater: FamilyConfig<Families> = updaterRaw as any;
