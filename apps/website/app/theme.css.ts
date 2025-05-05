@@ -1,6 +1,6 @@
 import {
   setupTheme,
   themeColors,
-} from '@/config/theme';
+} from '@sabinmarcu/website-theme';
 
 setupTheme(themeColors);
