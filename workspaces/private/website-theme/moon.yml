@@ -1,0 +1,13 @@
+project:
+  name: website-theme
+  description: Self-contained config for website theme
+  channel: "#ui"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: library
+dependsOn:
+  - "@sabinmarcu/theme"
+  - "@sabinmarcu/types"
+  - "@sabinmarcu/utils-test"
