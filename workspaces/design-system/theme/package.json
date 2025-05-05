@@ -1,7 +1,7 @@
 {
   "name": "@sabinmarcu/theme",
   "packageManager": "yarn@4.5.1",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "type": "module",
