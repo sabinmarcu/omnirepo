@@ -54,6 +54,7 @@
     "@sabinmarcu/utils-primitives": "workspace:*",
     "@sabinmarcu/utils-repo": "workspace:*",
     "@sabinmarcu/utils-test": "workspace:*",
+    "@sabinmarcu/website-theme": "workspace:*",
     "eslint-plugin-logical-properties": "workspace:*",
     "typescript": "5.8.2"
   },
