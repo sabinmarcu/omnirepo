@@ -1,0 +1,31 @@
+
+project:
+  name: website
+  description: My personal website
+  channel: "#website"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: application
+tasks:
+  start:
+    command: yarn dev
+    options:
+      cache: false
+  build:
+    command: yarn build
+    options:
+      cache: false
+      runInCI: false
+    deps:
+      - ^:build
+workspace:
+  inheritedTasks:
+    include:
+      - debugPrint
+      - fixDependsOn
+toolchain:
+  default: node
+  node:
+    version: "23"
