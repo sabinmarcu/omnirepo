@@ -1,0 +1,8 @@
+releases:
+  "@sabinmarcu/moving-mesh-background": patch
+  "@sabinmarcu/theme": patch
+
+declined:
+  - "@sabinmarcu/theme-storybook"
+  - "@sabinmarcu/config"
+  - "@sabinmarcu/observable"
