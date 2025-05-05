@@ -7,6 +7,10 @@ project:
   owner: Sabin Marcu
 language: typescript
 type: library
+workspace:
+  inheritedTasks:
+    exclude:
+      - publish
 dependsOn:
   - "@sabinmarcu/theme"
   - "@sabinmarcu/types"
