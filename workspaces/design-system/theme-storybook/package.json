@@ -58,6 +58,7 @@
     }
   },
   "peerDependencies": {
+    "@sabinmarcu/website": "workspace:*",
     "@storybook/manager-api": "*",
     "@storybook/react": "*",
     "@storybook/react-vite": "*",

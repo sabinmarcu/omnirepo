@@ -1,7 +1,10 @@
 import {
-  pickThemeFamily,
   setupThemeFamily,
 } from '@sabinmarcu/theme/family.runtime';
+import {
+  setupTheme as websiteThemes,
+  themeColors as websiteThemeValues,
+} from '@sabinmarcu/website/theme';
 import { themes } from './themes.js';
 import { themeValues } from './themes.values.js';
 
@@ -10,4 +13,7 @@ setupThemeFamily(
   themeValues as any,
 );
 
-pickThemeFamily(themes as any, 'base');
+setupThemeFamily(
+  websiteThemes as any,
+  websiteThemeValues as any,
+);
