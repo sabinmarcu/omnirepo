@@ -62,9 +62,10 @@ export const makeRenderer = (
 
   let isRendering = true;
   const render = () => {
-    const color = wnd?.getComputedStyle(canvas)
-      .getPropertyValue(canvasCSSProperty)
-      ?? defaultColor;
+    const computedStyle = wnd?.getComputedStyle(canvas);
+    const color = computedStyle?.getPropertyValue(canvasCSSProperty)
+      || computedStyle?.getPropertyValue('color')
+      || defaultColor;
     if (!isRendering || !context) {
       return;
     }
