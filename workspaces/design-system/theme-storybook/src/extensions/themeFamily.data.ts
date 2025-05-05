@@ -1,4 +1,4 @@
-import { setupTheme as websiteThemes } from '@sabinmarcu/website/theme';
+import { setupTheme as websiteThemes } from '@sabinmarcu/website-theme';
 import { themes } from '../config/themes.js';
 
 const compileFamilies = <Families extends string>(input: Families[]) => (
