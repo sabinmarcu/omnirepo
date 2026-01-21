@@ -38,7 +38,7 @@ const ThemeFamilySelector = memo(({ globals, children }: ThemeFamilySelectorProp
     () => {
       const { [THEME_FAMILY_GLOBAL_ID]: selection } = globals;
       if (!selection) return;
-      const [group, theme] = selection.split(':');
+      const [group, theme] = splitToolbar.unpack(selection);
       const target = document.querySelector(rootNode);
       if (!target) return;
       if (

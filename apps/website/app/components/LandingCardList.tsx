@@ -3,8 +3,8 @@ import { landingPageList } from './LandingCardList.css';
 
 export async function LandingCardList({ children }: PropsWithChildren<{}>) {
   return (
-      <section className={landingPageList}>
-        {children}
-      </section>
+    <section className={landingPageList}>
+      {children}
+    </section>
   );
 }

@@ -23,7 +23,10 @@
     ],
     "jsx": "react-jsx",
     "module": "NodeNext",
-    "target": "ES2022"
+    "target": "ES2022",
+    "types": [
+      "node"
+    ]
   },
   "exclude": [
     "node_modules"

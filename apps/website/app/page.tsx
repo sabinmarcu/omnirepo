@@ -1,3 +1,7 @@
+import type { Metadata } from 'next';
+import { homepageNavigation } from '@/navigation/home';
+import { Navigation } from '@/layouts/Navigation';
+import { ViewTransition } from 'react';
 import { LandingCard } from './components/LandingCard';
 import { LandingCardList } from './components/LandingCardList';
 import { LandingLogo } from './components/LandingLogo';
@@ -5,27 +9,35 @@ import {
   landingPageWrapper,
 } from './page.css';
 
+export const metadata: Metadata = {
+  title: 'Home Page | Sabin Marcu',
+};
+
 export default function Home() {
   return (
-    <main className={landingPageWrapper}>
-      <LandingLogo />
-      <LandingCardList>
-        <LandingCard theme="personal" wip>
-          <h1>About Me</h1>
-        </LandingCard>
-        <LandingCard theme="projects" >
-          <h1>Active Projects</h1>
-        </LandingCard>
-        <LandingCard theme="articles" wip>
-          <h1>Articles</h1>
-        </LandingCard>
-        <LandingCard theme="ramblings" wip>
-          <h1>Ramblings</h1>
-        </LandingCard>
-        <LandingCard theme="snippets" wip>
-          <h1>Snippets</h1>
-        </LandingCard>
-      </LandingCardList>
-    </main>
+    <ViewTransition>
+      <main className={landingPageWrapper}>
+        <Navigation empty />
+        <LandingLogo />
+        <LandingCardList>
+          {homepageNavigation.map(({
+            text,
+            id,
+            ...props
+          }) => (
+            <ViewTransition
+              key={id}
+              name={`navigation-${id}`}
+            >
+              <LandingCard
+                {...props as any}
+              >
+                <h1>{text}</h1>
+              </LandingCard>
+            </ViewTransition>
+          ))}
+        </LandingCardList>
+      </main>
+    </ViewTransition>
   );
 }

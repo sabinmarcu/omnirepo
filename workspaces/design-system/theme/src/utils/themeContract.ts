@@ -2,6 +2,7 @@ import {
   createGlobalTheme,
   createGlobalThemeContract,
 } from '@vanilla-extract/css';
+import { merge as deepMerge } from 'ts-deepmerge';
 import type {
   ExtractContractsFromThemeStructure,
   MapThemeToContract,
@@ -20,9 +21,36 @@ export function mapThemeToContract<
 >(theme: Theme): MapThemeToContract<Theme> {
   const result: MapThemeToContract<Theme> = {} as any;
   for (const [key, value] of Object.entries(theme)) {
-    (result as any)[key] = Array.isArray(value)
-      ? value[0]
-      : mapThemeToContract(value as any);
+    if (Array.isArray(value)) {
+      // eslint-disable-next-line unicorn/no-unreadable-array-destructuring
+      const [contract,,,meta] = value;
+      if (!meta?.raw) {
+        (result as any)[key] = contract;
+      }
+    } else {
+      (result as any)[key] = mapThemeToContract(value as any);
+    }
+  }
+  return result;
+}
+
+export function mapThemeToRaw<
+  Theme extends ThemeStructureType,
+>(theme: Theme): MapThemeToContract<Theme> {
+  const result: MapThemeToContract<Theme> = {} as any;
+  for (const [key, value] of Object.entries(theme)) {
+    if (Array.isArray(value)) {
+      // eslint-disable-next-line unicorn/no-unreadable-array-destructuring
+      const [contract,,,meta] = value;
+      if (meta?.raw) {
+        (result as any)[key] = contract;
+      }
+    } else {
+      const next = mapThemeToRaw(value as any);
+      if (Object.keys(next).length > 0) {
+        (result as any)[key] = next;
+      }
+    }
   }
   return result;
 }
@@ -47,14 +75,18 @@ export function createThemeContract<
   MapThemeToContract<Theme>,
   UpdaterFunction<MapThemeToUpdateInput<Theme>>,
   Theme,
+  MapThemeToContract<Theme>,
 ] {
   const contracts = extractContracts(theme);
   const contractVariables = mapThemeToContract(theme);
+  const contractRaws = mapThemeToRaw(theme);
   const contract = createGlobalThemeContract(
     // @ts-ignore
     contractVariables,
     (_, paths) => ['theme', family, ...paths].filter(Boolean).join('-'),
   ) as any;
+
+  const finalContract = deepMerge(contract, contractRaws);
 
   const contractValuesCache = prefixValueCache(contractVariables as any);
   const updater: UpdaterFunction<MapThemeToUpdateInput<Theme>> = (
@@ -80,5 +112,5 @@ export function createThemeContract<
     }
   };
 
-  return [contract, updater, theme] as const;
+  return [contract, updater, theme, finalContract as typeof contract] as const;
 }

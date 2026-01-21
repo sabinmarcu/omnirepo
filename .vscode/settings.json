@@ -23,5 +23,19 @@
     "nodenext"
   ],
   "typescript.format.enable": false,
-  "javascript.format.enable": false
+  "javascript.format.enable": false,
+  "prettier.enable": false,
+  "editor.formatOnSave": true,
+  "eslint.format.enable": true,
+  "eslint.useFlatConfig": true,
+  "editor.formatOnSaveMode": "modificationsIfAvailable",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "[typescript]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    },
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  }
 }

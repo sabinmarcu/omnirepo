@@ -12,7 +12,10 @@ import type {
 } from '../generators/types.js';
 import { rawContract } from './rawContract.js';
 import { themeVariantsLayer } from '../styles/layers.js';
-import type { UpdaterFunction } from './types.js';
+import type {
+  ContractMeta,
+  UpdaterFunction,
+} from './types.js';
 import type {
   UpdaterInputOfVariantContract,
   UpdaterInputOfVariantContractVariants,
@@ -116,5 +119,5 @@ export function variantContract<
     }
   };
 
-  return [rootContract, updateVariants, prefix] as const;
+  return [rootContract, updateVariants, prefix, {} as ContractMeta] as const;
 }

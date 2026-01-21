@@ -1,9 +1,9 @@
 baseConfig: "tsconfig.base.json"
 mode: loose
 defaultFileMode: default
-files: 
-  build: 
-    presets: 
+files:
+  build:
+    presets:
       - build
 presets:
   build:
@@ -28,13 +28,12 @@ presets:
     extends: "@docusaurus/tsconfig"
     compilerOptions:
       noEmit: true
-      baseUrl: "."
       rootDir: "src"
       tsBuildInfoFile: "./node_modules/.tmp/tsconfig.app.tsbuildInfo"
     include:
       - "src/**/*"
   docusaurusBuild:
-    exclude: 
+    exclude:
       - "src/**/*"
   nextApp:
     extends: "./tsconfig.next.json"
@@ -63,6 +62,7 @@ presets:
       - next-env.d.ts
       - "**/*.ts"
       - "**/*.tsx"
+      - "**/*.mdx"
       - ".next/types/**/*.ts"
     exclude:
       - node_modules
@@ -83,7 +83,9 @@ presets:
       allowImportingTsExtensions: true
       resolveJsonModule: true
       isolatedModules: true
+      module: esnext
       moduleDetection: force
+      moduleResolution: bundler
       noEmit: true
       jsx: react-jsx
       strict: true
@@ -93,11 +95,10 @@ presets:
   storybook:
     compilerOptions:
       noEmit: true
-      baseUrl: "."
       rootDir: "src"
       tsBuildInfoFile: "./node_modules/.tmp/tsconfig.app.tsbuildInfo"
     include:
       - "src/**/*"
   storybookLib:
     compilerOptions:
-      jsx: 'react'
+      jsx: "react"

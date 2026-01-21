@@ -1,4 +1,5 @@
 import { createThemeContract } from '../utils/themeContract.js';
+import { breakpointContract } from './breakpoint.js';
 import { gridContract } from './grid.js';
 import {
   errorContract,
@@ -22,6 +23,7 @@ export const createThemeVariantRaw = (variant: string) => (
       background: backgroundContract,
     },
     grid: gridContract,
+    breakpoint: breakpointContract,
   }, variant)
 );
 
@@ -29,6 +31,8 @@ export const ThemeMetadataSymbol = Symbol('metadata');
 export type ThemeMetadataConfig = {
   [ThemeMetadataSymbol]: {
     contract: ReturnType<typeof createThemeVariantRaw>[0],
+    finalContract: ReturnType<typeof createThemeVariantRaw>[0],
+
     raw: ReturnType<typeof createThemeVariantRaw>[2],
   }
 };
@@ -38,12 +42,13 @@ export type ThemeConfig = (
 );
 
 export const createThemeVariant = (variant: string) => {
-  const [contract, updater, raw] = createThemeVariantRaw(variant);
+  const [contract, updater, raw, finalContract] = createThemeVariantRaw(variant);
   const config: ThemeConfig = updater as any;
 
   config[ThemeMetadataSymbol] = {
     contract,
     raw,
+    finalContract,
   };
 
   return config;

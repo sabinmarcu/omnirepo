@@ -1,7 +1,9 @@
+import Color from 'colorjs.io';
 import {
   getColor,
 } from '../utils/color.js';
 import type { ThemeGenerator } from './types.js';
+import { colorspace } from '../constants.js';
 
 const blendAmount = 2;
 export const paletteGenerator = (() => {
@@ -9,11 +11,14 @@ export const paletteGenerator = (() => {
     color: string,
     defaultKey?: string,
   ) => {
-    const base = getColor(color);
+    const baseColor = new Color(color);
+    const base = baseColor.to(colorspace).toString();
     const baseReference = defaultKey ?? base;
+    const contrast = getColor(baseColor.luminance <= 0.5 ? '#ffff' : '#000f');
 
     return ({
       base,
+      contrast,
       muted: `oklch(from ${baseReference} l calc(c * ${1 / blendAmount}) h)`,
       emphasis: `oklch(from ${baseReference} l calc(c * ${blendAmount}) h)`,
     });

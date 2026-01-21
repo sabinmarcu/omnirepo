@@ -1,6 +1,7 @@
 import type {
   ArrayTail,
   PartialDeep,
+  Simplify,
 } from '@sabinmarcu/types';
 import { merge as deepMerge } from 'ts-deepmerge';
 import { createGlobalTheme } from '@vanilla-extract/css';
@@ -16,6 +17,7 @@ import { themeContractLayer } from '../styles/layers.constants.js';
 import {
   rootNode,
   themeFamilyDataAttribute,
+  themeDataAttribute,
 } from '../constants.js';
 
 export const baseKey = 'base';
@@ -36,6 +38,8 @@ export type ThemeFamilyPicker<Families extends string> = (
   ...rest: ArrayTail<Parameters<ThemeConfig>>
 ) => void;
 
+export type DataAttribute<T extends string> = `data-${T}`;
+
 export type FamilyConfig<Families extends string> = (
   & { pick: ThemeFamilyPicker<Families> }
   & ThemeFamilyUpdater<Families>
@@ -45,6 +49,10 @@ export type FamilyConfig<Families extends string> = (
   }
   & {
     families: (Families | BaseValuesKey)[],
+    selector: DataAttribute<typeof themeFamilyDataAttribute>,
+    variantSelector: DataAttribute<typeof themeDataAttribute>,
+    selectors: Simplify<{ [Key in Families | BaseValuesKey]: `[${DataAttribute<typeof themeFamilyDataAttribute>}=${Key}` }>,
+    themes: Record<Families | BaseValuesKey, ThemeConfig[typeof ThemeMetadataSymbol]['contract']>
   }
 );
 
@@ -105,6 +113,19 @@ export const createThemeFamily = <
 
   updater[ThemeMetadataSymbol] = rootUpdater[ThemeMetadataSymbol];
   updater.families = [baseKey, ...families];
+  updater.selector = `data-${themeFamilyDataAttribute}`;
+  updater.variantSelector = `data-${themeDataAttribute}`;
+  updater.selectors = Object.fromEntries(
+    updater.families.map(
+      (family) => [family, `[${updater.selector}=${family}]`],
+    ),
+  ) as any;
+
+  updater.themes = { base: baseUpdater[ThemeMetadataSymbol].contract } as any;
+
+  for (const family of families) {
+    (updater as any).themes[family] = familyUpdaters[family][ThemeMetadataSymbol].contract;
+  }
 
   return updater;
 };

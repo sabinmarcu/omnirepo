@@ -3,4 +3,4 @@ import {
   ThemeMetadataSymbol,
 } from './contracts/theme.js';
 
-export const { contract: theme } = setupTheme[ThemeMetadataSymbol];
+export const { finalContract: theme } = setupTheme[ThemeMetadataSymbol];

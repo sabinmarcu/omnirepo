@@ -1,4 +1,5 @@
 import { createThemeFamily } from '@sabinmarcu/theme/family';
+import { theme as baseTheme } from '@sabinmarcu/theme/theme';
 
 export const setupTheme = createThemeFamily(
   'personal',
@@ -8,12 +9,20 @@ export const setupTheme = createThemeFamily(
   'snippets',
 );
 
+export const {
+  themes,
+  selector,
+  variantSelector,
+  selectors,
+  families,
+} = setupTheme;
+
 export const themeColors = {
   base: {
     primary: '#0cf',
     secondary: '#f0c',
     background: {
-      light: '#e0e0e0',
+      light: '#c0c0c0',
       dark: '#171717',
     },
     success: 'green',
@@ -21,9 +30,17 @@ export const themeColors = {
     warning: 'yellow',
     error: 'red',
     grid: 16,
+    breakpoint: {
+      mobile: 700,
+      tablet: 1000,
+      screen: 1600,
+      large: 1900,
+      huge: 3800,
+    },
   },
   personal: {
-    primary: 'oklch(0.9 0.22 98.26)',
+    primary: 'oklch(0.43 0.09 61.07)',
+    secondary: 'oklch(0.32 0.12 8.23)',
   },
   projects: {
     primary: 'oklch(0.63 0.33 317.55)',
@@ -38,3 +55,7 @@ export const themeColors = {
     primary: 'oklch(0.69 0.25 39.9)',
   },
 } satisfies Parameters<typeof setupTheme>[0];
+
+export const theme = {
+  ...baseTheme,
+} as const;
