@@ -1,0 +1,1 @@
+export { InfoTagList } from './InfoTag.list';

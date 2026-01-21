@@ -3,7 +3,8 @@ import { globalStyle } from '@vanilla-extract/css';
 
 globalStyle('html, body', {
   maxInlineSize: '100vw',
-  overflowInline: 'hidden',
+  maxBlockSize: '100vh',
+  overflow: 'hidden',
 });
 
 globalStyle('body', {

@@ -1,9 +1,9 @@
 baseConfig: "tsconfig.base.json"
 mode: loose
 defaultFileMode: default
-files: 
-  build: 
-    presets: 
+files:
+  build:
+    presets:
       - build
 presets:
   build:
@@ -34,7 +34,7 @@ presets:
     include:
       - "src/**/*"
   docusaurusBuild:
-    exclude: 
+    exclude:
       - "src/**/*"
   nextApp:
     extends: "./tsconfig.next.json"
@@ -63,6 +63,7 @@ presets:
       - next-env.d.ts
       - "**/*.ts"
       - "**/*.tsx"
+      - "**/*.mdx"
       - ".next/types/**/*.ts"
     exclude:
       - node_modules
@@ -100,4 +101,4 @@ presets:
       - "src/**/*"
   storybookLib:
     compilerOptions:
-      jsx: 'react'
+      jsx: "react"

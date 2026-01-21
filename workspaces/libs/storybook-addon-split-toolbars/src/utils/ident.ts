@@ -2,7 +2,7 @@ import type { Globals } from '@storybook/core/types';
 import type { Ident } from '../types.js';
 import { DEFAULT_ITEMS_KEY } from '../constants.js';
 
-const identSeparator = ':';
+const identSeparator = '--';
 
 export const getGlobalIdent = (
   globals: Globals,
@@ -31,6 +31,11 @@ export const setGlobalIdent = (
     return value;
   }
   return [ident.key, value].join(identSeparator);
+};
+
+export const unpackIdent = (ident: string) => {
+  const [key, value] = ident.split(identSeparator);
+  return [key, value] as const;
 };
 
 export const ident = (id: string, key: string) => ({

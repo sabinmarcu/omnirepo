@@ -1,9 +1,9 @@
 import {
   createVar,
-  keyframes,
+  globalStyle,
   style,
 } from '@vanilla-extract/css';
-import { theme } from '@sabinmarcu/theme';
+import { theme } from '@sabinmarcu/website-theme';
 
 const spacing = createVar('spacing');
 const color = createVar('color');
@@ -19,15 +19,17 @@ const boxShadowIntensity = createVar({
   initialValue: '0.2',
 }, 'shadow-intensity');
 const boxShadow = `0 0px 20px oklch(from ${color} l c h / ${boxShadowIntensity})`;
+
 export const wrapperStyle = style({
+  aspectRatio: '7/3',
   cursor: 'pointer',
   display: 'flex',
   flexFlow: 'column nowrap',
 
-  minBlockSize: '10rem',
-
   background: `oklch(from ${color} l c h / ${colorIntensity})`,
   backdropFilter: 'blur(10px)',
+
+  fontSize: '2.5rem',
 
   borderInlineStart: `solid ${borderSize} ${color}`,
   borderInlineEnd: `solid ${borderSize} ${color}`,
@@ -47,7 +49,7 @@ export const wrapperStyle = style({
   vars: {
     [spacing]: theme.grid.m,
     [color]: `color-mix(in oklch, ${theme.colors.primary.muted} 30%, ${theme.colors.background.page})`,
-    [borderSize]: '2px',
+    [borderSize]: '6px',
     [boxShadowIntensity]: '0.3',
     [colorIntensity]: '0.1',
   },
@@ -69,57 +71,44 @@ export const wrapperStyle = style({
   justifyContent: 'center',
 });
 
+globalStyle(['a', 'a:visited', 'a:link'].map(
+  (it) => `${it}:has(> ${wrapperStyle})`,
+).join(', '), {
+  textDecoration: 'none',
+  color: 'inherit',
+});
+
 const wipMeshSize = createVar('wip-mesh-size');
-const wipMeshPercent = createVar('wip-mesh-percent');
+const wipMeshColor = createVar('wip-mesh-color');
 const wipMeshSteps = [
   'transparent 0%',
-  `transparent calc(50% - ${wipMeshPercent} / 2)`,
-  `${theme.colors.background.surface} calc(50% - ${wipMeshPercent} / 2)`,
-  `${theme.colors.background.surface} calc(50% + ${wipMeshPercent} / 2)`,
-  'transparent 45%',
+  `transparent calc(${wipMeshSize} / 4)`,
+  `${wipMeshColor} calc(${wipMeshSize} / 4)`,
+  `${wipMeshColor} ${wipMeshSize}`,
 ].join(', ');
-
-const onFrames = {
-  opacity: 1,
-} satisfies Parameters<typeof keyframes>[0][string];
-
-const offFrames = {
-  opacity: 0.8,
-} satisfies Parameters<typeof keyframes>[0][string];
-
-const flickerAnimation = keyframes({
-  ...Object.fromEntries(
-    [0, 19, 21, 23, 25, 54, 56, 100].map((percent) => [`${percent}%`, onFrames]),
-  ),
-  ...Object.fromEntries(
-    [20, 24, 55].map((percent) => [`${percent}%`, offFrames]),
-  ),
-});
 
 export const wipStyle = style({
   cursor: 'not-allowed',
   position: 'relative',
-  animation: `${flickerAnimation} 20s infinite alternate`,
-  animationDelay: 'attr(data-rand ms)',
   ':before': {
     content: '',
     position: 'absolute',
     zIndex: -2,
-    inset: 0,
-    backgroundImage: [
-      `linear-gradient(45deg, ${wipMeshSteps})`,
-      `linear-gradient(-45deg, ${wipMeshSteps})`,
-    ].join(', '),
-    backgroundSize: `${wipMeshSize} ${wipMeshSize}`,
-    boxShadow: [
-      boxShadow,
-      `inset 0 0 10px ${theme.colors.background.page}`,
-    ].join(', '),
-    vars: {
-      [wipMeshPercent]: '10%',
-      [wipMeshSize]: '13px',
+    inset: '0.8rem',
+    backgroundImage: `repeating-linear-gradient(45deg, ${wipMeshSteps})`,
+    backgroundAttachment: 'fixed',
+    opacity: 0.2,
+  },
+  vars: {
+    [wipMeshSize]: '50px',
+    [wipMeshColor]: theme.colors.warning.base,
+  },
+  '@media': {
+    '(prefers-color-scheme: dark)': {
+      vars: {
+        [wipMeshColor]: `hsla(from ${theme.colors.warning.base} h s l / 0.3)`,
+      },
     },
-    opacity: 0.3,
   },
   selectors: {
     '&:hover::before': {
@@ -136,6 +125,7 @@ export const wipTip = style({
   opacity: '0.2',
   userSelect: 'none',
   fontWeight: 'bold',
+  fontSize: '1.8rem',
   textTransform: 'uppercase',
   zIndex: '-0',
 });

@@ -20,7 +20,7 @@ export function ToolbarItemMenus({
     items,
   },
 }: ToolbarItemMenus.Props) {
-  const [,updateGlobals] = useGlobals();
+  const [, updateGlobals] = useGlobals();
 
   const onChange = ((
     ident,

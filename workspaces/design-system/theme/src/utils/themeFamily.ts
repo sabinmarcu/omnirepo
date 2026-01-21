@@ -16,6 +16,7 @@ import { themeContractLayer } from '../styles/layers.constants.js';
 import {
   rootNode,
   themeFamilyDataAttribute,
+  themeDataAttribute,
 } from '../constants.js';
 
 export const baseKey = 'base';
@@ -45,6 +46,10 @@ export type FamilyConfig<Families extends string> = (
   }
   & {
     families: (Families | BaseValuesKey)[],
+    selectors: Record<Families | BaseValuesKey, string>,
+    selector: string,
+    variantSelector: string,
+    themes: Record<Families | BaseValuesKey, ThemeConfig[typeof ThemeMetadataSymbol]['contract']>
   }
 );
 
@@ -105,6 +110,19 @@ export const createThemeFamily = <
 
   updater[ThemeMetadataSymbol] = rootUpdater[ThemeMetadataSymbol];
   updater.families = [baseKey, ...families];
+  updater.selector = `data-${themeFamilyDataAttribute}`;
+  updater.variantSelector = `data-${themeDataAttribute}`;
+  updater.selectors = Object.fromEntries(
+    updater.families.map(
+      (family) => [family, `[${updater.selector}=${family}]`],
+    ),
+  ) as any;
+
+  updater.themes = { base: baseUpdater[ThemeMetadataSymbol].contract } as any;
+
+  for (const family of families) {
+    (updater as any).themes[family] = familyUpdaters[family][ThemeMetadataSymbol].contract;
+  }
 
   return updater;
 };

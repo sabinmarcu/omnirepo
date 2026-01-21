@@ -1,7 +1,6 @@
-import { theme } from '@sabinmarcu/theme';
+import { theme } from '@sabinmarcu/website-theme';
 import {
   createVar,
-  keyframes,
   style,
 } from '@vanilla-extract/css';
 
@@ -10,23 +9,6 @@ const mixPercent = createVar({
   initialValue: '0%',
   inherits: true,
 }, 'mix-percent');
-
-const onFrames = {
-  opacity: 1,
-} satisfies Parameters<typeof keyframes>[0][string];
-
-const offFrames = {
-  opacity: 0.4,
-} satisfies Parameters<typeof keyframes>[0][string];
-
-const flickerAnimation = keyframes({
-  ...Object.fromEntries(
-    [0, 19, 21, 23, 25, 54, 56, 100].map((percent) => [`${percent}%`, onFrames]),
-  ),
-  ...Object.fromEntries(
-    [20, 24, 55].map((percent) => [`${percent}%`, offFrames]),
-  ),
-});
 
 const logoSize = createVar('logo-size');
 export const landingPageLogo = style({
@@ -38,7 +20,6 @@ export const landingPageLogo = style({
     [mixPercent]: '60%',
     [logoSize]: 'clamp(100px, 25cqmax, 200px)',
   },
-  animation: `${flickerAnimation} 20s infinite alternate`,
   selectors: {
     ':has([data-theme-variant="dark"]) &': {
       vars: {

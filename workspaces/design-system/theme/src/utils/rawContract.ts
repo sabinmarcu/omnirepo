@@ -7,7 +7,10 @@ import type {
   TypeOfThemeGenerator,
 } from '../generators/types.js';
 import { themeValuesLayer } from '../styles/layers.js';
-import type { UpdaterFunction } from './types.js';
+import type {
+  ContractMeta,
+  UpdaterFunction,
+} from './types.js';
 import { rootNode } from '../constants.js';
 import { prefixCache } from './prefixCache.js';
 import { prefixContractValues } from './prefixContractValues.js';
@@ -19,6 +22,7 @@ export function rawContract<
   generator: Generator,
   prefix: Prefix,
   defaultValue: TypeOfThemeGenerator<Generator> = '#ffff' as any,
+  meta: ContractMeta = {},
 ) {
   const raw = generator(defaultValue);
   const contract = createGlobalThemeContract<ReturnType<typeof generator>>(
@@ -43,5 +47,5 @@ export function rawContract<
       ...prefixedValues,
     } as any);
   };
-  return [contract, update, prefix] as const;
+  return [contract, update, prefix, meta] as const;
 }

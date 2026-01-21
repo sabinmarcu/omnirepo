@@ -13,10 +13,9 @@ const moize = moizeImport as unknown as Moize;
  * @param path The path to resolve against
  * @returns The resolved path to the .git folder
  */
-export const resolveSync = moize(((
+export const resolveSync = moize((
   path: string,
-) => nodePath.resolve(path, '.git')
-)) satisfies PathResolverFunction as PathResolverFunction;
+) => nodePath.resolve(path, '.git')) satisfies PathResolverFunction as PathResolverFunction;
 
 /**
  * Resolve a path to the .git folder (async)
