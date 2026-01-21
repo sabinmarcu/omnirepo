@@ -68,6 +68,7 @@ export function ToolbarMenuList<Data extends unknown = unknown>({
   }
 
   if (!title && !icon) {
+    // eslint-disable-next-line no-console
     console.warn(`Toolbar '${id}' has no title or icon`);
   }
 

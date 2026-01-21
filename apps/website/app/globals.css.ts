@@ -1,9 +1,11 @@
 import { theme } from '@sabinmarcu/theme';
 import { globalStyle } from '@vanilla-extract/css';
+import './codehike.css';
 
 globalStyle('html, body', {
   maxInlineSize: '100vw',
-  overflowInline: 'hidden',
+  maxBlockSize: '100vh',
+  overflow: 'hidden',
 });
 
 globalStyle('body', {
@@ -12,6 +14,10 @@ globalStyle('body', {
   fontFamily: 'Arial, Helvetica, sans-serif',
   WebkitFontSmoothing: 'antialiased',
   MozOsxFontSmoothing: 'grayscale',
+  containerName: 'body-container',
+  containerType: 'size',
+  inlineSize: '100cqw',
+  blockSize: '100cqh',
 });
 
 globalStyle('*', {
@@ -36,4 +42,9 @@ globalStyle('*, *::before, *::after', {
       animation: 'none !important',
     },
   },
+});
+
+globalStyle('*', {
+  scrollbarColor: `${theme.colors.background.elevated} ${theme.colors.background.depressed}`,
+  scrollbarWidth: 'thin',
 });

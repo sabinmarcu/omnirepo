@@ -13,6 +13,13 @@ export const themeValues = {
     warning: 'yellow',
     error: 'red',
     grid: 16,
+    breakpoint: {
+      mobile: 700,
+      tablet: 1000,
+      screen: 1200,
+      large: 1980,
+      huge: 3000,
+    },
   },
   red: {
     primary: 'red',

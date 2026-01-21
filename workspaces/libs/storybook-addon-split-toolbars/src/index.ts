@@ -1,4 +1,5 @@
 import type { ToolbarArgType as ToolbarArgumentType } from './types.js';
+import { unpackIdent } from './utils/ident.js';
 
 export type * from './types.js';
 
@@ -8,3 +9,5 @@ export const splitToolbar = <
 >(
     input: Input,
   ): any => input;
+
+splitToolbar.unpack = unpackIdent;

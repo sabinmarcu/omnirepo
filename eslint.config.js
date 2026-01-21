@@ -1,7 +1,12 @@
+import {
+  defineConfig,
+  globalIgnores,
+} from 'eslint/config';
+import nextPlugin from '@next/eslint-plugin-next';
 import config from '@sabinmarcu/eslint-config';
 
 /** @type {import('@typescript-eslint/utils').TSESLint.FlatConfig.ConfigFile} */
-const eslintConfig = [
+const eslintConfig = defineConfig([
   ...config,
   {
     name: 'Root Config',
@@ -29,6 +34,31 @@ const eslintConfig = [
       'import/extensions': ['off'],
     },
   },
-];
+  {
+    name: 'NextJS Rules for Website',
+    files: ['**/website/**/*.tsx', '**/website/**/*.ts'],
+    plugins: nextPlugin.configs['core-web-vitals'].plugins,
+    rules: {
+      ...nextPlugin.configs['core-web-vitals'].rules,
+      'import/extensions': ['off'],
+    },
+  },
+  {
+    name: 'Website JSX Overrides',
+    files: ['**/website/**/*.tsx', '**/website/**/*.ts'],
+    rules: {
+      'import/export': ['off'],
+      '@typescript-eslint/no-redeclare': ['off'],
+      '@typescript-eslint/no-shadow': ['off'],
+      'prefer-arrow-callback': ['off'],
+    },
+  },
+  globalIgnores([
+    '.next/**',
+    'out/**',
+    'build/**',
+    'next-env.d.ts',
+  ]),
+]);
 
 export default eslintConfig;

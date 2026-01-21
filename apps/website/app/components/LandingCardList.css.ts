@@ -1,4 +1,4 @@
-import { theme } from '@sabinmarcu/theme';
+import { theme } from '@sabinmarcu/website-theme';
 import {
   createVar,
   style,

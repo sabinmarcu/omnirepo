@@ -1,32 +1,47 @@
-import { themeFamilyDataAttribute } from '@sabinmarcu/theme/constants';
-import type { PropsWithChildren } from 'react';
-import type { setupTheme } from '@sabinmarcu/website-theme';
+import type {
+  ComponentProps,
+  PropsWithChildren,
+} from 'react';
+import Link from 'next/link';
+import { withTheme } from '@/theme/runtime';
+import { cls } from '@/utils/cls';
 import {
   wrapperStyle,
   wipStyle,
   wipTip,
 } from './LandingCard.css';
+import { rootBackgroundTrigger } from '../layout.css';
 
 export namespace LandingCard {
-  export type Props = PropsWithChildren<{
-    theme?: typeof setupTheme.families[number]
-    wip?: boolean,
-  }>;
+  export type Props = PropsWithChildren<
+    & {
+      wip?: boolean,
+    }
+    & Partial<Pick<ComponentProps<typeof Link>, 'href'>>
+  >;
 }
-export async function LandingCard({
-  theme,
+export const LandingCard = withTheme<LandingCard.Props>(async function LandingCard({
   children,
   wip,
-}: LandingCard.Props) {
-  const themeParam = theme ? { [`data-${themeFamilyDataAttribute}`]: theme } : {};
-  return (
+  href,
+  ...rest
+}) {
+  const inner = (
     <article
-      {...themeParam}
-      className={[wrapperStyle, wip && wipStyle].filter(Boolean).join(' ')}
+      {...rest}
+      className={cls(
+        wrapperStyle,
+        { [wipStyle]: wip },
+        rootBackgroundTrigger,
+      )}
       data-rand={Math.random() * 3000}
     >
       {wip ? <p className={wipTip}>Under Construction</p> : null}
       {children}
     </article>
   );
-}
+  return (href
+    ? (<Link href={href as any}>{inner}</Link>)
+    : inner
+  );
+});
