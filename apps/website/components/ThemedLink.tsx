@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-redeclare */
 /* eslint-disable import/export */
 
-import { withTheme } from '@/hocs/withTheme';
+import { withTheme } from '@/theme/runtime';
 import Link from 'next/link';
 import type { ComponentProps } from 'react';
 import {

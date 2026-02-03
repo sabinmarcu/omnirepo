@@ -1,16 +1,15 @@
 import type { PropsWithChildren } from 'react';
-import { ThemeSelector } from '@/components/ThemeSelector';
+import { ThemeSelector } from '@/theme';
 import { rootNavigation } from '@/navigation/root';
-import {
-  grids,
-  navigationStyles,
-} from './Navigation.css';
+import { Experiments } from '@/experiments';
 import { NavigationList } from './Navigation.list';
 import { NavigationLink } from './Navigation.link';
 import {
   NavigationBackdrop,
   NavigationMobileButton,
 } from './Navigation.mobile';
+import { grids } from './Navigation.grid';
+import { NavigationClient } from './Navigation.runtime';
 
 export namespace Navigation {
   export type Props = PropsWithChildren<{
@@ -19,28 +18,29 @@ export namespace Navigation {
 }
 export function Navigation({ children, empty }: Navigation.Props) {
   return (
-    <nav className={navigationStyles({ empty })}>
+    <NavigationClient empty={empty}>
       {empty
         ? <></>
         : (
           <>
-            <section id={grids.major}>
+            <section {...grids.selector('major')}>
               <NavigationList list={rootNavigation} />
             </section>
             {children
-              ? (<section id={grids.minor}>
+              ? (<section {...grids.selector('minor')}>
                 {children}
               </section>)
               : null
             }
           </>
         )}
-      <section id={grids.settings}>
+      <section {...grids.selector('settings')}>
         <ThemeSelector />
+        <Experiments.Trigger />
         <NavigationMobileButton />
       </section>
       <NavigationBackdrop />
-    </nav>
+    </NavigationClient>
   );
 }
 

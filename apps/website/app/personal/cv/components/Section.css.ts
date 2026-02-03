@@ -3,28 +3,23 @@ import {
   globalStyle,
   style,
 } from '@vanilla-extract/css';
-
-const sectionGrids = {
-  main: 'main',
-  secondary: 'secondary',
-} as const;
+import { grids } from './Section.grid';
 
 export const sectionStyles = style({});
 
 globalStyle(`${sectionStyles}:has(> article ~ article)`, {
   display: 'grid',
   gridTemplateColumns: '1fr 30cqw',
-  gridTemplateAreas:
-    `"${sectionGrids.main} ${sectionGrids.secondary}"`,
+  gridTemplateAreas: grids.mapper(({ main, secondary }) => [[main, secondary]]),
   gap: theme.grid.xl,
 });
 
 globalStyle(`${sectionStyles} > article:first-child`, {
-  gridArea: sectionGrids.main,
+  gridArea: grids.mapping.main,
 });
 
 globalStyle(`${sectionStyles} > article:last-child:not(:only-child)`, {
-  gridArea: sectionGrids.secondary,
+  gridArea: grids.mapping.secondary,
 });
 
 globalStyle(`${sectionStyles} h2`, {

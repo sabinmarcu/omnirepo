@@ -1,22 +1,13 @@
 import type { Metadata } from 'next';
-import {
-  VT323,
-} from 'next/font/google';
-import './theme.css.ts';
 import './globals.css.ts';
-import { getThemeVariant } from '@/components/ThemeSelector.core.ssr';
-import { variantSelector } from '@sabinmarcu/website-theme';
 import {
-  rootBackgroundStyle,
-  // scanLinesStyle,
-} from './layout.css';
-
-const rootFont = VT323({
-  variable: '--font-root',
-  subsets: ['latin'],
-  preload: true,
-  weight: '400',
-});
+  Experiments,
+  ExperimentsContextProvider,
+  getExperiments,
+} from '@/experiments';
+import { getThemeVariant } from '@/theme';
+import { variantSelector } from '@sabinmarcu/website-theme';
+import { RootBodyLayout } from './layout.runtime';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -33,15 +24,12 @@ export default async function RootLayout({
       lang="en"
       {...{ [variantSelector]: await getThemeVariant() }}
     >
-      <body
-       className={[
-         rootFont.variable,
-         rootFont.className,
-         rootBackgroundStyle,
-       ].join(' ')}
-      >
-        {children}
-      </body>
+      <ExperimentsContextProvider data={await getExperiments()}>
+        <RootBodyLayout>
+          {children}
+          <Experiments />
+        </RootBodyLayout>
+      </ExperimentsContextProvider>
     </html>
   );
 }

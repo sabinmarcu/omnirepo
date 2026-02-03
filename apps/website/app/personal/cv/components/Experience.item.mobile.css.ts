@@ -3,29 +3,34 @@ import { mobileMedia } from '@/utils/responsive';
 import { theme } from '@sabinmarcu/theme';
 import {
   experienceItemStyles,
-  grids,
 } from './Experience.item.css';
+import { grids } from './Experience.item.grid';
 
 globalStyle(`${experienceItemStyles}`, {
   ...mobileMedia({
-    gridTemplateAreas: [
-      [grids.title, grids.title],
-      [grids.duration, grids.duration],
-      [grids.location, grids.location],
-      [grids.content, grids.content],
-    ].map((it) => `"${it.join(' ')}"`).join('\n'),
+    gridTemplateAreas: grids.mapper(({
+      title,
+      duration,
+      location,
+      content,
+    }) => [
+      [title, title],
+      [duration, duration],
+      [location, location],
+      [content, content],
+    ]),
   }),
 });
 
-globalStyle(`${experienceItemStyles} [data-grid=${grids.duration}]:not(:has(+ [data-grid=${grids.location}]))`, {
+globalStyle(`${experienceItemStyles} ${grids.rawSelector('duration')}:not(:has(+ ${grids.rawSelector('location')}))`, {
   marginBlockEnd: theme.grid.s,
 });
 
-globalStyle(`${experienceItemStyles} [data-grid=${grids.duration}]:has(+ [data-grid=${grids.location}])`, {
+globalStyle(`${experienceItemStyles} ${grids.rawSelector('duration')}:has(+ ${grids.rawSelector('location')})`, {
   marginBlockEnd: 0,
 });
 
-globalStyle(`${experienceItemStyles} [data-grid=${grids.location}]`, {
+globalStyle(`${experienceItemStyles} ${grids.rawSelector('location')}`, {
   marginBlockEnd: theme.grid.m,
 });
 

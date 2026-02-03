@@ -2,7 +2,12 @@ import type { RecipeVariants } from '@vanilla-extract/recipes';
 import { recipe } from '@vanilla-extract/recipes';
 import { theme } from '@sabinmarcu/website-theme';
 import { themedLinkColor } from '@/components/ThemedLink.css';
-import { createVar } from '@vanilla-extract/css';
+import {
+  createVar,
+  globalStyle,
+} from '@vanilla-extract/css';
+import { animatedNavigationSelector } from './Navigation.css';
+import { blendAnimation } from './Navigation.animation.css';
 
 const navigationLinkBackground = createVar();
 
@@ -60,6 +65,10 @@ export const navigationLinkStyles = recipe({
       background: themedLinkColor,
     },
   },
+});
+
+globalStyle(`${animatedNavigationSelector} ${navigationLinkStyles.classNames.variants.active.true}`, {
+  background: blendAnimation(navigationLinkBackground, '20%'),
 });
 
 export type NavigationLinkStylesProps = RecipeVariants<typeof navigationLinkStyles>;

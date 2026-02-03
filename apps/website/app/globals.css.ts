@@ -13,6 +13,10 @@ globalStyle('body', {
   fontFamily: 'Arial, Helvetica, sans-serif',
   WebkitFontSmoothing: 'antialiased',
   MozOsxFontSmoothing: 'grayscale',
+  containerName: 'body-container',
+  containerType: 'size',
+  inlineSize: '100cqw',
+  blockSize: '100cqh',
 });
 
 globalStyle('*', {

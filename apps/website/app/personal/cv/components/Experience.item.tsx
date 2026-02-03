@@ -6,8 +6,8 @@ import type {
 } from '../schemas';
 import {
   experienceItemStyles,
-  grids,
 } from './Experience.item.css';
+import { grids } from './Experience.item.grid';
 
 export namespace ExperienceItem {
   export type Props = (
@@ -33,21 +33,21 @@ export function ExperienceItem({
     : props.project;
   return (
     <div className={experienceItemStyles}>
-      <h3 data-grid={grids.title}>
+      <h3 {...grids.selector('title')}>
         <span>{title}</span>
         {metadata
           ? (<span>{metadata.company}</span>)
           : null
         }
       </h3>
-      <p data-grid={grids.duration}>{from} - {to}</p>
+      <p {...grids.selector('duration')}>{from} - {to}</p>
       {metadata
-        ? (<p data-grid={grids.location}>{metadata.location}</p>)
+        ? (<p {...grids.selector('location')}>{metadata.location}</p>)
         : null
       }
       {children
         ? (
-          <div data-grid={grids.content}>
+          <div {...grids.selector('content')}>
             {children}
           </div>
         )

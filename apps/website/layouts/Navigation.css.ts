@@ -5,12 +5,14 @@ import {
 } from '@vanilla-extract/css';
 import { zIndexLayers } from '@/constants/layers';
 import { recipe } from '@vanilla-extract/recipes';
-
-export const grids = {
-  major: 'links',
-  minor: 'pageLinks',
-  settings: 'settings',
-} as const;
+import { grids } from './Navigation.grid';
+import {
+  blendAnimation,
+  blendSize,
+  navigationAnimation,
+  navigationAnimationPercent,
+} from './Navigation.animation.css';
+import { rootScrollTimeline } from './RootPageLayout.css';
 
 export const navigationSpacing = createVar();
 export const navigationMinSize = createVar();
@@ -23,6 +25,15 @@ export const navigationStyles = recipe({
         insetInline: 0,
       },
     },
+    animated: {
+      true: {
+        animation: navigationAnimation,
+        animationTimeline: rootScrollTimeline,
+        vars: {
+          [navigationAnimationPercent]: '0%',
+        },
+      },
+    },
   },
   base: {
     position: 'sticky',
@@ -33,12 +44,14 @@ export const navigationStyles = recipe({
 
     display: 'grid',
     gridTemplateColumns: '1fr fit-content(10rem)',
-    gridTemplateAreas: [
-      [grids.major, grids.settings],
-      [grids.minor, grids.minor],
-    ]
-      .map((set) => ['"', set.join(' '), '"'].join(''))
-      .join('\n'),
+    gridTemplateAreas: grids.mapper(({
+      major,
+      minor,
+      settings,
+    }) => [
+      [major, settings],
+      [minor, minor],
+    ]),
 
     fontSize: theme.grid.xxl,
 
@@ -50,18 +63,23 @@ export const navigationStyles = recipe({
 });
 
 export const navigationSelector = navigationStyles.classNames.base as unknown as 'Navigation';
+export const animatedNavigationSelector = navigationStyles.classNames.variants.animated.true as unknown as 'Animated Navigation';
+export const emptyNavigationSelector = navigationStyles.classNames.variants.empty.true as unknown as 'Empty Navigation';
 export const navigationSectionsSelectors = Object.fromEntries(
-  Object.entries(grids).map(([name, id]) => [
-    name,
-    `${navigationSelector} > section#${id}`,
+  Object.keys(grids.mapping).map((grid) => [
+    grid,
+    grids.extend(grid as any, navigationSelector),
   ]),
-) as unknown as { [Key in keyof typeof grids]: `${typeof navigationSelector} > section#${typeof grids[Key]}` };
+) as unknown as {
+  [Key in keyof typeof grids.mapping]:
+  ReturnType<typeof grids.extend<Key, typeof navigationSelector>>
+};
 
 globalStyle(`${navigationSelector} li`, {
   listStyle: 'none',
 });
 
-globalStyle(`${navigationSelector}:not(${navigationStyles.classNames.variants.empty.true}):before`, {
+globalStyle(`${navigationSelector}:not(${emptyNavigationSelector}):before`, {
   content: '',
   position: 'absolute',
   inset: 0,
@@ -96,6 +114,18 @@ globalStyle(`${navigationSelector} > section`, {
   },
 });
 
+globalStyle(`${animatedNavigationSelector} > section`, {
+  background: blendAnimation(navigationBackground),
+
+  marginInline: blendSize(navigationSpacing),
+  marginBlock: blendSize(navigationSpacing),
+
+  borderStartStartRadius: blendSize(navigationBorderRadius),
+  borderStartEndRadius: blendSize(navigationBorderRadius),
+  borderEndEndRadius: blendSize(navigationBorderRadius),
+  borderEndStartRadius: blendSize(navigationBorderRadius),
+});
+
 globalStyle(`${navigationSelector} > section > *`, {
   paddingInline: navigationSpacing,
   color: theme.colors.background.text,
@@ -103,7 +133,7 @@ globalStyle(`${navigationSelector} > section > *`, {
   blockSize: '100%',
 });
 
-globalStyle(`${navigationSelector}:not(${navigationStyles.classNames.variants.empty.true}) > section`, {
+globalStyle(`${navigationSelector}:not(${emptyNavigationSelector}) > section`, {
   background: navigationBackground,
 
   borderInlineStart: `solid ${navigationBorderSize} ${navigationBorderColor}`,
@@ -117,6 +147,14 @@ globalStyle(`${navigationSelector}:not(${navigationStyles.classNames.variants.em
   vars: {
     [navigationBorderSize]: '2px',
     [navigationBorderColor]: theme.colors.background.elevated,
+  },
+});
+
+globalStyle(`${animatedNavigationSelector}:not(${emptyNavigationSelector}) > section`, {
+  borderBlockWidth: blendSize(navigationBorderSize),
+  borderInlineWidth: blendSize(navigationBorderSize),
+  vars: {
+    [navigationBorderColor]: `${blendAnimation(theme.colors.background.elevated, undefined, true)}`,
   },
 });
 
@@ -152,13 +190,4 @@ globalStyle(`${navigationSectionsSelectors.minor}`, {
   },
 });
 
-const assignGrid = (grid: keyof typeof grids) => {
-  globalStyle(`${navigationSelector} > section#${grids[grid]}`, {
-    gridArea: grids[grid],
-  });
-};
-
-for (const grid of Object.keys(grids)) {
-  assignGrid(grid as any);
-}
-
+grids.renderer(navigationSelector);

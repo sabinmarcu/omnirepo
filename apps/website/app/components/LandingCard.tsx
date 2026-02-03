@@ -7,7 +7,7 @@ import type {
   PropsWithChildren,
 } from 'react';
 import Link from 'next/link';
-import { withTheme } from '@/hocs/withTheme';
+import { withTheme } from '@/theme/runtime';
 import {
   wrapperStyle,
   wipStyle,

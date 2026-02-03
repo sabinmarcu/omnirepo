@@ -3,4 +3,5 @@ export const zIndexLayers = {
   navigationBackdrop: 51,
   navigationSections: 52,
   crtOverlay: 100,
+  experiments: 75,
 } as const;

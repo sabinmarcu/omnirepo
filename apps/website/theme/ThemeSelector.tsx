@@ -1,4 +1,6 @@
-import { Icon } from './Icon';
+'use server';
+
+import { Icon } from '@/components/Icon';
 import { setThemeVariant } from './ThemeSelector.core.ssr';
 import {
   selectionDataAttribute,

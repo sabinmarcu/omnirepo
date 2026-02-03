@@ -5,14 +5,14 @@ import {
 import { zIndexLayers } from '@/constants/layers';
 import { mobileMedia } from '@/utils/responsive';
 import {
-  navigationStyles,
-  grids,
   navigationMinSize,
   navigationSectionsSelectors,
   navigationSelector,
+  emptyNavigationSelector,
   navigationSpacing,
   navigationBorderRadius,
 } from './Navigation.css';
+import { grids } from './Navigation.grid';
 
 export const triggerStyles = style({
   ...mobileMedia({
@@ -40,7 +40,7 @@ export const backdropStyles = style({
   zIndex: zIndexLayers.navigationBackdrop,
 });
 
-globalStyle(`${navigationSelector}.${navigationStyles.classNames.variants.empty.true} ${triggerStyles}`, {
+globalStyle(`${navigationSelector}.${emptyNavigationSelector} ${triggerStyles}`, {
   display: 'none',
 });
 
@@ -92,7 +92,7 @@ globalStyle(`${navigationSelector}${navigationSelector}:before`, {
   }),
 });
 
-globalStyle(`${navigationSelector}${navigationSelector} > section:not(#${grids.settings})`, {
+globalStyle(`${navigationSelector}${navigationSelector} > section:not(${grids.rawSelector('settings')})`, {
   ...mobileMedia({
     display: 'flex',
     flexFlow: 'column nowrap',
@@ -101,7 +101,7 @@ globalStyle(`${navigationSelector}${navigationSelector} > section:not(#${grids.s
   }),
 });
 
-globalStyle(`${navigationSelector}${navigationSelector} > section#${grids.settings}`, {
+globalStyle(`${navigationSelector}${navigationSelector} > section${grids.rawSelector('settings')}`, {
   ...mobileMedia({
     borderEndStartRadius: navigationBorderRadius,
   }),
