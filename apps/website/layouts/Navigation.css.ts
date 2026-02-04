@@ -54,11 +54,6 @@ export const navigationStyles = recipe({
     ]),
 
     fontSize: theme.grid.xxl,
-
-    vars: {
-      [navigationSpacing]: theme.grid.s,
-      [navigationMinSize]: '50px',
-    },
   },
 });
 
@@ -74,6 +69,13 @@ export const navigationSectionsSelectors = Object.fromEntries(
   [Key in keyof typeof grids.mapping]:
   ReturnType<typeof grids.extend<Key, typeof navigationSelector>>
 };
+
+globalStyle(`body:has(${navigationSelector})`, {
+  vars: {
+    [navigationMinSize]: '50px',
+    [navigationSpacing]: theme.grid.s,
+  },
+});
 
 globalStyle(`${navigationSelector} li`, {
   listStyle: 'none',

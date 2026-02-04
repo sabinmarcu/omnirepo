@@ -13,4 +13,10 @@ export const rootPageLayoutStyles = style({
   overflowBlock: 'auto',
   background: theme.colors.background.page,
   scrollTimeline: `${rootScrollTimeline} block`,
+  scrollBehavior: 'smooth',
+  '@media': {
+    '(prefers-reduced-motion)': {
+      scrollBehavior: 'auto',
+    },
+  },
 });

@@ -16,10 +16,12 @@ export const experienceItemStyles = style({
     duration,
     location,
     content,
+    skills,
   }) => [
     [title, title],
     [duration, location],
     [content, content],
+    [skills, skills],
   ]),
 });
 
@@ -39,4 +41,17 @@ globalStyle(grids.extend('duration', experienceItemStyles), {
 
 globalStyle(grids.extend('content', experienceItemStyles), {
   opacity: 0.8,
+});
+
+globalStyle(`${experienceItemStyles} > *`, {
+  maxInlineSize: '100cqw',
+});
+
+globalStyle(`${grids.extend('content', experienceItemStyles)} h3:not(:first-child)`, {
+  marginBlockStart: theme.grid.l,
+});
+
+globalStyle(`${grids.extend('content', experienceItemStyles)} h3`, {
+  marginBlockEnd: theme.grid.xxs,
+  fontSize: theme.grid.xl,
 });

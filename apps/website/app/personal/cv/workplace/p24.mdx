@@ -46,34 +46,35 @@ Personal initiatives include, but are not limited to:
 
 ## !!project Whitelabel Design System
 
-Fully per-partner customizable design system
+### Fully per-partner customizable design system
 * Enable full customization from the brand and system colors to sematic mapping of variables to component facets
 * Built with Vanilla Extract from the ground up to write fully type-safe code and expose only CSS generated at build-time
 * Uses the ESLint Logical Properties package and React ARIA for accessibility.
 
-Unified flow from UX to Dev
+### Unified flow from UX to Dev
 * Design variables and variable mappings primary color -> surface background are imported directly from figma
 * Variables, mappings and contracts are baked in directly to published packages
 * Devs use semantic variables and have no access to primitives or mappings
 * Export functions bound to CSS layers to be used by DS or applications
 
-Uses latest CSS techniques
+### Uses latest CSS techniques
 * Uses CSS Layers to delineate clear cascade layers between reset, variables collections, framework (design system) and application
 styles.
 * Uses CSS Containers to encapsulate styles and create truly responsive components and layouts
 * CSS Variables and partner-specific colors and mappings are calculated and rendered on server
 
-Modern Monorepo Setup
+### Modern Monorepo Setup
 * Full monorepo tooling built with Yarn Plugins
-* TSConfig Generation
-* ESLint Setup
-* Vite Setup
-* Dependency checks
-* Dependency enforcement
-* Gitlab CI parallel step setup
-* Package versioning with Yarn
-* Commit message enforcement &
-automation + tooling
+  <Grid columns={3}>
+    * TSConfig Generation
+    * ESLint Setup
+    * Vite Setup
+    * Dependency checks
+    * Dependency enforcement
+    * Gitlab CI parallel step setup
+    * Package versioning with Yarn
+    * Commit message enforcement & automation + tooling
+  </Grid>
 * Gitlab CI setup for build, lint, test and publishing any number of packages when required
 * Local and CI setup tooling for private scoped npm registries
 

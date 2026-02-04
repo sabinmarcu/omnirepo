@@ -17,17 +17,24 @@ export const infoTagListSchema = codehikeBlockObjectAnnotationSchema(
   }[typeof supportedTypes[number]][]
 ));
 
+export const overviewSkillsSchema = codehikeBlockArrayAnnotationSchema('skill');
+
 export const overviewSchema = z.object({
   title: codehikeBlockAnnotationSchema,
   tagline: codehikeBlockAnnotationSchema,
   info: infoTagListSchema,
+  skills: overviewSkillsSchema,
 }).transform(
   ({
-    title: { title }, tagline: { title: tagline }, info,
+    title: { title },
+    tagline: { title: tagline },
+    info,
+    skills,
   }) => ({
     title,
     tagline,
     info,
+    skills: skills.skill.map(({ title: skillTitle }) => skillTitle),
   }) as const,
 );
 
@@ -75,6 +82,7 @@ export const workplaceExperienceSchema = z.array(
 export const workplaceProjectSchema = z.array(
   codehikeBlockAnnotationSchema
     .and(workplaceMetadataSchema)
+    .and(featuredExperienceSchema)
     .and(codehikeBlockArrayAnnotationSchema('skill')),
 ).transform((projects) => (
   projects.map(({
@@ -83,11 +91,13 @@ export const workplaceProjectSchema = z.array(
     to: { title: to },
     skill,
     children,
+    featured,
   }) => ({
     title,
     from,
     to,
     children,
+    featured: !!featured,
     skill: skill.map(({ title: skillTitle }) => skillTitle),
   }) as const)));
 

@@ -14,6 +14,10 @@ globalStyle(`${sectionStyles}:has(> article ~ article)`, {
   gap: theme.grid.xl,
 });
 
+globalStyle(`${sectionStyles} > article`, {
+  gap: theme.grid.xl,
+});
+
 globalStyle(`${sectionStyles} > article:first-child`, {
   gridArea: grids.mapping.main,
 });

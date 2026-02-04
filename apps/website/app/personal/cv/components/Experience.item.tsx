@@ -1,21 +1,20 @@
-import type z from 'zod';
-import type {
-  workplaceProjectSchema,
-  workplaceExperienceSchema,
-  workplaceMasterMetadataSchema,
-} from '../schemas';
 import {
   experienceItemStyles,
 } from './Experience.item.css';
+import { ExperienceItemDuration } from './Experience.item.duration';
 import { grids } from './Experience.item.grid';
+import { ExperienceItemLocation } from './Experience.item.location';
+import { ExperienceItemSkills } from './Experience.item.skills';
+import { ExperienceItemTitle } from './Experience.item.title';
+import type {
+  ExperienceItemData,
+  ExperienceItemMetadata,
+} from './Experience.item.types';
 
 export namespace ExperienceItem {
   export type Props = (
-    & { metadata?: z.infer<typeof workplaceMasterMetadataSchema> }
-    & (
-      | { experience: z.infer<typeof workplaceExperienceSchema>[number] }
-      | { project: z.infer<typeof workplaceProjectSchema>[number] }
-    )
+    & ExperienceItemMetadata
+    & ExperienceItemData
   );
 }
 
@@ -24,27 +23,15 @@ export function ExperienceItem({
   ...props
 }: ExperienceItem.Props) {
   const {
-    title,
-    to,
-    from,
     children,
   } = 'experience' in props
     ? props.experience
     : props.project;
   return (
     <div className={experienceItemStyles}>
-      <h3 {...grids.selector('title')}>
-        <span>{title}</span>
-        {metadata
-          ? (<span>{metadata.company}</span>)
-          : null
-        }
-      </h3>
-      <p {...grids.selector('duration')}>{from} - {to}</p>
-      {metadata
-        ? (<p {...grids.selector('location')}>{metadata.location}</p>)
-        : null
-      }
+      <ExperienceItemTitle {...props} metadata={metadata} />
+      <ExperienceItemDuration {...props} />
+      <ExperienceItemLocation metadata={metadata} />
       {children
         ? (
           <div {...grids.selector('content')}>
@@ -53,6 +40,7 @@ export function ExperienceItem({
         )
         : null
       }
+      <ExperienceItemSkills {...props} />
     </div>
   );
 }

@@ -5,4 +5,5 @@ export const grids = createGrids([
   'duration',
   'location',
   'content',
+  'skills',
 ]);

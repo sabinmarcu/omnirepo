@@ -10,6 +10,7 @@ import {
 } from './Navigation.mobile';
 import { grids } from './Navigation.grid';
 import { NavigationClient } from './Navigation.runtime';
+import { NavigationAnchor } from './Navigation.anchor';
 
 export namespace Navigation {
   export type Props = PropsWithChildren<{
@@ -46,3 +47,4 @@ export function Navigation({ children, empty }: Navigation.Props) {
 
 Navigation.List = NavigationList;
 Navigation.Link = NavigationLink;
+Navigation.Anchor = NavigationAnchor;
