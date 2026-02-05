@@ -8,6 +8,6 @@ globalStyle(`${infoTagListStyles}`, {
     flexFlow: 'column nowrap',
     alignItems: 'flex-start',
     gap: theme.grid.xxs,
-    marginBlock: theme.grid.xs,
+    marginBlockStart: theme.grid.xs,
   }),
 });

@@ -12,29 +12,29 @@ import {
   gridStyles,
 } from './Grid.css';
 
-const experienceItemBorderSize = createVar();
+export const experienceItemBorderSize = createVar();
+export const experienceItemPadding = createVar();
 export const experienceItemStyles = style({
   display: 'flex',
   flexFlow: 'column',
-  paddingBlock: theme.grid.l,
+  paddingBlock: experienceItemPadding,
   borderBlockStart: `dashed ${experienceItemBorderSize} ${theme.colors.background.elevated}`,
   vars: {
     [experienceItemBorderSize]: '2px',
+    [experienceItemPadding]: theme.grid.l,
   },
 });
 
-globalStyle(`:not(${experienceItemStyles}) + ${experienceItemStyles}`, {
+globalStyle([
+  `:not(${experienceItemStyles}) + ${experienceItemStyles}`,
+  `${experienceItemStyles}:has(> ${grids.rawSelector('content')}:empty) + ${experienceItemStyles}`,
+].join(', '), {
   paddingBlockStart: 0,
-  borderBlockStart: 'none',
+  borderBlockStartWidth: 0,
 });
 
 globalStyle(`${experienceItemStyles}:has(> ${grids.rawSelector('content')}:empty)`, {
   paddingBlockEnd: 0,
-});
-
-globalStyle(`${experienceItemStyles}:has(> ${grids.rawSelector('content')}:empty) + ${experienceItemStyles}`, {
-  paddingBlockStart: 0,
-  borderBlockStart: 'none',
 });
 
 globalStyle([
@@ -58,11 +58,11 @@ globalStyle(grids.extend('metadata', experienceItemStyles), {
   alignItems: 'center',
   justifyContent: 'space-between',
   gap: theme.grid.xxl,
-  marginBlockEnd: theme.grid.m,
 });
 
 globalStyle(grids.extend('content', experienceItemStyles), {
   opacity: 0.8,
+  marginBlockStart: theme.grid.m,
 });
 
 globalStyle(`${experienceItemStyles} > *`, {
@@ -86,5 +86,6 @@ globalStyle(grids.extend('title', experienceItemStyles), {
 for (const columns of Array.from({ length: 5 }).fill(0).map((_, index) => index)) {
   globalStyle(`:not(${experienceItemStyles}) + ${gridStyles.classNames.variants.grid.true} ${experienceItemStyles}:nth-child(${columns})`, {
     borderBlockStartWidth: `calc(clamp(0, calc(${columns} - ${gridColumns}), 1) * ${experienceItemBorderSize})`,
+    paddingBlockStart: `calc(clamp(0, calc(${columns} - ${gridColumns}), 1) * ${experienceItemPadding})`,
   });
 }

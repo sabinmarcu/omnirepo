@@ -1,6 +1,5 @@
 import { mobileMedia } from '@/utils/responsive';
 import { globalStyle } from '@vanilla-extract/css';
-import { theme } from '@sabinmarcu/theme';
 import { gridStyles } from './Grid.css';
 
 const columnsReset = {
@@ -17,20 +16,26 @@ globalStyle(`${gridStyles.classNames.base}${gridStyles.classNames.base}`, {
     ...alignmentReset,
   }),
 });
-globalStyle(`${gridStyles.classNames.base}${gridStyles.classNames.base} :is(ul, ol)`, {
+globalStyle(`${gridStyles.classNames.base}${gridStyles.classNames.base} :where(ul, ol)`, {
   ...mobileMedia({
     ...columnsReset,
+    marginInlineStart: 0,
   }),
 });
 
-globalStyle(`${gridStyles.classNames.base}${gridStyles.classNames.base}:not(:has(> :is(ul, ol))) > *`, {
+globalStyle(`${gridStyles.classNames.base}${gridStyles.classNames.base}:not(:has(> :where(ul, ol))) > *`, {
   ...mobileMedia({
     ...alignmentReset,
-    display: 'list-item',
-    marginInlineStart: theme.grid.m,
   }),
 });
-globalStyle(`${gridStyles.classNames.base}${gridStyles.classNames.base} :is(ul, ol) :is(:first-child, :last-child)`, {
+
+globalStyle(`${gridStyles.classNames.base}${gridStyles.classNames.base}:not(:has(> :where(ul, ol))):not(${gridStyles.classNames.variants.grid.true}) > *`, {
+  ...mobileMedia({
+    display: 'list-item',
+  }),
+});
+
+globalStyle(`${gridStyles.classNames.base}${gridStyles.classNames.base} :where(ul, ol) :where(:first-child, :last-child)`, {
   ...mobileMedia({
     ...alignmentReset,
   }),
@@ -39,5 +44,13 @@ globalStyle(`${gridStyles.classNames.base}${gridStyles.classNames.base} :is(ul, 
 globalStyle(`${gridStyles.classNames.variants.large.true}${gridStyles.classNames.base}`, {
   ...mobileMedia({
     marginBlock: 0,
+  }),
+});
+
+globalStyle(`${gridStyles.classNames.variants.grid.true}`, {
+  ...mobileMedia({
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    gap: 0,
   }),
 });

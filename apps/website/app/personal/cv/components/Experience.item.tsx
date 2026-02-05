@@ -30,10 +30,14 @@ export function ExperienceItem({
   return (
     <section className={experienceItemStyles}>
       <ExperienceItemTitle {...props} metadata={metadata} />
-      <div {...grids.selector('metadata')}>
-        <ExperienceItemDuration {...props} />
-        <ExperienceItemLocation metadata={metadata} />
-      </div>
+      {(metadata && metadata.location) || ((props as any).from)
+        ? (
+          <div {...grids.selector('metadata')}>
+            <ExperienceItemDuration {...props} />
+            <ExperienceItemLocation metadata={metadata} />
+          </div>
+        )
+        : null}
       {children
         ? (
           <div {...grids.selector('content')}>

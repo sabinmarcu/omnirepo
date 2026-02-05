@@ -2,9 +2,11 @@ import { mobileMedia } from '@/utils/responsive';
 import { globalStyle } from '@vanilla-extract/css';
 import { sectionStyles } from './Section.css';
 
-globalStyle(`${sectionStyles}:has(> article ~ article)`, {
+globalStyle(sectionStyles, {
   ...mobileMedia({
-    display: 'flex',
-    flexFlow: 'column nowrap',
+    float: 'none',
+    maxInlineSize: 'max-content',
+    marginBlockEnd: 0,
+    marginInlineStart: 0,
   }),
 });

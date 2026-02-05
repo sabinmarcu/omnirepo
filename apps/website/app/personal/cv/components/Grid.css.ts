@@ -30,7 +30,7 @@ export const gridStyles = recipe({
   },
   base: {
     selectors: {
-      '&:not(:has(:is(ul, ol)))': {
+      '&:not(:has(> :where(ul, ol)))': {
         ...gridContainerStyles,
       },
     },
@@ -45,12 +45,12 @@ globalStyle(`${gridStyles.classNames.base} > *`, {
   textAlign: 'inherit',
 });
 
-globalStyle(`${gridStyles.classNames.base}:not(${gridStyles.classNames.variants.grid.true}) :is(ul, ol)`, {
+globalStyle(`${gridStyles.classNames.base}:not(${gridStyles.classNames.variants.grid.true}) :where(ul, ol)`, {
   ...gridContainerStyles,
   marginInlineStart: theme.grid.m,
 });
 
-globalStyle(`${gridStyles.classNames.base} :is(ul, ol) li`, {
+globalStyle(`${gridStyles.classNames.base} :where(ul, ol) li`, {
   display: 'list-item',
 });
 
