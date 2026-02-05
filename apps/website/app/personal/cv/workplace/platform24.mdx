@@ -1,4 +1,6 @@
 import { Grid } from '../components/Grid'
+import { getTOCSlug } from '../components/Experience.item.utils';
+import { ThemedLink } from '@/components/ThemedLink'
 export const company = 'Platform24'
 export const location = 'Bucharest, Romania'
 
@@ -6,14 +8,10 @@ export const location = 'Bucharest, Romania'
 
 Responsible for the patient side application of the company’s health platform:
 
-<Grid columns={3} center>
-
-Main web application 
-
-Design System 
-
-React Native application
-
+<Grid columns={3}>
+  * Main web application 
+  * Design System 
+  * React Native application
 </Grid>
 
 My responsibilities within the team, and throughout the company include:
@@ -32,7 +30,7 @@ My responsibilities within the team, and throughout the company include:
 Personal initiatives include, but are not limited to:
 
 <Grid columns={2}>
-  * Development and promotion of our internal whitelabel design system
+  * Development and promotion of our internal <ThemedLink href={`#${getTOCSlug('whitelabel design system', { prefix: 'project' })}`}>whitelabel design system</ThemedLink>
   * Reusable tooling and pipelines for monorepos which can both publish packages and deploy Apps / MFEs (a perfect example is the design system)
   * Establishing and enforcing correct flow of component development (_UX -> DS -> Apps / MFEs_)
   * Phasing out legacy build systems and processes
@@ -80,6 +78,7 @@ styles.
 
 ### !from January 2024
 ### !to September 2025
+### !featured
 
 ### !!skill Yarn 4
 ### !!skill Monorepo

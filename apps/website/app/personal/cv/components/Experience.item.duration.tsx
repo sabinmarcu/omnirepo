@@ -21,6 +21,6 @@ export function ExperienceItemDuration(
     return null;
   }
   return (
-    <p {...grids.selector('duration')}>{from} - {to}</p>
+    <p {...grids.selector('duration')}>{from}{to ? ` - ${to}` : ''}</p>
   );
 }

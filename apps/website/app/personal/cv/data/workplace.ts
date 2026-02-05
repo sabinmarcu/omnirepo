@@ -2,6 +2,7 @@ import { parse } from 'codehike';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { personalPagesPath } from '@/constants/paths';
+import type z from 'zod';
 import {
   workplaceMasterMetadataSchema,
   workplaceSchema,
@@ -27,19 +28,27 @@ const rawWorkplaces = await Promise.all(mdxFiles.map(
     return {
       data: parsedPage,
       metadata,
+      filename,
     } as const;
   },
 ));
 
 export const workplaces: ({
-  data: typeof workplaceSchema._output
+  data: z.output<typeof workplaceSchema>
 } & Omit<typeof rawWorkplaces[number], 'data'>)[] = [];
 
 for (const workplace of rawWorkplaces) {
-  const parsed = workplaceSchema.parse(workplace.data);
-  const render = {
-    ...workplace,
-    data: parsed,
-  };
-  workplaces.push(render);
+  try {
+    const parsed = workplaceSchema.parse(workplace.data);
+    const render = {
+      ...workplace,
+      data: parsed,
+    };
+    workplaces.push(render);
+  } catch (error) {
+    console.error({
+      e: error,
+      filename: workplace.filename,
+    });
+  }
 }

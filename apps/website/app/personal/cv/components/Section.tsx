@@ -6,14 +6,9 @@ import { sectionStyles } from './Section.css';
 import './Section.mobile.css';
 
 export namespace Section {
-  export type TagType = { name: string };
   export type Props = PropsWithChildren<
     & HTMLAttributes<HTMLDivElement>
-    & Partial<TagType>
-  >;
-  export type SubsectionProps = PropsWithChildren<
-    & HTMLAttributes<HTMLDivElement>
-    & TagType
+    & { name: string }
   >;
 }
 export function Section({
@@ -32,7 +27,3 @@ export function Section({
     />
   );
 }
-
-Section.Subsection = ({ name, ...props }: Section.SubsectionProps) => (
-  <article data-name={name} {...props} />
-);

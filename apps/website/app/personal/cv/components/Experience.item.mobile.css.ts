@@ -1,6 +1,5 @@
 import { globalStyle } from '@vanilla-extract/css';
 import { mobileMedia } from '@/utils/responsive';
-import { theme } from '@sabinmarcu/theme';
 import {
   experienceItemStyles,
 } from './Experience.item.css';
@@ -22,15 +21,7 @@ globalStyle(`${experienceItemStyles}`, {
   }),
 });
 
-globalStyle(`${experienceItemStyles} ${grids.rawSelector('duration')}:not(:has(+ ${grids.rawSelector('location')}))`, {
-  marginBlockEnd: theme.grid.s,
-});
-
 globalStyle(`${experienceItemStyles} ${grids.rawSelector('duration')}:has(+ ${grids.rawSelector('location')})`, {
   marginBlockEnd: 0,
-});
-
-globalStyle(`${experienceItemStyles} ${grids.rawSelector('location')}`, {
-  marginBlockEnd: theme.grid.m,
 });
 

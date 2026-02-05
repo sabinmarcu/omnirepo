@@ -25,3 +25,14 @@ globalStyle(`${cvPageStyles} ${cvPageBioStyles} p`, {
   fontSize: theme.grid.xxl,
   color: theme.colors.primary.muted,
 });
+
+globalStyle(`${cvPageStyles} h2`, {
+  borderBlockEnd: `solid 2px ${theme.colors.primary.muted}`,
+  color: theme.colors.primary.base,
+  lineHeight: '0.75em',
+  fontSize: `calc(${theme.grid.xxl} * 1.6)`,
+  paddingBlockEnd: theme.grid.s,
+  marginBlockEnd: theme.grid.l,
+  display: 'flex',
+});
+

@@ -12,7 +12,7 @@ export namespace ExperienceItemLocation {
 export function ExperienceItemLocation({ metadata }: ExperienceItemLocation.Props) {
   return (
     <>
-      {metadata
+      {metadata && metadata.location
         ? (<p {...grids.selector('location')}>{metadata.location}</p>)
         : null
       }

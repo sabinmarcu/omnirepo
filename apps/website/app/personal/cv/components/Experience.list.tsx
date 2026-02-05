@@ -1,6 +1,4 @@
 import { ExperienceItem } from './Experience.item';
-import { experienceListStyles } from './Experience.list.css';
-import './Experience.list.mobile.css';
 
 export namespace ExperienceList {
   export type Props = {
@@ -25,15 +23,14 @@ function computeKey(item: ExperienceItem.Props) {
 
 export function ExperienceList({ list }: ExperienceList.Props) {
   return (
-    <div className={experienceListStyles}>
+    <>
       {list.map((item) => (
         <ExperienceItem
           key={computeKey(item)}
           {...item}
         />
       ))}
-    </div>
+    </>
   );
 }
 
-ExperienceList.className = experienceListStyles;

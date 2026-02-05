@@ -3,27 +3,12 @@ import {
   globalStyle,
   style,
 } from '@vanilla-extract/css';
-import { grids } from './Section.grid';
 
-export const sectionStyles = style({});
-
-globalStyle(`${sectionStyles}:has(> article ~ article)`, {
-  display: 'grid',
-  gridTemplateColumns: '1fr 30cqw',
-  gridTemplateAreas: grids.mapper(({ main, secondary }) => [[main, secondary]]),
-  gap: theme.grid.xl,
-});
-
-globalStyle(`${sectionStyles} > article`, {
-  gap: theme.grid.xl,
-});
-
-globalStyle(`${sectionStyles} > article:first-child`, {
-  gridArea: grids.mapping.main,
-});
-
-globalStyle(`${sectionStyles} > article:last-child:not(:only-child)`, {
-  gridArea: grids.mapping.secondary,
+export const sectionStyles = style({
+  float: 'inline-end',
+  maxInlineSize: '30cqw',
+  marginInlineStart: theme.grid.xxl,
+  marginBlockEnd: theme.grid.xxl,
 });
 
 globalStyle(`${sectionStyles} h2`, {

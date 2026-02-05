@@ -28,10 +28,12 @@ export function ExperienceItem({
     ? props.experience
     : props.project;
   return (
-    <div className={experienceItemStyles}>
+    <section className={experienceItemStyles}>
       <ExperienceItemTitle {...props} metadata={metadata} />
-      <ExperienceItemDuration {...props} />
-      <ExperienceItemLocation metadata={metadata} />
+      <div {...grids.selector('metadata')}>
+        <ExperienceItemDuration {...props} />
+        <ExperienceItemLocation metadata={metadata} />
+      </div>
       {children
         ? (
           <div {...grids.selector('content')}>
@@ -41,7 +43,7 @@ export function ExperienceItem({
         : null
       }
       <ExperienceItemSkills {...props} />
-    </div>
+    </section>
   );
 }
 

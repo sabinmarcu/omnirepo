@@ -4,7 +4,7 @@ import type {
 } from 'react';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import {
-  gridColummns,
+  gridColumns,
   gridStyles,
   type GridStylesProps,
 } from './Grid.css';
@@ -22,7 +22,7 @@ export function Grid({
   className,
   columns,
   large,
-  center,
+  grid,
   ...props
 }: Grid.Props) {
   return (
@@ -32,11 +32,11 @@ export function Grid({
         className,
         gridStyles({
           large,
-          center,
+          grid,
         }),
       ].join(' ')}
       style={assignInlineVars({
-        [gridColummns]: `${columns}`,
+        [gridColumns]: `${columns}`,
       })}
     />
   );
