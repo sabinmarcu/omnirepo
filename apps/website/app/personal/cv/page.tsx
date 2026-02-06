@@ -22,7 +22,8 @@ import {
 import './page.mobile.css';
 import { Section } from './components/Section';
 import { title as pageTitle } from './content.mdx';
-import { ExperienceList } from './components/Experience.list';
+import { ExperienceList } from './components/Experience';
+import { LanguageList } from './components/Language';
 
 export async function generateMetadata(): Promise<Metadata> {
   return { title: getTitle('Personal', pageTitle) };
@@ -34,6 +35,7 @@ const {
     tagline,
     info,
     skills,
+    languages,
   },
 } = overview;
 
@@ -48,7 +50,8 @@ export default async function CVPage() {
       <Section name="skills">
         <h2>Skills</h2>
         <ExperienceList list={[{ project: { skill: skills } }] as any} />
-        {/* <h2>Languages</h2> */}
+        <h2>Languages</h2>
+        <LanguageList list={languages} />
         {/* <h2>Education</h2> */}
         {/* <h2>Publications and Conferences</h2> */}
       </Section>

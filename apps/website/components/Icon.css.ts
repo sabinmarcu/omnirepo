@@ -7,16 +7,13 @@ import {
 export const iconSize = createVar('icon-size');
 globalStyle('body', {
   vars: {
-    [iconSize]: '24px',
+    [iconSize]: '1.2em',
   },
 });
 
 export const iconStyle = style({
   aspectRatio: '1',
   inlineSize: iconSize,
-  vars: {
-    [iconSize]: '1.2em',
-  },
 });
 
 globalStyle(`${iconStyle} svg`, {

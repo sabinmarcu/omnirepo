@@ -40,7 +40,7 @@ export const themeColors = {
   },
   personal: {
     primary: 'oklch(0.43 0.09 61.07)',
-    secondary: 'oklch(0.39 0.11 4.26)',
+    secondary: 'oklch(0.32 0.12 8.23)',
   },
   projects: {
     primary: 'oklch(0.63 0.33 317.55)',

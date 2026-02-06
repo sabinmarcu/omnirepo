@@ -1,5 +1,5 @@
 import type z from 'zod';
-import type { infoTagListSchema } from '../schemas';
+import type { infoTagListSchema } from '@/data/personal/cv.schema';
 import { InfoTag } from './InfoTag.tag';
 import { infoTagListStyles } from './InfoTag.list.css';
 import './InfoTag.list.mobile.css';

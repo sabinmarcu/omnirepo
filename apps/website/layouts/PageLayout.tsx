@@ -9,7 +9,7 @@ import { pageLayoutStyles } from './PageLayout.css';
 export namespace PageLayout {
   export type Props = PropsWithChildren<
     & HTMLAttributes<HTMLDivElement>
-    & PageLayoutStylesProps,
+    & PageLayoutStylesProps
   >;
 }
 export function PageLayout({

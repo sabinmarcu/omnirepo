@@ -37,7 +37,7 @@ export function ExperienceItemTitle({ metadata, ...props }: ExperienceItemTitle.
   );
 
   const final = link
-    ? (<ThemedLink href={link as any} variant="secondary">{inner}</ThemedLink>)
+    ? (<ThemedLink href={link as any}>{inner}</ThemedLink>)
     : inner;
 
   return (

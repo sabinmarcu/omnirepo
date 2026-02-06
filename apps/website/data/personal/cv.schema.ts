@@ -18,23 +18,34 @@ export const infoTagListSchema = codehikeBlockObjectAnnotationSchema(
 ));
 
 export const overviewSkillsSchema = codehikeBlockArrayAnnotationSchema('skill');
+export const overviewLanguagesSchema = codehikeBlockArrayAnnotationSchema('language', z.object({
+  level: codehikeBlockAnnotationSchema(),
+}));
 
 export const overviewSchema = z.object({
   title: codehikeBlockAnnotationSchema(),
   tagline: codehikeBlockAnnotationSchema(),
   info: infoTagListSchema,
   skills: overviewSkillsSchema,
+  languages: overviewLanguagesSchema,
 }).transform(
   ({
     title: { title },
     tagline: { title: tagline },
     info,
     skills,
+    languages,
   }) => ({
     title,
     tagline,
     info,
     skills: skills.skill.map(({ title: skillTitle }) => skillTitle),
+    languages: Object.fromEntries(
+      languages.language.map(({
+        title: languageTitle,
+        level: { title: level },
+      }) => [languageTitle, Number.parseInt(level, 10)]),
+    ),
   }) as const,
 );
 

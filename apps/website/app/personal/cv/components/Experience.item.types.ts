@@ -3,7 +3,7 @@ import type {
   workplaceExperienceSchema,
   workplaceMasterMetadataSchema,
   workplaceProjectSchema,
-} from '../schemas';
+} from '@/data/personal/cv.schema';
 
 export type ExperienceItemMetadata = { metadata?: z.infer<typeof workplaceMasterMetadataSchema> };
 
