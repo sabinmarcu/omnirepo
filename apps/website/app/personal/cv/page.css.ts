@@ -32,8 +32,8 @@ globalStyle(`${cvPageStyles} ${cvPageBioStyles} p`, {
 });
 
 globalStyle(`${cvPageStyles} h2`, {
-  borderBlockEnd: `solid 2px ${theme.colors.secondary.muted}`,
-  color: theme.colors.secondary.base,
+  borderBlockEnd: `solid 2px ${theme.colors.primary.muted}`,
+  color: theme.colors.primary.base,
   lineHeight: '1em',
   fontSize: `calc(${theme.grid.xxl} * 1.6)`,
   paddingBlockEnd: theme.grid.s,
