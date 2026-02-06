@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/DavidAnson/markdownlint-cli2/refs/heads/main/schema/markdownlint-cli2-config-schema.json
+
+config:
+  MD013: false
+  MD024: false
+  MD033: false
+  MD034: false
+  MD041: false

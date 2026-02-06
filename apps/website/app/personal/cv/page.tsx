@@ -13,6 +13,7 @@ import {
   overview,
   personalProjects,
   filteredDegrees,
+  zippedPublications,
 } from '@/data/personal/cv';
 import { Grid } from '@/components/Grid';
 import { InfoTagList } from './components/InfoTag';
@@ -26,6 +27,7 @@ import { title as pageTitle } from './content.mdx';
 import { ExperienceList } from './components/Experience';
 import { LanguageList } from './components/Language';
 import { DegreeList } from './components/Degree.list';
+import { PublicationsList } from './components/Publications.list';
 
 export async function generateMetadata(): Promise<Metadata> {
   return { title: getTitle('Personal', pageTitle) };
@@ -56,10 +58,15 @@ export default async function CVPage() {
         <LanguageList list={languages} />
         <h2>Education</h2>
         <DegreeList list={filteredDegrees} />
-        {/* <h2>Publications and Conferences</h2> */}
+        <h2>Publications and Conferences</h2>
+        <PublicationsList list={zippedPublications} />
       </Section>
       <h2>Recent Experience</h2>
       <ExperienceList list={featuredExperiences} />
+      <br style={{
+        clear: 'both',
+        position: 'relative',
+      }} />
       <h2>Work Projects</h2>
       <ExperienceList list={featuredProjects} />
       <Grid columns={2} grid>

@@ -1,21 +1,16 @@
 import { mobileMedia } from '@/utils/responsive';
 import { globalStyle } from '@vanilla-extract/css';
-import { navigationSelector } from './Navigation.css';
-import { navigationAnchorOffset } from './Navigation.anchor.css';
-import { grids } from './Navigation.grid';
+import { theme } from '@sabinmarcu/theme';
+import {
+  navigationAnchorOffset,
+} from './Navigation.anchor.css';
 
-globalStyle(`body:has(${navigationSelector})`, {
+globalStyle([
+  'body > *',
+].join(', '), {
   ...mobileMedia({
     vars: {
-      [navigationAnchorOffset]: '0px',
-    },
-  }),
-});
-
-globalStyle(`body:has(${navigationSelector} ${grids.rawSelector('minor')})`, {
-  ...mobileMedia({
-    vars: {
-      [navigationAnchorOffset]: '0px',
+      [navigationAnchorOffset]: theme.grid.m,
     },
   }),
 });

@@ -1,14 +1,16 @@
 import { compareTimeline } from '@/utils/date';
+import type { workplaces } from './cv.workplace';
 import {
   experiences,
   projects,
   degrees,
+  publications,
 } from './cv.workplace';
 
 export { overview } from './cv.overview';
 
 const filterCollection = <
-  Key extends string,
+  Key extends keyof typeof workplaces[number]['data'],
 >(property: Key) => <
   T extends { [key in Key]: compareTimeline.Timeline },
 >(
@@ -25,6 +27,7 @@ const filterCollection = <
 const filterExperiences = filterCollection('experience');
 const filterProjects = filterCollection('project');
 const filterDegrees = filterCollection('degree');
+const filterPublications = filterCollection('publication');
 
 export const extracurricularExperiences = filterExperiences(
   experiences,
@@ -83,4 +86,14 @@ export const extendedProjects = filterProjects(
 
 export const filteredDegrees = filterDegrees(degrees, () => true);
 
-console.dir({ filteredDegrees }, { depth: null });
+export const filteredPublications = filterPublications(publications, () => true);
+
+export const zippedPublications: {
+  [Key in typeof filteredPublications[number]['publication']['where']]: typeof filteredPublications
+} = {} as any;
+
+for (const publication of filteredPublications) {
+  const { publication: { where: id } } = publication;
+  zippedPublications[id] ??= [];
+  zippedPublications[id].push(publication);
+}

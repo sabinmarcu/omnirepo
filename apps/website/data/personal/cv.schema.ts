@@ -158,8 +158,32 @@ export const workplaceDegreeSchema = z.array(
   }))
 ));
 
+export const workplacePublicationMetadataSchema = z.object({
+  where: codehikeBlockAnnotationSchema(),
+  reference: codehikeBlockAnnotationSchema().optional(),
+  year: codehikeBlockAnnotationSchema(),
+});
+
+export const workplacePublicationSchema = z.array(
+  codehikeBlockAnnotationSchema()
+    .and(workplacePublicationMetadataSchema),
+).transform((publications) => (
+  publications.map(({
+    title,
+    where: { title: where },
+    year: { title: year },
+    reference,
+  }) => ({
+    title,
+    year,
+    where,
+    reference: reference?.title ?? undefined,
+  }))
+));
+
 export const workplaceSchema = z.object({
   experience: workplaceExperienceSchema.optional(),
   project: workplaceProjectSchema.optional(),
   degree: workplaceDegreeSchema.optional(),
+  publication: workplacePublicationSchema.optional(),
 });
