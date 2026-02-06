@@ -3,18 +3,26 @@ import {
   type HTMLAttributes,
   type PropsWithChildren,
 } from 'react';
+import type { PageLayoutStylesProps } from './PageLayout.css';
 import { pageLayoutStyles } from './PageLayout.css';
 
 export namespace PageLayout {
-  export type Props = PropsWithChildren<HTMLAttributes<HTMLDivElement>>;
+  export type Props = PropsWithChildren<
+    & HTMLAttributes<HTMLDivElement>
+    & PageLayoutStylesProps,
+  >;
 }
-export function PageLayout({ className, ...props }: PageLayout.Props) {
+export function PageLayout({
+  className,
+  variant,
+  ...props
+}: PageLayout.Props) {
   return (
     <ViewTransition name="page-layout">
       <section
         className={[
           className,
-          pageLayoutStyles,
+          pageLayoutStyles({ variant }),
         ].join(' ')}
         {...props}
       />

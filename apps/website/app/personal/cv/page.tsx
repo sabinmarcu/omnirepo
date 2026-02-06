@@ -39,7 +39,7 @@ const {
 
 export default async function CVPage() {
   return (
-    <PageLayout className={cvPageStyles}>
+    <PageLayout className={cvPageStyles} variant="large">
       <div className={cvPageBioStyles}>
         <h1>{title}</h1>
         <p>{tagline}</p>
