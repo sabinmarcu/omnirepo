@@ -1,12 +1,17 @@
 import { theme } from '@sabinmarcu/website-theme';
 import {
+  createVar,
   globalStyle,
   style,
 } from '@vanilla-extract/css';
 
+export const cvPageSpacing = createVar();
 export const cvPageStyles = style({
   container: 'cv-page',
   containerType: 'inline-size',
+  vars: {
+    [cvPageSpacing]: theme.grid.l,
+  },
 });
 
 globalStyle(`${cvPageStyles} [data-tagline]`, {

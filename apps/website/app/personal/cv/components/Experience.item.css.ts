@@ -11,6 +11,7 @@ import {
   gridStyles,
 } from '@/components/Grid.css';
 import { grids } from './Experience.item.grid';
+import { cvPageSpacing } from '../page.css';
 
 export const experienceItemBorderSize = createVar();
 export const experienceItemPadding = createVar();
@@ -21,7 +22,7 @@ export const experienceItemStyles = style({
   borderBlockStart: `dashed ${experienceItemBorderSize} ${theme.colors.background.elevated}`,
   vars: {
     [experienceItemBorderSize]: '2px',
-    [experienceItemPadding]: theme.grid.l,
+    [experienceItemPadding]: cvPageSpacing,
   },
 });
 

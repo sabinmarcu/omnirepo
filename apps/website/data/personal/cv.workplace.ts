@@ -27,3 +27,11 @@ export const experiences = workplaces
       metadata,
     })) ?? []
   ));
+
+export const degrees = workplaces
+  .flatMap(({ data: { degree: list }, metadata }) => (
+    list?.map((degree) => ({
+      degree,
+      metadata,
+    })) ?? []
+  ));

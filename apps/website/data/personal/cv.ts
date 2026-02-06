@@ -2,31 +2,29 @@ import { compareTimeline } from '@/utils/date';
 import {
   experiences,
   projects,
+  degrees,
 } from './cv.workplace';
 
 export { overview } from './cv.overview';
 
-const filterExperiences = (
-  input: typeof experiences,
-  predicate: (input: typeof experiences[number]) => boolean,
-) => (
-  input.filter(predicate)
-    .sort((
-      { experience: experienceA },
-      { experience: experienceB },
-    ) => compareTimeline(experienceA, experienceB))
-);
+const filterCollection = <
+  Key extends string,
+>(property: Key) => <
+  T extends { [key in Key]: compareTimeline.Timeline },
+>(
+      input: T[],
+      predicate: (input: T) => boolean,
+    ) => (
+      input.filter(predicate)
+        .sort((a, b) => compareTimeline(
+          a[property],
+          b[property],
+        ))
+    );
 
-const filterProjects = (
-  input: typeof projects,
-  predicate: (input: typeof projects[number]) => boolean,
-) => (
-  input.filter(predicate)
-    .sort((
-      { project: projectA },
-      { project: projectB },
-    ) => compareTimeline(projectA, projectB))
-);
+const filterExperiences = filterCollection('experience');
+const filterProjects = filterCollection('project');
+const filterDegrees = filterCollection('degree');
 
 export const extracurricularExperiences = filterExperiences(
   experiences,
@@ -82,3 +80,7 @@ export const extendedProjects = filterProjects(
   unknownProjects,
   ({ project: { featured } }) => !featured,
 );
+
+export const filteredDegrees = filterDegrees(degrees, () => true);
+
+console.dir({ filteredDegrees }, { depth: null });

@@ -1,5 +1,6 @@
 import type { overview } from '@/data/personal/cv';
 import { LanguageItem } from './Language.item';
+import { languageListStyles } from './Language.list.css';
 
 export namespace LanguageList {
   export type Props = {
@@ -9,7 +10,7 @@ export namespace LanguageList {
 
 export function LanguageList({ list }: LanguageList.Props) {
   return (
-    <div>
+    <div className={languageListStyles}>
       {Object.entries(list).map(([key, value]) => (
         <LanguageItem
           key={key}

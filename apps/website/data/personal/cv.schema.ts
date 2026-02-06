@@ -142,7 +142,24 @@ export const workplaceProjectSchema = z.array(
     link: link?.title ?? undefined,
   }) as const)));
 
+export const workplaceDegreeSchema = z.array(
+  codehikeBlockAnnotationSchema()
+    .and(workplaceMetadataSchema),
+).transform((degrees) => (
+  degrees.map(({
+    title,
+    from: { title: from },
+    to: { title: to },
+
+  }) => ({
+    title,
+    from,
+    to,
+  }))
+));
+
 export const workplaceSchema = z.object({
   experience: workplaceExperienceSchema.optional(),
   project: workplaceProjectSchema.optional(),
+  degree: workplaceDegreeSchema.optional(),
 });
