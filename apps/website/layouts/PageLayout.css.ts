@@ -23,12 +23,7 @@ export const pageLayoutStyles = recipe({
     fontSize: '1.3rem',
     container: 'page-layout',
     containerType: 'inline-size',
-    '@media': {
-      [theme.breakpoint['lt-tablet']]: {
-        paddingInline: theme.grid.m,
-      },
-    },
-
+    paddingInline: theme.grid.m,
   },
 });
 

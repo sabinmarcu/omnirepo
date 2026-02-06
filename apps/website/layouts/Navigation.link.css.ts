@@ -6,7 +6,11 @@ import {
   createVar,
   globalStyle,
 } from '@vanilla-extract/css';
-import { animatedNavigationSelector } from './Navigation.css';
+import {
+  animatedNavigationSelector,
+  navigationBorderColor,
+  navigationBorderSize,
+} from './Navigation.css';
 import { blendAnimation } from './Navigation.animation.css';
 
 const navigationLinkBackground = createVar();
@@ -34,6 +38,10 @@ export const navigationLinkStyles = recipe({
       true: {
         cursor: 'not-allowed',
         position: 'relative',
+        ':after': {
+          content: 'WIP',
+          opacity: '0.5',
+        },
         ':before': {
           content: '',
           position: 'absolute',
@@ -58,11 +66,21 @@ export const navigationLinkStyles = recipe({
   },
   base: {
     color: theme.colors.background.text,
+    display: 'inline-flex',
+    flexFlow: 'row nowrap',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderInlineEnd: `solid ${navigationBorderSize} ${navigationBorderColor}`,
     ':visited': {
       color: theme.colors.background.text,
     },
     ':hover': {
       background: themedLinkColor,
+    },
+    selectors: {
+      '&:last-of-type': {
+        borderInlineEnd: 'none',
+      },
     },
   },
 });

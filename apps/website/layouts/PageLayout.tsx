@@ -5,6 +5,7 @@ import {
 } from 'react';
 import type { PageLayoutStylesProps } from './PageLayout.css';
 import { pageLayoutStyles } from './PageLayout.css';
+import { Footer } from './Footer';
 
 export namespace PageLayout {
   export type Props = PropsWithChildren<
@@ -15,6 +16,7 @@ export namespace PageLayout {
 export function PageLayout({
   className,
   variant,
+  children,
   ...props
 }: PageLayout.Props) {
   return (
@@ -25,7 +27,10 @@ export function PageLayout({
           pageLayoutStyles({ variant }),
         ].join(' ')}
         {...props}
-      />
+      >
+        {children}
+        <Footer />
+      </section>
     </ViewTransition>
   );
 }

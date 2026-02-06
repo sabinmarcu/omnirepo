@@ -6,9 +6,18 @@ import {
   cvPageStyles,
 } from './page.css';
 
+globalStyle(cvPageStyles, {
+  ...mobileMedia({
+    paddingBlockStart: '2cqh',
+  }),
+});
+
 globalStyle(`${cvPageStyles} ${cvPageBioStyles} h1`, {
-  fontSize: `calc(${theme.grid.xxl} * 2)`,
-  lineHeight: '1.2em',
+  ...mobileMedia({
+    fontSize: `calc(${theme.grid.xxl} * 3)`,
+    lineHeight: '0.8em',
+    paddingBlockEnd: '0.2em',
+  }),
 });
 
 globalStyle(`${cvPageStyles} ${cvPageBioStyles} p`, {

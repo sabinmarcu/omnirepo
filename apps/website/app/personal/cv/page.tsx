@@ -46,11 +46,13 @@ const {
 export default async function CVPage() {
   return (
     <PageLayout className={cvPageStyles} variant="large">
-      <div className={cvPageBioStyles}>
-        <h1>{title}</h1>
-        <p>{tagline}</p>
-      </div>
+      <header>
+        <div className={cvPageBioStyles}>
+          <h1>{title}</h1>
+          <p>{tagline}</p>
+        </div>
       <InfoTagList list={info} />
+      </header>
       <Section name="skills">
         <h2>Skills</h2>
         <ExperienceList list={[{ project: { skill: skills } }] as any} />

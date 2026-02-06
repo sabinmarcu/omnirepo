@@ -9,6 +9,7 @@ export const cvPageSpacing = createVar();
 export const cvPageStyles = style({
   container: 'cv-page',
   containerType: 'inline-size',
+  paddingBlockStart: '3cqh',
   vars: {
     [cvPageSpacing]: theme.grid.l,
   },
@@ -41,3 +42,6 @@ globalStyle(`${cvPageStyles} h2`, {
   display: 'flex',
 });
 
+globalStyle(`${cvPageStyles} :is(ul, li)`, {
+  marginInlineStart: theme.grid.xs,
+});

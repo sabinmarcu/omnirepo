@@ -90,8 +90,8 @@ globalStyle(`${navigationSelector}:not(${emptyNavigationSelector}):before`, {
 
 const navigationBlendPercent = createVar();
 const navigationBackground = createVar();
-const navigationBorderSize = createVar();
-const navigationBorderColor = createVar();
+export const navigationBorderSize = createVar();
+export const navigationBorderColor = createVar();
 export const navigationBorderRadius = createVar();
 globalStyle(`${navigationSelector} > section`, {
   display: 'inline-flex',

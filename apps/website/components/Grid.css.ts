@@ -47,7 +47,7 @@ globalStyle(`${gridStyles.classNames.base} > *`, {
 
 globalStyle(`${gridStyles.classNames.base}:not(${gridStyles.classNames.variants.grid.true}) :where(ul, ol)`, {
   ...gridContainerStyles,
-  marginInlineStart: theme.grid.m,
+  marginInlineStart: theme.grid.xs,
 });
 
 globalStyle(`${gridStyles.classNames.base} :where(ul, ol) li`, {

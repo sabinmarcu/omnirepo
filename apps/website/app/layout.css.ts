@@ -11,7 +11,7 @@ import {
   style,
 } from '@vanilla-extract/css';
 
-const backgroundColor = createVar('root-background');
+const rootBackgroundColor = createVar('root-background');
 const commonBackgroundStyles = {
   content: '',
   position: 'absolute',
@@ -26,12 +26,12 @@ export const rootBackgroundStyle = style({
   background: theme.colors.background.page,
   position: 'relative',
   vars: {
-    [backgroundColor]: theme.colors.primary.base,
+    [rootBackgroundColor]: theme.colors.primary.base,
   },
   selectors: {
     '&::before': {
       ...commonBackgroundStyles,
-      background: backgroundColor,
+      background: rootBackgroundColor,
       mixBlendMode: 'overlay',
       opacity: 0.5,
     },
@@ -60,7 +60,7 @@ for (const family of families) {
     ).join(', '),
     {
       vars: {
-        [backgroundColor]: themes[family].colors.primary.base,
+        [rootBackgroundColor]: themes[family].colors.primary.base,
       },
     },
   );

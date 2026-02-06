@@ -19,7 +19,6 @@ globalStyle(`${gridStyles.classNames.base}${gridStyles.classNames.base}`, {
 globalStyle(`${gridStyles.classNames.base}${gridStyles.classNames.base} :where(ul, ol)`, {
   ...mobileMedia({
     ...columnsReset,
-    marginInlineStart: 0,
   }),
 });
 
