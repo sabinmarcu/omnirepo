@@ -1,4 +1,5 @@
 import { navigationAnchorStyle } from './Navigation.anchor.css';
+import './Navigation.anchor.mobile.css';
 
 export namespace NavigationAnchor {
   export type Props = {

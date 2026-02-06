@@ -27,7 +27,7 @@ export function Grid({
 }: Grid.Props) {
   return (
     <div
-      { ...props }
+      {...props}
       className={[
         className,
         gridStyles({

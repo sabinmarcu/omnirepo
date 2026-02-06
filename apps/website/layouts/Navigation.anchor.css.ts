@@ -11,7 +11,7 @@ import {
 } from './Navigation.css';
 import { grids } from './Navigation.grid';
 
-const navigationAnchorOffset = createVar();
+export const navigationAnchorOffset = createVar();
 export const navigationAnchorStyle = style({
   position: 'absolute',
   insetBlockStart: `calc(0px - ${navigationAnchorOffset})`,

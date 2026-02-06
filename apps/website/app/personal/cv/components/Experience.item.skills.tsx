@@ -1,8 +1,8 @@
 import type { Simplify } from '@sabinmarcu/types';
+import { SkillPill } from '@/components/SkillPill';
 import type {
   ExperienceItemData,
 } from './Experience.item.types';
-import { SkillPill } from './SkillPill';
 import { experienceItemSkillsStyle } from './Experience.item.skills.css';
 import { grids } from './Experience.item.grid';
 

@@ -1,13 +1,13 @@
 import { globalStyle } from '@vanilla-extract/css';
 import { mobileMedia } from '@/utils/responsive';
 import { theme } from '@sabinmarcu/theme';
+import { gridStyles } from '@/components/Grid.css';
 import {
   experienceItemBorderSize,
   experienceItemPadding,
   experienceItemStyles,
 } from './Experience.item.css';
 import { grids } from './Experience.item.grid';
-import { gridStyles } from './Grid.css';
 
 globalStyle(`${experienceItemStyles}`, {
   ...mobileMedia({

@@ -6,11 +6,11 @@ import {
 import {
   theme,
 } from '@sabinmarcu/theme';
-import { grids } from './Experience.item.grid';
 import {
   gridColumns,
   gridStyles,
-} from './Grid.css';
+} from '@/components/Grid.css';
+import { grids } from './Experience.item.grid';
 
 export const experienceItemBorderSize = createVar();
 export const experienceItemPadding = createVar();

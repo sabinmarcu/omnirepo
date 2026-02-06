@@ -2,11 +2,10 @@ import {
   compareAsc,
   parse,
 } from 'date-fns';
-import type { commonWorkplaceFields } from '../schemas';
 
 export namespace compareTimeline {
   export type Timeline = {
-    [Key in typeof commonWorkplaceFields[number]]: string
+    [Key in 'to' | 'from']: string
   };
 }
 export function compareTimeline(
