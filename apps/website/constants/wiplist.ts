@@ -2,7 +2,7 @@ export const WIPRoutes = [
   '/articles/[[...rest]]',
   '/projects/[[...rest]]',
   '/ramblings/[[...rest]]',
-  '/personal',
+  // '/personal',
   '/personal/stack',
-  '/snippets/[[...rest]]',
+  // '/snippets/[[...rest]]',
 ] as const;

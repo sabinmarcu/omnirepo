@@ -8,10 +8,9 @@ import { LandingLogo } from './components/LandingLogo';
 import {
   landingPageWrapper,
 } from './page.css';
-import { getTitle } from './utils/getTitle';
 
 export const metadata: Metadata = {
-  title: getTitle(),
+  title: 'Home Page | Sabin Marcu',
 };
 
 export default function Home() {

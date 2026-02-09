@@ -22,15 +22,11 @@ function computeKey(item: ExperienceItem.Props) {
 }
 
 export function ExperienceList({ list }: ExperienceList.Props) {
-  return (
-    <>
-      {list.map((item) => (
-        <ExperienceItem
-          key={computeKey(item)}
-          {...item}
-        />
-      ))}
-    </>
-  );
+  return list.map((item) => (
+    <ExperienceItem
+      key={computeKey(item)}
+      {...item}
+    />
+  ));
 }
 

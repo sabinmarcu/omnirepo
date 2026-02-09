@@ -16,6 +16,7 @@ import { rootScrollTimeline } from './RootPageLayout.css';
 
 export const navigationSpacing = createVar();
 export const navigationMinSize = createVar();
+export const navigationOffset = createVar();
 export const navigationStyles = recipe({
   variants: {
     empty: {
@@ -189,6 +190,36 @@ globalStyle(`${navigationSectionsSelectors.minor}`, {
   marginBlockStart: 0,
   vars: {
     [navigationBlendPercent]: '30%',
+  },
+});
+
+globalStyle('body', {
+  vars: {
+    [navigationOffset]: '0px',
+  },
+});
+
+globalStyle(`body:has(${navigationSelector})`, {
+  vars: {
+    [navigationOffset]: `calc(${navigationMinSize} + ${navigationSpacing} * 3)`,
+  },
+});
+
+globalStyle(`body:has(${navigationSelector} ${grids.rawSelector('minor')})`, {
+  vars: {
+    [navigationOffset]: `calc(${navigationMinSize} * 2 + ${navigationSpacing} * 3)`,
+  },
+});
+
+globalStyle(`body:has(${navigationSelector}${animatedNavigationSelector})`, {
+  vars: {
+    [navigationOffset]: blendSize(navigationMinSize),
+  },
+});
+
+globalStyle(`body:has(${navigationSelector}${animatedNavigationSelector} ${grids.rawSelector('minor')})`, {
+  vars: {
+    [navigationOffset]: `calc(${navigationMinSize} * 2)`,
   },
 });
 

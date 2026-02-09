@@ -5,9 +5,26 @@ import {
 import { extendPathname } from '@/utils/routes';
 import { RootPageLayout } from '@/layouts/RootPageLayout';
 import { normalizeNavigationList } from '@/navigation/utils';
+import type {
+  Metadata,
+  ResolvingMetadata,
+} from 'next';
 import {
   getPersonalPagesList,
 } from './data';
+
+export async function generateMetadata(
+  _: any,
+  previous: ResolvingMetadata,
+): Promise<Metadata> {
+  const { title } = await previous;
+  return {
+    title: {
+      default: 'Personal',
+      template: `Personal - ${title!.template}`,
+    },
+  };
+}
 
 export default async function SnippetsLayout({
   children,

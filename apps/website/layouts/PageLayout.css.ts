@@ -1,20 +1,20 @@
 import { theme } from '@sabinmarcu/website-theme';
 import {
+  createVar,
   globalStyle,
 } from '@vanilla-extract/css';
 import type { RecipeVariants } from '@vanilla-extract/recipes';
 import { recipe } from '@vanilla-extract/recipes';
 
+export const pageLayoutSize = createVar();
 export const pageLayoutStyles = recipe({
   variants: {
     variant: {
-      large: {
-        maxInlineSize: '1200px',
-      },
+      large: {},
     },
   },
   base: {
-    maxInlineSize: '1000px',
+    maxInlineSize: pageLayoutSize,
     display: 'block',
     marginBlockStart: '0',
     marginBlockEnd: '0',
@@ -24,6 +24,18 @@ export const pageLayoutStyles = recipe({
     container: 'page-layout',
     containerType: 'inline-size',
     paddingInline: theme.grid.m,
+  },
+});
+
+globalStyle(`body:has(${pageLayoutStyles.classNames.base} )`, {
+  vars: {
+    [pageLayoutSize]: '1000px',
+  },
+});
+
+globalStyle(`body:has(${pageLayoutStyles.classNames.variants.variant.large})`, {
+  vars: {
+    [pageLayoutSize]: '1200px',
   },
 });
 

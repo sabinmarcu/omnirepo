@@ -1,13 +1,12 @@
 import type { Simplify } from '@sabinmarcu/types';
-import { NavigationAnchor } from '@/layouts/Navigation.anchor';
 import { ThemedLink } from '@/components/ThemedLink';
+import { PageTOCLayout } from '@/layouts/PageTOCLayout';
 import { grids } from './Experience.item.grid';
 import type {
   ExperienceItemData,
   ExperienceItemMetadata,
 } from './Experience.item.types';
 import {
-  getTOCAnchor,
   pickExperienceField,
 } from './Experience.item.utils';
 
@@ -26,14 +25,21 @@ export function ExperienceItemTitle({ metadata, ...props }: ExperienceItemTitle.
   }
 
   const inner = (
-    <>
-      <NavigationAnchor {...getTOCAnchor(props, { prefix })} />
+    <PageTOCLayout.Anchor
+      prefix={prefix}
+      text={[
+        title,
+        prefix === 'experience'
+          ? metadata?.company
+          : undefined,
+      ].filter(Boolean).join(' ')}
+      level={ 3 }>
       <span>{title}</span>
       {metadata
         ? (<span>{metadata.company}</span>)
         : null
       }
-    </>
+    </PageTOCLayout.Anchor>
   );
 
   const final = link

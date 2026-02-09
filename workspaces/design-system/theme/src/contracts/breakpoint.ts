@@ -9,7 +9,7 @@ let rawContract = breakpointGenerator({
   mobile: 700,
   tablet: 1000,
   screen: 1200,
-  large: 1980,
+  large: 1920,
   huge: 3000,
 });
 const contract = new Proxy(rawContract, {
@@ -23,4 +23,3 @@ const update: UpdaterFunction<TypeOfThemeGenerator<typeof breakpointGenerator>> 
 const prefix = 'breakpoint';
 
 export const breakpointContract = [contract, update, prefix, { raw: true }] as const;
-

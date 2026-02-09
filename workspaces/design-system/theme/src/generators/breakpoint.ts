@@ -8,11 +8,15 @@ export const breakpointGenerator = <Breakpoints extends BreakpointsMapping>(
 ): BreakpointsOf<Breakpoints> => {
   const lowerThans = {} as any;
   const greaterThans = {} as any;
+  const lowerThansEquals = {} as any;
+  const greaterThansEquals = {} as any;
 
   const keys = Object.keys(breakpoints) as unknown as (keyof Breakpoints & string)[];
   for (const key of keys) {
-    lowerThans[`lt-${key}` as unknown as keyof typeof lowerThans] = `(max-width: ${breakpoints[key]}px)`;
+    lowerThans[`lt-${key}` as unknown as keyof typeof lowerThans] = `(max-width: ${breakpoints[key] - 1}px)`;
     greaterThans[`gt-${key}` as any] = `(min-width: ${breakpoints[key]}px)`;
+    lowerThansEquals[`lte-${key}` as unknown as keyof typeof lowerThans] = `(max-width: ${breakpoints[key] + 1}px)`;
+    greaterThansEquals[`gte-${key}` as any] = `(min-width: ${breakpoints[key] - 1}px)`;
   }
 
   const betweens = {} as any;
@@ -27,6 +31,8 @@ export const breakpointGenerator = <Breakpoints extends BreakpointsMapping>(
   return {
     ...lowerThans,
     ...greaterThans,
+    ...lowerThansEquals,
+    ...greaterThansEquals,
     ...betweens,
   };
 };

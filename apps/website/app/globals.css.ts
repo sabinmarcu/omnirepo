@@ -42,3 +42,8 @@ globalStyle('*, *::before, *::after', {
     },
   },
 });
+
+globalStyle('*', {
+  scrollbarColor: `${theme.colors.background.elevated} ${theme.colors.background.depressed}`,
+  scrollbarWidth: 'thin',
+});

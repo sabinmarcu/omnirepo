@@ -1,6 +1,4 @@
-import { PageLayout } from '@/layouts/PageLayout';
 import type { Metadata } from 'next';
-import { getTitle } from '@/app/utils/getTitle';
 import {
   academicProjects,
   competitionProjects,
@@ -16,10 +14,10 @@ import {
   zippedPublications,
 } from '@/data/personal/cv';
 import { Grid } from '@/components/Grid';
+import { Typography } from '@/components/mdx/Typography';
 import { InfoTagList } from './components/InfoTag';
 import {
   cvPageBioStyles,
-  cvPageStyles,
 } from './page.css';
 import './page.mobile.css';
 import { Section } from './components/Section';
@@ -30,7 +28,7 @@ import { DegreeList } from './components/Degree.list';
 import { PublicationsList } from './components/Publications.list';
 
 export async function generateMetadata(): Promise<Metadata> {
-  return { title: getTitle('Personal', pageTitle) };
+  return { title: pageTitle };
 }
 
 const {
@@ -45,7 +43,7 @@ const {
 
 export default async function CVPage() {
   return (
-    <PageLayout className={cvPageStyles} variant="large">
+    <>
       <header>
         <div className={cvPageBioStyles}>
           <h1>{title}</h1>
@@ -54,42 +52,42 @@ export default async function CVPage() {
       <InfoTagList list={info} />
       </header>
       <Section name="skills">
-        <h2>Skills</h2>
+        <Typography as="h2">Skills</Typography>
         <ExperienceList list={[{ project: { skill: skills } }] as any} />
-        <h2>Languages</h2>
+        <Typography as="h2">Languages</Typography>
         <LanguageList list={languages} />
-        <h2>Education</h2>
+        <Typography as="h2">Education</Typography>
         <DegreeList list={filteredDegrees} />
-        <h2>Publications and Conferences</h2>
+        <Typography as="h2">Publications and Conferences</Typography>
         <PublicationsList list={zippedPublications} />
       </Section>
-      <h2>Recent Experience</h2>
+      <Typography as="h2">Recent Experience</Typography>
       <ExperienceList list={featuredExperiences} />
       <br style={{
         clear: 'both',
         position: 'relative',
       }} />
-      <h2>Work Projects</h2>
+      <Typography as="h2">Work Projects</Typography>
       <ExperienceList list={featuredProjects} />
       <Grid columns={2} grid>
         <ExperienceList list={extendedProjects} />
       </Grid>
-      <h2>Open Source Projects</h2>
+      <Typography as="h2">Open Source Projects</Typography>
       <Grid columns={2} grid>
         <ExperienceList list={opensourceProjects} />
       </Grid>
-      <h2>Personal Projects</h2>
+      <Typography as="h2">Personal Projects</Typography>
       <Grid columns={2} grid>
         <ExperienceList list={personalProjects} />
       </Grid>
-      <h2>Academic Projects</h2>
+      <Typography as="h2">Academic Projects</Typography>
       <ExperienceList list={academicProjects} />
-      <h2>Extracurricular Involvement</h2>
+      <Typography as="h2">Extracurricular Involvement</Typography>
       <ExperienceList list={extracurricularExperiences} />
-      <h2>Competition Projects</h2>
+      <Typography as="h2">Competition Projects</Typography>
       <ExperienceList list={competitionProjects} />
-      <h2>Extended Experience</h2>
+      <Typography as="h2">Extended Experience</Typography>
       <ExperienceList list={extendedExperiences} />
-    </PageLayout>
+    </>
   );
 }

@@ -4,6 +4,7 @@ import {
 } from '@vanilla-extract/css';
 import { zIndexLayers } from '@/constants/layers';
 import { mobileMedia } from '@/utils/responsive';
+import { theme } from '@sabinmarcu/theme';
 import {
   navigationMinSize,
   navigationSectionsSelectors,
@@ -11,6 +12,7 @@ import {
   emptyNavigationSelector,
   navigationSpacing,
   navigationBorderRadius,
+  navigationOffset,
 } from './Navigation.css';
 import { grids } from './Navigation.grid';
 
@@ -116,3 +118,12 @@ globalStyle([
   }),
 });
 
+globalStyle([
+  'body > *',
+].join(', '), {
+  ...mobileMedia({
+    vars: {
+      [navigationOffset]: theme.grid.m,
+    },
+  }),
+});
