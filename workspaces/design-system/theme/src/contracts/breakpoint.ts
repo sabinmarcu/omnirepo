@@ -8,9 +8,9 @@ import type { CSSVariableFunction } from '../utils/prefixVariable.js';
 let rawContract = breakpointGenerator({
   mobile: 700,
   tablet: 1000,
-  screen: 1200,
-  large: 1920,
-  huge: 3000,
+  screen: 1600,
+  large: 1900,
+  huge: 3800,
 });
 const contract = new Proxy(rawContract, {
   get(target, k) {

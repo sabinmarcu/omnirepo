@@ -33,9 +33,9 @@ export const themeColors = {
     breakpoint: {
       mobile: 700,
       tablet: 1000,
-      screen: 1200,
-      large: 1980,
-      huge: 3000,
+      screen: 1600,
+      large: 1900,
+      huge: 3800,
     },
   },
   personal: {
