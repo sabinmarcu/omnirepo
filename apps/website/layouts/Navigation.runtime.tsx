@@ -3,7 +3,9 @@
 /* eslint-disable import/export */
 import { withExperiment } from '@/experiments/components/withExperiment';
 import type { PropsWithChildren } from 'react';
+import { ClientClickProxy } from '@/components/ClientClickProxy';
 import { navigationStyles } from './Navigation.css';
+import { mobileNavigationTriggerSelector } from './Navigation.mobile.constants';
 
 export namespace NavigationClient {
   export type Props = PropsWithChildren<
@@ -18,10 +20,11 @@ export const NavigationClient = withExperiment('animatedNavigation')(({
   empty,
   animatedNavigation,
 }: NavigationClient.Props) => (
-      <nav className={navigationStyles({
-        empty,
-        animated: animatedNavigation,
-      })}>
+    <nav className={navigationStyles({
+      empty,
+      animated: animatedNavigation,
+    })}>
+      <ClientClickProxy delegate={mobileNavigationTriggerSelector} />
       {children}
-      </nav>
+    </nav>
 ));

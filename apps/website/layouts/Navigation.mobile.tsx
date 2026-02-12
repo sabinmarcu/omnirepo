@@ -3,8 +3,8 @@ import {
   backdropStyles,
   triggerStyles,
 } from './Navigation.mobile.css';
+import { mobileNavigationTriggerSelector } from './Navigation.mobile.constants';
 
-const mobileNavigationTriggerSelector = 'mobile-navigation-trigger';
 export function NavigationMobileButton() {
   return (
     <label htmlFor={mobileNavigationTriggerSelector} className={triggerStyles}>

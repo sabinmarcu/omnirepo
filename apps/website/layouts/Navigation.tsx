@@ -11,6 +11,7 @@ import {
 import { grids } from './Navigation.grid';
 import { NavigationClient } from './Navigation.runtime';
 import { NavigationAnchor } from './Navigation.anchor';
+import { TOCMobileButton } from './PageTOCLayout.toc.mobile';
 
 export namespace Navigation {
   export type Props = PropsWithChildren<{
@@ -39,6 +40,7 @@ export function Navigation({ children, empty }: Navigation.Props) {
         <ThemeSelector />
         <Experiments.Trigger />
         <NavigationMobileButton />
+        <TOCMobileButton />
       </section>
       <NavigationBackdrop />
     </NavigationClient>

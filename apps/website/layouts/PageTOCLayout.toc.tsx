@@ -1,11 +1,15 @@
 import { ThemedLink } from '@/components/ThemedLink';
+import type { ReactElement } from 'react';
+import { ClientClickProxy } from '@/components/ClientClickProxy';
 import type { usePageTOCContextProvider } from './PageTOCLayout.core';
 import { pageTOCLayoutTOCStyles } from './PageTOCLayout.toc.css';
+import { mobileTOCTriggerSelector } from './PageTOCLayout.toc.constants';
 
 export namespace PageTOCLayoutTOC {
   export type Props = {
     links: usePageTOCContextProvider.TOCObject[],
     maxLevel?: number,
+    header: ReactElement,
   };
 }
 
@@ -28,7 +32,7 @@ function restrictLinksToMaxLevel(
 function TOCLayoutList({
   links,
   maxLevel = Infinity,
-}: PageTOCLayoutTOC.Props) {
+}: Omit<PageTOCLayoutTOC.Props, 'header'>) {
   const restrictedLinks = restrictLinksToMaxLevel(links, maxLevel);
 
   return (
@@ -53,12 +57,14 @@ function TOCLayoutList({
 export function PageTOCLayoutTOC({
   links,
   maxLevel,
+  header,
 }: PageTOCLayoutTOC.Props) {
   return (
     <aside className={pageTOCLayoutTOCStyles}>
       <section>
         <nav>
-          <h1>Table of Contents</h1>
+          <ClientClickProxy delegate={mobileTOCTriggerSelector} />
+          {header}
           <TOCLayoutList links={links} maxLevel={maxLevel} />
         </nav>
       </section>

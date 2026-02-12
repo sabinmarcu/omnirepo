@@ -4,16 +4,17 @@ import {
   globalStyle,
   style,
 } from '@vanilla-extract/css';
+import type { MediaType } from '@/utils/responsive';
+import { media as mediaRaw } from '@/utils/responsive';
 import { navigationOffset } from './Navigation.css';
 import { pageLayoutSize } from './PageLayout.css';
 
+export const breakpoint = 'large' satisfies MediaType;
+const media = mediaRaw(breakpoint, 'gte');
+
 export const pageTOCLayoutTOCStyles = style({
   '@media': {
-    // TODO: Figure out TOC for smaller screens
-    [theme.breakpoint['lt-large']]: {
-      display: 'none',
-    },
-    [theme.breakpoint['gte-large']]: {
+    [media]: {
       position: 'sticky',
       insetInline: 0,
       insetBlockStart: navigationOffset,
@@ -26,7 +27,7 @@ const availableTocSpace = createVar();
 const preferredTocSize = createVar();
 globalStyle(`${pageTOCLayoutTOCStyles} section`, {
   '@media': {
-    [theme.breakpoint['gte-large']]: {
+    [media]: {
       maxInlineSize: tocSize,
       inlineSize: tocSize,
 
@@ -48,27 +49,33 @@ const tocMargin = createVar();
 const tocPadding = createVar();
 // eslint-disable-next-line logical-properties/overflow
 globalStyle(`${pageTOCLayoutTOCStyles} nav`, {
+  '@media': {
+    [media]: {
+      marginInline: tocMargin,
+
+      position: 'absolute',
+
+      insetBlockStart: tocMargin,
+      insetInline: 0,
+
+      borderStartStartRadius: '2px',
+      borderStartEndRadius: '2px',
+      borderEndEndRadius: '2px',
+      borderEndStartRadius: '2px',
+
+      borderInlineStart: `solid 1px ${theme.colors.primary.muted}`,
+      borderInlineEnd: `solid 1px ${theme.colors.primary.muted}`,
+      borderBlockStart: `solid 1px ${theme.colors.primary.muted}`,
+      borderBlockEnd: `solid 1px ${theme.colors.primary.muted}`,
+
+      maxBlockSize: `calc(100cqh - ${navigationOffset} - ${tocMargin} * 2)`,
+
+    },
+  },
+  maxBlockSize: '100cqh',
+
   paddingBlock: tocPadding,
   paddingInline: tocPadding,
-
-  marginInline: tocMargin,
-
-  position: 'absolute',
-
-  insetBlockStart: tocMargin,
-  insetInline: 0,
-
-  borderStartStartRadius: '2px',
-  borderStartEndRadius: '2px',
-  borderEndEndRadius: '2px',
-  borderEndStartRadius: '2px',
-
-  borderInlineStart: `solid 1px ${theme.colors.primary.muted}`,
-  borderInlineEnd: `solid 1px ${theme.colors.primary.muted}`,
-  borderBlockStart: `solid 1px ${theme.colors.primary.muted}`,
-  borderBlockEnd: `solid 1px ${theme.colors.primary.muted}`,
-
-  maxBlockSize: `calc(100cqh - ${navigationOffset} - ${tocMargin} * 2)`,
 
   overflowX: 'hidden',
   overflowY: 'auto',
@@ -84,15 +91,25 @@ globalStyle(`${pageTOCLayoutTOCStyles} nav`, {
 
 globalStyle(`${pageTOCLayoutTOCStyles} h1`, {
   fontSize: theme.grid.xxl,
-  borderBlockEnd: `solid 1px ${theme.colors.primary.muted}`,
+
   background: theme.colors.background.depressed,
-  marginBlockEnd: theme.grid.m,
-  paddingBlockEnd: theme.grid.xxs,
+  borderBlockEnd: `solid 1px ${theme.colors.primary.muted}`,
+
   position: 'sticky',
+
   insetInline: `calc(0px - ${tocPadding})`,
   insetBlockStart: `calc(0px - ${tocPadding})`,
+
   marginBlockStart: `calc(0px - ${tocPadding})`,
+  marginBlockEnd: theme.grid.m,
+
   paddingBlockStart: tocPadding,
+  paddingBlockEnd: theme.grid.xxs,
+
+  display: 'flex',
+  flexFlow: 'row nowrap',
+  alignItems: 'center',
+  justifyContent: 'space-between',
 });
 
 globalStyle(`${pageTOCLayoutTOCStyles} ul ul`, {

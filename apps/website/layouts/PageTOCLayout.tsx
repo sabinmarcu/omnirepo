@@ -5,10 +5,28 @@ import { PageTOCLayoutAnchor } from './PageTOCLayout.anchor';
 import { PageTOCLayoutInlineAnchor } from './PageTOCLayout.anchor.inline';
 import { PageTOCLayoutLink } from './PageTOCLayout.link';
 import { PageTOCLayoutClient } from './PageTOCLayout.runtime';
+import { TOCMobileCloseButton } from './PageTOCLayout.toc.mobile';
 
-export async function PageTOCLayout(props: ComponentProps<typeof PageTOCLayoutClient>) {
+export namespace PageTOCLayout {
+  export type Props = (
+    & Omit<ComponentProps<typeof PageTOCLayoutClient>, 'tocHeader'>
+    & Partial<Pick<ComponentProps<typeof PageTOCLayoutClient>, 'tocHeader'>>
+  );
+}
+
+export async function PageTOCLayout(
+  { tocHeader, ...props }: PageTOCLayout.Props,
+) {
   return (
-    <PageTOCLayoutClient {...props} />
+    <PageTOCLayoutClient
+      tocHeader={tocHeader ?? (
+          <h1>
+            <span>Table of Contents</span>
+            <TOCMobileCloseButton />
+          </h1>
+      )}
+      {...props}
+    />
   );
 }
 
