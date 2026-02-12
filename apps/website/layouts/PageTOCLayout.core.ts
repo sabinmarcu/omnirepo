@@ -1,5 +1,7 @@
 'use client';
 
+import { merge } from 'ts-deepmerge';
+
 import {
   useContext,
   useState,
@@ -30,7 +32,6 @@ function tocElementToTocTree(link: TOCElement): TOCTree {
     children: [],
   };
 }
-// TODO: Find out why h4s aren't loaded
 function treeLinksToTree(
   links: TOCElement[],
 ): TOCTree[] {
@@ -39,6 +40,7 @@ function treeLinksToTree(
   }
   const result: TOCTree[] = [];
   const stack = [];
+  let firstLevel = -1;
   for (const link of links) {
     const current = tocElementToTocTree(link);
 
@@ -47,22 +49,23 @@ function treeLinksToTree(
       continue;
     }
 
-    if (current.level === 2) {
+    if (firstLevel === -1) {
+      firstLevel = current.level;
+    }
+
+    if (current.level === firstLevel) {
       result.push(current);
     }
 
-    if (stack.length === 0) {
-      stack.push(current);
-    } else if (current.level === stack[0].level + 1) {
-      stack[0].children.push(current);
-    } else if (current.level > stack[0].level + 1) {
-      stack.unshift(current);
-    } else {
+    while (stack.length > 0 && stack[0].level >= current.level) {
       stack.shift();
-      if (stack.length === 0) {
-        stack.unshift(current);
-      }
     }
+
+    if (stack.length > 0) {
+      stack[0].children.push(current);
+    }
+
+    stack.unshift(current);
   }
 
   return result;

@@ -9,19 +9,35 @@ export namespace PageTOCLayoutTOC {
   };
 }
 
+function restrictLinksToMaxLevel(
+  links: PageTOCLayoutTOC.Props['links'],
+  maxLevel: Exclude<PageTOCLayoutTOC.Props['maxLevel'], undefined>,
+) {
+  const result: PageTOCLayoutTOC.Props['links'] = [];
+  for (const link of links) {
+    if (link.level <= maxLevel) {
+      result.push({
+        ...link,
+        children: restrictLinksToMaxLevel(link.children, maxLevel),
+      });
+    }
+  }
+  return result;
+}
+
 function TOCLayoutList({
   links,
   maxLevel = Infinity,
 }: PageTOCLayoutTOC.Props) {
+  const restrictedLinks = restrictLinksToMaxLevel(links, maxLevel);
+
   return (
     <ul>
-      {links.map(({
+      {restrictedLinks.map(({
         title,
         slug,
         children,
-        level,
-      }) => (level < maxLevel
-        ? (
+      }) => (
           <>
             <li><ThemedLink href={ `#${slug}` }>{title}</ThemedLink></li>
             {children
@@ -29,8 +45,7 @@ function TOCLayoutList({
               : null
             }
           </>
-        )
-        : null))}
+      ))}
     </ul>
   );
 }
