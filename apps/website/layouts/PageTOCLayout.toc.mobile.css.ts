@@ -102,3 +102,14 @@ globalStyle(`${mobileTOCActiveSelector} ${pageTOCLayoutTOCStyles}`, {
   opacity: 1,
   zIndex: zIndexLayers.toc,
 });
+
+globalStyle([
+  `${pageTOCLayoutTOCStyles} section`,
+  `${pageTOCLayoutTOCStyles} nav`,
+].join(', '), {
+  '@media': {
+    [media('lt')]: {
+      blockSize: '100%',
+    },
+  },
+});

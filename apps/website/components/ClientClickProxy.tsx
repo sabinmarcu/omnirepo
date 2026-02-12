@@ -4,13 +4,18 @@ import {
   useEffect,
   useRef,
 } from 'react';
+import { clientClickProxyStyles } from './ClientClickProxy.css';
 
 export namespace ClientClickProxy {
   export type Props = {
     delegate: string,
+    toggle?: boolean,
   };
 }
-export function ClientClickProxy({ delegate }: ClientClickProxy.Props) {
+export function ClientClickProxy({
+  delegate,
+  toggle,
+}: ClientClickProxy.Props) {
   const reference = useRef<HTMLSpanElement>(null);
   useEffect(
     () => {
@@ -24,14 +29,16 @@ export function ClientClickProxy({ delegate }: ClientClickProxy.Props) {
           return;
         }
 
-        targetElement.checked = !targetElement.checked;
+        targetElement.checked = toggle
+          ? !targetElement.checked
+          : false;
       };
       element.addEventListener('click', handler);
       return () => element.removeEventListener('click', handler);
     },
-    [delegate],
+    [delegate, toggle],
   );
   return (
-    <span ref={reference} />
+    <span ref={reference} className={clientClickProxyStyles} />
   );
 }

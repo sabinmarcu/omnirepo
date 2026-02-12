@@ -29,14 +29,26 @@ function restrictLinksToMaxLevel(
   return result;
 }
 
+namespace TOCLayoutList {
+  export type Props = (
+    & Omit<PageTOCLayoutTOC.Props, 'header'>
+    & { root?: boolean }
+  );
+}
+
 function TOCLayoutList({
   links,
   maxLevel = Infinity,
-}: Omit<PageTOCLayoutTOC.Props, 'header'>) {
+  root,
+}: TOCLayoutList.Props) {
   const restrictedLinks = restrictLinksToMaxLevel(links, maxLevel);
 
   return (
     <ul>
+      {root
+        ? (<ClientClickProxy delegate={mobileTOCTriggerSelector} />
+        )
+        : null}
       {restrictedLinks.map(({
         title,
         slug,
@@ -63,9 +75,8 @@ export function PageTOCLayoutTOC({
     <aside className={pageTOCLayoutTOCStyles}>
       <section>
         <nav>
-          <ClientClickProxy delegate={mobileTOCTriggerSelector} />
           {header}
-          <TOCLayoutList links={links} maxLevel={maxLevel} />
+          <TOCLayoutList links={links} maxLevel={maxLevel} root />
         </nav>
       </section>
     </aside>

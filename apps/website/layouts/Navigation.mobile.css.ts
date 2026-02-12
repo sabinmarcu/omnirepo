@@ -127,3 +127,9 @@ globalStyle([
     },
   }),
 });
+
+globalStyle(`${navigationSelector}${navigationSelector}:not(${emptyNavigationSelector}):before`, {
+  ...mobileMedia({
+    background: `hsla(from ${theme.colors.background.page} h s l / 0.8)`,
+  }),
+});
