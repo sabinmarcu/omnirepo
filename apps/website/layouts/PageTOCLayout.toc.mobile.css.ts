@@ -36,7 +36,10 @@ export const mobileTOCTriggerStyles = style({
   },
 });
 
-globalStyle(`${navigationSelector}.${emptyNavigationSelector} ${mobileTOCTriggerStyles}`, {
+globalStyle([
+  `${navigationSelector}.${emptyNavigationSelector} ${mobileTOCTriggerStyles}`,
+  `body:not(:has(${pageTOCLayoutTOCStyles})) ${mobileTOCTriggerStyles}`,
+].join(', '), {
   display: 'none',
 });
 
