@@ -4,6 +4,8 @@ import { Typography } from '@/components/mdx/Typography';
 import { resolveSnippetPage } from './data';
 import { snippetLayoutPageStyles } from './layout.css';
 
+export const dynamic = 'force-dynamic';
+
 export default async function SnippetLayoutPage(props: LayoutProps<'/snippets/[slug]/[subpage]'>) {
   return resolveSnippetPage(props, {
     onError: () => null,

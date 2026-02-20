@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import moize from 'moize';
 
 import type {
   ZodAny,
@@ -8,9 +9,9 @@ import type {
 import { contentPath } from '@/constants/paths';
 import { readContent } from './readContent';
 
-export async function readContentDirectory(directoryPath: string): Promise<string[]>;
+async function readContentDirectoryRaw(directoryPath: string): Promise<string[]>;
 
-export async function readContentDirectory<
+async function readContentDirectoryRaw<
   Schema extends ZodType,
   MetadataSchema extends ZodType = ZodAny,
 >(
@@ -23,7 +24,7 @@ export async function readContentDirectory<
   >[]
 >;
 
-export async function readContentDirectory(
+async function readContentDirectoryRaw(
   directoryPath: string,
   options?: any,
 ) {
@@ -48,3 +49,7 @@ export async function readContentDirectory(
   return contents.filter(Boolean);
 }
 
+export const readContentDirectory = (
+  moize.promise(readContentDirectoryRaw) as
+  unknown as typeof readContentDirectoryRaw
+);

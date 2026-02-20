@@ -7521,6 +7521,7 @@ __metadata:
     date-fns: "npm:^4.1.0"
     eslint: "npm:^9"
     eslint-config-next: "npm:15.3.1"
+    moize: "npm:^6.1.7"
     next: "npm:16.1.4"
     react: "npm:^19.2.3"
     react-dom: "npm:^19.2.3"
@@ -20024,6 +20025,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"micro-memoize@npm:^4.1.2":
+  version: 4.2.0
+  resolution: "micro-memoize@npm:4.2.0"
+  checksum: 10c0/e8bc7252d7424b68276ec346b5f21802633f753c3927e73b60e311d734e8645917ff619728f91b8f49d5f1f1d9285e6f0abf2c378b02bf33e2decb1de8e5cc14
+  languageName: node
+  linkType: hard
+
 "micromark-core-commonmark@npm:^2.0.0":
   version: 2.0.0
   resolution: "micromark-core-commonmark@npm:2.0.0"
@@ -20863,6 +20871,16 @@ __metadata:
     fast-equals: "npm:^3.0.1"
     micro-memoize: "npm:^4.0.11"
   checksum: 10c0/b809761de34d3f85d0b1be99fbe462122fca3dd1cfae7af968ab62387a829bf10150322af8ecfe6be1d8731c399c5d0016362370e2dd47025a02f58d2d9411c6
+  languageName: node
+  linkType: hard
+
+"moize@npm:^6.1.7":
+  version: 6.1.7
+  resolution: "moize@npm:6.1.7"
+  dependencies:
+    fast-equals: "npm:^3.0.1"
+    micro-memoize: "npm:^4.1.2"
+  checksum: 10c0/769dd315b5e8f3a603341a3ed06787ee13ed301372d4f9a1fe56e290d79614bcb8002438648b4a1cc93473ec03954d30457bfb30b66adece94c8fa76c13b42b6
   languageName: node
   linkType: hard
 

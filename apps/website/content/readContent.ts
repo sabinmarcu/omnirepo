@@ -1,4 +1,6 @@
+/* eslint-disable import/export, @typescript-eslint/no-redeclare */
 import { parse } from 'codehike';
+import moize from 'moize';
 import type {
   ZodAny,
   ZodType,
@@ -15,7 +17,7 @@ export namespace readContent {
   };
 }
 
-export async function readContent<
+async function readContentRaw<
   Schema extends ZodType,
   MetadataSchema extends ZodType = ZodAny,
 >(
@@ -39,3 +41,8 @@ export async function readContent<
     metadata,
   } as const;
 }
+
+export const readContent = (
+  moize.promise(readContentRaw) as
+  unknown as typeof readContentRaw
+);

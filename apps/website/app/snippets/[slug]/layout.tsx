@@ -5,6 +5,8 @@ import { extendPathname } from '@/utils/routes';
 import { normalizeNavigationList } from '@/navigation/utils';
 import { resolveSnippet } from './data';
 
+export const dynamic = 'force-dynamic';
+
 export default async function SnippetLayoutPage(params: LayoutProps<'/snippets/[slug]'>) {
   return resolveSnippet(
     params,

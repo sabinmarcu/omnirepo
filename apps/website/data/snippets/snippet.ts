@@ -1,3 +1,4 @@
+import moize from 'moize';
 import { readContentDirectory } from '@/content/readContentDirectory';
 import { tocSlug } from '@/utils/toc';
 import { readContent } from '@/content/readContent';
@@ -36,7 +37,7 @@ export const snippetSlugs = snippetsList.map(
   ({ slug }) => ({ slug }),
 );
 
-export const getSnippet = (slug: string) => {
+export const getSnippet = moize.promise((slug: string) => {
   const snippet = snippetsList.find(
     ({ slug: snippetSlug }) => slug === snippetSlug,
   );
@@ -46,4 +47,4 @@ export const getSnippet = (slug: string) => {
   }
 
   return readContent(snippet.path, snippetsReadOptions);
-};
+});

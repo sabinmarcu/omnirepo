@@ -25,6 +25,7 @@
     "@vanilla-extract/recipes": "^0.5.7",
     "codehike": "^1.0.7",
     "date-fns": "^4.1.0",
+    "moize": "^6.1.7",
     "next": "16.1.4",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
