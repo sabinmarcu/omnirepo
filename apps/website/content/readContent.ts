@@ -3,6 +3,7 @@ import type {
   ZodAny,
   ZodType,
 } from 'zod';
+import { readRawContent } from './readRawContent';
 
 export namespace readContent {
   export type Options<
@@ -24,9 +25,10 @@ export async function readContent<
     metadataSchema,
   }: readContent.Options<Schema, MetadataSchema>,
 ) {
-  const { default: Page, ...rest } = await import(
-    `./${path}`
-  );
+  if (!/\.mdx?$/.test(path)) {
+    return undefined;
+  }
+  const { default: Page, ...rest } = await readRawContent(path);
   const metadata = metadataSchema?.parse(rest) ?? undefined;
   const codehikeData = parse(Page);
   const data = schema.parse(codehikeData);

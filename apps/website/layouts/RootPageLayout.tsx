@@ -39,7 +39,7 @@ export async function RootPageLayout({
       {...{ [selector]: section }}
       {...rest}
     >
-        {children}
+      {children}
     </main>
   );
 }

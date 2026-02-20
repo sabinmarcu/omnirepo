@@ -15,6 +15,7 @@
     "@next/mdx": "^16.1.4",
     "@sabinmarcu/moving-mesh-background": "workspace:*",
     "@sabinmarcu/theme": "workspace:*",
+    "@sabinmarcu/utils-string": "workspace:^",
     "@sabinmarcu/website-theme": "workspace:*",
     "@tscircuit/routematch": "^1.0.1",
     "@types/mdx": "^2.0.13",
@@ -29,7 +30,8 @@
     "react-dom": "^19.2.3",
     "remark-frontmatter": "^5.0.0",
     "remark-mdx-frontmatter": "^5.2.0",
-    "zod": "^4"
+    "ts-reset": "^0.0.1",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -40,7 +42,7 @@
     "@types/react-dom": "^19.2.3",
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
-    "typescript": "^5"
+    "typescript": "^5.9.3"
   },
   "tscmono": {
     "preset": "nextApp"

@@ -1,18 +1,19 @@
 import { readContentDirectory } from '@/content/readContentDirectory';
 import { tocSlug } from '@/utils/toc';
-import z from 'zod';
+import { readContent } from '@/content/readContent';
+import {
+  snippetsPageMetadataSchema,
+  snippetsPageSchema,
+} from './snippets.schema';
 
-const metadataSchema = z.object({
-  title: z.string(),
-  slug: z.string().optional(),
-});
+const snippetsReadOptions = {
+  metadataSchema: snippetsPageMetadataSchema,
+  schema: snippetsPageSchema,
+} as const;
 
 const snippetsListFiles = await readContentDirectory(
   'snippets',
-  {
-    metadataSchema,
-    schema: z.any(),
-  },
+  snippetsReadOptions,
 );
 
 export const snippetsList = (
@@ -39,5 +40,10 @@ export const getSnippet = (slug: string) => {
   const snippet = snippetsList.find(
     ({ slug: snippetSlug }) => slug === snippetSlug,
   );
-  return snippet;
+
+  if (!snippet) {
+    return undefined;
+  }
+
+  return readContent(snippet.path, snippetsReadOptions);
 };

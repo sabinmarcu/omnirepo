@@ -1,5 +1,6 @@
 import { theme } from '@sabinmarcu/theme';
 import { globalStyle } from '@vanilla-extract/css';
+import './codehike.css';
 
 globalStyle('html, body', {
   maxInlineSize: '100vw',

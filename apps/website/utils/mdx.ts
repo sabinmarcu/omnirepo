@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import z from 'zod';
 import type {
   $ZodString,
@@ -9,7 +10,7 @@ export function codehikeBlockAnnotationSchema<const Schema extends $ZodType = $Z
 ) {
   return z.object({
     title: schema || z.string(),
-    children: z.any(),
+    children: z.custom<ReactNode>(),
   });
 }
 
@@ -25,7 +26,7 @@ export function codehikeBlockArrayAnnotationSchema<
     z.ZodArray<
       z.ZodObject<{
         title: z.core.$ZodString<unknown> | z.ZodString;
-        children: z.ZodAny;
+        children: z.ZodCustom<ReactNode, ReactNode>;
       },
       z.core.$strip>
     >
@@ -49,7 +50,7 @@ export function codehikeBlockArrayAnnotationSchema<
       z.ZodIntersection<
         z.ZodObject<{
           title: z.ZodString | z.core.$ZodString<unknown>;
-          children: z.ZodAny;
+          children: z.ZodCustom<ReactNode, ReactNode>;
         },
         z.core.$strip>,
         Schema

@@ -32,7 +32,11 @@ const nextConfig: NextConfig = {
   },
 };
 
-const chConfig: CodeHikeConfig = {};
+const chConfig: CodeHikeConfig = {
+  components: {
+    code: 'CodehikeCode',
+  },
+};
 
 const withMdx = createMdx({
   extension: /\.(md|mdx)$/,

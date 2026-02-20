@@ -16,7 +16,12 @@ export async function readContentDirectory<
 >(
   directoryPath: string,
   options?: readContent.Options<Schema, MetadataSchema>,
-): Promise<Awaited<ReturnType<typeof readContent<Schema, MetadataSchema>>>[]>;
+): Promise<
+  Exclude<
+    Awaited<ReturnType<typeof readContent<Schema, MetadataSchema>>>,
+    undefined
+  >[]
+>;
 
 export async function readContentDirectory(
   directoryPath: string,
@@ -29,14 +34,17 @@ export async function readContentDirectory(
     .map((absolutePath) => path.relative(
       contentPath,
       absolutePath,
-    ));
+    ))
+    .filter(Boolean);
 
   if (options === undefined) {
     return paths;
   }
 
-  return Promise.all(
+  const contents = await Promise.all(
     paths.map((filePath) => readContent(filePath, options)),
   );
+
+  return contents.filter(Boolean);
 }
 

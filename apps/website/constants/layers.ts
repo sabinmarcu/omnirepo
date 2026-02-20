@@ -1,8 +1,42 @@
+import { toCamel } from '@sabinmarcu/utils-string';
+import type { CamelCase } from '@sabinmarcu/types';
+
+let lastZLayer = 0;
+const zLayer = <
+  const RootLayer extends string,
+  const SubLayers extends string,
+>(
+    label: RootLayer,
+    ...children: SubLayers[]
+  ): (
+    & { [Key in RootLayer]: number }
+    & { [Key in SubLayers as CamelCase<`${RootLayer}-${SubLayers}`>]: number }
+  ) => {
+  lastZLayer = Number.parseInt(
+    `${(lastZLayer + 10) / 10}`,
+    10,
+  ) * 10;
+
+  let accumulator = {
+    [label]: lastZLayer,
+  };
+
+  for (const child of children) {
+    lastZLayer += 1;
+    const name = toCamel([label, child].join('-'));
+    accumulator = {
+      ...accumulator,
+      [name]: lastZLayer,
+    };
+  }
+
+  return accumulator as any;
+};
+
 export const zIndexLayers = {
-  navigation: 50,
-  navigationBackdrop: 51,
-  navigationSections: 52,
-  toc: 60,
-  experiments: 75,
-  crtOverlay: 100,
-} as const;
+  ...zLayer('crtOverlay'),
+  ...zLayer('navigation', 'backdrop', 'sections'),
+  ...zLayer('toc'),
+  ...zLayer('experiments'),
+};
+
