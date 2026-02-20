@@ -1,3 +1,4 @@
+import { mobileMedia } from '@/utils/responsive';
 import { theme } from '@sabinmarcu/theme';
 import { style } from '@vanilla-extract/css';
 
@@ -11,4 +12,13 @@ export const codeStyles = style({
   borderStartEndRadius: '2px',
   borderEndEndRadius: '2px',
   borderEndStartRadius: '2px',
+
+  ...mobileMedia({
+    textWrap: 'pretty',
+  }, true),
+
+  ...mobileMedia({
+    overflowX: 'auto',
+    fontSize: '0.8rem',
+  }),
 });

@@ -7,12 +7,17 @@ export namespace ShowcaseLayout {
 
 export function ShowcaseLayout({
   className,
+  children,
   ...rest
 }: ShowcaseLayout.Props) {
   return (
     <section
       {...rest}
       className={[className, showcaseLayoutStyles].join(' ')}
-    />
+    >
+      <div data-root>
+        {children}
+      </div>
+    </section>
   );
 }

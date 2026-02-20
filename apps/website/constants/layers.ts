@@ -35,6 +35,7 @@ const zLayer = <
 
 export const zIndexLayers = {
   ...zLayer('crtOverlay'),
+  ...zLayer('showcase'),
   ...zLayer('navigation', 'backdrop', 'sections'),
   ...zLayer('toc'),
   ...zLayer('experiments'),

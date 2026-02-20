@@ -6,6 +6,7 @@ import {
 import type { PageLayoutStylesProps } from './PageLayout.css';
 import { pageLayoutStyles } from './PageLayout.css';
 import { Footer } from './Footer';
+import { PageLayoutCode } from './PageLayout.code';
 
 export namespace PageLayout {
   export type Props = PropsWithChildren<
@@ -34,3 +35,5 @@ export function PageLayout({
     </ViewTransition>
   );
 }
+
+PageLayout.Code = PageLayoutCode;

@@ -13,6 +13,7 @@ import {
   snippetsPageMetadataSchema,
   snippetsPageSchema,
 } from './snippets.schema';
+import { parseRawCode } from './snippets.parser';
 
 const readContentOptions = {
   metadataSchema: snippetsPageMetadataSchema,
@@ -71,10 +72,6 @@ export const getSnippet = async (slug: string) => {
         file,
       )
     );
-    console.log({
-      file,
-      resolvedFile,
-    });
     return resolvedFile;
   };
 
@@ -86,11 +83,16 @@ export const getSnippet = async (slug: string) => {
     & { title: string, slug: string }
     & (
       | { content: ReactNode }
-      | { content: {
-        value: string,
-        lang: string,
-        meta: string,
-      } }
+      | { content: (
+        Omit<ReturnType<typeof parseRawCode>[number], 'content'>
+        & {
+          content: {
+            value: ReturnType<typeof parseRawCode>[number]['content'],
+            lang: string,
+            meta: string,
+          }
+        }
+      )[] }
       | { content: ReactElement }
     )
   )[] = [
@@ -112,21 +114,32 @@ export const getSnippet = async (slug: string) => {
         slug: fileSlug,
         lang,
         source,
-      }) => ({
-        title,
-        slug: fileSlug,
-        content: {
-          value: await fs.readFile(
-            path.resolve(
-              contentPath,
-              resolveFile(source),
-            ),
-            'utf8',
+      }) => {
+        const contentGroups = parseRawCode(await fs.readFile(
+          path.resolve(
+            contentPath,
+            resolveFile(source),
           ),
-          lang: lang ?? 'text',
+          'utf8',
+        ));
+        const partial = {
+          lang: lang ?? source.split('.').at(-1),
           meta: fileSlug,
-        },
-      })),
+        };
+        return {
+          title,
+          slug: fileSlug,
+          content: contentGroups.map((content) => ({
+            title: content.title,
+            variant: content.variant,
+            comment: content.comment,
+            content: {
+              ...partial,
+              value: content.content,
+            },
+          })),
+        };
+      }),
     ),
   ].filter(Boolean) as any;
 
@@ -135,4 +148,3 @@ export const getSnippet = async (slug: string) => {
     pages,
   };
 };
-

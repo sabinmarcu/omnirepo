@@ -6,7 +6,10 @@ import {
   snippetSlugs,
 } from '@/data/snippets/snippets';
 import { Code } from '@/components/Code';
+import { Typography } from '@/components/mdx/Typography';
+import { PageLayout } from '@/layouts/PageLayout';
 import { resolveSnippetPage } from './data';
+import { codeSectionStyle } from './page.css';
 
 export async function generateStaticParams() {
   return snippetSlugs;
@@ -27,12 +30,31 @@ export default async function SnippetPageSubpage(
   return resolveSnippetPage(props, {
     onError: () => redirect404(),
     onSuccess: async (subpage) => {
-      if (subpage.content
-        && typeof subpage.content === 'object'
-        && 'value' in subpage.content
-      ) {
+      if (subpage.content && Array.isArray(subpage.content)) {
         return (
-          <Code code={subpage.content} />
+          <>
+            {subpage.content
+              .filter(({ content }) => content.value)
+              .map(({
+                title,
+                content,
+                variant,
+                comment,
+              }) => (
+              <section key={title} className={codeSectionStyle}>
+                {title !== 'ROOT'
+                  ? (<Typography as="h2">{title}</Typography>)
+                  : null
+                }
+                {comment
+                  ? (<p>{comment}</p>)
+                  : null}
+                <PageLayout.Code variant={variant}>
+                  <Code code={content} />
+                </PageLayout.Code>
+              </section>
+              ))}
+          </>
         );
       }
 
