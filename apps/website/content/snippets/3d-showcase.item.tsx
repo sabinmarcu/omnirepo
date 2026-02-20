@@ -16,6 +16,7 @@ import type {
   MouseEventHandler,
   HTMLAttributes,
   ImgHTMLAttributes,
+  TouchEventHandler,
 } from 'react';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import type { ShowcaseWrapperStylesProps } from './3d-showcase.css';
@@ -114,6 +115,29 @@ export function ShowcaseItem({ className, ...props }: ShowcaseItem.Props) {
     [setPosition],
   );
 
+  const onTouchEnterMove = useCallback<TouchEventHandler<HTMLDivElement>>(
+    ({
+      touches,
+      currentTarget: element,
+    }) => {
+      const { clientX, clientY } = touches.item(0);
+      const {
+        top,
+        left,
+        width,
+        height,
+      } = element.getBoundingClientRect();
+
+      const [x, y] = [clientX - left, clientY - top];
+
+      setPosition({
+        x: x / width,
+        y: y / height,
+      });
+    },
+    [setPosition],
+  );
+
   // Handle the loss of interaction (mouse moves outside our component)
   const onLeave = useCallback(() => {
     setPosition(undefined);
@@ -128,6 +152,10 @@ export function ShowcaseItem({ className, ...props }: ShowcaseItem.Props) {
       onMouseEnter={onEnterMove}
       onMouseMove ={onEnterMove}
       onMouseLeave={onLeave}
+      onTouchStart={onTouchEnterMove}
+      onTouchMove={onTouchEnterMove}
+      onTouchCancel={onLeave}
+      onTouchEnd={onLeave}
       which="outer"
       active={isActive}
       style={isActive
