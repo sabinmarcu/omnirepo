@@ -47,7 +47,7 @@ export default async function SnippetPageSubpage(
                   : null
                 }
                 {comment
-                  ? (<p>{comment}</p>)
+                  ? (<p dangerouslySetInnerHTML={{ __html: comment }} />)
                   : null}
                 <PageLayout.Code variant={variant}>
                   <Code code={content} />

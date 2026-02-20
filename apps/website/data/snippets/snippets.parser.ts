@@ -30,7 +30,7 @@ export function parseRawCode(code: string) {
     ] = [
       line.match(/^(?:\/\/|\/\*+)\s*#region\s*(.+)$/),
       line.match(/^\/\*\*\s*$/),
-      line.match(/^(?:\/\/|\/\*+)\s*#endregion\s*(.+)$/),
+      line.match(/^(?:\/\/|\/\*+)\s*#endregion.*$/),
       line.match(/^\s*\*\/\s*$/),
       line.match(/^(?:\/\/|\/\*+)\s*#variant\s*(.+)$/),
       line.match(/^\s*\*\s*(.+)\s*$/),
@@ -92,7 +92,7 @@ export function parseRawCode(code: string) {
     (currentGroup ?? rootGroup).lines.push(line);
   }
   return groups
-    .filter(({ name }) => !/^ignore$/i.test(name))
+    .filter(({ name }) => !/^ignore/i.test(name))
     .map(({
       name,
       lines,

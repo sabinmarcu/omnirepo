@@ -13,28 +13,44 @@ export namespace PageLayout {
   export type Props = PropsWithChildren<
     & HTMLAttributes<HTMLDivElement>
     & PageLayoutStylesProps
+    & {
+      disableTransition?: boolean
+      disableFooter?: boolean
+    }
   >;
 }
 export function PageLayout({
   className,
   variant,
   children,
+  disableTransition,
+  disableFooter,
   ...props
 }: PageLayout.Props) {
-  return (
-    <ViewTransition name="page-layout">
-      <section
-        className={[
-          className,
-          pageLayoutStyles({ variant }),
-        ].join(' ')}
-        {...props}
-      >
-        {children}
-        <Footer />
-      </section>
-    </ViewTransition>
+  const renderTransition = !disableTransition;
+  const renderFooter = !disableFooter;
+  const footerContent = renderFooter
+    ? (<Footer />)
+    : null;
+  const innerContent = (
+    <section
+      className={[
+        className,
+        pageLayoutStyles({ variant }),
+      ].filter(Boolean).join(' ')}
+      {...props}
+    >
+      {children}
+      {footerContent}
+    </section>
   );
+  return renderTransition
+    ? (
+      <ViewTransition name="page-layout">
+        {innerContent}
+      </ViewTransition>
+    )
+    : innerContent;
 }
 
 PageLayout.Code = PageLayoutCode;
