@@ -1,4 +1,5 @@
 import {
+  createVar,
   globalStyle,
   style,
 } from '@vanilla-extract/css';
@@ -6,13 +7,13 @@ import { zIndexLayers } from '@/constants/layers';
 import { mobileMedia } from '@/utils/responsive';
 import { theme } from '@sabinmarcu/theme';
 import {
-  navigationMinSize,
+  navigationMinBlockSize,
   navigationSectionsSelectors,
   navigationSelector,
   emptyNavigationSelector,
   navigationSpacing,
   navigationBorderRadius,
-  navigationOffset,
+  navigationBlockOffset,
 } from './Navigation.css';
 import { grids } from './Navigation.grid';
 
@@ -82,7 +83,7 @@ globalStyle(`${navigationSelector}${navigationSelector}`, {
     insetInline: 0,
     insetBlock: 0,
     transform: 'translateX(-100cqw)',
-    paddingBlockStart: `calc(${navigationMinSize} + ${navigationSpacing})`,
+    paddingBlockStart: `calc(${navigationMinBlockSize} + ${navigationSpacing})`,
     display: 'flex',
     flexFlow: 'column nowrap',
   }),
@@ -123,7 +124,7 @@ globalStyle([
 ].join(', '), {
   ...mobileMedia({
     vars: {
-      [navigationOffset]: theme.grid.m,
+      [navigationBlockOffset]: theme.grid.m,
     },
   }),
 });

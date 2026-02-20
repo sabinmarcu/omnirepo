@@ -24,7 +24,6 @@ export const pageLayoutCodeStylesRaw = {
     marginInline: 'calc(0px - (100vw - 100cqw) / 2)',
     vars: {
       [contentSize]: '100cqw',
-
     },
   },
 } satisfies Parameters<typeof recipe>[0];

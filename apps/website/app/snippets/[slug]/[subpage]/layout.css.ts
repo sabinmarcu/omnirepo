@@ -3,6 +3,7 @@ import {
   style,
 } from '@vanilla-extract/css';
 import { theme } from '@sabinmarcu/theme';
+import { mobileMedia } from '@/utils/responsive';
 import {
   codeSectionSpacing,
   codeSectionStyle,
@@ -16,4 +17,9 @@ export const snippetLayoutPageStyles = style({
 
 globalStyle(`${snippetLayoutPageStyles} > h1:not(:has(+ ${codeSectionStyle} h2))`, {
   paddingBlockEnd: codeSectionSpacing,
+});
+globalStyle(`${snippetLayoutPageStyles} > h1`, {
+  ...mobileMedia({
+    paddingBlockEnd: codeSectionSpacing,
+  }),
 });

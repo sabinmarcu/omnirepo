@@ -15,8 +15,11 @@ import {
 import { rootScrollTimeline } from './RootPageLayout.css';
 
 export const navigationSpacing = createVar();
-export const navigationMinSize = createVar();
-export const navigationOffset = createVar();
+export const navigationMinBlockSize = createVar();
+export const navigationMinInlineSize = createVar();
+export const navigationBlockOffset = createVar();
+export const navigationMobileElements = createVar();
+export const navigationInlineOffset = createVar();
 export const navigationStyles = recipe({
   variants: {
     empty: {
@@ -73,7 +76,8 @@ export const navigationSectionsSelectors = Object.fromEntries(
 
 globalStyle(`body:has(${navigationSelector})`, {
   vars: {
-    [navigationMinSize]: '50px',
+    [navigationMinBlockSize]: '50px',
+    [navigationMinInlineSize]: `calc(${navigationMinBlockSize} * 4 / 5)`,
     [navigationSpacing]: theme.grid.s,
   },
 });
@@ -165,8 +169,8 @@ globalStyle(`${navigationSectionsSelectors.settings}`, {
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
-  minBlockSize: navigationMinSize,
-  minInlineSize: navigationMinSize,
+  minBlockSize: navigationMinBlockSize,
+  minInlineSize: navigationMinBlockSize,
   marginInlineStart: 0,
 });
 
@@ -184,6 +188,8 @@ globalStyle([
   cursor: 'pointer',
   color: theme.colors.background.text,
   fontSize: '1rem',
+  blockSize: navigationMinBlockSize,
+  inlineSize: navigationMinInlineSize,
 });
 
 globalStyle(`${navigationSectionsSelectors.minor}`, {
@@ -195,31 +201,37 @@ globalStyle(`${navigationSectionsSelectors.minor}`, {
 
 globalStyle('body', {
   vars: {
-    [navigationOffset]: '0px',
+    [navigationBlockOffset]: '0px',
   },
 });
 
 globalStyle(`body:has(${navigationSelector})`, {
   vars: {
-    [navigationOffset]: `calc(${navigationMinSize} + ${navigationSpacing} * 3)`,
+    [navigationBlockOffset]: `calc(${navigationMinBlockSize} + ${navigationSpacing} * 3)`,
   },
 });
 
 globalStyle(`body:has(${navigationSelector} ${grids.rawSelector('minor')})`, {
   vars: {
-    [navigationOffset]: `calc(${navigationMinSize} * 2 + ${navigationSpacing} * 3)`,
+    [navigationBlockOffset]: `calc(${navigationMinBlockSize} * 2 + ${navigationSpacing} * 3)`,
   },
 });
 
 globalStyle(`body:has(${navigationSelector}${animatedNavigationSelector})`, {
   vars: {
-    [navigationOffset]: blendSize(navigationMinSize),
+    [navigationBlockOffset]: blendSize(navigationMinBlockSize),
   },
 });
 
 globalStyle(`body:has(${navigationSelector}${animatedNavigationSelector} ${grids.rawSelector('minor')})`, {
   vars: {
-    [navigationOffset]: `calc(${navigationMinSize} * 2)`,
+    [navigationBlockOffset]: `calc(${navigationMinBlockSize} * 2)`,
+  },
+});
+
+globalStyle(`body:has(${navigationSelector})`, {
+  vars: {
+    [navigationMobileElements]: '3',
   },
 });
 

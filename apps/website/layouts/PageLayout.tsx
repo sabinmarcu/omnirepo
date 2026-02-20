@@ -7,6 +7,7 @@ import type { PageLayoutStylesProps } from './PageLayout.css';
 import { pageLayoutStyles } from './PageLayout.css';
 import { Footer } from './Footer';
 import { PageLayoutCode } from './PageLayout.code';
+import './PageLayout.mobile.css.ts';
 
 export namespace PageLayout {
   export type Props = PropsWithChildren<

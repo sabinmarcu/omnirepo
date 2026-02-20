@@ -6,7 +6,10 @@ import {
 } from '@vanilla-extract/css';
 import type { MediaType } from '@/utils/responsive';
 import { media as mediaRaw } from '@/utils/responsive';
-import { navigationOffset } from './Navigation.css';
+import {
+  navigationBlockOffset,
+  navigationMobileElements,
+} from './Navigation.css';
 import { pageLayoutSize } from './PageLayout.css';
 
 export const breakpoint = 'large' satisfies MediaType;
@@ -17,7 +20,7 @@ export const pageTOCLayoutTOCStyles = style({
     [media]: {
       position: 'sticky',
       insetInline: 0,
-      insetBlockStart: navigationOffset,
+      insetBlockStart: navigationBlockOffset,
     },
   },
 });
@@ -68,7 +71,7 @@ globalStyle(`${pageTOCLayoutTOCStyles} nav`, {
       borderBlockStart: `solid 1px ${theme.colors.primary.muted}`,
       borderBlockEnd: `solid 1px ${theme.colors.primary.muted}`,
 
-      maxBlockSize: `calc(100cqh - ${navigationOffset} - ${tocMargin} * 2)`,
+      maxBlockSize: `calc(100cqh - ${navigationBlockOffset} - ${tocMargin} * 2)`,
 
     },
   },
@@ -118,4 +121,10 @@ globalStyle(`${pageTOCLayoutTOCStyles} ul ul`, {
 
 globalStyle(`${pageTOCLayoutTOCStyles} li`, {
   listStyle: 'none',
+});
+
+globalStyle(`body:has(${pageTOCLayoutTOCStyles})`, {
+  vars: {
+    [navigationMobileElements]: '4',
+  },
 });
