@@ -29,10 +29,15 @@ export const matchRoute = (
   return matcher(currentPathname);
 };
 
-export const extendPathname = (
-  pathname: string,
-  segment: string,
-) => [pathname, segment].join('/');
+export const extendPathname = <
+  Pathname extends string,
+  Segment extends string,
+>(
+    pathname: Pathname,
+    segment: Segment,
+  ) => (
+    [pathname, segment].join('/')
+  ) as unknown as `${Pathname}/${Segment}`;
 
 export const getRouteCategory = (pathname: string) => {
   const route = getRoute(pathname);

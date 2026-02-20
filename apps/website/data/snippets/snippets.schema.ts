@@ -18,15 +18,18 @@ export const snippetsPageMetadataSchema = z.object({
 });
 
 export const snippetsPageSchema = z.object({
-  preview: codehikeBlockAnnotationSchema(),
+  preview: codehikeBlockAnnotationSchema().optional(),
+  showcase: codehikeBlockAnnotationSchema(),
   file: z.array(snippetsFileSchema),
   children: z.custom<ReactNode>(),
 }).transform(({
   preview,
   file,
   children,
+  showcase,
 }) => ({
-  preview: preview.title,
+  showcase: showcase.title,
+  preview: preview?.title,
   file: file.map(({
     title,
     slug,

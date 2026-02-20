@@ -75,9 +75,15 @@ export const getSnippet = async (slug: string) => {
     return resolvedFile;
   };
 
-  const previewContents = await readRawContent(
-    resolveFile(loadedSnippet.data.preview),
+  const showcaseContents = await readRawContent(
+    resolveFile(loadedSnippet.data.showcase),
   );
+
+  const previewContents = loadedSnippet.data.preview
+    ? await readRawContent(
+      resolveFile(loadedSnippet.data.preview),
+    )
+    : showcaseContents;
 
   const pages: (
     & { title: string, slug: string }
@@ -97,9 +103,9 @@ export const getSnippet = async (slug: string) => {
     )
   )[] = [
     {
-      title: 'Preview',
+      title: 'Showcase',
       slug: '',
-      content: previewContents.default,
+      content: showcaseContents.default,
     },
     loadedSnippet.data.children
       ? {
@@ -146,5 +152,6 @@ export const getSnippet = async (slug: string) => {
   return {
     ...loadedSnippet,
     pages,
+    preview: previewContents.default,
   };
 };

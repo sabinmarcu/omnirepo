@@ -13,18 +13,19 @@ export const pageLayoutStyles = recipe({
       large: {},
     },
   },
-  base: {
-    maxInlineSize: pageLayoutSize,
-    display: 'block',
-    marginBlockStart: '0',
-    marginBlockEnd: '0',
-    marginInlineStart: 'auto',
-    marginInlineEnd: 'auto',
-    fontSize: '1.3rem',
-    container: 'page-layout',
-    containerType: 'inline-size',
-    paddingInline: theme.grid.m,
-  },
+});
+
+globalStyle(`:where(${pageLayoutStyles.classNames.base})`, {
+  maxInlineSize: pageLayoutSize,
+  display: 'block',
+  marginBlockStart: '0',
+  marginBlockEnd: '0',
+  marginInlineStart: 'auto',
+  marginInlineEnd: 'auto',
+  fontSize: '1.3rem',
+  container: 'page-layout',
+  containerType: 'inline-size',
+  paddingInline: theme.grid.m,
 });
 
 globalStyle(`body:has(${pageLayoutStyles.classNames.base} )`, {

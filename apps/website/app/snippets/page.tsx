@@ -1,13 +1,11 @@
-import Link from 'next/link';
 import type { Metadata } from 'next';
-import {
-  extendPathname,
-} from '@/utils/routes';
 import { getPathname } from '@/utils/routes.ssr';
 import { RootPageLayout } from '@/layouts/RootPageLayout';
 import { Navigation } from '@/layouts/Navigation';
 import { snippetsList } from '@/data/snippets/snippets';
-import { landingPageWrapper } from '../page.css';
+import { PageLayout } from '@/layouts/PageLayout';
+import { SnippetCard } from './components/SnippetCard';
+import { snippetsPageStyles } from './page.css';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -18,21 +16,24 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function SnippetsList() {
   const list = snippetsList ?? [];
   const pathname = await getPathname();
-  const getSlug = extendPathname.bind(undefined, pathname);
   return (
     <RootPageLayout>
       <Navigation />
-      <main className={ landingPageWrapper }>
+      <PageLayout
+        className={snippetsPageStyles}
+        disableFooter
+      >
         {list.length === 0
           ? <p>No Snippets</p>
           : (
-            <ul>
-              {list.map(({ slug, title }) => (
-                <li key={slug}><Link href={getSlug(slug) as any}>{title}</Link></li>
+            <>
+              {list.map((snippet) => (
+                <SnippetCard {...snippet} pathname={pathname} />
               ))}
-            </ul>
+            </>
           )}
-      </main>
+      </PageLayout>
+      <PageLayout disableTransition />
     </RootPageLayout>
   );
 }
