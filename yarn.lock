@@ -6985,7 +6985,7 @@ __metadata:
     react-dom: "npm:^19.1.0"
     typedoc: "npm:^0.28.1"
     typedoc-plugin-markdown: "npm:^4.2.3"
-    typescript: "npm:5.8.2"
+    typescript: "npm:5.9.3"
   languageName: unknown
   linkType: soft
 
@@ -7015,7 +7015,7 @@ __metadata:
     optics-ts: "npm:^2.4.1"
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
-    typescript: "npm:5.8.2"
+    typescript: "npm:5.9.3"
     vite: "npm:^5.3.4"
     zod: "npm:^3.23.8"
   languageName: unknown
@@ -7045,7 +7045,7 @@ __metadata:
     eslint-plugin-unicorn: "npm:^58.0.0"
     glob: "npm:^8.0.3"
     globals: "npm:^15.9.0"
-    ts-deepmerge: "npm:^7.0.2"
+    ts-deepmerge: "npm:^7.0.3"
   peerDependencies:
     eslint: ^9.9.0
     eslint-plugin-expect-type: ^0.4.0
@@ -7197,7 +7197,7 @@ __metadata:
     "@sabinmarcu/utils-test": "workspace:*"
     "@vanilla-extract/css": "npm:^1.17.1"
     "@vanilla-extract/dynamic": "npm:^2.1.2"
-    ts-deepmerge: "npm:^7.0.2"
+    ts-deepmerge: "npm:^7.0.3"
   peerDependencies:
     "@storybook/core": "*"
     "@storybook/react": "*"
@@ -7297,7 +7297,7 @@ __metadata:
     pako: "npm:^2.1.0"
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
-    typescript: "npm:5.8.2"
+    typescript: "npm:5.9.3"
     vite: "npm:^5.3.4"
     zod: "npm:^3.23.8"
   languageName: unknown
@@ -7360,7 +7360,7 @@ __metadata:
     next: "npm:16.1.4"
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
-    typescript: "npm:5.8.2"
+    typescript: "npm:5.9.3"
     zod: "npm:^3.23.8"
   languageName: unknown
   linkType: soft
@@ -7369,7 +7369,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/types@workspace:workspaces/libs/types"
   dependencies:
-    type-fest: "npm:^4.38.0"
+    type-fest: "npm:^5.4.4"
   languageName: unknown
   linkType: soft
 
@@ -7461,6 +7461,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@sabinmarcu/utils-string@workspace:^, @sabinmarcu/utils-string@workspace:workspaces/utils/utils-string":
+  version: 0.0.0-use.local
+  resolution: "@sabinmarcu/utils-string@workspace:workspaces/utils/utils-string"
+  dependencies:
+    "@sabinmarcu/types": "workspace:*"
+    "@sabinmarcu/utils-test": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
 "@sabinmarcu/utils-test@workspace:*, @sabinmarcu/utils-test@workspace:workspaces/utils/utils-test":
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/utils-test@workspace:workspaces/utils/utils-test"
@@ -7496,6 +7505,7 @@ __metadata:
     "@sabinmarcu/moving-mesh-background": "workspace:*"
     "@sabinmarcu/theme": "workspace:*"
     "@sabinmarcu/types": "workspace:*"
+    "@sabinmarcu/utils-string": "workspace:^"
     "@sabinmarcu/utils-test": "workspace:*"
     "@sabinmarcu/website-theme": "workspace:*"
     "@tscircuit/routematch": "npm:^1.0.1"
@@ -7516,8 +7526,9 @@ __metadata:
     react-dom: "npm:^19.2.3"
     remark-frontmatter: "npm:^5.0.0"
     remark-mdx-frontmatter: "npm:^5.2.0"
-    typescript: "npm:^5"
-    zod: "npm:^4"
+    ts-reset: "npm:^0.0.1"
+    typescript: "npm:^5.9.3"
+    zod: "npm:^4.3.6"
   languageName: unknown
   linkType: soft
 
@@ -24454,7 +24465,7 @@ __metadata:
     moize: "patch:moize@npm%3A6.1.4#~/.yarn/patches/moize-npm-6.1.4-85c2846283.patch"
     pako: "npm:^2.1.0"
     ts-node: "npm:^10.9.2"
-    typescript: "npm:5.8.2"
+    typescript: "npm:5.9.3"
     typescript-eslint: "npm:^8.28.0"
     vitest: "npm:^3.1.1"
     yaml: "npm:^2.5.0"
@@ -25988,6 +25999,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tagged-tag@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "tagged-tag@npm:1.0.0"
+  checksum: 10c0/91d25c9ffb86a91f20522cefb2cbec9b64caa1febe27ad0df52f08993ff60888022d771e868e6416cf2e72dab68449d2139e8709ba009b74c6c7ecd4000048d1
+  languageName: node
+  linkType: hard
+
 "tapable@npm:^1.0.0":
   version: 1.1.3
   resolution: "tapable@npm:1.1.3"
@@ -26284,10 +26302,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-deepmerge@npm:^7.0.2":
-  version: 7.0.2
-  resolution: "ts-deepmerge@npm:7.0.2"
-  checksum: 10c0/fd46cf217004020979d6fa628b38a2cf8a689180a8ecde319e76806fb4a61e9e1896b4ba8b805dc75662d2a777983b8e7b5c49666952369dc8cc4e3a0a7d13d0
+"ts-deepmerge@npm:^7.0.3":
+  version: 7.0.3
+  resolution: "ts-deepmerge@npm:7.0.3"
+  checksum: 10c0/f466a8c5fb65c568cd45e537ab42deb032842e34fc175973edf7771a8b8b4094a2ede65af07bc287e58cb241da82f48f10fb38e41c74dc9a3951fc85b2ec1522
   languageName: node
   linkType: hard
 
@@ -26364,6 +26382,13 @@ __metadata:
     ts-node-transpile-only: dist/bin-transpile.js
     ts-script: dist/bin-script-deprecated.js
   checksum: 10c0/5f29938489f96982a25ba650b64218e83a3357d76f7bede80195c65ab44ad279c8357264639b7abdd5d7e75fc269a83daa0e9c62fd8637a3def67254ecc9ddc2
+  languageName: node
+  linkType: hard
+
+"ts-reset@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "ts-reset@npm:0.0.1"
+  checksum: 10c0/5a45b7b22202c561395b572eb1bfd7b7a1b08caf58bad854cc310443a313851a97c3a625061e24d1ebce34e4c2192c2ccf60d1976a32553e2c13fe52c568e285
   languageName: node
   linkType: hard
 
@@ -26476,10 +26501,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-fest@npm:^4.37.0, type-fest@npm:^4.38.0, type-fest@npm:^4.6.0":
+"type-fest@npm:^4.37.0, type-fest@npm:^4.6.0":
   version: 4.38.0
   resolution: "type-fest@npm:4.38.0"
   checksum: 10c0/db9990d682a08697cf8ae67ac3cdbca734c742c96615e8888401d7d54e376b390e6a5d3be25fe3b4b439e1bb88a7da461da678a614ece8caccd9c0a07dd2e5f4
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^5.4.4":
+  version: 5.4.4
+  resolution: "type-fest@npm:5.4.4"
+  dependencies:
+    tagged-tag: "npm:^1.0.0"
+  checksum: 10c0/bf9c6d7df5383fd720aac71da8ce8690ff1c554459d19cf3c72d61eac98255dba57abe20c628f91f4116f66211791462fdafa90b2be2d7405a5a4c295e4d849d
   languageName: node
   linkType: hard
 
@@ -26688,13 +26722,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.8.2":
-  version: 5.8.2
-  resolution: "typescript@npm:5.8.2"
+"typescript@npm:5.9.3, typescript@npm:^5.9.3":
+  version: 5.9.3
+  resolution: "typescript@npm:5.9.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10c0/5c4f6fbf1c6389b6928fe7b8fcd5dc73bb2d58cd4e3883f1d774ed5bd83b151cbac6b7ecf11723de56d4676daeba8713894b1e9af56174f2f9780ae7848ec3c6
+  checksum: 10c0/6bd7552ce39f97e711db5aa048f6f9995b53f1c52f7d8667c1abdc1700c68a76a308f579cd309ce6b53646deb4e9a1be7c813a93baaf0a28ccd536a30270e1c5
   languageName: node
   linkType: hard
 
@@ -26708,23 +26742,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5":
-  version: 5.8.3
-  resolution: "typescript@npm:5.8.3"
+"typescript@patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.9.3#optional!builtin<compat/typescript>":
+  version: 5.9.3
+  resolution: "typescript@patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=cef18b"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10c0/5f8bb01196e542e64d44db3d16ee0e4063ce4f3e3966df6005f2588e86d91c03e1fb131c2581baf0fb65ee79669eea6e161cd448178986587e9f6844446dbb48
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@npm%3A5.8.2#optional!builtin<compat/typescript>":
-  version: 5.8.2
-  resolution: "typescript@patch:typescript@npm%3A5.8.2#optional!builtin<compat/typescript>::version=5.8.2&hash=cef18b"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 10c0/8a6cd29dfb59bd5a978407b93ae0edb530ee9376a5b95a42ad057a6f80ffb0c410489ccd6fe48d1d0dfad6e8adf5d62d3874bbd251f488ae30e11a1ce6dabd28
+  checksum: 10c0/6f7e53bf0d9702350deeb6f35e08b69cbc8b958c33e0ec77bdc0ad6a6c8e280f3959dcbfde6f5b0848bece57810696489deaaa53d75de3578ff255d168c1efbd
   languageName: node
   linkType: hard
 
@@ -26735,16 +26759,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10c0/d2949ccbf74e52ec8a153e5b2996439854e40937334b97374d4985c47465de1b63a611f15dc9bab9a8ae735fbedfabdf30f55e968778d890600f8472c286a08a
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@npm%3A^5#optional!builtin<compat/typescript>":
-  version: 5.8.3
-  resolution: "typescript@patch:typescript@npm%3A5.8.3#optional!builtin<compat/typescript>::version=5.8.3&hash=cef18b"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 10c0/92ea03509e06598948559ddcdd8a4ae5a7ab475766d5589f1b796f5731b3d631a4c7ddfb86a3bd44d58d10102b132cd4b4994dda9b63e6273c66d77d6a271dbd
   languageName: node
   linkType: hard
 
@@ -28175,7 +28189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^4":
+"zod@npm:^4.3.6":
   version: 4.3.6
   resolution: "zod@npm:4.3.6"
   checksum: 10c0/860d25a81ab41d33aa25f8d0d07b091a04acb426e605f396227a796e9e800c44723ed96d0f53a512b57be3d1520f45bf69c0cb3b378a232a00787a2609625307

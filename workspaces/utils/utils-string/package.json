@@ -1,6 +1,6 @@
 {
-  "name": "@sabinmarcu/types",
-  "version": "2.0.3",
+  "name": "@sabinmarcu/utils-string",
+  "version": "0.0.0",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "module": "./esm/index.mjs",
@@ -39,8 +39,9 @@
   "build": {
     "preset": "../../../.config/build.config.ts"
   },
-  "dependencies": {
-    "type-fest": "^5.4.4"
+  "devDependencies": {
+    "@sabinmarcu/types": "workspace:*",
+    "@sabinmarcu/utils-test": "workspace:*"
   },
   "tscmono": {
     "preset": "lib"
@@ -55,7 +56,7 @@
   "repository": {
     "url": "git+https://github.com/sabinmarcu/omnirepo.git",
     "type": "git",
-    "directory": "workspaces/libs/types"
+    "directory": "workspaces/utils/utils-fs"
   },
-  "homepage": "https:/sabinmarcu.dev/api/types"
+  "homepage": "https:/sabinmarcu.dev/api/utils-fs"
 }

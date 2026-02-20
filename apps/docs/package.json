@@ -56,7 +56,7 @@
     "@sabinmarcu/utils-test": "workspace:*",
     "@sabinmarcu/website-theme": "workspace:*",
     "eslint-plugin-logical-properties": "workspace:*",
-    "typescript": "5.8.2"
+    "typescript": "5.9.3"
   },
   "browserslist": {
     "production": [
