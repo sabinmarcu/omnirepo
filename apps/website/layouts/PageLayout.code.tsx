@@ -1,8 +1,8 @@
 import type { HTMLAttributes } from 'react';
+import { withStyles } from '@/hocs/withStyles';
 import type { PageLayoutCodeStylesProps } from './PageLayout.code.css';
 import {
   pageLayoutCodeStyles,
-  pageLayoutCodeStylesRaw,
 } from './PageLayout.code.css';
 
 export namespace PageLayoutCode {
@@ -12,8 +12,7 @@ export namespace PageLayoutCode {
   );
 }
 
-export function PageLayoutCode({
-  className,
+export const PageLayoutCode = withStyles(function PageLayoutCode({
   children,
   variant,
   ...rest
@@ -21,13 +20,8 @@ export function PageLayoutCode({
   return (
     <article
       {...rest}
-      className={[className, pageLayoutCodeStyles({ variant })].join(' ')}
     >
       <div data-container>{children}</div>
     </article>
   );
-}
-
-PageLayoutCode.variants = Object.keys(
-  pageLayoutCodeStylesRaw.variants.variant,
-) as unknown as (keyof typeof pageLayoutCodeStylesRaw.variants.variant)[];
+}, pageLayoutCodeStyles);

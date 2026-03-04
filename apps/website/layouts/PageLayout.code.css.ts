@@ -8,7 +8,8 @@ import type { RecipeVariants } from '@vanilla-extract/recipes';
 import { recipe } from '@vanilla-extract/recipes';
 
 const contentSize = createVar();
-export const pageLayoutCodeStylesRaw = {
+
+export const pageLayoutCodeStyles = recipe({
   variants: {
     variant: {
       wide: {
@@ -26,9 +27,7 @@ export const pageLayoutCodeStylesRaw = {
       [contentSize]: '100cqw',
     },
   },
-} satisfies Parameters<typeof recipe>[0];
-
-export const pageLayoutCodeStyles = recipe(pageLayoutCodeStylesRaw);
+});
 
 globalStyle(`${pageLayoutCodeStyles.classNames.base} > [data-container]`, {
   marginBlockStart: '0',

@@ -1,5 +1,4 @@
 import {
-  createVar,
   globalStyle,
   style,
 } from '@vanilla-extract/css';
@@ -43,7 +42,9 @@ export const backdropStyles = style({
   zIndex: zIndexLayers.navigationBackdrop,
 });
 
-globalStyle(`${navigationSelector}.${emptyNavigationSelector} ${triggerStyles}`, {
+globalStyle([
+  `${navigationSelector}.${emptyNavigationSelector} ${triggerStyles}`,
+].join(', '), {
   display: 'none',
 });
 

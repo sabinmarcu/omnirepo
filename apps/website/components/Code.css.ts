@@ -14,7 +14,9 @@ export const codeStyles = style(deepMerge(
     borderStartEndRadius: '2px',
     borderEndEndRadius: '2px',
     borderEndStartRadius: '2px',
-  },
+
+    wordBreak: 'break-word',
+  } satisfies Parameters<typeof style>[0],
 
   mobileMedia({
     textWrap: 'pretty',

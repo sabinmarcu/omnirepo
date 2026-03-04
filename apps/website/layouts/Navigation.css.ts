@@ -5,6 +5,7 @@ import {
 } from '@vanilla-extract/css';
 import { zIndexLayers } from '@/constants/layers';
 import { recipe } from '@vanilla-extract/recipes';
+import { themedLinkStyle } from '@/components/ThemedLink.css';
 import { grids } from './Navigation.grid';
 import {
   blendAnimation,
@@ -133,11 +134,15 @@ globalStyle(`${animatedNavigationSelector} > section`, {
   borderEndStartRadius: blendSize(navigationBorderRadius),
 });
 
-globalStyle(`${navigationSelector} > section > *`, {
+globalStyle(`:where(${navigationSelector} > section > *)`, {
   paddingInline: navigationSpacing,
   color: theme.colors.background.text,
   inlineSize: '100%',
   blockSize: '100%',
+});
+
+globalStyle(`${navigationSelector} > section > ${themedLinkStyle.classNames.base}`, {
+  color: theme.colors.background.text,
 });
 
 globalStyle(`${navigationSelector}:not(${emptyNavigationSelector}) > section`, {

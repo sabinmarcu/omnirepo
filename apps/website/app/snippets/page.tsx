@@ -28,7 +28,7 @@ export default async function SnippetsList() {
           : (
             <>
               {list.map((snippet) => (
-                <SnippetCard {...snippet} pathname={pathname} />
+                <SnippetCard key={snippet.slug} {...snippet} pathname={pathname} />
               ))}
             </>
           )}

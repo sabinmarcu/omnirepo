@@ -1,13 +1,18 @@
 /* eslint-disable no-continue */
 import { PageLayout } from '@/layouts/PageLayout';
 
+const pageLayoutCodeVariants = Object.keys(
+  PageLayout.Code.selectors.variant,
+) as unknown as (
+  keyof typeof PageLayout.Code.selectors.variant
+)[];
+
 type GroupType = {
   name: string,
   comment?: string[],
-  variant?: typeof PageLayout.Code.variants[number]
+  variant?: typeof pageLayoutCodeVariants[number]
   lines: string[]
 };
-
 export function parseRawCode(code: string) {
   const withoutEslint = code.replaceAll(/\n?(?:\/\/|\/\*)\s*eslint-disable[^\n]+/gm, '');
   const rootGroup: GroupType = {
@@ -76,7 +81,7 @@ export function parseRawCode(code: string) {
     }
     if (variantMatch) {
       const targetGroup = currentGroup ?? rootGroup;
-      if (!PageLayout.Code.variants.includes(variantMatch[1] as any)) {
+      if (!pageLayoutCodeVariants.includes(variantMatch[1] as any)) {
         throw new Error(`Attempting to set invalid variant (${variantMatch[1]}) to group "${targetGroup.name}"`);
       }
       targetGroup.variant = variantMatch[1] as any;

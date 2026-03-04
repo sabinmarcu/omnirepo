@@ -1,4 +1,5 @@
 import type { degrees } from '@/data/personal/cv.workplace';
+import { cls } from '@/utils/cls';
 import { ExperienceItemTitle } from './Experience.item.title';
 import { ExperienceItemDuration } from './Experience.item.duration';
 import { ExperienceItemLocation } from './Experience.item.location';
@@ -20,10 +21,10 @@ export function DegreeItem({
 }: DegreeItem.Props) {
   return (
     <section
-      className={[
+      className={cls(
         experienceItemStyles,
         degreeItemStyles,
-      ].join(' ')}
+      )}
     >
       <ExperienceItemTitle
         {...{ experience: { title } } as any}

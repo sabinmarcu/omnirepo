@@ -1,6 +1,7 @@
 import type {
   HTMLAttributes,
 } from 'react';
+import { withStyles } from '@/hocs/withStyles';
 import { Icon } from './Icon';
 import {
   gradingPipSelector,
@@ -17,8 +18,7 @@ export namespace Grading {
   );
 }
 
-export function Grading({
-  className,
+export const Grading = withStyles(function Grading({
   max,
   value,
   ...props
@@ -33,14 +33,8 @@ export function Grading({
       </div>
     ));
   return (
-    <div
-      {...props}
-      className={[
-        className,
-        gradingStyles,
-      ].join(' ')}
-    >
+    <div {...props}>
       {elements}
     </div>
   );
-}
+}, gradingStyles);

@@ -4,6 +4,7 @@ import {
   Pre,
 } from 'codehike/code';
 import type { ComponentProps } from 'react';
+import { withStyles } from '@/hocs/withStyles';
 import { codeStyles } from './Code.css';
 
 export namespace Code {
@@ -13,9 +14,8 @@ export namespace Code {
   );
 }
 
-export async function Code({
+export const Code = withStyles(async function Code({
   code,
-  className,
   ...rest
 }: Code.Props) {
   const highlighted = await highlight(
@@ -25,8 +25,7 @@ export async function Code({
   return (
     <Pre
       {...rest}
-      className={[className, codeStyles].join(' ')}
       code={highlighted}
     />
   );
-}
+}, codeStyles);

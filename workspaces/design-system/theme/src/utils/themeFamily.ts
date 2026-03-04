@@ -1,6 +1,7 @@
 import type {
   ArrayTail,
   PartialDeep,
+  Simplify,
 } from '@sabinmarcu/types';
 import { merge as deepMerge } from 'ts-deepmerge';
 import { createGlobalTheme } from '@vanilla-extract/css';
@@ -37,6 +38,8 @@ export type ThemeFamilyPicker<Families extends string> = (
   ...rest: ArrayTail<Parameters<ThemeConfig>>
 ) => void;
 
+export type DataAttribute<T extends string> = `data-${T}`;
+
 export type FamilyConfig<Families extends string> = (
   & { pick: ThemeFamilyPicker<Families> }
   & ThemeFamilyUpdater<Families>
@@ -46,9 +49,9 @@ export type FamilyConfig<Families extends string> = (
   }
   & {
     families: (Families | BaseValuesKey)[],
-    selectors: Record<Families | BaseValuesKey, string>,
-    selector: string,
-    variantSelector: string,
+    selector: DataAttribute<typeof themeFamilyDataAttribute>,
+    variantSelector: DataAttribute<typeof themeDataAttribute>,
+    selectors: Simplify<{ [Key in Families | BaseValuesKey]: `[${DataAttribute<typeof themeFamilyDataAttribute>}=${Key}` }>,
     themes: Record<Families | BaseValuesKey, ThemeConfig[typeof ThemeMetadataSymbol]['contract']>
   }
 );

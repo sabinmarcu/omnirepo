@@ -68,14 +68,8 @@ export function extractToc(
       ) {
         return undefined;
       }
-      if ('props' in child!) {
-        console.log({ child });
-        if (tocAnchorSelector in (child!.props as any)) {
-          console.log({ child });
-        }
-        if ('children' in (child!.props as any)) {
-          return extractToc((child!.props as any).children);
-        }
+      if ('props' in child! && 'children' in (child!.props as any)) {
+        return extractToc((child!.props as any).children);
       }
       return undefined;
     },

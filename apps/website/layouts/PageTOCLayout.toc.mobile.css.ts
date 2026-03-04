@@ -5,6 +5,7 @@ import {
 import { media as mediaRaw } from '@/utils/responsive';
 import { zIndexLayers } from '@/constants/layers';
 import { iconSize } from '@/components/Icon.css';
+import { tooltipStyle } from '@/components/Tooltip.component.css';
 import {
   breakpoint,
   pageTOCLayoutTOCStyles,
@@ -18,11 +19,6 @@ import {
 const media = mediaRaw.bind(undefined, breakpoint);
 
 export const mobileTOCTriggerStyles = style({
-  '@media': {
-    [media('gte')]: {
-      display: 'none',
-    },
-  },
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -39,8 +35,21 @@ export const mobileTOCTriggerStyles = style({
 globalStyle([
   `${navigationSelector}.${emptyNavigationSelector} ${mobileTOCTriggerStyles}`,
   `body:not(:has(${pageTOCLayoutTOCStyles})) ${mobileTOCTriggerStyles}`,
+  `${navigationSelector}.${emptyNavigationSelector} ${mobileTOCTriggerStyles} + ${tooltipStyle.classNames.base}`,
+  `body:not(:has(${pageTOCLayoutTOCStyles})) ${mobileTOCTriggerStyles} + ${tooltipStyle.classNames.base}`,
 ].join(', '), {
   display: 'none',
+});
+
+globalStyle([
+  mobileTOCTriggerStyles,
+  `${mobileTOCTriggerStyles} + ${tooltipStyle.classNames.base}`,
+].join(', '), {
+  '@media': {
+    [media('gte')]: {
+      display: 'none',
+    },
+  },
 });
 
 const mobileTOCTriggerSelector = `${mobileTOCTriggerStyles} > input`;

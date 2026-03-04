@@ -43,6 +43,16 @@ const eslintConfig = defineConfig([
       'import/extensions': ['off'],
     },
   },
+  {
+    name: 'Website JSX Overrides',
+    files: ['**/website/**/*.tsx', '**/website/**/*.ts'],
+    rules: {
+      'import/export': ['off'],
+      '@typescript-eslint/no-redeclare': ['off'],
+      '@typescript-eslint/no-shadow': ['off'],
+      'prefer-arrow-callback': ['off'],
+    },
+  },
   globalIgnores([
     '.next/**',
     'out/**',

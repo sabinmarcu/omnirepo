@@ -3,6 +3,7 @@ import type {
   PropsWithChildren,
 } from 'react';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
+import { withStyles } from '@/hocs/withStyles';
 import {
   gridColumns,
   gridStyles,
@@ -18,26 +19,16 @@ export namespace Grid {
   >;
 }
 
-export function Grid({
-  className,
+export const Grid = withStyles(function Grid({
   columns,
-  large,
-  grid,
   ...props
 }: Grid.Props) {
   return (
     <div
       {...props}
-      className={[
-        className,
-        gridStyles({
-          large,
-          grid,
-        }),
-      ].join(' ')}
       style={assignInlineVars({
         [gridColumns]: `${columns}`,
       })}
     />
   );
-}
+}, gridStyles);

@@ -1,13 +1,10 @@
-/* eslint-disable @typescript-eslint/no-shadow */
-/* eslint-disable prefer-arrow-callback */
-/* eslint-disable @typescript-eslint/no-redeclare */
-/* eslint-disable import/export */
 import type {
   ComponentProps,
   PropsWithChildren,
 } from 'react';
 import Link from 'next/link';
 import { withTheme } from '@/theme/runtime';
+import { cls } from '@/utils/cls';
 import {
   wrapperStyle,
   wipStyle,
@@ -23,20 +20,20 @@ export namespace LandingCard {
     & Partial<Pick<ComponentProps<typeof Link>, 'href'>>
   >;
 }
-export const LandingCard = withTheme(async function LandingCard({
+export const LandingCard = withTheme<LandingCard.Props>(async function LandingCard({
   children,
   wip,
   href,
   ...rest
-}: LandingCard.Props) {
+}) {
   const inner = (
     <article
       {...rest}
-      className={[
+      className={cls(
         wrapperStyle,
-        wip && wipStyle,
+        { [wipStyle]: wip },
         rootBackgroundTrigger,
-      ].filter(Boolean).join(' ')}
+      )}
       data-rand={Math.random() * 3000}
     >
       {wip ? <p className={wipTip}>Under Construction</p> : null}
