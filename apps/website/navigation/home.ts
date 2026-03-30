@@ -31,6 +31,11 @@ export const homepageNavigation = normalizeNavigationList([
     text: 'Blog',
   },
   {
+    ...categoriesMap.projects,
+    href: '/tools',
+    text: 'Tools',
+  },
+  {
     ...categoriesMap.snippets,
     text: 'Code Snippets',
   },

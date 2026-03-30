@@ -20,6 +20,11 @@ export const rootNavigation = normalizeNavigationList([
     text: 'Ramblings',
   },
   {
+    ...categoriesMap.projects,
+    href: '/tools',
+    text: 'Tools',
+  },
+  {
     ...categoriesMap.snippets,
     text: 'Snippets',
   },

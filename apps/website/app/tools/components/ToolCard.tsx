@@ -1,30 +1,30 @@
-import type { snippetsList } from '@/data/snippets/snippets';
+import type { toolsList } from '@/data/tools/tools';
 import { extendPathname } from '@/utils/routes';
 import type { HTMLAttributes } from 'react';
 import { Card } from '@/components/Card';
-import { resolveSnippet } from '../[slug]/data';
+import { resolveTool } from '../[slug]/data';
 
-export namespace SnippetCard {
+export namespace ToolCard {
   export type Props = (
-    & typeof snippetsList[number]
+    & typeof toolsList[number]
     & { pathname: string }
     & HTMLAttributes<HTMLDivElement>
   );
 }
 
-export async function SnippetCard({
+export async function ToolCard({
   title,
   slug,
   pathname,
   className,
   ...props
-}: SnippetCard.Props) {
-  return resolveSnippet(
+}: ToolCard.Props) {
+  return resolveTool(
     { params: Promise.resolve({ slug }) } as any,
     {
       onError: () => null,
-      onSuccess: (snippet) => {
-        const { preview: PreviewPage } = snippet;
+      onSuccess: (tool) => {
+        const { preview: PreviewPage } = tool;
         const href = extendPathname(pathname, slug) as any;
         return (
           <Card {...props} href={href}>

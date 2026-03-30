@@ -41,7 +41,7 @@ export function ExperimentItemToggle({
       {...props}
       type="checkbox"
       onClick={ownOnClick}
-      checked={value}
+      defaultChecked={value}
     />
   );
 }
