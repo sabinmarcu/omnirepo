@@ -7,6 +7,10 @@ import { MdxResource } from '@/models/MdxResource';
 import { layoutTitle } from '@/utils/metadata';
 
 const content = await MdxResource.from(import('./content.mdx'));
+console.dir({
+  content: content.content,
+  toc: content.toc,
+}, { depth: null });
 
 export async function generateMetadata(
   _: any,

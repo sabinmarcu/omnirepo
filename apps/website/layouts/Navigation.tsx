@@ -12,7 +12,7 @@ import {
 } from './Navigation.mobile';
 import { grids } from './Navigation.grid';
 import { NavigationAnchor } from './Navigation.anchor';
-import { TOCMobileButton } from './PageTOCLayout.toc.mobile';
+import { TOCMobileButton } from './TOCLayout.toc.mobile';
 import { navigationStyles } from './Navigation.css';
 
 export namespace Navigation {

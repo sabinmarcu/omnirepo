@@ -15,7 +15,7 @@ import { pageLayoutSize } from './PageLayout.css';
 export const breakpoint = 'large' satisfies MediaType;
 const media = mediaRaw(breakpoint, 'gte');
 
-export const pageTOCLayoutTOCStyles = style({
+export const tocLayoutTOCStyles = style({
   '@media': {
     [media]: {
       position: 'sticky',
@@ -28,7 +28,7 @@ export const pageTOCLayoutTOCStyles = style({
 const tocSize = createVar();
 const availableTocSpace = createVar();
 const preferredTocSize = createVar();
-globalStyle(`${pageTOCLayoutTOCStyles} section`, {
+globalStyle(`${tocLayoutTOCStyles} section`, {
   '@media': {
     [media]: {
       maxInlineSize: tocSize,
@@ -51,7 +51,7 @@ globalStyle(`${pageTOCLayoutTOCStyles} section`, {
 const tocMargin = createVar();
 const tocPadding = createVar();
 // eslint-disable-next-line logical-properties/overflow
-globalStyle(`${pageTOCLayoutTOCStyles} nav`, {
+globalStyle(`${tocLayoutTOCStyles} nav`, {
   '@media': {
     [media]: {
       marginInline: tocMargin,
@@ -92,7 +92,7 @@ globalStyle(`${pageTOCLayoutTOCStyles} nav`, {
   },
 });
 
-globalStyle(`${pageTOCLayoutTOCStyles} h2`, {
+globalStyle(`${tocLayoutTOCStyles} h2`, {
   fontSize: theme.grid.xxl,
 
   background: theme.colors.background.depressed,
@@ -115,16 +115,17 @@ globalStyle(`${pageTOCLayoutTOCStyles} h2`, {
   justifyContent: 'space-between',
 });
 
-globalStyle(`${pageTOCLayoutTOCStyles} ul ul`, {
+globalStyle(`${tocLayoutTOCStyles} ul ul`, {
   paddingInlineStart: tocPadding,
 });
 
-globalStyle(`${pageTOCLayoutTOCStyles} li`, {
+globalStyle(`${tocLayoutTOCStyles} li`, {
   listStyle: 'none',
 });
 
-globalStyle(`body:has(${pageTOCLayoutTOCStyles})`, {
+globalStyle(`body:has(${tocLayoutTOCStyles})`, {
   vars: {
     [navigationMobileElements]: '4',
   },
 });
+

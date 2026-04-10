@@ -6,7 +6,12 @@ import type {
   ComponentType,
 } from 'react';
 import { contentPath } from '@/constants/paths';
+import {
+  tocElementsToTree,
+  tocSlug,
+} from '@/utils/toc';
 import { Resource } from './Resource';
+import type { tocSchema } from './schemas';
 import { metadataSchema } from './schemas';
 
 export namespace SourceResource {
@@ -137,4 +142,22 @@ export class SourceResource extends Resource<SourceResource.Options> {
     }
   }
   // #endregion
+
+  // #region TOC
+  public get toc(): z.infer<typeof tocSchema> {
+    const elements: tocElementsToTree.Element[] = [];
+    for (const item of this.content) {
+      if (item.title === 'ROOT') {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+      elements.push({
+        title: item.title,
+        level: 2,
+        id: tocSlug(item.title),
+      });
+    }
+    return tocElementsToTree(elements);
+  }
+  // endregion
 }

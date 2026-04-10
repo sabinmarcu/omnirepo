@@ -40,6 +40,7 @@ export default async function SnippetPageSubpage(
   if (!page) {
     return redirect404();
   }
+
   if (page.content && Array.isArray(page.content)) {
     return (
       <>

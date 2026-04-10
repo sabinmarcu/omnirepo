@@ -8,8 +8,8 @@ import { iconSize } from '@/components/Icon.css';
 import { tooltipStyle } from '@/components/Tooltip.component.css';
 import {
   breakpoint,
-  pageTOCLayoutTOCStyles,
-} from './PageTOCLayout.toc.css';
+  tocLayoutTOCStyles,
+} from './TOCLayout.toc.css';
 import {
   emptyNavigationSelector,
   navigationSelector,
@@ -34,9 +34,9 @@ export const mobileTOCTriggerStyles = style({
 
 globalStyle([
   `${navigationSelector}.${emptyNavigationSelector} ${mobileTOCTriggerStyles}`,
-  `body:not(:has(${pageTOCLayoutTOCStyles})) ${mobileTOCTriggerStyles}`,
+  `body:not(:has(${tocLayoutTOCStyles})) ${mobileTOCTriggerStyles}`,
   `${navigationSelector}.${emptyNavigationSelector} ${mobileTOCTriggerStyles} + ${tooltipStyle.classNames.base}`,
-  `body:not(:has(${pageTOCLayoutTOCStyles})) ${mobileTOCTriggerStyles} + ${tooltipStyle.classNames.base}`,
+  `body:not(:has(${tocLayoutTOCStyles})) ${mobileTOCTriggerStyles} + ${tooltipStyle.classNames.base}`,
 ].join(', '), {
   display: 'none',
 });
@@ -71,7 +71,7 @@ globalStyle(`${mobileTOCTriggerStyles} > [role=button]`, {
   boxSizing: 'border-box',
 });
 
-globalStyle(pageTOCLayoutTOCStyles, {
+globalStyle(tocLayoutTOCStyles, {
   '@media': {
     [media('lt')]: {
       position: 'fixed',
@@ -82,7 +82,7 @@ globalStyle(pageTOCLayoutTOCStyles, {
   },
 });
 
-globalStyle(`${pageTOCLayoutTOCStyles} h2 label`, {
+globalStyle(`${tocLayoutTOCStyles} h2 label`, {
   '@media': {
     [media('gte')]: {
       display: 'none',
@@ -107,14 +107,14 @@ globalStyle(`${pageTOCLayoutTOCStyles} h2 label`, {
   },
 });
 
-globalStyle(`${mobileTOCActiveSelector} ${pageTOCLayoutTOCStyles}`, {
+globalStyle(`${mobileTOCActiveSelector} ${tocLayoutTOCStyles}`, {
   opacity: 1,
   zIndex: zIndexLayers.toc,
 });
 
 globalStyle([
-  `${pageTOCLayoutTOCStyles} section`,
-  `${pageTOCLayoutTOCStyles} nav`,
+  `${tocLayoutTOCStyles} section`,
+  `${tocLayoutTOCStyles} nav`,
 ].join(', '), {
   '@media': {
     [media('lt')]: {
@@ -122,3 +122,4 @@ globalStyle([
     },
   },
 });
+

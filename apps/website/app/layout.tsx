@@ -25,27 +25,27 @@ export const metadata: Metadata = {
     default: 'Unknown Page',
     template: '%s | Sabin Marcu',
   },
-  // manifest: '/site.webmanifest',
-  // icons: {
-  //   icon: [
-  //     {
-  //       url: '/favicon-96x96.png',
-  //       sizes: '96x96',
-  //       type: 'image/png',
-  //     },
-  //     {
-  //       url: '/favicon.svg',
-  //       type: 'image/svg+xml',
-  //     },
-  //   ],
-  //   shortcut: ['/favicon.ico'],
-  //   apple: [
-  //     {
-  //       url: '/apple-touch-icon.png',
-  //       sizes: '180x180',
-  //     },
-  //   ],
-  // },
+  manifest: '/site.webmanifest',
+  icons: {
+    icon: [
+      {
+        url: '/favicon-96x96.png',
+        sizes: '96x96',
+        type: 'image/png',
+      },
+      {
+        url: '/favicon.svg',
+        type: 'image/svg+xml',
+      },
+    ],
+    shortcut: ['/favicon.ico'],
+    apple: [
+      {
+        url: '/apple-touch-icon.png',
+        sizes: '180x180',
+      },
+    ],
+  },
 };
 
 export namespace RootLayout {
