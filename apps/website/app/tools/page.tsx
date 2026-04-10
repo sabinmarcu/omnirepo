@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { getPathname } from '@/utils/routes.ssr';
 import { PageLayout } from '@/layouts/PageLayout';
 import { ToolResource } from '@/models/ToolResource';
-import { ToolCard } from './components/ToolCard';
+import { ShowcaseCard } from '@/components/ShowcaseCard';
 import { toolsPageStyles } from './page.css';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -25,7 +25,11 @@ export default async function ToolsList() {
           : (
             <>
               {list.map((tool) => (
-                <ToolCard key={tool.slug} tool={tool} pathname={pathname} />
+                <ShowcaseCard
+                  key={tool.slug}
+                  resource={tool}
+                  pathname={pathname}
+                />
               ))}
             </>
           )}

@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import { getPathname } from '@/utils/routes.ssr';
 import { RootPageLayout } from '@/layouts/RootPageLayout';
 import { Navigation } from '@/layouts/Navigation';
-import { snippetsList } from '@/data/snippets/snippets';
 import { PageLayout } from '@/layouts/PageLayout';
-import { SnippetCard } from './components/SnippetCard';
+import { SnippetResource } from '@/models/SnippetResource';
+import { ShowcaseCard } from '@/components/ShowcaseCard';
 import { snippetsPageStyles } from './page.css';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function SnippetsList() {
-  const list = snippetsList ?? [];
+  const list = await SnippetResource.getList() ?? [];
   const pathname = await getPathname();
   return (
     <RootPageLayout>
@@ -28,7 +28,11 @@ export default async function SnippetsList() {
           : (
             <>
               {list.map((snippet) => (
-                <SnippetCard key={snippet.slug} {...snippet} pathname={pathname} />
+                <ShowcaseCard
+                  key={snippet.slug}
+                  resource={snippet}
+                  pathname={pathname}
+                />
               ))}
             </>
           )}

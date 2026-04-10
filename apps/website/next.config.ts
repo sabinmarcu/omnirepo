@@ -10,6 +10,7 @@ import {
 } from 'codehike/mdx';
 
 import { remarkMdxToc } from 'remark-mdx-toc';
+import remarkHeadingId from 'remark-heading-id';
 
 const withVanillaExtract = createVanillaExtractPlugin();
 
@@ -44,6 +45,10 @@ const withMdx = createMdx({
   extension: /\.(md|mdx)$/,
   options: {
     remarkPlugins: [
+      [remarkHeadingId, {
+        defaults: true,
+        uniqueDefaults: true,
+      }],
       [remarkMdxToc as any, { name: 'toc' }],
       [remarkCodeHike, chConfig],
     ],

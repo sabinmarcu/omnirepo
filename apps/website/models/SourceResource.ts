@@ -5,6 +5,7 @@ import { readRawContent } from '@/content/readRawContent';
 import type {
   ComponentType,
 } from 'react';
+import { contentPath } from '@/constants/paths';
 import { Resource } from './Resource';
 import { metadataSchema } from './schemas';
 
@@ -18,6 +19,25 @@ export namespace SourceResource {
 }
 
 export class SourceResource extends Resource<SourceResource.Options> {
+  // #region Cache Busting
+  static prepareCache<
+    // eslint-disable-next-line function-paren-newline
+    T extends new (...arguments_: any[]) => Resource,
+  >(
+    this: T,
+    pathOrImport: ConstructorParameters<T>[0],
+    options?: SourceResource.Options,
+  ): string {
+    if (options?.metadata?.slug) {
+      if (typeof pathOrImport === 'string') {
+        return `${options.metadata.slug}-${pathOrImport}`;
+      }
+      return options.metadata.slug;
+    }
+    return pathOrImport;
+  }
+  // endregion
+
   // #region Metadata
   public metadataSchema = metadataSchema.extend({
     lang: z.string().optional(),
@@ -47,7 +67,7 @@ export class SourceResource extends Resource<SourceResource.Options> {
     this.pathPrefix = prefix;
   }
 
-  protected async resolveFile(pathToResolve: string) {
+  protected resolveFile(pathToResolve: string) {
     if (this.pathPrefix) {
       return path.join(
         this.pathPrefix,
@@ -84,24 +104,37 @@ export class SourceResource extends Resource<SourceResource.Options> {
   }
 
   // #region Content
-  protected content: SourceResource.Output = [];
+  protected sourceContent: SourceResource.Output = [];
+
+  get content() { return this.sourceContent; }
 
   protected component: ComponentType = undefined as any;
 
   get Component() { return this.component; }
 
   public async parse() {
-    const rawComponent = await readRawContent(
-      await this.resolveFile(this.pathOrImport as string),
-    );
+    const rawComponent = typeof this.rawContent === 'string'
+      ? await readRawContent(
+        this.resolveFile(this.pathOrImport as string),
+      )
+      : this.rawContent;
 
-    this.component = rawComponent.default;
+    this.component = rawComponent?.default ?? rawComponent;
 
-    this.content = await parseSourceFile({
-      ...this.metadata,
-      filepath: this.fileDefinition!.filepath,
-      source: this.rawContent,
-    });
+    if (typeof this.rawContent === 'string') {
+      const sourcePayload = this.rawContent !== this.fileDefinition!.filepath
+        ? { source: this.rawContent }
+        : {};
+
+      this.sourceContent = await parseSourceFile({
+        ...this.metadata,
+        filepath: path.join(
+          contentPath,
+          this.fileDefinition!.filepath,
+        ),
+        ...sourcePayload,
+      });
+    }
   }
   // #endregion
 }

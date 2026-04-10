@@ -30,14 +30,9 @@ export async function parseSourceFile(options: parseSourceFile.Options) {
   const { extension, filename } = explainFile(filepath);
 
   const partial = {
-    lang: lang ?? extension,
+    lang: lang ?? extension ?? 'txt',
     meta: filename,
   };
-
-  console.log({
-    source,
-    filepath,
-  });
 
   const contentGroups = parseSourceCode(
     source ?? await fs.readFile(
@@ -46,7 +41,7 @@ export async function parseSourceFile(options: parseSourceFile.Options) {
     ),
   );
 
-  return contentGroups.map((content) => ({
+  const result = contentGroups.map((content) => ({
 
     title: content.title,
     variant: content.variant,
@@ -56,4 +51,6 @@ export async function parseSourceFile(options: parseSourceFile.Options) {
       value: content.content,
     },
   }));
+
+  return result;
 }

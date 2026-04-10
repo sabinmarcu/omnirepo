@@ -25,7 +25,7 @@ export class GenericMdxResource<
 
   protected metadata: z.infer<MetadataSchema> = undefined as any;
 
-  protected content: z.infer<ContentSchema> = undefined as any;
+  protected codehikeContent: z.infer<ContentSchema> = undefined as any;
 
   protected rawMdxContent: ReactNode;
 
@@ -37,6 +37,6 @@ export class GenericMdxResource<
     const { default: content, ...metadata } = normalizedRawContent;
     this.metadata = this.metadataSchema.parse(metadata);
     this.rawMdxContent = parse(content);
-    this.content = this.contentSchema.parse(this.rawMdxContent);
+    this.codehikeContent = this.contentSchema.parse(this.rawMdxContent);
   }
 }

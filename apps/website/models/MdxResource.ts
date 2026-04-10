@@ -10,13 +10,13 @@ const mdxMetadataSchema = metadataSchema.extend({
 });
 
 export class MdxResource<
-  ContentSchema extends ZodType = typeof GenericMdxResource.prototype.contentSchema,
+  ContentSchema extends ZodType = InstanceType<typeof GenericMdxResource>['contentSchema'],
   MetadataSchema extends typeof mdxMetadataSchema = typeof mdxMetadataSchema,
 
 > extends GenericMdxResource<ContentSchema, MetadataSchema> {
   static resourceFilter = (path: string) => path.endsWith('.mdx');
 
-  static get slugs(): Promise<string[]> {
+  static get slugs(): Promise<{ slug: string }[]> {
     return (async () => {
       const list = await this.getList();
       return list.map(({ slug }) => ({ slug }));
@@ -43,4 +43,12 @@ export class MdxResource<
   get title() { return this.metadata.title; }
 
   get slug() { return this.metadata.slug ?? this.fileDefinition?.filename ?? 'unknown'; }
+
+  get content() {
+    return this.codehikeContent;
+  }
+
+  get toc() {
+    return this.metadata.toc;
+  }
 }

@@ -31,6 +31,7 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "remark-frontmatter": "^5.0.0",
+    "remark-heading-id": "^1.0.1",
     "remark-mdx-frontmatter": "^5.2.0",
     "remark-mdx-toc": "^0.3.1",
     "ts-reset": "^0.0.1",

@@ -2,45 +2,37 @@ import type {
   Metadata,
 } from 'next';
 import { redirect404 } from '@/utils/routes.ssr';
-import {
-  snippetSlugs,
-} from '@/data/snippets/snippets';
 import { ShowcaseLayout } from '@/layouts/ShowcaseLayout';
-import { resolveSnippet } from './data';
+import { SnippetResource } from '@/models/SnippetResource';
 
 export async function generateStaticParams() {
-  return snippetSlugs;
+  return SnippetResource.slugs;
 }
 
-export async function generateMetadata(props: PageProps<'/snippets/[slug]'>): Promise<Metadata> {
-  return resolveSnippet(
-    props,
-    {
-      onError: () => {},
-      onSuccess: (snippet) => ({
-        title: snippet.metadata?.title ?? 'Unknown Snippet',
-      }),
-
-    },
-  );
+export async function generateMetadata({ params }: PageProps<'/snippets/[slug]'>): Promise<Metadata> {
+  const { slug } = await params;
+  const snippet = await SnippetResource.fromSlug(slug);
+  if (!snippet) {
+    return {};
+  }
+  return {
+    title: snippet.title,
+  };
 }
 
 export default async function SnippetPage(
-  props: PageProps<'/snippets/[slug]'>,
+  { params }: PageProps<'/snippets/[slug]'>,
 ) {
-  return resolveSnippet(
-    props,
-    {
-      onError: () => redirect404(),
-      onSuccess: async (snippet) => {
-        const { content: PreviewPage } = snippet.pages.find(({ slug: pageSlug }) => pageSlug === '') as any;
+  const { slug } = await params;
+  const snippet = await SnippetResource.fromSlug(slug);
+  if (!snippet) {
+    return redirect404();
+  }
+  const { showcase: { Component: ShowcasePage } } = snippet;
 
-        return (
-          <ShowcaseLayout>
-            <PreviewPage />
-          </ShowcaseLayout>
-        );
-      },
-    },
+  return (
+    <ShowcaseLayout>
+      <ShowcasePage />
+    </ShowcaseLayout>
   );
 }

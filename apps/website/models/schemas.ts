@@ -4,7 +4,9 @@ export const tocSchema = z.array(
   z.object({
     depth: z.number(),
     value: z.string(),
-    attributes: z.any(),
+    attributes: z.object({
+      id: z.string(),
+    }),
     get children() {
       return tocSchema;
     },

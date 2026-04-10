@@ -1,26 +1,29 @@
 import { extendPathname } from '@/utils/routes';
 import type { HTMLAttributes } from 'react';
 import { Card } from '@/components/Card';
-import type { ToolResource } from '@/models/ToolResource';
+import type { ShowcaseResource } from '@/models/ShowcaseResource';
 
-export namespace ToolCard {
+export namespace ShowcaseCard {
   export type Props = (
-    & { pathname: string, tool: ToolResource }
-    & HTMLAttributes<HTMLDivElement>
+    & {
+      pathname: string,
+      resource: ShowcaseResource,
+    }
+    & Omit<HTMLAttributes<HTMLDivElement>, 'resource'>
   );
 }
 
-export async function ToolCard({
+export async function ShowcaseCard({
   pathname,
   className,
-  tool,
+  resource,
   ...props
-}: ToolCard.Props) {
+}: ShowcaseCard.Props) {
   const {
     slug,
     title,
     preview: { Component: PreviewPage },
-  } = tool;
+  } = resource;
   const href = extendPathname(pathname, slug) as any;
   return (
     <Card {...props} href={href}>
