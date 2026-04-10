@@ -9,6 +9,8 @@ import {
   type CodeHikeConfig,
 } from 'codehike/mdx';
 
+import { remarkMdxToc } from 'remark-mdx-toc';
+
 const withVanillaExtract = createVanillaExtractPlugin();
 
 const nextConfig: NextConfig = {
@@ -41,7 +43,10 @@ const chConfig: CodeHikeConfig = {
 const withMdx = createMdx({
   extension: /\.(md|mdx)$/,
   options: {
-    remarkPlugins: [[remarkCodeHike, chConfig]],
+    remarkPlugins: [
+      [remarkMdxToc as any, { name: 'toc' }],
+      [remarkCodeHike, chConfig],
+    ],
     recmaPlugins: [[recmaCodeHike, chConfig]],
     jsx: true,
   },

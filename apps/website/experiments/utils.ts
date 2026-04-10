@@ -2,6 +2,7 @@ import { cookies } from 'next/headers';
 import { experiments } from './experiments';
 
 const experiementKeyPrefix = 'experiment-';
+
 const getExperimentKey = <Experiment extends keyof typeof experiments>(
   experiment: Experiment,
 ) => `${experiementKeyPrefix}${experiment}` as unknown as `${typeof experiementKeyPrefix}${Experiment}`;
@@ -9,6 +10,8 @@ const getExperimentKey = <Experiment extends keyof typeof experiments>(
 export async function experimentEnabled<Experiment extends keyof typeof experiments>(
   experiment: Experiment,
 ): Promise<boolean> {
+  'use server';
+
   const store = await cookies();
   const key = getExperimentKey(experiment);
   if (store.has(key)) {
@@ -25,10 +28,14 @@ export async function toggleExperiment<Experiment extends keyof typeof experimen
 
   const current = await experimentEnabled(experiment);
   const store = await cookies();
-  store.set(getExperimentKey(experiment), JSON.stringify(!current));
+  const key = getExperimentKey(experiment);
+
+  store.set(key, JSON.stringify(!current));
 }
 
 export async function getExperiments() {
+  'use server';
+
   const values:Record<keyof typeof experiments, boolean> = {} as any;
   for (const key of Object.keys(experiments)) {
     values[key as keyof typeof experiments] = (

@@ -1,14 +1,11 @@
-'use client';
-
 import type { InputHTMLAttributes } from 'react';
 import type {
-  Experiments,
   experiments,
 } from '../experiments';
 import {
-  useExperimentEnabled,
-  useExperimentsContext,
-} from './Experiments.core';
+  experimentEnabled,
+  toggleExperiment,
+} from '../utils';
 
 export namespace ExperimentItemToggle {
   export type ExperimentProp = { experiment: keyof typeof experiments };
@@ -18,29 +15,25 @@ export namespace ExperimentItemToggle {
       'onClick' | 'type' | 'checked'
     >
     & ExperimentProp
-    & { onClick: (experiment: Experiments) => Promise<void> }
   );
 }
-export function ExperimentItemToggle({
+export async function ExperimentItemToggle({
   experiment,
-  onClick,
   ...props
 }: ExperimentItemToggle.Props) {
-  'use client';
+  const value = await experimentEnabled(experiment);
 
-  const { toggle } = useExperimentsContext();
-  const value = useExperimentEnabled(experiment);
+  async function onClick() {
+    'use server';
 
-  const ownOnClick = () => {
-    toggle(experiment);
-    onClick(experiment);
-  };
+    return toggleExperiment(experiment);
+  }
 
   return (
     <input
       {...props}
       type="checkbox"
-      onClick={ownOnClick}
+      onClick={onClick}
       defaultChecked={value}
     />
   );

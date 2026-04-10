@@ -3,7 +3,7 @@ import {
   style,
 } from '@vanilla-extract/css';
 import { variantSelector } from '@sabinmarcu/website-theme';
-import { themeSelections } from './ThemeSelector.core';
+import { themeSelections } from './ThemeSelector.constants';
 
 export const selectionDataAttribute = 'data-selection';
 

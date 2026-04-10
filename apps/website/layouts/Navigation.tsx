@@ -2,6 +2,8 @@ import type { PropsWithChildren } from 'react';
 import { ThemeSelector } from '@/theme';
 import { rootNavigation } from '@/navigation/root';
 import { Experiments } from '@/experiments';
+import { withExperiment } from '@/experiments/components/withExperiment';
+import { extendComponent } from '@/utils/components';
 import { NavigationList } from './Navigation.list';
 import { NavigationLink } from './Navigation.link';
 import {
@@ -9,18 +11,28 @@ import {
   NavigationMobileButton,
 } from './Navigation.mobile';
 import { grids } from './Navigation.grid';
-import { NavigationClient } from './Navigation.runtime';
 import { NavigationAnchor } from './Navigation.anchor';
 import { TOCMobileButton } from './PageTOCLayout.toc.mobile';
+import { navigationStyles } from './Navigation.css';
 
 export namespace Navigation {
-  export type Props = PropsWithChildren<{
-    empty?: boolean,
-  }>;
+  export type Props = PropsWithChildren<(
+    & { empty?: boolean }
+    & withExperiment.Props<'animatedNavigation'>
+  )>;
 }
-export function Navigation({ children, empty }: Navigation.Props) {
-  return (
-    <NavigationClient empty={empty}>
+
+export const Navigation = extendComponent(
+  withExperiment('animatedNavigation')(async function Navigation({
+    children,
+    empty,
+    animatedNavigation,
+  }: Navigation.Props) {
+    return (
+    <nav className={navigationStyles({
+      empty,
+      animated: animatedNavigation,
+    })}>
       {empty
         ? <></>
         : (
@@ -43,10 +55,12 @@ export function Navigation({ children, empty }: Navigation.Props) {
         <TOCMobileButton />
       </section>
       <NavigationBackdrop />
-    </NavigationClient>
-  );
-}
-
-Navigation.List = NavigationList;
-Navigation.Link = NavigationLink;
-Navigation.Anchor = NavigationAnchor;
+    </nav>
+    );
+  }),
+  {
+    List: NavigationList,
+    Link: NavigationLink,
+    Anchor: NavigationAnchor,
+  },
+);

@@ -1,12 +1,9 @@
 import type { experiments } from '../experiments';
 import {
-  toggleExperiment,
-} from '../utils';
-import {
   experimentsItemStyles,
 } from './Experiments.item.css';
 import { grids } from './Experiments.item.grid';
-import { ExperimentItemToggle } from './Experiments.item.runtime';
+import { ExperimentItemToggle } from './Experiments.item.toggle';
 
 export namespace ExperimentItem {
   export type Props = (
@@ -24,10 +21,7 @@ export async function ExperimentItem({
   return (
     <label className={experimentsItemStyles}>
       <div {...grids.selector('checkbox')}>
-        <ExperimentItemToggle
-          experiment={experiment}
-          onClick={toggleExperiment}
-        />
+        <ExperimentItemToggle experiment={experiment} />
       </div>
       <p {...grids.selector('title')}>{title}</p>
       <p {...grids.selector('description')}>{description} (default: {defaultValue})</p>

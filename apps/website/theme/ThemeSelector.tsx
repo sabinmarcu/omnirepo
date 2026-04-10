@@ -1,23 +1,28 @@
-'use server';
-
 import { Icon } from '@/components/Icon';
-import { setThemeVariant } from './ThemeSelector.core.ssr';
+import {
+  themeSelectionsMap,
+} from './ThemeSelector.constants';
 import {
   selectionDataAttribute,
   themeSelectorStyles,
 } from './ThemeSelector.css';
-import { ThemeSelectorButton } from './ThemeSelector.runtime';
+import {
+  getThemeVariant,
+  rotateThroughThemeVariant,
+} from './ThemeSelector.core';
 
 export async function ThemeSelector() {
+  const current = await getThemeVariant();
+  const label = `Change theme. Currently: ${themeSelectionsMap[current]}`;
   return (
-    <ThemeSelectorButton
-
-      onClick={setThemeVariant}
+    <button
+      onClick={rotateThroughThemeVariant}
       className={themeSelectorStyles}
+      aria-label={label}
     >
       <Icon icon="sun-solid" {...{ [selectionDataAttribute]: 'light' }} />
       <Icon icon="moon-solid" {...{ [selectionDataAttribute]: 'dark' }} />
       <Icon icon="technology" {...{ [selectionDataAttribute]: 'system' }} />
-    </ThemeSelectorButton>
+    </button>
   );
 }
