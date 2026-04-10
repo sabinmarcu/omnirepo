@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { getPathname } from '@/utils/routes.ssr';
 import { PageLayout } from '@/layouts/PageLayout';
 import { ToolResource } from '@/models/ToolResource';
 import { ShowcaseCard } from '@/components/ShowcaseCard';

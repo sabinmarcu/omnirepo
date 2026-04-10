@@ -4,27 +4,27 @@ import { SnippetResource } from '@/models/SnippetResource';
 import { TOCLayout } from '@/layouts/TOCLayout';
 import { snippetLayoutPageStyles } from './layout.css';
 
-export const dynamicParams = false;
-export const dynamic = 'force-static';
-
-export async function generateStaticParams() {
-  const snippets = await SnippetResource.getList();
-  const slugs = snippets
-    .flatMap(
-      ({ subpages, slug }) => (
-        subpages
-          .filter(({ slug }) => slug)
-          .map(
-            ({ slug: subpage }) => ({
-              slug,
-              subpage,
-            }),
-          )
-      ),
-    );
-
-  return slugs;
-}
+// export const dynamicParams = false;
+// export const dynamic = 'force-static';
+//
+// export async function generateStaticParams() {
+//   const snippets = await SnippetResource.getList();
+//   const slugs = snippets
+//     .flatMap(
+//       ({ subpages, slug }) => (
+//         subpages
+//           .filter(({ slug }) => slug)
+//           .map(
+//             ({ slug: subpage }) => ({
+//               slug,
+//               subpage,
+//             }),
+//           )
+//       ),
+//     );
+//
+//   return slugs;
+// }
 
 export default async function SnippetLayoutPage(props: LayoutProps<'/snippets/[slug]/[subpage]'>) {
   const { params, children } = props;
