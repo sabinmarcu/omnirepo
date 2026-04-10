@@ -91,7 +91,6 @@ globalStyle(`${navigationSelector}:not(${emptyNavigationSelector}):before`, {
   content: '',
   position: 'absolute',
   inset: 0,
-  background: `linear-gradient(to bottom, ${theme.colors.background.page} 90%, transparent 100%)`,
 });
 
 const navigationBlendPercent = createVar();

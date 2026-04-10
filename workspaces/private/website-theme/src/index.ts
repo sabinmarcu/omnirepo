@@ -22,7 +22,7 @@ export const themeColors = {
     primary: '#0cf',
     secondary: '#f0c',
     background: {
-      light: '#e0e0e0',
+      light: '#c0c0c0',
       dark: '#171717',
     },
     success: 'green',
