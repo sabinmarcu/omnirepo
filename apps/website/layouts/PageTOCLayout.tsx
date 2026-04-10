@@ -20,10 +20,10 @@ export async function PageTOCLayout(
   return (
     <PageTOCLayoutClient
       tocHeader={tocHeader ?? (
-          <h1>
+          <h2>
             <span>Table of Contents</span>
             <TOCMobileCloseButton />
-          </h1>
+          </h2>
       )}
       {...props}
     />

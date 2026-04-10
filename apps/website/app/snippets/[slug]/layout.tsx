@@ -1,9 +1,15 @@
 import { Navigation } from '@/layouts/Navigation';
 import { RootPageLayout } from '@/layouts/RootPageLayout';
-import { getPathname } from '@/utils/routes.ssr';
 import { extendPathname } from '@/utils/routes';
 import { normalizeNavigationList } from '@/navigation/utils';
 import { SnippetResource } from '@/models/SnippetResource';
+
+export const dynamicParams = false;
+export const dynamic = 'force-static';
+
+export async function generateStaticParams() {
+  return SnippetResource.slugs;
+}
 
 export default async function SnippetLayoutPage({ params, children }: LayoutProps<'/snippets/[slug]'>) {
   const { slug } = await params;
@@ -11,11 +17,7 @@ export default async function SnippetLayoutPage({ params, children }: LayoutProp
   if (!snippet) {
     return null;
   }
-  const pathname = await getPathname();
-  const rootPathname = pathname.match(
-    /(\/?snippets\/[^/]+)/,
-  )![0];
-  const getSlug = extendPathname.bind(undefined, rootPathname);
+  const getSlug = extendPathname.bind(undefined, `/snippets/${slug}`);
 
   const sublist = normalizeNavigationList(
     snippet.files.map(({
@@ -29,7 +31,7 @@ export default async function SnippetLayoutPage({ params, children }: LayoutProp
   );
 
   return (
-    <RootPageLayout>
+    <RootPageLayout theme="snippets">
       <Navigation>
         <Navigation.List list={sublist} strictMatch />
       </Navigation>

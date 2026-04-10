@@ -20,6 +20,9 @@ const rootFont = VT323({
   weight: '400',
 });
 
+export const dynamicParams = false;
+export const dynamic = 'force-static';
+
 export const metadata: Metadata = {
   title: {
     default: 'Unknown Page',

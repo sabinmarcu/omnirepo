@@ -59,4 +59,8 @@ export class SnippetResource extends ShowcaseResource<typeof snippetsContentSche
     }
     return undefined;
   }
+
+  public get subpages() {
+    return this.files.map(({ slug }) => ({ slug }));
+  }
 }

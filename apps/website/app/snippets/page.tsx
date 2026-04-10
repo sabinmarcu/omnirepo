@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { getPathname } from '@/utils/routes.ssr';
 import { RootPageLayout } from '@/layouts/RootPageLayout';
 import { Navigation } from '@/layouts/Navigation';
 import { PageLayout } from '@/layouts/PageLayout';
@@ -15,9 +14,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function SnippetsList() {
   const list = await SnippetResource.getList() ?? [];
-  const pathname = await getPathname();
   return (
-    <RootPageLayout>
+    <RootPageLayout theme="snippets">
       <Navigation />
       <PageLayout
         className={snippetsPageStyles}
@@ -31,7 +29,7 @@ export default async function SnippetsList() {
                 <ShowcaseCard
                   key={snippet.slug}
                   resource={snippet}
-                  pathname={pathname}
+                  pathname={'/snippets'}
                 />
               ))}
             </>

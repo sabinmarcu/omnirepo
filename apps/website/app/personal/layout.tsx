@@ -41,7 +41,7 @@ export default async function SnippetsLayout({
   );
 
   return (
-    <RootPageLayout>
+    <RootPageLayout theme="personal">
       <Navigation>
         <Navigation.List list={sublist} strictMatch />
       </Navigation>

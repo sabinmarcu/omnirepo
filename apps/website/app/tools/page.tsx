@@ -13,7 +13,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function ToolsList() {
   const list = await ToolResource.getList() ?? [];
-  const pathname = await getPathname();
   return (
     <>
       <PageLayout
@@ -28,7 +27,7 @@ export default async function ToolsList() {
                 <ShowcaseCard
                   key={tool.slug}
                   resource={tool}
-                  pathname={pathname}
+                  pathname={'/tools'}
                 />
               ))}
             </>

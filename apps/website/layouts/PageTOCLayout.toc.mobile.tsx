@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-shadow */
-/* eslint-disable @typescript-eslint/no-redeclare */
-/* eslint-disable import/export */
 import { Icon } from '@/components/Icon';
 import { withTooltip } from '@/components/Tooltip.hoc';
 import type { HTMLAttributes } from 'react';
@@ -12,7 +9,6 @@ export namespace TOCMobileButton {
   export type Props = Omit<HTMLAttributes<HTMLLabelElement>, 'children'>;
 }
 
-// eslint-disable-next-line prefer-arrow-callback
 export const TOCMobileButton = withTooltip(function TOCMobileButton({
   className,
   ...props

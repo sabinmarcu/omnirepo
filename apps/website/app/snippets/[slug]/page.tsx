@@ -5,10 +5,6 @@ import { redirect404 } from '@/utils/routes.ssr';
 import { ShowcaseLayout } from '@/layouts/ShowcaseLayout';
 import { SnippetResource } from '@/models/SnippetResource';
 
-export async function generateStaticParams() {
-  return SnippetResource.slugs;
-}
-
 export async function generateMetadata({ params }: PageProps<'/snippets/[slug]'>): Promise<Metadata> {
   const { slug } = await params;
   const snippet = await SnippetResource.fromSlug(slug);
