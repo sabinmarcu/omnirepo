@@ -14,12 +14,19 @@ type GroupType = {
   lines: string[]
 };
 
-export function parseRawCode(code: string) {
+export namespace parseSourceCode {
+  export type CodeGroup = ReturnType<typeof parseSourceCode>[number];
+  export type Output = ReturnType<typeof parseSourceCode>[];
+}
+
+export function parseSourceCode(code: string) {
   const withoutEslint = code.replaceAll(/\n?(?:\/\/|\/\*)\s*eslint-disable[^\n]+/gm, '');
+
   const rootGroup: GroupType = {
     name: 'ROOT',
     lines: [],
   };
+
   let currentGroup: GroupType | undefined;
   let currentCommentGroup: string[] | undefined;
   const groups: GroupType[] = [

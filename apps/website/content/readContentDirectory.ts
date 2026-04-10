@@ -1,13 +1,11 @@
-import fs from 'node:fs/promises';
-import path from 'node:path';
 import moize from 'moize';
 
 import type {
   ZodAny,
   ZodType,
 } from 'zod';
-import { contentPath } from '@/constants/paths';
 import { readContent } from './readContent';
+import { readRawContentDirectory } from './readRawContentDirectory';
 
 async function readContentDirectoryRaw(directoryPath: string): Promise<string[]>;
 
@@ -28,15 +26,7 @@ async function readContentDirectoryRaw(
   directoryPath: string,
   options?: any,
 ) {
-  const resolvedPath = path.resolve(contentPath, directoryPath);
-  const files = await fs.readdir(resolvedPath);
-  const paths = files
-    .map((file) => path.resolve(resolvedPath, file))
-    .map((absolutePath) => path.relative(
-      contentPath,
-      absolutePath,
-    ))
-    .filter(Boolean);
+  const paths = await readRawContentDirectory(directoryPath);
 
   if (options === undefined) {
     return paths;

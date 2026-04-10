@@ -5,18 +5,21 @@ import type {
 } from 'next';
 import { Navigation } from '@/layouts/Navigation';
 import { RootPageLayout } from '@/layouts/RootPageLayout';
-import { title } from './content.mdx';
+import { MdxResource } from '@/models/MdxResource';
+import { layoutTitle } from '@/utils/metadata';
+
+const content = await MdxResource.from(import('./content.mdx'));
 
 export async function generateMetadata(
   _: any,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const { title: parentTitle } = await parent;
   return {
-    title: {
-      default: title,
-      template: `Tool - ${parentTitle!.template}`,
-    },
+    title: await layoutTitle({
+      parent,
+      title: content.title,
+      prefix: 'Tool',
+    }),
   };
 }
 
