@@ -28,7 +28,6 @@ presets:
     extends: "@docusaurus/tsconfig"
     compilerOptions:
       noEmit: true
-      baseUrl: "."
       rootDir: "src"
       tsBuildInfoFile: "./node_modules/.tmp/tsconfig.app.tsbuildInfo"
     include:
@@ -84,7 +83,9 @@ presets:
       allowImportingTsExtensions: true
       resolveJsonModule: true
       isolatedModules: true
+      module: esnext
       moduleDetection: force
+      moduleResolution: bundler
       noEmit: true
       jsx: react-jsx
       strict: true
@@ -94,7 +95,6 @@ presets:
   storybook:
     compilerOptions:
       noEmit: true
-      baseUrl: "."
       rootDir: "src"
       tsBuildInfoFile: "./node_modules/.tmp/tsconfig.app.tsbuildInfo"
     include:

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import './globals.css.ts';
+import './globals.css';
 import {
   Experiments,
   ExperimentsContextProvider,
