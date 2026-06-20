@@ -4,13 +4,15 @@ import {
   expect,
 } from 'vitest';
 import {
+  isCamelCase,
+} from './camel.predicate.js';
+import {
   camelToKebab,
   camelToPascal,
   camelToSnake,
   camelToText,
-  isCamelCase,
   toCamel,
-} from './camel.js';
+} from './camel.conversion.js';
 
 describe('camelCase', () => {
   it.each([

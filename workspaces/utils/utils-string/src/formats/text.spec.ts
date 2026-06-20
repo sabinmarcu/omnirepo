@@ -4,14 +4,27 @@ import {
   expect,
 } from 'vitest';
 import {
+  isTextCase,
+} from './text.predicate.js';
+import {
   textToCamel,
   textToKebab,
   textToPascal,
   textToSnake,
   toText,
-} from './text.js';
+} from './text.conversion.js';
 
 describe('text case', () => {
+  it.each([
+    ['a', true],
+    ['text case', true],
+    ['is 2 texts', true],
+    ['is_2 texts', false],
+    ['awesome-stuff', false],
+    ['AwesomeStuff', false],
+  ])('isTextCase(%s) = %s', (input, expected) => {
+    expect(isTextCase(input)).toBe(expected);
+  });
   it.each([
     ['a', 'a'],
     ['text case', 'textCase'],

@@ -35,6 +35,7 @@ export {
 } from './formats/snake.js';
 
 export {
+  isTextCase,
   textToCamel,
   textToKebab,
   textToPascal,

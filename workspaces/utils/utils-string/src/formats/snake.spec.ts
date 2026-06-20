@@ -5,12 +5,14 @@ import {
 } from 'vitest';
 import {
   isSnakeCase,
+} from './snake.predicate.js';
+import {
   snakeToCamel,
   snakeToKebab,
   snakeToPascal,
   snakeToText,
   toSnake,
-} from './snake.js';
+} from './snake.conversion.js';
 
 describe('snake_case', () => {
   it.each([

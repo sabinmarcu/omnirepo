@@ -5,12 +5,14 @@ import {
 } from 'vitest';
 import {
   isKebabCase,
+} from './kebab.predicate.js';
+import {
   kebabToCamel,
   kebabToPascal,
   kebabToSnake,
   kebabToText,
   toKebab,
-} from './kebab.js';
+} from './kebab.conversion.js';
 
 describe('kebab-case', () => {
   it.each([
