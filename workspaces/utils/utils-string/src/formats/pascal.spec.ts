@@ -5,12 +5,14 @@ import {
 } from 'vitest';
 import {
   isPascalCase,
+} from './pascal.predicate.js';
+import {
   pascalToCamel,
   pascalToKebab,
   pascalToSnake,
   pascalToText,
   toPascal,
-} from './pascal.js';
+} from './pascal.conversion.js';
 
 describe('PascalCase', () => {
   it.each([
