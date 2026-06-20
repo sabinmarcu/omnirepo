@@ -4,6 +4,7 @@ import type {
 } from 'next';
 import { PageLayout } from '@/layouts/PageLayout';
 import BioPage, { title } from './content.mdx';
+import { bioPageStyles } from './page.css';
 
 export async function generateMetadata(
   _: any,
@@ -18,7 +19,9 @@ export async function generateMetadata(
 export default async function PersonalHomepage() {
   return (
     <PageLayout>
-      <BioPage />
+      <div className={bioPageStyles}>
+        <BioPage />
+      </div>
     </PageLayout>
   );
 }
