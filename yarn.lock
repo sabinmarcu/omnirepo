@@ -6975,6 +6975,7 @@ __metadata:
     "@sabinmarcu/utils-path": "workspace:*"
     "@sabinmarcu/utils-primitives": "workspace:*"
     "@sabinmarcu/utils-repo": "workspace:*"
+    "@sabinmarcu/utils-string": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
     "@sabinmarcu/website-theme": "workspace:*"
     clsx: "npm:^1.2.1"
@@ -7461,7 +7462,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@sabinmarcu/utils-string@workspace:^, @sabinmarcu/utils-string@workspace:workspaces/utils/utils-string":
+"@sabinmarcu/utils-string@workspace:*, @sabinmarcu/utils-string@workspace:workspaces/utils/utils-string":
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/utils-string@workspace:workspaces/utils/utils-string"
   dependencies:
@@ -7505,7 +7506,7 @@ __metadata:
     "@sabinmarcu/moving-mesh-background": "workspace:*"
     "@sabinmarcu/theme": "workspace:*"
     "@sabinmarcu/types": "workspace:*"
-    "@sabinmarcu/utils-string": "workspace:^"
+    "@sabinmarcu/utils-string": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
     "@sabinmarcu/website-theme": "workspace:*"
     "@tscircuit/routematch": "npm:^1.0.1"

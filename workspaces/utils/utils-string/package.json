@@ -56,7 +56,7 @@
   "repository": {
     "url": "git+https://github.com/sabinmarcu/omnirepo.git",
     "type": "git",
-    "directory": "workspaces/utils/utils-fs"
+    "directory": "workspaces/utils/utils-string"
   },
-  "homepage": "https:/sabinmarcu.dev/api/utils-fs"
+  "homepage": "https:/sabinmarcu.dev/api/utils-string"
 }
