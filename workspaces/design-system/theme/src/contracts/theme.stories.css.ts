@@ -14,7 +14,7 @@ import {
 const familyDataAttribute = `data-${themeFamilyDataAttribute}`;
 const variantDataAttribute = `data-${themeDataAttribute}`;
 
-const { contract: themeContract } = setupTheme[ThemeMetadataSymbol];
+const { finalContract: themeContract } = setupTheme[ThemeMetadataSymbol];
 
 export const swatchSet = style({
   display: 'grid',

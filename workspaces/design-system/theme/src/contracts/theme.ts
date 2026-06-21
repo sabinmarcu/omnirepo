@@ -32,6 +32,7 @@ export type ThemeMetadataConfig = {
   [ThemeMetadataSymbol]: {
     contract: ReturnType<typeof createThemeVariantRaw>[0],
     finalContract: ReturnType<typeof createThemeVariantRaw>[0],
+    rawUpdater: ReturnType<typeof createThemeVariantRaw>[4],
 
     raw: ReturnType<typeof createThemeVariantRaw>[2],
   }
@@ -42,13 +43,14 @@ export type ThemeConfig = (
 );
 
 export const createThemeVariant = (variant: string) => {
-  const [contract, updater, raw, finalContract] = createThemeVariantRaw(variant);
+  const [contract, updater, raw, finalContract, rawUpdater] = createThemeVariantRaw(variant);
   const config: ThemeConfig = updater as any;
 
   config[ThemeMetadataSymbol] = {
     contract,
     raw,
     finalContract,
+    rawUpdater,
   };
 
   return config;

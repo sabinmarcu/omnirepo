@@ -76,6 +76,7 @@ export function createThemeContract<
   UpdaterFunction<MapThemeToUpdateInput<Theme>>,
   Theme,
   MapThemeToContract<Theme>,
+  UpdaterFunction<MapThemeToUpdateInput<Theme>>,
 ] {
   const contracts = extractContracts(theme);
   const contractVariables = mapThemeToContract(theme);
@@ -106,11 +107,27 @@ export function createThemeContract<
     updateFunction(selector, localContract, localValues);
 
     // @ts-ignore
-    for (const [,contractUpdater, contractName] of contracts) {
-      const { [contractName]: values } = input as any;
-      contractUpdater(values, selector, updateFunction, family);
+    for (const [,contractUpdater, contractName, meta] of contracts) {
+      if (!family || !meta?.raw) {
+        const { [contractName]: values } = input as any;
+        contractUpdater(values, selector, updateFunction, family);
+      }
     }
   };
 
-  return [contract, updater, theme, finalContract as typeof contract] as const;
+  const rawUpdater: UpdaterFunction<MapThemeToUpdateInput<Theme>> = (
+    input,
+    selector = rootNode,
+    updateFunction = createGlobalTheme,
+  ) => {
+    // @ts-ignore
+    for (const [,contractUpdater, contractName, meta] of contracts) {
+      if (meta?.raw) {
+        const { [contractName]: values } = input as any;
+        contractUpdater(values, selector, updateFunction);
+      }
+    }
+  };
+
+  return [contract, updater, theme, finalContract as typeof contract, rawUpdater] as const;
 }

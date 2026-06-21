@@ -92,6 +92,7 @@ export const createThemeFamily = <
 
   const updaterRaw: ThemeFamilyUpdater<Families> = (input, selector, updateFunction) => {
     const { base: baseInput, ...familiesInput } = input;
+    rootUpdater[ThemeMetadataSymbol].rawUpdater(baseInput, selector, updateFunction);
     baseUpdater(baseInput, selector, updateFunction);
     picker('base', selectorOfFamily('base'), updateFunction);
     for (const family of families) {
