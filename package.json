@@ -46,6 +46,7 @@
     "lint": "yarn moon run :lint",
     "moon": "$(yarn bin moon)",
     "postinstall": "husky install && tscmono",
+    "publish:idempotent": "node .github/scripts/idempotent-publish.mjs",
     "test": "yarn moon run :test"
   },
   "devDependencies": {

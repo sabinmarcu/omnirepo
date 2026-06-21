@@ -110,7 +110,7 @@ tasks:
       - "@globs(sources)"
 
   publish:
-    command: "yarn npm publish --tolerate-republish"
+    command: "yarn run -T publish:idempotent"
     deps:
       - "~:build"
     inputs:

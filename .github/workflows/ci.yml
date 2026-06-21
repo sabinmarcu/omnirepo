@@ -53,6 +53,9 @@ jobs:
     runs-on: 'ubuntu-latest'
     needs: ci
     if: needs.ci.outputs.has_versioning == 'true' && github.ref == 'refs/heads/master'
+    concurrency:
+      group: "versioning-publish-${{ github.ref }}"
+      cancel-in-progress: false
     steps:
       - name: Checkout Repo
         uses: 'actions/checkout@v3'
