@@ -41,6 +41,6 @@ describe('getValidPropertyName', () => {
       output: undefined,
     },
   ])('getValidPropertyName($input) = $output', ({ input, output }) => {
-    expect(getValidPropertyName(input as any)).toEqual(output);
+    expect(getValidPropertyName(input as never)).toEqual(output);
   });
 });

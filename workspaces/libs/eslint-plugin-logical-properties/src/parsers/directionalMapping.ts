@@ -19,10 +19,10 @@ export const directionalMappingTransformerFactory: DirectionalTransformerFactory
 ) => {
   const propertyName = getValidPropertyName(property)!;
   const [source, target] = [propertyName, mappings[propertyName]];
-  const value = context.sourceCode.getText(property.value as any);
+  const value = context.sourceCode.getText(property.value);
 
   context.report({
-    node: node as any,
+    node,
     message: generateDirectionalPropertyError(source, target),
     fix(fixer) {
       return fixer.replaceText(property, `"${target}":${value}`);

@@ -1,10 +1,25 @@
 import type { ValidProperty } from '../types.js';
 
-export const isValidProperty = (property: any): property is ValidProperty => (
-  property.type === 'Property'
-  && (
-    (property.key.type === 'Identifier')
-    || (property.key.type === 'Literal')
-  )
-  && property.value
-);
+export const isValidProperty = (property: unknown): property is ValidProperty => {
+  if (typeof property !== 'object' || property === null) {
+    return false;
+  }
+
+  const candidate = property as {
+    type?: unknown,
+    key?: {
+      type?: unknown,
+    },
+    value?: unknown,
+  };
+
+  return (
+    candidate.type === 'Property'
+    && !!candidate.key
+    && (
+      candidate.key.type === 'Identifier'
+      || candidate.key.type === 'Literal'
+    )
+    && candidate.value !== undefined
+  );
+};

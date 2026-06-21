@@ -1,6 +1,6 @@
 import { rulePrefix } from '../constants.js';
 
-export const prefixRules = <T extends Record<string, any>>(
+export const prefixRules = <T extends Record<string, unknown>>(
   rules: T,
 ): {
     [Key in keyof typeof rules & string as `${typeof rulePrefix}/${Key}`]: (typeof rules)[Key]
@@ -8,5 +8,7 @@ export const prefixRules = <T extends Record<string, any>>(
     Object.fromEntries(
       Object.entries(rules)
         .map(([name, rule]) => [`${rulePrefix}/${name}`, rule]),
-    ) as unknown as any
+    ) as {
+      [Key in keyof typeof rules & string as `${typeof rulePrefix}/${Key}`]: (typeof rules)[Key]
+    }
   );

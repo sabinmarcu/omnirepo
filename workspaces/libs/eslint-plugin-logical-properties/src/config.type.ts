@@ -41,7 +41,7 @@ export type JSONSchemaObjectType = {
 export type JSONSchemaObjectToType<
   Input extends JSONSchemaObjectType,
 > = InputAndReadonly<(
-  & (Input['properties'] extends Record<string, any>
+  & (Input['properties'] extends Record<string, JSONSchemaType>
     ? { [Key in keyof Input['properties']]: JSONSchemaToType<Input['properties'][Key]> }
     : unknown
   )

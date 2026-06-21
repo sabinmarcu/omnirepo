@@ -6,22 +6,17 @@ export const mappings = {
   marginRight: 'marginInlineEnd',
   marginTop: 'marginBlockStart',
   marginBottom: 'marginBlockEnd',
+  block: 'marginBlock',
+  inline: 'marginInline',
 };
 
 export const shorthands = {
   margin: [
-    [
-      [
-        mappings.marginTop,
-        mappings.marginBottom,
-        mappings.marginLeft,
-        mappings.marginRight,
-      ],
-    ],
+    [[mappings.marginTop, mappings.marginBottom]],
     [[mappings.marginTop, mappings.marginBottom], [mappings.marginLeft, mappings.marginRight]],
     [
       [mappings.marginTop],
-      [mappings.marginLeft, mappings.marginRight],
+      [mappings.inline],
       [mappings.marginBottom],
     ],
     [
@@ -33,9 +28,17 @@ export const shorthands = {
   ],
 } satisfies DirectionalRuleConfig['shorthands'];
 
+export const shorthandPairMappings = {
+  margin: [
+    [mappings.block],
+    [mappings.inline],
+  ],
+} as const satisfies DirectionalRuleConfig['shorthandPairMappings'];
+
 export const ruleConfig = {
   mappings,
   shorthands,
+  shorthandPairMappings,
 } satisfies DirectionalRuleConfig;
 
 export default generateDirectionalRules(ruleConfig);

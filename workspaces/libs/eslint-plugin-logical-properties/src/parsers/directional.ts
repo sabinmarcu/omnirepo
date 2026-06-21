@@ -27,6 +27,7 @@ import {
   defaultJsxAttributes,
   defaultKeyframes,
   defaultResolvers,
+  rulePrefix,
 } from '../constants.js';
 import {
   directionalValueTransformerFactory,
@@ -34,6 +35,51 @@ import {
 import { configSchema } from '../config.js';
 import { propertyTraverseSet } from '../utils/propertyTraverse.js';
 import { getValidPropertyName } from '../utils/getValidPropertyName.js';
+
+const getOptional = (
+  input: string[] | Readonly<string[]> | undefined,
+  fallback: string[] | Readonly<string[]>,
+): string[] => ((input && input.length > 0) ? [...input] : [...fallback]);
+
+const isTargetJsxAttribute = (
+  node: unknown,
+  names: string[],
+): node is {
+  type: 'JSXAttribute'
+  name: {
+    type: 'JSXIdentifier'
+    name: string,
+  }
+  value: {
+    type: 'JSXExpressionContainer'
+    expression: unknown,
+  }
+} => (
+  typeof node === 'object'
+  && node !== null
+  && 'type' in node
+  && node.type === 'JSXAttribute'
+  && 'name' in node
+  && !!node.name
+  && typeof node.name === 'object'
+  && node.name !== null
+  && 'type' in node.name
+  && node.name.type === 'JSXIdentifier'
+  && 'name' in node.name
+  && typeof node.name.name === 'string'
+  && names.includes(node.name.name)
+  && 'value' in node
+  && !!node.value
+  && typeof node.value === 'object'
+  && node.value !== null
+  && 'type' in node.value
+  && node.value.type === 'JSXExpressionContainer'
+  && 'expression' in node.value
+  && typeof node.value.expression === 'object'
+  && node.value.expression !== null
+  && 'type' in node.value.expression
+  && node.value.expression.type === 'ObjectExpression'
+);
 
 export const transformDirectionalProperty = (
   node: ObjectExpression,
@@ -45,12 +91,14 @@ export const transformDirectionalProperty = (
     disabled = [],
     mappings = {},
     shorthands = {},
+    shorthandPairMappings = {},
     shorthandMappings = {},
     values = {},
   } = config;
   const toDisable = Array.isArray(disabled) ? disabled : [disabled];
   const mappingsSources = Object.keys(mappings);
   const shorthandSources = Object.keys(shorthands);
+  const shorthandPairMappingsSources = Object.keys(shorthandPairMappings);
   const shorthandMappingsSources = Object.keys(shorthandMappings);
   const valueSources = Object.keys(values);
   const transformerFactoryInput = {
@@ -79,7 +127,10 @@ export const transformDirectionalProperty = (
       try {
         if (mappingsSources.includes(propertyName)) {
           directionalMappingTransformer(property);
-        } else if (shorthandSources.includes(propertyName)) {
+        } else if (
+          shorthandSources.includes(propertyName)
+          || shorthandPairMappingsSources.includes(propertyName)
+        ) {
           directionalShorthandTransformer(property);
         } else if (shorthandMappingsSources.includes(propertyName)) {
           directionalShorthandMappingTransformer(property);
@@ -109,41 +160,31 @@ export const generateDirectionalRules = (config: DirectionalRuleConfig): Rule.Ru
     schema: [configSchema],
   },
   create(context) {
-    const [options = {}] = context.options ?? [];
+    const [ruleOptions = {}] = context.options ?? [];
+    const settings = ((context.settings?.[rulePrefix] ?? {}) as PluginOptions);
+    const options = ruleOptions as PluginOptions;
 
-    const {
-      functions = [],
-      jsxAttributes = [],
-      keyframes = [],
-      resolvers = [],
-    } = options as unknown as PluginOptions;
-    const nodeFunctionNames = (functions?.length > 0
-      ? functions
-      : defaultFunctions
+    const nodeFunctionNames = getOptional(
+      options.functions,
+      getOptional(settings.functions, defaultFunctions),
     );
-    const nodeKeyframesNames = (keyframes?.length > 0
-      ? keyframes
-      : defaultKeyframes
+    const nodeKeyframesNames = getOptional(
+      options.keyframes,
+      getOptional(settings.keyframes, defaultKeyframes),
     );
-    const nodeJsxAttributesNames = (jsxAttributes?.length > 0
-      ? functions
-      : defaultJsxAttributes
+    const nodeJsxAttributesNames = getOptional(
+      options.jsxAttributes,
+      getOptional(settings.jsxAttributes, defaultJsxAttributes),
     );
-    const nodeResolvers = (resolvers?.length > 0
-      ? resolvers
-      : defaultResolvers
+    const nodeResolvers = getOptional(
+      options.resolvers,
+      getOptional(settings.resolvers, defaultResolvers),
     );
     return {
-      JSXAttribute(node: any) {
-        if (
-          node.type === 'JSXAttribute'
-          && node.name.type === 'JSXIdentifier'
-          && nodeJsxAttributesNames.includes(node.name.name)
-          && node.value.type === 'JSXExpressionContainer'
-          && node.value.expression.type === 'ObjectExpression'
-        ) {
+      JSXAttribute(node) {
+        if (isTargetJsxAttribute(node, nodeJsxAttributesNames)) {
           transformDirectionalProperty(
-            node.value.expression,
+            node.value.expression as ObjectExpression,
             context,
             config,
             nodeResolvers,
@@ -160,7 +201,7 @@ export const generateDirectionalRules = (config: DirectionalRuleConfig): Rule.Ru
               for (const ruleSet of rules.elements) {
                 if (ruleSet?.type === 'ObjectExpression') {
                   transformDirectionalProperty(
-                    ruleSet as any,
+                    ruleSet as unknown as ObjectExpression,
                     context,
                     config,
                     [],
@@ -169,7 +210,7 @@ export const generateDirectionalRules = (config: DirectionalRuleConfig): Rule.Ru
               }
             } else if (rules.type === 'ObjectExpression') {
               transformDirectionalProperty(
-                rules as any,
+                rules as unknown as ObjectExpression,
                 context,
                 config,
                 nodeResolvers,
@@ -188,7 +229,7 @@ export const generateDirectionalRules = (config: DirectionalRuleConfig): Rule.Ru
                   && property.value.type === 'ObjectExpression'
                 ) {
                   transformDirectionalProperty(
-                    property.value as any,
+                    property.value as unknown as ObjectExpression,
                     context,
                     config,
                     nodeResolvers,

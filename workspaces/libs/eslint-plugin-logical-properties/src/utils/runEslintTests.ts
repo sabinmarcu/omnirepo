@@ -1,21 +1,26 @@
-import type { Rule } from 'eslint';
+import type {
+  Rule,
+  RuleTester,
+} from 'eslint';
 import {
   run,
 } from 'eslint-vitest-rule-tester';
 import type { TestInput } from '../types.js';
 
-const trimTestInput = (input: any[]) => input.map(({
-  code, output, ...rest
-}) => {
-  const result = { ...rest };
-  if (code) {
-    result.code = code.trim();
-  }
-  if (output) {
-    result.output = output.trim();
-  }
-  return result;
-});
+const trimTestInput = <
+  T extends RuleTester.ValidTestCase | RuleTester.InvalidTestCase,
+>(input: T[]): T[] => input.map((entry) => {
+    const result = { ...entry } as T;
+
+    if ('code' in result && typeof result.code === 'string') {
+      result.code = result.code.trim();
+    }
+    if ('output' in result && typeof result.output === 'string') {
+      result.output = result.output.trim();
+    }
+
+    return result;
+  });
 
 export const runEslintTests = (
   testName: string,
@@ -25,6 +30,9 @@ export const runEslintTests = (
     invalid = [],
   }: TestInput,
 ) => {
+  const validTestCases = trimTestInput(valid) as unknown as Array<string | { code: string }>;
+  const invalidTestCases = trimTestInput(invalid) as unknown as Array<string | { code: string }>;
+
   run({
     name: testName,
     rule,
@@ -32,7 +40,7 @@ export const runEslintTests = (
       ecmaVersion: 2020,
       sourceType: 'module',
     },
-    valid: trimTestInput(valid),
-    invalid: trimTestInput(invalid),
+    valid: validTestCases,
+    invalid: invalidTestCases,
   });
 };

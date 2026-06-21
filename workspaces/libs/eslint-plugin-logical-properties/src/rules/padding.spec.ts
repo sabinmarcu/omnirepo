@@ -44,10 +44,8 @@ describe('Padding Rule', () => {
       ] as const;
       const source = `\`${a} ${b}\``;
       const results = [
-        `"paddingBlockStart":\`${a}\``,
-        `"paddingBlockEnd":\`${a}\``,
-        `"paddingInlineStart":\`${b}\``,
-        `"paddingInlineEnd":\`${b}\``,
+        `"paddingBlock":\`${a}\``,
+        `"paddingInline":\`${b}\``,
       ];
       const test = {
         code: `style({padding: ${source}})`,
@@ -68,12 +66,11 @@ describe('Padding Rule', () => {
         '${a + 1}', '${b + 2}', '${c + 3}',
 
       ] as const;
-      const source = `\`${a} ${c} ${b}\``;
+      const source = `\`${a} ${b} ${c}\``;
       const results = [
         `"paddingBlockStart":\`${a}\``,
-        `"paddingInlineStart":\`${c}\``,
-        `"paddingInlineEnd":\`${c}\``,
-        `"paddingBlockEnd":\`${b}\``,
+        `"paddingInline":\`${b}\``,
+        `"paddingBlockEnd":\`${c}\``,
       ];
       const test = {
         code: `style({padding: ${source}})`,
@@ -94,10 +91,8 @@ describe('Padding Rule', () => {
       ] as const;
       const source = `\`${a} ${b}\``;
       const results = [
-        `"paddingBlockStart":\`${a}\``,
-        `"paddingBlockEnd":\`${a}\``,
-        `"paddingInlineStart":\`${b}\``,
-        `"paddingInlineEnd":\`${b}\``,
+        `"paddingBlock":\`${a}\``,
+        `"paddingInline":\`${b}\``,
       ];
       const test = {
         code: `style({padding: ${source}})`,
@@ -118,10 +113,8 @@ describe('Padding Rule', () => {
       ] as const;
       const source = `\`${a} ${b}\``;
       const results = [
-        `"paddingBlockStart":\`${a}\``,
-        `"paddingBlockEnd":\`${a}\``,
-        `"paddingInlineStart":\`${b}\``,
-        `"paddingInlineEnd":\`${b}\``,
+        `"paddingBlock":\`${a}\``,
+        `"paddingInline":\`${b}\``,
       ];
       const test = {
         code: `style({padding: ${source}})`,

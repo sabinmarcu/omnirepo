@@ -1,5 +1,6 @@
 import type { Rule } from 'eslint';
 import type {
+  DirectionalRuleShorthandPairMappings,
   DirectionalTransformerFactory,
   ValidProperty,
 } from '../types.js';
@@ -18,8 +19,8 @@ export const generateDirectionalShorthandError = (
 );
 
 export const expandShorthandOptions = (
-  options: Array<Array<string>>,
-  values: Array<string>,
+  options: ReadonlyArray<ReadonlyArray<string>>,
+  values: ReadonlyArray<string>,
   isTemplateString = false,
 ) => {
   const results: string[] = [];
@@ -40,12 +41,12 @@ const getPropertyValues = (
   context: Rule.RuleContext,
   property: ValidProperty,
 ) => {
-  const sourceCode = context.sourceCode.getText(property.value as any);
+  const sourceCode = context.sourceCode.getText(property.value);
   if (!/^["'`].*["'`]$/.test(sourceCode)) {
     return {
       isTemplateString: false,
-      values: [sourceCode] as unknown as string[],
-      replacements: [] as unknown as [string, string][],
+      values: [sourceCode],
+      replacements: [] as [string, string][],
     } as const;
   }
 
@@ -56,7 +57,7 @@ const getPropertyValues = (
   );
   const { output, tokens } = tokenizeString(stringToTokenize);
 
-  const values = output.split(' ');
+  const values = output.trim().split(/\s+/).filter(Boolean);
   return {
     isTemplateString: true,
     values,
@@ -64,11 +65,39 @@ const getPropertyValues = (
   } as const;
 };
 
+const applyTokenReplacements = (
+  input: string,
+  replacements: [string, string][],
+) => {
+  let output = input;
+  for (const [target, value] of replacements) {
+    output = output.replace(target, value);
+  }
+  return output;
+};
+
+const expandPairMappingOptions = (
+  pairMappings: DirectionalRuleShorthandPairMappings,
+  values: string[],
+  isTemplateString: boolean,
+) => {
+  const [first, second] = values;
+  return expandShorthandOptions(
+    [
+      [...pairMappings[0]],
+      [...pairMappings[1]],
+    ],
+    [first, second],
+    isTemplateString,
+  );
+};
+
 export const directionalShorthandTransformerFactory: DirectionalTransformerFactory = ({
   node,
   context,
   config: {
     shorthands = {},
+    shorthandPairMappings = {},
   },
 }) => (
   property,
@@ -79,25 +108,33 @@ export const directionalShorthandTransformerFactory: DirectionalTransformerFacto
     replacements,
     isTemplateString,
   } = getPropertyValues(context, property);
-  const options = shorthands[propertyName][values.length - 1];
-  if (!options) {
-    throw new MustDisablePropertyError();
+  if (values.length <= 1) {
+    return;
   }
-  const sourceText = context.sourceCode.getText(property as any);
-  const results = expandShorthandOptions(options, values, isTemplateString)
-    .map((it) => {
-      let final = it;
-      for (const [target, value] of replacements) {
-        final = final.replace(target, value);
-      }
-      return final;
-    });
+
+  let results: string[];
+  if (values.length === 2 && shorthandPairMappings[propertyName]) {
+    results = expandPairMappingOptions(
+      shorthandPairMappings[propertyName],
+      values,
+      isTemplateString,
+    );
+  } else {
+    const options = shorthands[propertyName]?.[values.length - 1];
+    if (!options) {
+      throw new MustDisablePropertyError();
+    }
+    results = expandShorthandOptions(options, values, isTemplateString);
+  }
+
+  const sourceText = context.sourceCode.getText(property);
+  const replacedResults = results.map((it) => applyTokenReplacements(it, replacements));
 
   context.report({
-    node: node as any,
-    message: generateDirectionalShorthandError(sourceText, results),
+    node,
+    message: generateDirectionalShorthandError(sourceText, replacedResults),
     fix(fixer) {
-      return fixer.replaceText(property, results.join(','));
+      return fixer.replaceText(property, replacedResults.join(','));
     },
   });
 };

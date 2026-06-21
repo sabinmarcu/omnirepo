@@ -1,0 +1,3 @@
+releases:
+  "@sabinmarcu/eslint-config": minor
+  eslint-plugin-logical-properties: minor

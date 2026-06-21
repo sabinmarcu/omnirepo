@@ -10,14 +10,7 @@ export const mappings = {
 
 export const shorthands = {
   borderRadius: [
-    [
-      [
-        mappings.borderTopLeftRadius,
-        mappings.borderTopRightRadius,
-        mappings.borderBottomRightRadius,
-        mappings.borderBottomLeftRadius,
-      ],
-    ],
+    [[mappings.borderTopLeftRadius, mappings.borderBottomRightRadius]],
     [
       [mappings.borderTopLeftRadius, mappings.borderBottomRightRadius],
       [mappings.borderTopRightRadius, mappings.borderBottomLeftRadius],
@@ -36,9 +29,17 @@ export const shorthands = {
   ],
 } as const satisfies DirectionalRuleConfig['shorthands'];
 
+export const shorthandPairMappings = {
+  borderRadius: [
+    [mappings.borderTopLeftRadius, mappings.borderBottomRightRadius],
+    [mappings.borderTopRightRadius, mappings.borderBottomLeftRadius],
+  ],
+} as const satisfies DirectionalRuleConfig['shorthandPairMappings'];
+
 export const ruleConfig = {
   mappings,
   shorthands,
+  shorthandPairMappings,
 } as const satisfies DirectionalRuleConfig;
 
 export default generateDirectionalRules(ruleConfig);

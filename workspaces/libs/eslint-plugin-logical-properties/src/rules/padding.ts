@@ -6,25 +6,20 @@ export const mappings = {
   paddingRight: 'paddingInlineEnd',
   paddingTop: 'paddingBlockStart',
   paddingBottom: 'paddingBlockEnd',
+  block: 'paddingBlock',
+  inline: 'paddingInline',
 };
 
 export const shorthands = {
   padding: [
-    [
-      [
-        mappings.paddingTop,
-        mappings.paddingBottom,
-        mappings.paddingLeft,
-        mappings.paddingRight,
-      ],
-    ],
+    [[mappings.paddingTop, mappings.paddingBottom]],
     [
       [mappings.paddingTop, mappings.paddingBottom],
       [mappings.paddingLeft, mappings.paddingRight],
     ],
     [
       [mappings.paddingTop],
-      [mappings.paddingLeft, mappings.paddingRight],
+      [mappings.inline],
       [mappings.paddingBottom],
     ],
     [
@@ -36,9 +31,17 @@ export const shorthands = {
   ],
 } satisfies DirectionalRuleConfig['shorthands'];
 
+export const shorthandPairMappings = {
+  padding: [
+    [mappings.block],
+    [mappings.inline],
+  ],
+} as const satisfies DirectionalRuleConfig['shorthandPairMappings'];
+
 export const ruleConfig = {
   mappings,
   shorthands,
+  shorthandPairMappings,
 } satisfies DirectionalRuleConfig;
 
 export default generateDirectionalRules(ruleConfig);

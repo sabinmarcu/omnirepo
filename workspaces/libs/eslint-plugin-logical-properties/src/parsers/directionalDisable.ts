@@ -15,7 +15,7 @@ export const directionalDisableTransformerFactory: DirectionalTransformerFactory
 ) => {
   const propertyName = getValidPropertyName(property)!;
   context.report({
-    node: node as any,
+    node,
     message: generateDirectionalDisableError(propertyName),
   });
 };

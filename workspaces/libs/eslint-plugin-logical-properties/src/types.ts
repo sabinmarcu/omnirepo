@@ -10,11 +10,16 @@ import type { configSchema } from './config.js';
 import type { JSONSchemaToType } from './config.type.js';
 
 export type DirectionalRuleShorthand = Array<Array<Array<string>>>;
+export type DirectionalRuleShorthandPairMappings = readonly [
+  readonly string[],
+  readonly string[],
+];
 
 export type DirectionalRuleConfig = {
   mappings?: Record<string, string>,
   disabled?: string | string[],
   shorthands?: Record<string, DirectionalRuleShorthand>,
+  shorthandPairMappings?: Record<string, DirectionalRuleShorthandPairMappings>,
   shorthandMappings?: Record<string, string[]>,
   values?: Record<string, Record<string, string>>,
 };

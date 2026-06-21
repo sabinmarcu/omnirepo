@@ -63,7 +63,7 @@ export const packer = {
       }, undefined, 2));
     }
   },
-  pack: (input: any) => {
+  pack: (input: unknown) => {
     const stringified = JSON.stringify(input);
     const normalized = normalizePackOutput(
       normalizePackOutput(stringified, '`'),
@@ -98,7 +98,7 @@ export const generateObjectStringFromPath = (
     return packer.pack(newArray);
   }
 
-  const newObject: any = { [current]: next };
+  const newObject: Record<string, unknown> = { [current]: next };
   return packer.pack(newObject);
 };
 
@@ -127,8 +127,8 @@ export type ObjectStringTestCaseOptions = (
   & { resolvers: string[] | readonly string[] }
 );
 export type ObjectStringTestCase = {
-  input: Record<any, any> | string,
-  output?: Record<any, any> | string,
+  input: Record<string, unknown> | string,
+  output?: Record<string, unknown> | string,
 
 };
 
@@ -165,7 +165,7 @@ export const generateObjectStringTestCases = (
   for (const [index, code] of Object.entries(inputObjectStrings)) {
     result.push({
       code,
-      output: (outputObjectStrings as any)[index],
+      output: outputObjectStrings[Number(index)],
     });
   }
   return result;

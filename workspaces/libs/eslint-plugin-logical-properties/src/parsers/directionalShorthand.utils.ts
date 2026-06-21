@@ -11,7 +11,10 @@ import {
 export const directionalShorthandTestGenerator: DirectionalTransformerTestsFactory = ({
   testName: inputTestName,
   options: inputOptions,
-  config: { shorthands },
+  config: {
+    shorthands,
+    shorthandPairMappings = {},
+  },
 }) => {
   if (!shorthands) {
     return {
@@ -35,8 +38,11 @@ export const directionalShorthandTestGenerator: DirectionalTransformerTestsFacto
       resolvers,
     });
     for (const [property, shorthandOptions] of Object.entries(shorthands)) {
-      for (const shorthandOption of shorthandOptions) {
-        const ruleValues = Array.from({ length: shorthandOption.length }).fill(0).map((_, index) => `value-${index}`);
+      for (const [optionIndex, shorthandOption] of Object.entries(shorthandOptions)) {
+        const valueCount = Number(optionIndex) + 1;
+        const ruleValues = Array.from({ length: shorthandOption.length })
+          .fill(0)
+          .map((_, valueIndex) => `value-${valueIndex}`);
         const quotesSet = [
           '"',
           '\'',
@@ -47,19 +53,41 @@ export const directionalShorthandTestGenerator: DirectionalTransformerTestsFacto
           for (const values of valuesSet) {
             const input = values.join(' ');
             const source = `"${property}":${quote}${input}${quote}`;
-            const results = expandShorthandOptions(shorthandOption, values, true);
-            const invalidInputs = testCaseGenerator({
-              input: `{${source}}`,
-              output: `{${results.join(',')}}`,
-            });
-            invalid.push(
-              ...invalidInputs.map(({ code, output }) => ({
-                code,
-                options,
-                errors: [{ message: generateDirectionalShorthandError(source, results) }],
-                output,
-              })),
-            );
+            if (valueCount <= 1) {
+              const validInputs = testCaseGenerator({
+                input: `{${source}}`,
+              });
+              valid.push(
+                ...validInputs.map(({ code }) => ({
+                  code,
+                  options,
+                })),
+              );
+            } else {
+              const pairMappings = shorthandPairMappings[property];
+              const results = valueCount === 2 && pairMappings
+                ? expandShorthandOptions(
+                  [
+                    [...pairMappings[0]],
+                    [...pairMappings[1]],
+                  ],
+                  values,
+                  true,
+                )
+                : expandShorthandOptions(shorthandOption, values, true);
+              const invalidInputs = testCaseGenerator({
+                input: `{${source}}`,
+                output: `{${results.join(',')}}`,
+              });
+              invalid.push(
+                ...invalidInputs.map(({ code, output }) => ({
+                  code,
+                  options,
+                  errors: [{ message: generateDirectionalShorthandError(source, results) }],
+                  output,
+                })),
+              );
+            }
           }
         }
       }
