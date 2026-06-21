@@ -14,6 +14,8 @@ user-invocable: true
 - When a change touches shared workspace configuration.
 - When you need quick go or no-go confidence for merge readiness.
 
+Before assuming how linting or testing works, read [TESTING_AND_LINTING.md](../../../TESTING_AND_LINTING.md).
+
 ## Standard Workflow
 
 1. Install deterministically:
@@ -31,6 +33,8 @@ If the user provides a project id `<id>`, run targeted checks first:
 2. `yarn moon run <id>:lint`
 3. `yarn moon run <id>:test`
 
+Assume `lint` depends on `build`, and `test` routes through root Vitest workspace mode using the workspace-specific `VITEST_PROJECT` value from `.env`.
+
 Escalate to full `yarn moon ci` when:
 
 - shared configs changed,
@@ -45,6 +49,8 @@ Escalate to full `yarn moon ci` when:
   - fix TypeScript/build issues before expecting lint to pass.
 - TS config drift:
   - rerun `yarn tscmono` when presets or tsconfig generation inputs changed.
+- Targeted Vitest mismatch:
+  - verify the workspace `.env` contains the expected `VITEST_PROJECT`; rerun `yarn constraints` if the workspace was added or renamed.
 
 ## Reporting Format
 
@@ -58,6 +64,7 @@ Return results in this order:
 
 ## References
 
+- Quality workflow: [TESTING_AND_LINTING.md](../../../TESTING_AND_LINTING.md)
 - CI workflow: [\.github/workflows/ci.yml](../../workflows/ci.yml)
 - Shared Moon tasks: [\.moon/tasks.yml](../../../.moon/tasks.yml)
 - Root task orchestration: [moon.yml](../../../moon.yml)

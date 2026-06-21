@@ -7,6 +7,7 @@ This repository is a Yarn 4 + Moon monorepo with TypeScript project references a
 - Core orchestration is done by Moon (`.moon/workspace.yml`, root `moon.yml`, `.moon/tasks.yml`), not by ad-hoc npm scripts.
 - Dependency and manifest consistency are enforced by Yarn constraints (`yarn.config.cjs`).
 - TypeScript config generation and preset alignment are managed by `tscmono` (`.tscmonorc.yml`).
+- Testing, linting, coverage, and their Moon execution paths are documented canonically in [TESTING_AND_LINTING.md](TESTING_AND_LINTING.md).
 - Package topology is explicit: `apps/*` (application projects) and `workspaces/*/*` (libraries, tooling, and private/internal packages).
 - Build defaults are inherited from `.moon/tasks.yml` (`tsc -b tsconfig.build.json`) and overridden in app projects where needed.
 - Publishing is centralized through Moon’s `publish` task (`yarn npm publish --tolerate-republish`) and CI, with versioning applied via `yarn version apply --all` when version-request files exist.
@@ -82,9 +83,13 @@ Root orchestration tasks live in root `moon.yml`:
 
 - ESLint flat config at root (`eslint.config.js`) extending workspace package `@sabinmarcu/eslint-config`
 - Vitest workspace setup (`vitest.workspace.mjs`)
+- Shared Moon `lint` depends on `~:build` and `eslint-config:build`; shared `test` routes through `root:testWorkspace` with `--project $VITEST_PROJECT`
+- Per-workspace `.env` files provide `VITEST_PROJECT` and are maintained by Yarn constraint logic in `yarn.config.cjs`
 - Husky hooks enforce commit and staged quality checks:
   - `commit-msg`: `yarn commitlint --edit $1`
   - `pre-commit`: affected lint+test and `yarn constraints`
+
+Canonical quality reference: [TESTING_AND_LINTING.md](TESTING_AND_LINTING.md)
 
 ## 3) Workspace Inventory Grouped By Path And Purpose
 

@@ -22,6 +22,9 @@ Use root scripts in [package.json](package.json) for common workflows.
 - Default library build is TypeScript project build: `tsc -b tsconfig.build.json` (from [\.moon/tasks.yml](.moon/tasks.yml)).
 - Many apps override build/dev commands in local `moon.yml` files (framework-native builds for Next.js, Vite, Docusaurus).
 - `lint` depends on build tasks, so TypeScript errors may block lint execution.
+- Testing and linting are documented canonically in [TESTING_AND_LINTING.md](TESTING_AND_LINTING.md). Read it before changing quality tooling or assuming how `lint`, `test`, `coverage`, or `moon ci` behave.
+- Shared `test` tasks route through root Vitest workspace execution using `--project $VITEST_PROJECT` loaded from each workspace `.env` file.
+- Shared `lint` tasks run `eslint` and depend on both the local build and `eslint-config:build`.
 
 ## TypeScript Conventions
 
@@ -51,6 +54,7 @@ Use root scripts in [package.json](package.json) for common workflows.
 
 ## High-Value References
 
+- Quality workflow: [TESTING_AND_LINTING.md](TESTING_AND_LINTING.md)
 - Architecture overview: [ARCHITECTURE.md](ARCHITECTURE.md)
 - Styling reference: [STYLING.md](STYLING.md)
 - Root task defaults: [\.moon/tasks.yml](.moon/tasks.yml)
