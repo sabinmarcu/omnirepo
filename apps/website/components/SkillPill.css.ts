@@ -8,7 +8,7 @@ const skillPillBorderColor = createVar();
 export const skillPillStyle = style({
   display: 'inline-grid',
   placeItems: 'center',
-  paddingInline: theme.grid.xs,
+  paddingInline: theme.grid.s,
 
   borderInlineStart: `solid 1px ${skillPillBorderColor}`,
   borderInlineEnd: `solid 1px ${skillPillBorderColor}`,

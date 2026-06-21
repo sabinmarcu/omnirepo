@@ -58,7 +58,7 @@ export const navigationStyles = recipe({
       [minor, minor],
     ]),
 
-    fontSize: theme.grid.xxl,
+    fontSize: theme.grid.l,
   },
 });
 
@@ -117,7 +117,7 @@ globalStyle(`${navigationSelector} > section`, {
   vars: {
     [navigationBlendPercent]: '50%',
     [navigationBackground]: `color-mix(in hsl, ${theme.colors.primary.base} ${navigationBlendPercent}, ${theme.colors.background.page})`,
-    [navigationBorderRadius]: theme.grid.xxs,
+    [navigationBorderRadius]: '3px',
   },
 });
 
@@ -134,7 +134,9 @@ globalStyle(`${animatedNavigationSelector} > section`, {
 });
 
 globalStyle(`:where(${navigationSelector} > section > *)`, {
+  paddingBlock: `calc(${navigationSpacing} * 0.75)`,
   paddingInline: navigationSpacing,
+  lineHeight: '1.2em',
   color: theme.colors.background.text,
   inlineSize: '100%',
   blockSize: '100%',

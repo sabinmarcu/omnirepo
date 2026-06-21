@@ -19,7 +19,7 @@ export const cardWrapperStyle = style({
 });
 
 export const cardTitleStyle = style({
-  fontSize: `calc(${theme.grid.xxl} * 1.5)`,
+  fontSize: `calc(${theme.grid.xl} * 1.5)`,
 
   paddingBlock: theme.grid.s,
   paddingInline: theme.grid.m,

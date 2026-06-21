@@ -87,13 +87,13 @@ globalStyle(`${pageTOCLayoutTOCStyles} nav`, {
   background: theme.colors.background.depressed,
 
   vars: {
-    [tocMargin]: theme.grid.xxl,
+    [tocMargin]: theme.grid.xl,
     [tocPadding]: theme.grid.m,
   },
 });
 
 globalStyle(`${pageTOCLayoutTOCStyles} h2`, {
-  fontSize: theme.grid.xxl,
+  fontSize: theme.grid.xl,
 
   background: theme.colors.background.depressed,
   borderBlockEnd: `solid 1px ${theme.colors.primary.muted}`,

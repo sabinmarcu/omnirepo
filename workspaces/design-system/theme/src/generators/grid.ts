@@ -20,14 +20,12 @@ const fibonacciSequence = (index: number) => {
   return current;
 };
 
-const gridOfIndex = (index: number) => {
-  const current = fibonacciSequence(index);
-  return [current * -1, current];
-};
-
 const rem = (input: number) => (`${input / defaultRemSize}rem`);
 
-export const gridGenerator = <Amount extends number = 3>(
+type GridPairGenerator = (index: number, inputSize: number) => [number, number];
+
+const createGridGenerator = <Amount extends number = 3>(
+  pairGenerator: GridPairGenerator,
   amount: Amount = 3 as any,
 ) => {
   const fixedGenerator = ((() => {
@@ -44,11 +42,11 @@ export const gridGenerator = <Amount extends number = 3>(
 
       for (const index of Array.from({ length: amount }).map((_, index_) => index_)) {
         const namePrefix = Array.from({ length: index }).fill('x').join('');
-        const [xs, xl] = gridOfIndex(5 + index);
+        const [smallValue, largeValue] = pairGenerator(index, inputSize);
         result = {
           ...result,
-          [`${namePrefix}s`]: rem(xs + inputSize),
-          [`${namePrefix}l`]: rem(xl + inputSize),
+          [`${namePrefix}s`]: rem(smallValue),
+          [`${namePrefix}l`]: rem(largeValue),
         };
       }
 
@@ -60,3 +58,24 @@ export const gridGenerator = <Amount extends number = 3>(
   })()) satisfies ThemeGenerator<number>;
   return fixedGenerator;
 };
+
+const fibonacciGridPair: GridPairGenerator = (index) => {
+  const current = fibonacciSequence(5 + index);
+  return [defaultRemSize - current, defaultRemSize + current];
+};
+
+const eightPointGridPair: GridPairGenerator = (index, inputSize) => {
+  const smallValue = inputSize / (2 ** (index + 1));
+  const largeValue = inputSize + (inputSize / 2) * (index + 1);
+  return [smallValue, largeValue];
+};
+
+export const fibonacciGridGenerator = <Amount extends number = 3>(
+  amount: Amount = 3 as any,
+) => createGridGenerator(fibonacciGridPair, amount);
+
+export const eightPointGridGenerator = <Amount extends number = 3>(
+  amount: Amount = 3 as any,
+) => createGridGenerator(eightPointGridPair, amount);
+
+export const gridGenerator = eightPointGridGenerator;

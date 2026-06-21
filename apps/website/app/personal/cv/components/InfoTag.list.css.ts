@@ -5,6 +5,6 @@ export const infoTagListStyles = style({
   display: 'flex',
   flexFlow: 'row wrap',
   justifyContent: 'space-between',
-  gap: theme.grid.xxl,
+  gap: theme.grid.xl,
   marginBlock: theme.grid.m,
 });

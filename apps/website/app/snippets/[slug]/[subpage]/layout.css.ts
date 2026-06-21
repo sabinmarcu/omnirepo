@@ -11,7 +11,7 @@ import {
 
 export const snippetLayoutPageStyles = style({
   vars: {
-    [codeSectionSpacing]: theme.grid.xxl,
+    [codeSectionSpacing]: theme.grid.xl,
   },
 });
 

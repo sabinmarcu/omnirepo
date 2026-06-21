@@ -12,7 +12,7 @@ export const landingPageList = style({
   display: 'grid',
   gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
 
-  marginBlockStart: theme.grid.xxl,
+  marginBlockStart: theme.grid.xl,
 
   paddingBlockStart: listSpacing,
   paddingBlockEnd: listSpacing,
@@ -22,6 +22,6 @@ export const landingPageList = style({
   gap: listSpacing,
 
   vars: {
-    [listSpacing]: theme.grid.xl,
+    [listSpacing]: theme.grid.l,
   },
 });

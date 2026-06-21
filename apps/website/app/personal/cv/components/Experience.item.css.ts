@@ -58,7 +58,7 @@ globalStyle(grids.extend('metadata', experienceItemStyles), {
   flexFlow: 'row nowrap',
   alignItems: 'center',
   justifyContent: 'space-between',
-  gap: theme.grid.xxl,
+  gap: theme.grid.xl,
 });
 
 globalStyle(grids.extend('content', experienceItemStyles), {
@@ -76,12 +76,12 @@ globalStyle(`${grids.extend('content', experienceItemStyles)} h3:not(:first-chil
 
 globalStyle(`${grids.extend('content', experienceItemStyles)} h3`, {
   marginBlockEnd: theme.grid.xxs,
-  fontSize: theme.grid.xl,
+  fontSize: theme.grid.l,
 });
 
 globalStyle(grids.extend('title', experienceItemStyles), {
   lineHeight: '0.75em',
-  fontSize: theme.grid.xxl,
+  fontSize: theme.grid.xl,
 });
 
 for (const columns of Array.from({ length: 5 }).fill(0).map((_, index) => index)) {

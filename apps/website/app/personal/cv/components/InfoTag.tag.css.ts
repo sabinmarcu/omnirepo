@@ -7,7 +7,7 @@ import {
 
 export const iconSize = createVar();
 export const infoTagStyles = style({
-  gap: theme.grid.xs,
+  gap: theme.grid.s,
   vars: {
     [iconSize]: '1.5em',
   },

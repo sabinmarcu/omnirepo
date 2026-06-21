@@ -13,7 +13,7 @@ export const footerStyles = style({
   paddingBlockStart: '1cqh',
   paddingBlockEnd: '5cqh',
   color: theme.colors.primary.muted,
-  gap: theme.grid.xs,
+  gap: theme.grid.s,
   borderBlockStart: `dashed 2px ${theme.colors.background.elevated}`,
 });
 

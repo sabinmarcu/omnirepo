@@ -6,7 +6,7 @@ export const languageItemStyles = style({
   flexFlow: 'row nowrap',
   alignItems: 'center',
   justifyContent: 'space-between',
-  fontSize: theme.grid.xxl,
+  fontSize: theme.grid.xl,
   fontWeight: 'bold',
   lineHeight: '1.25em',
 });

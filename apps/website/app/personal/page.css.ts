@@ -11,6 +11,6 @@ globalStyle(`${bioPageStyles} p`, {
 });
 
 globalStyle(`${bioPageStyles} hr`, {
-  marginBlock: theme.grid.xxl,
+  marginBlock: theme.grid.xl,
   borderStyle: 'dashed',
 });

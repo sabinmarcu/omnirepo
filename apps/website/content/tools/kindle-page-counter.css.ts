@@ -29,7 +29,7 @@ export const wrapperStyles = style({
   flexFlow: 'column nowrap',
   containerType: 'inline-size',
   inlineSize: 'clamp(500px, 75cqmin, 100cqw)',
-  fontSize: theme.grid.xl,
+  fontSize: theme.grid.l,
   vars: {
     [spacing]: theme.grid.m,
   },

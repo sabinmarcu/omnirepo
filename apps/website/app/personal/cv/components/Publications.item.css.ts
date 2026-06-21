@@ -7,6 +7,6 @@ import {
 export const publicationsItemStyle = style({});
 
 globalStyle(`${publicationsItemStyle} > p`, {
-  fontSize: theme.grid.xxl,
+  fontSize: theme.grid.xl,
   lineHeight: '1em',
 });

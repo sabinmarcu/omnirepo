@@ -9,7 +9,7 @@ export const codeSectionSpacing = createVar();
 export const codeSectionStyle = style({});
 
 globalStyle(`${codeSectionStyle} > h2`, {
-  fontSize: `calc(${theme.grid.xxl} * 1.25)`,
+  fontSize: `calc(${theme.grid.xl} * 1.25)`,
 });
 
 globalStyle(`${codeSectionStyle}:not(:first-of-type) > h2`, {

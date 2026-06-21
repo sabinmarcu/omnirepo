@@ -9,7 +9,7 @@ import { recipe } from '@vanilla-extract/recipes';
 export const gridColumns = createVar();
 const gridContainerStyles: Parameters<typeof globalStyle>[1] = {
   columns: gridColumns,
-  paddingBlock: theme.grid.xs,
+  paddingBlock: theme.grid.s,
 } as const;
 
 export const gridStyles = recipe({
@@ -24,7 +24,7 @@ export const gridStyles = recipe({
         display: 'grid',
         columns: 'initial',
         gridTemplateColumns: `repeat(${gridColumns}, 1fr)`,
-        gap: theme.grid.xxl,
+        gap: theme.grid.xl,
       },
     },
   },
@@ -47,7 +47,7 @@ globalStyle(`${gridStyles.classNames.base} > *`, {
 
 globalStyle(`${gridStyles.classNames.base}:not(${gridStyles.classNames.variants.grid.true}) :where(ul, ol)`, {
   ...gridContainerStyles,
-  marginInlineStart: theme.grid.xs,
+  marginInlineStart: theme.grid.s,
 });
 
 globalStyle(`${gridStyles.classNames.base} :where(ul, ol) li`, {

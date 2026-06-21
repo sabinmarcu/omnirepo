@@ -14,7 +14,7 @@ globalStyle(cvPageStyles, {
 
 globalStyle(`${cvPageStyles} ${cvPageBioStyles} h1`, {
   ...mobileMedia({
-    fontSize: `calc(${theme.grid.xxl} * 3)`,
+    fontSize: `calc(${theme.grid.xl} * 3)`,
     lineHeight: '0.8em',
     paddingBlockEnd: '0.2em',
   }),
@@ -22,6 +22,6 @@ globalStyle(`${cvPageStyles} ${cvPageBioStyles} h1`, {
 
 globalStyle(`${cvPageStyles} ${cvPageBioStyles} p`, {
   ...mobileMedia({
-    fontSize: theme.grid.xl,
+    fontSize: theme.grid.l,
   }),
 });

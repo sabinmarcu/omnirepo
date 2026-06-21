@@ -21,7 +21,7 @@ export const pageLayoutCodeStyles = recipe({
   },
   base: {
     background: theme.colors.background.depressed,
-    paddingBlock: theme.grid.xxl,
+    paddingBlock: theme.grid.xl,
     marginInline: 'calc(0px - (100vw - 100cqw) / 2)',
     vars: {
       [contentSize]: '100cqw',

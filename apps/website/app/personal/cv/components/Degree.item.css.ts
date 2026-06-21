@@ -11,7 +11,7 @@ export const degreeItemStyles = style({});
 const overrideSelector = `${experienceItemStyles}${degreeItemStyles}`;
 globalStyle(grids.extend('title', overrideSelector), {
   flexFlow: 'column nowrap',
-  gap: theme.grid.xs,
+  gap: theme.grid.s,
 });
 
 globalStyle(`${grids.extend('title', overrideSelector)} span:last-of-type:not(:only-child)`, {

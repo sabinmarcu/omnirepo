@@ -9,7 +9,7 @@ export const experienceItemSkillsStyle = style({
   flexFlow: 'row wrap',
   justifyContent: 'flex-start',
   alignItems: 'center',
-  gap: theme.grid.xs,
+  gap: theme.grid.s,
   marginBlockStart: theme.grid.m,
 });
 

@@ -32,7 +32,7 @@ export const showcaseRootContainerStyles = style({
 export const showcaseListStyles = style({
   display: 'flex',
   flexFlow: 'row nowrap',
-  gap: theme.grid.xxl,
+  gap: theme.grid.xl,
 });
 // #endregion
 

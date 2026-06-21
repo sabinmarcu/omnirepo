@@ -61,10 +61,10 @@ export const wrapperStyle = style({
 
   gap: spacing,
 
-  borderStartStartRadius: theme.grid.xxs,
-  borderStartEndRadius: theme.grid.xxs,
-  borderEndEndRadius: theme.grid.xxs,
-  borderEndStartRadius: theme.grid.xxs,
+  borderStartStartRadius: '3px',
+  borderStartEndRadius: '3px',
+  borderEndEndRadius: '3px',
+  borderEndStartRadius: '3px',
 
   position: 'relative',
   alignItems: 'center',

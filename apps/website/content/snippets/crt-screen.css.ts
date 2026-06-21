@@ -157,7 +157,7 @@ export const crtContentContainerStyles = style({
 
 // #region ignore
 globalStyle(`${crtContentContainerStyles} p`, {
-  marginBlock: theme.grid.xxl,
+  marginBlock: theme.grid.xl,
 });
 globalStyle(`${crtContentContainerStyles} p:first-of-type`, {
   marginBlockStart: 0,

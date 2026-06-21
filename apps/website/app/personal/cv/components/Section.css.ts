@@ -6,6 +6,6 @@ import {
 export const sectionStyles = style({
   float: 'inline-end',
   maxInlineSize: '30cqw',
-  marginInlineStart: theme.grid.xxl,
-  marginBlockEnd: theme.grid.xxl,
+  marginInlineStart: theme.grid.xl,
+  marginBlockEnd: theme.grid.xl,
 });
