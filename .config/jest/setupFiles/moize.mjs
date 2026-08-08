@@ -8,3 +8,12 @@ vi.mock('moize', async (importOriginal) => {
     default: patchedMoize,
   };
 });
+
+vi.mock('moize/mjs/index.mjs', async (importOriginal) => {
+  const { mockMoize } = await vi.importActual('@sabinmarcu/utils-test');
+  const { default: moizeActual } = await importOriginal();
+  const patchedMoize = mockMoize(moizeActual);
+  return {
+    default: patchedMoize,
+  };
+});

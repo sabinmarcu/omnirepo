@@ -3,7 +3,8 @@ import {
   readJsonSync,
 } from '@sabinmarcu/utils-fs';
 import type { PackageJson } from 'type-fest';
-import moizeImport, { type Moize } from 'moize';
+// eslint-disable-next-line import/extensions -- Moize's ESM entry requires its .mjs extension.
+import moize from 'moize/mjs/index.mjs';
 import {
   resolve as resolvePackageJson,
   resolveSync as resolvePackageJsonSync,
@@ -13,8 +14,6 @@ import type {
   PathResolverFunction,
   PathResolverFunctionAsync,
 } from '../../types.js';
-
-const moize = moizeImport as unknown as Moize;
 
 /**
  * Resolve a path to the package.json file (async)

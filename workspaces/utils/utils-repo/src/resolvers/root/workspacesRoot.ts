@@ -1,4 +1,5 @@
-import moizeImport, { type Moize } from 'moize';
+// eslint-disable-next-line import/extensions -- Moize's ESM entry requires its .mjs extension.
+import moize from 'moize/mjs/index.mjs';
 import {
   predicate as testPath,
 } from '../../predicates/workspacesRoot.js';
@@ -8,8 +9,6 @@ import type {
   PathResolverFunctionAsync,
 } from '../../types.js';
 import { walker } from '../../utils/walkFs.js';
-
-const moize = moizeImport as unknown as Moize;
 
 /**
  * Resolve a path to the .git folder

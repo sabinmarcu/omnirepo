@@ -1,4 +1,5 @@
-import type { Moize } from 'moize/index.d.ts';
+// eslint-disable-next-line import/extensions -- Moize's ESM entry requires its .mjs extension.
+import type { Moize } from 'moize/mjs/index.mjs';
 
 const fix = (returnValue: any) => returnValue;
 

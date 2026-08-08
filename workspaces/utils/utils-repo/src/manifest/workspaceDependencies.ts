@@ -1,11 +1,10 @@
-import moizeImport, { type Moize } from 'moize';
+// eslint-disable-next-line import/extensions -- Moize's ESM entry requires its .mjs extension.
+import moize from 'moize/mjs/index.mjs';
 import type { PackageJson } from 'type-fest';
 import {
   allDependenciesOf,
   allDependenciesOfSync,
 } from './allDependencies.js';
-
-const moize = moizeImport as unknown as Moize;
 
 export const filterDependenciesByWorkspace = (
   dependencies: Record<string, string>,

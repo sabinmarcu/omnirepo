@@ -2,11 +2,10 @@ import {
   readJson,
   readJsonSync,
 } from '@sabinmarcu/utils-fs';
-import moizeImport, { type Moize } from 'moize';
+// eslint-disable-next-line import/extensions -- Moize's ESM entry requires its .mjs extension.
+import moize from 'moize/mjs/index.mjs';
 import type { PackageJson } from 'type-fest';
 import { resolveManifest } from '../resolvers/index.js';
-
-const moize = moizeImport as unknown as Moize;
 
 const manifestOfSyncRaw = (
   path: string,

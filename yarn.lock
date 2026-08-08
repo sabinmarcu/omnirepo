@@ -7155,7 +7155,7 @@ __metadata:
     glob: "npm:^8.0.3"
     jiti: "npm:^2.4.2"
     memfs: "npm:^3.4.12"
-    moize: "patch:moize@npm%3A6.1.4#~/.yarn/patches/moize-npm-6.1.4-85c2846283.patch"
+    moize: "npm:^6.1.7"
     typanion: "npm:^3.12.1"
     yaml: "npm:^2.5.0"
   bin:
@@ -7457,7 +7457,7 @@ __metadata:
     "@types/glob": "npm:^8"
     "@types/ramda": "npm:^0"
     glob: "npm:^8.0.3"
-    moize: "patch:moize@npm%3A6.1.4#~/.yarn/patches/moize-npm-6.1.4-85c2846283.patch"
+    moize: "npm:^6.1.7"
     ramda: "npm:^0.29.1"
   languageName: unknown
   linkType: soft
@@ -7479,7 +7479,7 @@ __metadata:
     "@types/glob": "npm:^8"
     glob: "npm:^8.0.3"
     memfs: "npm:^3.4.12"
-    moize: "patch:moize@npm%3A6.1.4#~/.yarn/patches/moize-npm-6.1.4-85c2846283.patch"
+    moize: "npm:^6.1.7"
     yaml: "npm:^2.5.0"
   languageName: unknown
   linkType: soft
@@ -10446,22 +10446,6 @@ __metadata:
   bin:
     JSONStream: ./bin.js
   checksum: 10c0/0f54694da32224d57b715385d4a6b668d2117379d1f3223dc758459246cca58fdc4c628b83e8a8883334e454a0a30aa198ede77c788b55537c1844f686a751f2
-  languageName: node
-  linkType: hard
-
-"a@npm:*":
-  version: 3.0.1
-  resolution: "a@npm:3.0.1"
-  dependencies:
-    a_mock: "npm:1.0.5"
-  checksum: 10c0/8fb90abd2d7b0f593b1e8f17d041eb3ea79807d73a366424b40bdc002e1c52d8d81f339d2c7b18fb0a8072de4b4083174e4418b527adca176c1268137ae4a8a6
-  languageName: node
-  linkType: hard
-
-"a_mock@npm:1.0.5":
-  version: 1.0.5
-  resolution: "a_mock@npm:1.0.5"
-  checksum: 10c0/5b7e59c82f25d5ddcddb29610a4b2e168aa9ba373a5819824d702c3659ade92cf5569355b9c718df1680a7087bbcf2db1014110c35b6f93ef5581f5c3dbc25fb
   languageName: node
   linkType: hard
 
@@ -20077,13 +20061,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"micro-memoize@npm:^4.0.11":
-  version: 4.0.14
-  resolution: "micro-memoize@npm:4.0.14"
-  checksum: 10c0/80c7f719edd4623ac3cd46e6ad3a70bd4d4495d2fe154e4f3435805d0038c01c4118e7ede9b37e77feea74ad94546c8437a066cc3dc7d835085d35482ca02c81
-  languageName: node
-  linkType: hard
-
 "micro-memoize@npm:^4.1.2":
   version: 4.2.0
   resolution: "micro-memoize@npm:4.2.0"
@@ -20923,16 +20900,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moize@npm:6.1.4":
-  version: 6.1.4
-  resolution: "moize@npm:6.1.4"
-  dependencies:
-    fast-equals: "npm:^3.0.1"
-    micro-memoize: "npm:^4.0.11"
-  checksum: 10c0/b809761de34d3f85d0b1be99fbe462122fca3dd1cfae7af968ab62387a829bf10150322af8ecfe6be1d8731c399c5d0016362370e2dd47025a02f58d2d9411c6
-  languageName: node
-  linkType: hard
-
 "moize@npm:^6.1.7":
   version: 6.1.7
   resolution: "moize@npm:6.1.7"
@@ -20940,16 +20907,6 @@ __metadata:
     fast-equals: "npm:^3.0.1"
     micro-memoize: "npm:^4.1.2"
   checksum: 10c0/769dd315b5e8f3a603341a3ed06787ee13ed301372d4f9a1fe56e290d79614bcb8002438648b4a1cc93473ec03954d30457bfb30b66adece94c8fa76c13b42b6
-  languageName: node
-  linkType: hard
-
-"moize@patch:moize@npm%3A6.1.4#~/.yarn/patches/moize-npm-6.1.4-85c2846283.patch":
-  version: 6.1.4
-  resolution: "moize@patch:moize@npm%3A6.1.4#~/.yarn/patches/moize-npm-6.1.4-85c2846283.patch::version=6.1.4&hash=9d5ee4"
-  dependencies:
-    fast-equals: "npm:^3.0.1"
-    micro-memoize: "npm:^4.0.11"
-  checksum: 10c0/304bf26b271dc4248e4335b841cf459bfb3e6c8e344a6806b75c0a9d50d5d11af3f0d28fbbd999a72309196caf7851d3e0d23009133ec42902a7ac2acc3713af
   languageName: node
   linkType: hard
 
@@ -24580,7 +24537,7 @@ __metadata:
     inquirer: "npm:8"
     minimist: "npm:^1.2.7"
     mkdist: "npm:^1.5.4"
-    moize: "patch:moize@npm%3A6.1.4#~/.yarn/patches/moize-npm-6.1.4-85c2846283.patch"
+    moize: "npm:^6.1.7"
     pako: "npm:^2.1.0"
     ts-node: "npm:^10.9.2"
     typescript: "npm:6.0.2"
