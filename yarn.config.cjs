@@ -149,6 +149,13 @@ async function ensureRequiredDependencies({ Yarn }) {
         if (workspace.ident === dependency) {
           continue;
         }
+        const hasDependency = [...Yarn.dependencies({ ident: dependency })]
+          .some(({ workspace: dependencyWorkspace }) => (
+            dependencyWorkspace.ident === workspace.ident
+          ));
+        if (hasDependency) {
+          continue;
+        }
         workspace.set(`${type}.${dependency}`, WORKSPACE_PROTOCOL_RANGE);
       }
     }

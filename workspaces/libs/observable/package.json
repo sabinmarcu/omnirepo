@@ -40,7 +40,6 @@
     "preset": "../../../.config/build.config.ts"
   },
   "devDependencies": {
-    "@sabinmarcu/types": "workspace:*",
     "@sabinmarcu/utils-test": "workspace:*"
   },
   "tscmono": {
@@ -54,6 +53,7 @@
     }
   },
   "dependencies": {
+    "@sabinmarcu/types": "workspace:*",
     "@sabinmarcu/utils-primitives": "workspace:*"
   },
   "repository": {

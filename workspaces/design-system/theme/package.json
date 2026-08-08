@@ -44,7 +44,6 @@
     "preset": "../../../.config/build.config.ts"
   },
   "devDependencies": {
-    "@sabinmarcu/types": "workspace:*",
     "@sabinmarcu/utils-test": "workspace:*"
   },
   "tscmono": {
@@ -77,6 +76,7 @@
   "homepage": "https:/sabinmarcu.dev/api/theme",
   "dependencies": {
     "@sabinmarcu/stylesheet": "workspace:*",
+    "@sabinmarcu/types": "workspace:*",
     "colorjs.io": "^0.5.2"
   }
 }

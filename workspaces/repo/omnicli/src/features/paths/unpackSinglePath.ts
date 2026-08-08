@@ -1,4 +1,4 @@
-import type { Split } from 'type-fest';
+import type { Split } from '@sabinmarcu/types';
 import { singlePathSeparator } from './constants.js';
 import type { SinglePathSeparator } from './types.js';
 
