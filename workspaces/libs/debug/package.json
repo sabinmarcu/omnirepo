@@ -42,12 +42,12 @@
   "dependencies": {
     "@sabinmarcu/config": "workspace:*",
     "@sabinmarcu/observable": "workspace:*",
+    "@sabinmarcu/types": "workspace:*",
     "micromatch": "^4.0.5",
     "ramda": "^0.29.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@sabinmarcu/types": "workspace:*",
     "@sabinmarcu/utils-test": "workspace:*",
     "@types/micromatch": "^4",
     "@types/ramda": "^0"

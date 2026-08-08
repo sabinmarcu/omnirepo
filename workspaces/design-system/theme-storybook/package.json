@@ -39,7 +39,6 @@
     "preset": "../../../.config/build.config.ts"
   },
   "devDependencies": {
-    "@sabinmarcu/types": "workspace:*",
     "@sabinmarcu/utils-test": "workspace:*",
     "@storybook/types": "^8.6.11"
   },
@@ -75,6 +74,7 @@
     "@sabinmarcu/storybook-addon-split-toolbars": "workspace:*",
     "@sabinmarcu/storybook-addon-theme-overrider": "workspace:*",
     "@sabinmarcu/theme": "workspace:*",
+    "@sabinmarcu/types": "workspace:*",
     "@sabinmarcu/website-theme": "workspace:*",
     "deepmerge-ts": "^7.1.5"
   }

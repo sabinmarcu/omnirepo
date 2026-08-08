@@ -4,7 +4,7 @@ import {
   type SnakeCase,
   type DelimiterCase,
   type PascalCase,
-} from 'type-fest';
+} from '@sabinmarcu/types';
 import {
   isCamelCase,
 } from './camel.predicate.js';

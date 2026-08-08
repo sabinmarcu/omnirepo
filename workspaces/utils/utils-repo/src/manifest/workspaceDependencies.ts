@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/extensions -- Moize's ESM entry requires its .mjs extension.
 import moize from 'moize/mjs/index.mjs';
-import type { PackageJson } from 'type-fest';
+import type { PackageJson } from '@sabinmarcu/types';
 import {
   allDependenciesOf,
   allDependenciesOfSync,

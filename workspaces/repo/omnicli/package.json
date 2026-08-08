@@ -49,6 +49,7 @@
     "@babel/plugin-transform-modules-commonjs": "*",
     "@babel/plugin-transform-typescript": "*",
     "@rnx-kit/babel-plugin-import-path-remapper": "*",
+    "@sabinmarcu/types": "workspace:*",
     "@sabinmarcu/utils-fs": "workspace:*",
     "@sabinmarcu/utils-repo": "workspace:*",
     "babel-plugin-dynamic-import-node": "*",
@@ -62,7 +63,6 @@
     "yaml": "^2.5.0"
   },
   "devDependencies": {
-    "@sabinmarcu/types": "workspace:*",
     "@sabinmarcu/utils-test": "workspace:*",
     "@types/glob": "^8"
   },

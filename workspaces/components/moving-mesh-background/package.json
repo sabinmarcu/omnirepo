@@ -40,7 +40,6 @@
     "preset": "../../../.config/build.config.ts"
   },
   "devDependencies": {
-    "@sabinmarcu/types": "workspace:*",
     "@sabinmarcu/utils-test": "workspace:*"
   },
   "tscmono": {
@@ -58,6 +57,7 @@
     }
   },
   "dependencies": {
+    "@sabinmarcu/types": "workspace:*",
     "@sabinmarcu/use-duplicate-ref": "workspace:*",
     "@sabinmarcu/use-prefers-reduced-motion": "workspace:*"
   },

@@ -40,13 +40,13 @@
     "preset": "../../../.config/build.config.ts"
   },
   "dependencies": {
+    "@sabinmarcu/types": "workspace:*",
     "@sabinmarcu/utils-fs": "workspace:*",
     "glob": "^8.0.3",
     "moize": "^6.1.7",
     "ramda": "^0.29.1"
   },
   "devDependencies": {
-    "@sabinmarcu/types": "workspace:*",
     "@sabinmarcu/utils-test": "workspace:*",
     "@types/glob": "^8",
     "@types/ramda": "^0"

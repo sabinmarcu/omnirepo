@@ -1,4 +1,4 @@
-import type { Join } from 'type-fest';
+import type { Join } from '@sabinmarcu/types';
 import type { SubcommandType } from '../command/types.ts';
 import type { singlePathSeparator } from './constants.js';
 

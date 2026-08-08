@@ -1,6 +1,6 @@
 import type {
   Asyncify,
-} from 'type-fest';
+} from '@sabinmarcu/types';
 
 export type AsyncifyArray<
   Input extends any[],
