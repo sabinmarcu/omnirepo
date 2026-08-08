@@ -1,11 +1,10 @@
-import moizeImport, { type Moize } from 'moize';
+// eslint-disable-next-line import/extensions -- Moize's ESM entry requires its .mjs extension.
+import moize from 'moize/mjs/index.mjs';
 import type {
   MapOfSubcommandsList,
 } from './types.js';
 import type { SubcommandType } from '../command/types.js';
 import { getSinglePathsOf } from '../paths/getSinglePathsOf.js';
-
-const moize = moizeImport as unknown as Moize;
 
 const compileSubcommandsMapRaw = <
   Subcommands extends readonly SubcommandType[],

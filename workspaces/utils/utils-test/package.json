@@ -42,7 +42,7 @@
   "dependencies": {
     "glob": "^8.0.3",
     "memfs": "^3.4.12",
-    "moize": "patch:moize@npm%3A6.1.4#~/.yarn/patches/moize-npm-6.1.4-85c2846283.patch",
+    "moize": "^6.1.7",
     "yaml": "^2.5.0"
   },
   "devDependencies": {

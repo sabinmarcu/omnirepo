@@ -2,7 +2,8 @@ import {
   readJson,
   readJsonSync,
 } from '@sabinmarcu/utils-fs';
-import moizeImport, { type Moize } from 'moize';
+// eslint-disable-next-line import/extensions -- Moize's ESM entry requires its .mjs extension.
+import moize from 'moize/mjs/index.mjs';
 
 import path from 'node:path';
 import type { PackageJson } from 'type-fest';
@@ -16,8 +17,6 @@ import {
   resolver as getWorkspacesPaths,
 } from './paths.js';
 import { testWorkspaces as test } from '../../predicates/index.js';
-
-const moize = moizeImport as unknown as Moize;
 
 export const getWorkspacesNames = moize.promise(async (
   from: string,

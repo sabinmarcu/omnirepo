@@ -1,4 +1,5 @@
-import moizeImport, { type Moize } from 'moize';
+// eslint-disable-next-line import/extensions -- Moize's ESM entry requires its .mjs extension.
+import moize from 'moize/mjs/index.mjs';
 import type {
   PathResolver,
   PathResolverFunction,
@@ -8,8 +9,6 @@ import {
   resolver as getWorkspacesNames,
 } from '../workspace/names.js';
 import { deriveAlias } from '../../utils/deriveAlias.js';
-
-const moize = moizeImport as unknown as Moize;
 
 export const getAliasesNames = moize.promise(async (
   from: string,

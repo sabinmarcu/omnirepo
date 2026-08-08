@@ -1,6 +1,7 @@
 import glob from 'glob';
 import path from 'node:path';
-import moizeImport, { type Moize } from 'moize';
+// eslint-disable-next-line import/extensions -- Moize's ESM entry requires its .mjs extension.
+import moize from 'moize/mjs/index.mjs';
 import { promisify } from 'node:util';
 import { testWorkspaces as test } from '../../predicates/index.js';
 import { walker } from '../../utils/walkFs.js';
@@ -11,7 +12,6 @@ import type {
   PathResolverFunctionAsync,
 } from '../../types.js';
 
-const moize = moizeImport as unknown as Moize;
 const globPromisified = promisify(glob);
 
 export const getWorkspacesPaths = moize.promise(async (

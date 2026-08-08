@@ -42,7 +42,7 @@
   "dependencies": {
     "@sabinmarcu/utils-fs": "workspace:*",
     "glob": "^8.0.3",
-    "moize": "patch:moize@npm%3A6.1.4#~/.yarn/patches/moize-npm-6.1.4-85c2846283.patch",
+    "moize": "^6.1.7",
     "ramda": "^0.29.1"
   },
   "devDependencies": {
