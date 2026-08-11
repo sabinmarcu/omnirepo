@@ -29,7 +29,7 @@ export const expandShorthandOptions = (
     const localResult = localMappings.map((mapping) => {
       const localValue = isTemplateString
         ? `\`${value}\``
-        : `${value}`;
+        : value;
       return `"${mapping}":${localValue}`;
     });
     results.push(...localResult);

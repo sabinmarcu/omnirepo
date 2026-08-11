@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@sabinmarcu/utils-test": "workspace:*",
-    "eslint-vitest-rule-tester": "^2.2.0"
+    "eslint-vitest-rule-tester": "^3.1.0"
   },
   "peerDependencies": {
     "eslint": ">=8.31.0",

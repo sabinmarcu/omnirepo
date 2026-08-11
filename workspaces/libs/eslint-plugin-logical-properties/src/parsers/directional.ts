@@ -181,7 +181,7 @@ export const generateDirectionalRules = (config: DirectionalRuleConfig): Rule.Ru
       getOptional(settings.resolvers, defaultResolvers),
     );
     return {
-      JSXAttribute(node) {
+      JSXAttribute(node: unknown) {
         if (isTargetJsxAttribute(node, nodeJsxAttributesNames)) {
           transformDirectionalProperty(
             node.value.expression as ObjectExpression,

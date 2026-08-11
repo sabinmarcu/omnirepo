@@ -31,7 +31,7 @@ export const directionalDisableTestGenerator: DirectionalTransformerTestsFactory
       invalid.push(
         ...invalidInputs.map(({ code }) => ({
           code,
-          options: functionNames,
+          options: [...functionNames],
           errors: [
             {
               message: generateDirectionalDisableError(disabledProperty),

@@ -40,9 +40,10 @@ export const directionalShorthandTestGenerator: DirectionalTransformerTestsFacto
     for (const [property, shorthandOptions] of Object.entries(shorthands)) {
       for (const [optionIndex, shorthandOption] of Object.entries(shorthandOptions)) {
         const valueCount = Number(optionIndex) + 1;
-        const ruleValues = Array.from({ length: shorthandOption.length })
-          .fill(0)
-          .map((_, valueIndex) => `value-${valueIndex}`);
+        const ruleValues = Array.from(
+          { length: shorthandOption.length },
+          (_, valueIndex) => `value-${valueIndex}`,
+        );
         const quotesSet = [
           '"',
           '\'',
@@ -65,16 +66,18 @@ export const directionalShorthandTestGenerator: DirectionalTransformerTestsFacto
               );
             } else {
               const pairMappings = shorthandPairMappings[property];
-              const results = valueCount === 2 && pairMappings
-                ? expandShorthandOptions(
-                  [
-                    [...pairMappings[0]],
-                    [...pairMappings[1]],
-                  ],
-                  values,
-                  true,
-                )
-                : expandShorthandOptions(shorthandOption, values, true);
+              const results = expandShorthandOptions(
+                valueCount === 2 && pairMappings
+                  ? (
+                    [
+                      [...pairMappings[0]],
+                      [...pairMappings[1]],
+                    ]
+                  )
+                  : shorthandOption,
+                values,
+                true,
+              );
               const invalidInputs = testCaseGenerator({
                 input: `{${source}}`,
                 output: `{${results.join(',')}}`,

@@ -10,17 +10,17 @@ import type { TestInput } from '../types.js';
 const trimTestInput = <
   T extends RuleTester.ValidTestCase | RuleTester.InvalidTestCase,
 >(input: T[]): T[] => input.map((entry) => {
-    const result = { ...entry } as T;
+  const result = { ...entry } as T;
 
-    if ('code' in result && typeof result.code === 'string') {
-      result.code = result.code.trim();
-    }
-    if ('output' in result && typeof result.output === 'string') {
-      result.output = result.output.trim();
-    }
+  if ('code' in result && typeof result.code === 'string') {
+    result.code = result.code.trim();
+  }
+  if ('output' in result && typeof result.output === 'string') {
+    result.output = result.output.trim();
+  }
 
-    return result;
-  });
+  return result;
+});
 
 export const runEslintTests = (
   testName: string,
