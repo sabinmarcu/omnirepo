@@ -27,7 +27,7 @@ const managerHead: StorybookConfig['managerHead'] = (
     mirrorPreview.manager(themeOverride.manager(head ?? ''))
   )
 );
-export const themeConfigurationExtension = {
+export const themeConfigExtension = {
   managerObject: {
     previewHead,
     managerHead,

@@ -54,14 +54,17 @@ type ThemeSelectorProps = PropsWithChildren<{
 const ThemeSelector = memo(({ globals, children }: ThemeSelectorProps) => {
   useEffect(
     () => {
-      const { [THEME_SELECTOR_GLOBAL_ID]: selection } = globals;
+      const selection = globals[THEME_SELECTOR_GLOBAL_ID];
       const target = document.querySelector(rootNode);
       if (!target) return;
+      // The attribute value identifies the selected theme, so it is not boolean.
+      /* eslint-disable unicorn/prefer-toggle-attribute */
       if (themeVariants.includes(selection)) {
         target.setAttribute(dataAttribute, selection);
       } else {
         target.removeAttribute(dataAttribute);
       }
+      /* eslint-enable unicorn/prefer-toggle-attribute */
     },
   );
   return children;
@@ -75,9 +78,9 @@ const ThemeSelectorManager = memo(() => {
 });
 
 const ThemeSelectorDecorator: Decorator = (StoryFunction, { globals }) => (
-    <ThemeSelector globals={globals}>
-      <StoryFunction />
-    </ThemeSelector>
+  <ThemeSelector globals={globals}>
+    <StoryFunction />
+  </ThemeSelector>
 );
 
 const themeSelectorManager: Extension['manager'] = () => {
