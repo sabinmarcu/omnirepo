@@ -1,5 +1,3 @@
-/* eslint-disable unicorn/prevent-abbreviations */
-
 import type { PartialDeep } from '@sabinmarcu/types';
 import { merge as deepMerge } from 'ts-deepmerge';
 import { theme } from './contract.js';

@@ -1,5 +1,3 @@
-/* eslint-disable unicorn/prevent-abbreviations */
-
 import { theme } from './contract.js';
 import { createStyle } from './renderStyles.js';
 import { argsTable } from './styles.common.js';

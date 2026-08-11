@@ -15,7 +15,7 @@ export const config = (() => {
 
   return {
     get config() {
-      const { [WINDOW_PROPERTY]: windowConfig } = (globalThis as any).window;
+      const windowConfig = (globalThis as any)[WINDOW_PROPERTY];
       return Object.freeze(deepMerge(windowConfig ?? localConfig));
     },
     set config(input: Parameters<typeof updateConfig>[0]) {

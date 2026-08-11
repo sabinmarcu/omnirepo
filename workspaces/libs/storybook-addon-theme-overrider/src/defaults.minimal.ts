@@ -244,9 +244,7 @@ export type MinimalOptions = PartialDeep<
   >
 >;
 
-const isMinimal = (input: any): input is MinimalOptions => (
-  true
-);
+const isMinimal = (_input: any): _input is MinimalOptions => true;
 
 export const normalizeOptions = (
   input: InputOptions | MinimalOptions,
