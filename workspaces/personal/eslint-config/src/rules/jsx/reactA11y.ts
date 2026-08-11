@@ -340,7 +340,7 @@ const reactA11yConfig = await conditionalConfig(
       name: 'A11Y Config',
       rules: reactA11yRules,
       plugins: {
-        'jsx-a11y': jsxA11yPlugin,
+        'jsx-a11y': jsxA11yPlugin.default ?? jsxA11yPlugin,
       },
     }),
   ],

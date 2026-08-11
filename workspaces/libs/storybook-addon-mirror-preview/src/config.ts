@@ -1,22 +1,18 @@
 import { WINDOW_PROPERTY } from './constants.js';
 import { configTemplate } from './renderers/config.js';
-import type { MirrorConfiguration } from './types.js';
+import type { MirrorConfig } from './types.js';
 
 export const config = (() => {
-  const localConfig: MirrorConfiguration[] = [];
-  const updateConfig = (inputs: readonly MirrorConfiguration[]) => {
+  const localConfig: MirrorConfig[] = [];
+  const updateConfig = (inputs: readonly MirrorConfig[]) => {
     localConfig.push(...inputs);
   };
 
   return {
     get config() {
-      const {
-        [WINDOW_PROPERTY]: windowConfig,
-      } = (globalThis as unknown as {
-        window: {
-          [WINDOW_PROPERTY]?: MirrorConfiguration[]
-        }
-      }).window;
+      const windowConfig = (globalThis as unknown as {
+        [WINDOW_PROPERTY]?: MirrorConfig[]
+      })[WINDOW_PROPERTY];
 
       const finalConfig = [
         ...windowConfig ?? [],

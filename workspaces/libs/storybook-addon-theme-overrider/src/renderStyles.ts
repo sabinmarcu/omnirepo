@@ -5,9 +5,7 @@ import type {
   createContainer,
 } from '@vanilla-extract/css';
 
-const addContainer: typeof createContainer = (input) => (
-  `${input}`
-);
+const addContainer: typeof createContainer = String;
 
 export const createStyle = (debugId = 'theme-overrider-styles') => {
   const collection: Record<

@@ -37,7 +37,7 @@ vi.mock('node:fs/promises', async () => {
 vi.mock('glob', async (importOriginal) => {
   const utilitiesTest: any = await vi.importActual('@sabinmarcu/utils-test');
   const originalGlob: any = await importOriginal();
-  const globMock = utilitiesTest.mockGlob(utilitiesTest.vol, originalGlob.default);
+  const globMock = utilitiesTest.mockGlob(utilitiesTest.fs, originalGlob.glob);
   return {
     ...originalGlob,
     glob: globMock,

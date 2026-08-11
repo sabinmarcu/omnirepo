@@ -1,4 +1,4 @@
-export type MirrorConfiguration = {
+export type MirrorConfig = {
   selector: string;
   id: string;
 };

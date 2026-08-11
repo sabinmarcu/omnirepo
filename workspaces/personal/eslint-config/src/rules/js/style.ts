@@ -734,7 +734,7 @@ export const jsStyleRules = {
   'wrap-regex': 'off',
 
   // enforce consistent use of dot notation
-  '@stylistic/js/dot-location': ['error', 'property'],
+  '@stylistic/dot-location': ['error', 'property'],
 } as const satisfies Config['rules'];
 
 const jsStyleConfig = [

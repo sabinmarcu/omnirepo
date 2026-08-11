@@ -8,8 +8,8 @@ import { prefixContractValues } from './prefixContractValues.js';
 export const prefixCache = <
   const Contract extends ReturnType<typeof createGlobalThemeContract>,
 >(
-    contract: Contract,
-  ) => {
+  contract: Contract,
+) => {
   const cache: Record<string, Contract> = {};
   return (prefix?: string) => {
     if (!prefix) {
@@ -25,8 +25,8 @@ export const prefixCache = <
 export const prefixValueCache = <
   const Values extends Parameters<typeof createGlobalTheme>[2],
 >(
-    values: Values,
-  ) => {
+  values: Values,
+) => {
   const cache: Record<string, Values> = {};
   return (prefix?: string) => {
     if (!prefix) {

@@ -24,11 +24,11 @@ export const wrapSetMethod = <
   InputSet extends Set<any>,
   MethodName extends MethodsOfSet,
 >(
-    source: InputSet,
-    method: MethodName,
-    store: Subject<InputSet>,
-  ) => {
-  const member = source[method];
+  source: InputSet,
+  method: MethodName,
+  store: Subject<InputSet>,
+) => {
+  const member = Reflect.get(source, method) as InputSet[MethodName];
   const replacement = (
     (...parameters: Parameters<typeof member>) => {
       const result = Reflect.apply((member as any), source, parameters);
@@ -44,7 +44,7 @@ export const observableSet = <T>(
   const store = subject(source);
   const newSet = new Set(source) as ObservableSet<T>;
   for (const key of SetKeysToWrap) {
-    newSet[key] = wrapSetMethod(source, key, store) as any;
+    Reflect.set(newSet, key, wrapSetMethod(source, key, store));
   }
   newSet.subscribe = store.subscribe;
   return newSet;

@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/prevent-abbreviations */
 import { createStylesheet } from '@sabinmarcu/stylesheet';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { rootNode } from '../constants.js';
@@ -39,12 +38,12 @@ const updateThemeRuntimeFunction = (<ThemeContract extends Contract>(
 ) => {
   const { '@layer': layer, ...rules } = values;
   const { '@layer': ignore, ...contractWithoutLayer } = contract;
-  const vars = assignInlineVars(contractWithoutLayer as any, rules as any);
+  const variables = assignInlineVars(contractWithoutLayer as any, rules as any);
   ThemeStylesheet.update([
     {
       selector,
       layer: layer as string,
-      rules: vars,
+      rules: variables,
     },
   ]);
 });
@@ -69,20 +68,20 @@ export const setupThemeRuntime = (
 export const updateThemeFamilyRuntime = <
   Families extends string,
 >(
-    themeFamily: FamilyConfig<Families>,
-    input: Parameters<ThemeFamilyUpdater<Families>>[0],
-    selector?: Parameters<ThemeFamilyUpdater<Families>>[1],
-  ) => {
+  themeFamily: FamilyConfig<Families>,
+  input: Parameters<ThemeFamilyUpdater<Families>>[0],
+  selector?: Parameters<ThemeFamilyUpdater<Families>>[1],
+) => {
   themeFamily(input, selector, updateThemeRuntimeFunction as any);
 };
 
 export const setupThemeFamilyRuntime = <
   Families extends string,
 >(
-    themeFamily: FamilyConfig<Families>,
-    input: Parameters<ThemeFamilyUpdater<Families>>[0],
-    selector?: Parameters<ThemeFamilyUpdater<Families>>[1],
-  ) => {
+  themeFamily: FamilyConfig<Families>,
+  input: Parameters<ThemeFamilyUpdater<Families>>[0],
+  selector?: Parameters<ThemeFamilyUpdater<Families>>[1],
+) => {
   ThemeStylesheet.legacyRender(document);
   updateThemeFamilyRuntime(themeFamily, input, selector);
 };
@@ -90,9 +89,9 @@ export const setupThemeFamilyRuntime = <
 export const pickThemeFamilyRuntime = <
   Families extends string,
 >(
-    themeFamily: FamilyConfig<Families>,
-    family: Families,
-    selector?: Parameters<ThemeFamilyUpdater<Families>>[1],
-  ) => {
+  themeFamily: FamilyConfig<Families>,
+  family: Families,
+  selector?: Parameters<ThemeFamilyUpdater<Families>>[1],
+) => {
   themeFamily.pick(family, selector, updateThemeRuntimeFunction as any);
 };

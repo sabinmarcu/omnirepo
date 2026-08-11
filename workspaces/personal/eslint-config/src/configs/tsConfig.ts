@@ -1,4 +1,3 @@
-import stylisticTsPlugin from '@stylistic/eslint-plugin-ts';
 import { getLogger } from '../utils/debug.js';
 import { conditionalConfig } from '../utils/conditionalConfig.js';
 import { tsConfigCompiler } from '../constants/ts.js';
@@ -33,7 +32,6 @@ const tsConfig = await conditionalConfig(
         name: 'TS Plugins',
         plugins: {
           '@typescript-eslint': tsPlugin.plugin,
-          '@stylistic/ts': stylisticTsPlugin as any,
         },
       }),
       ...tsConfigRewrites,

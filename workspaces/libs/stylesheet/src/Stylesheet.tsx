@@ -122,7 +122,7 @@ export function createStylesheet<
   const getCurrentStylesheets = (
     root: typeof document = document,
   ) => (
-    root.querySelectorAll(`[data-stylesheet="${debugId}"]`)
+    root.querySelectorAll(`[data-stylesheet="${CSS.escape(debugId ?? '')}"]`)
   );
 
   const update = (

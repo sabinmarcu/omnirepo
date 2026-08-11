@@ -56,6 +56,7 @@ export const jsVariablesRules = {
     {
       vars: 'all',
       args: 'after-used',
+      argsIgnorePattern: '^_',
       ignoreRestSiblings: true,
     },
   ],

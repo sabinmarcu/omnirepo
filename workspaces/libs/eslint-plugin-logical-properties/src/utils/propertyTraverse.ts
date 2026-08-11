@@ -14,14 +14,16 @@ export const propertyTraverse = (
   node: ObjectExpression | ArrayExpression,
   path: string,
 ): ObjectExpression[] => {
-  const [current, ...nextSegments] = pathToSegments(path);
-
-  let currentSelector = current;
+  const segments = pathToSegments(path);
+  const current = segments[0];
 
   // Account for no further segments
   if (!current && node.type === 'ObjectExpression') {
     return [node];
   }
+
+  const [, ...nextSegments] = segments;
+  let currentSelector = current;
 
   // Account for square brackets (string or number selector)
   const squareBracketsMatch = current.match(/\[([^\]]+)]/);
@@ -30,7 +32,7 @@ export const propertyTraverse = (
 
     if (node.type === 'ArrayExpression') {
       if (/^\d+$/.test(currentMatch)) {
-        const index = Number.parseInt(currentMatch, 10);
+        const index = Number(currentMatch);
         const nextProperty = node.elements[index];
         if (nextProperty && nextProperty.type === 'ObjectExpression') {
           return propertyTraverse(nextProperty, segmentsToPath(nextSegments));

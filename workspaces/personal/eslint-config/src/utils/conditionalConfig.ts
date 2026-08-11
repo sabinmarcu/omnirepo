@@ -26,7 +26,7 @@ export const conditionalConfig = async <T extends [string, ...string[]]>(
 
   for (const [index, param] of Object.entries(params)) {
     if (typeof param !== 'string') {
-      if (index === `${params.length - 1}`) {
+      if (index === String(params.length - 1)) {
         generatorFunction = param as any;
       } else {
         errorFunction = param as any;

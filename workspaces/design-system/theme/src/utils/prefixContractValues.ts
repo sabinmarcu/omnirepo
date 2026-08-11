@@ -6,10 +6,10 @@ export const prefixContractValues = <
   const Values extends Parameters<typeof createGlobalTheme>[2],
   const Prefix extends string = string,
 >(
-    values: Values,
-    prefix?: Prefix,
+  values: Values,
+  prefix?: Prefix,
 
-  ): Values => {
+): Values => {
   if (!prefix) {
     return values;
   }

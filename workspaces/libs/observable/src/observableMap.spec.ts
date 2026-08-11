@@ -199,7 +199,6 @@ describe('observableMap', () => {
     ]));
     const callback = vi.fn();
 
-    // eslint-disable-next-line unicorn/no-array-for-each
     map.forEach(callback);
     expect(callback).toHaveBeenCalledTimes(2);
     expect(callback).toHaveBeenCalledWith(1, 'a', map);

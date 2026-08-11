@@ -8,7 +8,7 @@ export type UpdaterFunction<Input extends unknown = unknown> = (
   input: Input,
   selector?: string,
   updateFunction?: ThemeUpdateFunction,
-  family?: string
+  family?: string,
 ) => void;
 
 export type ContractMeta = {

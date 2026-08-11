@@ -45,29 +45,29 @@ export type NonEmptyString<T extends string> =
     : unknown;
 
 export type DebugDefinitionFromString<T extends string> =
-    T extends `${infer Namespace}:${infer Path}#${infer Channel}`
-      ? Channel extends DebugChannels
-        ? NonEmptyString<Path>
+  T extends `${infer Namespace}:${infer Path}#${infer Channel}`
+    ? Channel extends DebugChannels
+      ? NonEmptyString<Path>
         & NonEmptyString<Namespace>
         & NonEmptyString<Channel>
         & DebugDefinition<Path, Namespace, Channel>
-        : never
-      : T extends `${infer Namespace}:${infer Path}`
-        ?
+      : never
+    : T extends `${infer Namespace}:${infer Path}`
+      ?
         & NonEmptyString<Path>
         & NonEmptyString<Namespace>
         & DebugDefinition<Path, Namespace>
-        : T extends `${infer Path}#${infer Channel}`
-          ? Channel extends DebugChannels
-            ? NonEmptyString<Path>
+      : T extends `${infer Path}#${infer Channel}`
+        ? Channel extends DebugChannels
+          ? NonEmptyString<Path>
             & NonEmptyString<Channel>
             & DebugDefinition<Path, '', Channel>
-            : never
-          : T extends `${infer Path}`
-            ?
+          : never
+        : T extends `${infer Path}`
+          ?
             & NonEmptyString<Path>
             & DebugDefinition<Path>
-            : never;
+          : never;
 
 export type ValidDebugDefinitionString<T extends string> =
   DebugDefinitionFromString<T> extends never

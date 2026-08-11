@@ -19,9 +19,9 @@ export const createLogicalPropertiesConfig = <
   Severity extends Linter.RuleSeverity = 'error',
   Options extends Partial<PluginOptions> = {},
 >(
-    severity: Severity = 'error' as Severity,
-    options: Options = {} as Options,
-  ) => {
+  severity: Severity = 'error' as Severity,
+  options: Options = {} as Options,
+) => {
   const functions = getOptional(options.functions, defaultFunctions);
   const jsxAttributes = getOptional(options.jsxAttributes, defaultJsxAttributes);
   const keyframes = getOptional(options.keyframes, defaultKeyframes);

@@ -109,7 +109,7 @@ export function createThemeContract<
     // @ts-ignore
     for (const [,contractUpdater, contractName, meta] of contracts) {
       if (!family || !meta?.raw) {
-        const { [contractName]: values } = input as any;
+        const values = (input as any)[contractName];
         contractUpdater(values, selector, updateFunction, family);
       }
     }
@@ -123,7 +123,7 @@ export function createThemeContract<
     // @ts-ignore
     for (const [,contractUpdater, contractName, meta] of contracts) {
       if (meta?.raw) {
-        const { [contractName]: values } = input as any;
+        const values = (input as any)[contractName];
         contractUpdater(values, selector, updateFunction);
       }
     }

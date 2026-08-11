@@ -1,4 +1,4 @@
-/* eslint-disable unicorn/prevent-abbreviations */
+/* eslint-disable unicorn/name-replacements */
 import { ThemeProvider } from '@sabinmarcu/mui-material-theme';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';

@@ -1,16 +1,15 @@
-// eslint-disable-next-line import/extensions
-import type { Volume } from 'memfs/lib/volume.js';
-import glob from 'glob';
+import type { IFs } from 'memfs';
+import { glob } from 'glob';
 
 export const mockGlob = (
-  fs: Volume,
+  fs: IFs,
   globInstance = glob,
 ) => {
-  const mockedGlob = (pattern: string, options: any, callback: any) => (
+  const mockedGlob = (pattern: string, options: any) => (
     globInstance(pattern, {
       ...options,
       fs,
-    }, callback)
+    })
   );
   const mockedGlobSync = (pattern: string, options: any) => (
     globInstance.sync(pattern, {

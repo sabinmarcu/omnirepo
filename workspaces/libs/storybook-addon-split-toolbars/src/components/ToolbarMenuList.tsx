@@ -11,19 +11,19 @@ import {
 import { useGlobals } from 'storybook/internal/manager-api';
 
 import type {
-  Ident,
+  Ident as Identifier,
   NormalizedToolbarItemList,
 } from '../types.js';
 import {
   getSelectedIcon,
   getSelectedTitle,
 } from '../utils/getSelected.js';
-import { getGlobalIdent } from '../utils/ident.js';
+import { getGlobalIdent as getGlobalIdentifier } from '../utils/ident.js';
 import { ToolbarMenuButton } from './ToolbarMenuButton.js';
 import { ToolbarMenuListItem } from './ToolbarMenuListItem.js';
 
 export namespace ToolbarMenuList {
-  export type ChangeHandler = (ident: Ident, value: string | undefined) => void;
+  export type ChangeHandler = (identifier: Identifier, value: string | undefined) => void;
   export type Props<Data extends unknown = unknown> = (
     & NormalizedToolbarItemList<Data>[string]
     & {
@@ -46,7 +46,7 @@ export function ToolbarMenuList<Data extends unknown = unknown>({
   const [globals, storyGlobals] = useGlobals();
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
 
-  const currentValue = getGlobalIdent(globals, ident);
+  const currentValue = getGlobalIdentifier(globals, ident);
   const hasGlobalValue = !!currentValue;
   const isOverridden = id in storyGlobals;
 
@@ -85,15 +85,7 @@ export function ToolbarMenuList<Data extends unknown = unknown>({
       tooltip={({ onHide }) => {
         const links = items
           // Special case handling for various "type" variants
-          .filter(({ type }) => {
-            let shouldReturn = true;
-
-            if (type === 'reset' && !currentValue) {
-              shouldReturn = false;
-            }
-
-            return shouldReturn;
-          })
+          .filter(({ type }) => !(type === 'reset' && !currentValue))
           .map((item) => {
             const listItem = ToolbarMenuListItem({
               ...item,
@@ -112,15 +104,13 @@ export function ToolbarMenuList<Data extends unknown = unknown>({
       closeOnOutsideClick
       onVisibleChange={setIsTooltipVisible}
     >
-      {
-        <ToolbarMenuButton
-          active={isTooltipVisible || hasGlobalValue}
-          disabled={isOverridden}
-          description={description || ''}
-          icon={icon}
-          title={title || ''}
-        />
-      }
+      <ToolbarMenuButton
+        active={isTooltipVisible || hasGlobalValue}
+        disabled={isOverridden}
+        description={description || ''}
+        icon={icon}
+        title={title || ''}
+      />
     </WithTooltip>
   );
 }

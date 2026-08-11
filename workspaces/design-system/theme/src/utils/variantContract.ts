@@ -30,11 +30,11 @@ const inputHasVariants = <
   const Generator extends ThemeGenerator<any>,
   const Prefix extends string = '',
 >(
-    input: UpdaterInputOfVariantContract<Generator, Prefix>[0],
-  ): input is UpdaterInputOfVariantContractVariants<Generator, Prefix> => (
-    typeof input === 'object'
+  input: UpdaterInputOfVariantContract<Generator, Prefix>[0],
+): input is UpdaterInputOfVariantContractVariants<Generator, Prefix> => (
+  typeof input === 'object'
   && themeVariants.every((variant) => variant in input)
-  );
+);
 
 export function selectorOfVariant(variant: typeof themeVariants[number]) {
   return `[data-${themeDataAttribute}="${variant}"]`;
@@ -99,13 +99,9 @@ export function variantContract<
     } as any);
 
     for (const variant of themeVariants) {
-      let valuesToRender: Parameters<typeof updaters[typeof variant]>[0];
-      if (inputHasVariants(values)) {
-        const { [variant]: variantValues } = values;
-        valuesToRender = variantValues;
-      } else {
-        valuesToRender = values;
-      }
+      const valuesToRender: Parameters<typeof updaters[typeof variant]>[0] = (
+        inputHasVariants(values) ? values[variant] : values
+      );
 
       const prefixedVariant = contractVariantValuesCaches[variant](family);
       updateFunction(selectorOfVariant(variant), {

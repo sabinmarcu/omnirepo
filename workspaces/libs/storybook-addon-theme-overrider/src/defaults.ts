@@ -1,6 +1,6 @@
 import { merge as deepMerge } from 'ts-deepmerge';
 
-const defaultFontFamily = `'Nunito Sans', -apple-system, '.SFNSText-Regular', 'San Francisco', BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif`;
+const defaultFontFamily = '\'Nunito Sans\', -apple-system, \'.SFNSText-Regular\', \'San Francisco\', BlinkMacSystemFont, \'Segoe UI\', \'Helvetica Neue\', Helvetica, Arial, sans-serif';
 
 const defaultHeadingsCommonStyles = {
   margin: {

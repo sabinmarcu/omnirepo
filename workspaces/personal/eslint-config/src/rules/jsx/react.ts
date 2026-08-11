@@ -367,7 +367,7 @@ const reactRules = {
 
   // only .jsx files may have JSX
   // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-filename-extension.md
-  'react/jsx-filename-extension': ['error', { extensions: ['.jsx'] }],
+  'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
 
   // prevent accidental JS comments from being injected into JSX as text
   // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-comment-textnodes.md
@@ -594,8 +594,8 @@ const reactRules = {
   'react/function-component-definition': [
     'error',
     {
-      namedComponents: ['function-declaration', 'function-expression'],
-      unnamedComponents: 'function-expression',
+      namedComponents: ['function-declaration', 'function-expression', 'arrow-function'],
+      unnamedComponents: ['function-expression', 'arrow-function'],
     },
   ],
 
@@ -609,7 +609,7 @@ const reactRules = {
 
   // Prevent creating unstable components inside components
   // https://github.com/jsx-eslint/eslint-plugin-react/blob/c2a790a3472eea0f6de984bdc3ee2a62197417fb/docs/rules/no-unstable-nested-components.md
-  'react/no-unstable-nested-components': 'error',
+  'react/no-unstable-nested-components': ['error', { allowAsProps: true }],
 
   // Enforce that namespaces are not used in React elements
   // https://github.com/jsx-eslint/eslint-plugin-react/blob/8785c169c25b09b33c95655bf508cf46263bc53f/docs/rules/no-namespace.md
@@ -674,7 +674,7 @@ const reactConfig = await conditionalConfig(
       name: 'JSX Config',
       rules: reactRules,
       plugins: {
-        react: reactPlugin,
+        react: reactPlugin.default ?? reactPlugin,
       },
       settings: {
         react: {

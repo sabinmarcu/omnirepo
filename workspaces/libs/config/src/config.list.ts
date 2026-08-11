@@ -12,16 +12,12 @@ import type {
 export const projectListInput = <
   const Parameters extends ConfigListParameters,
 >(
-    ...inputs: Parameters
-  ) => {
-  const outputs: Observable<any>[] = [];
-  for (const input of inputs) {
-    outputs.push(
-      isObservable(input)
-        ? input
-        : observable.from(input),
-    );
-  }
+  ...inputs: Parameters
+) => {
+  const outputs: Observable<any>[] = Array.from(
+    inputs,
+    (input) => (isObservable(input) ? input : observable.from(input)),
+  );
   return outputs as ConfigObservablesFromParameters<Parameters>;
 };
 
@@ -32,7 +28,9 @@ export const simpleConfig: SimpleConfigFunction = (
   const result = observable.project(
     ...observables as any[],
     (...values) => {
-      for (const value of values.reverse()) {
+      // This package's lib target predates Array#toReversed.
+      // eslint-disable-next-line unicorn/no-array-reverse
+      for (const value of [...values].reverse()) {
         if (value !== undefined) {
           return value;
         }

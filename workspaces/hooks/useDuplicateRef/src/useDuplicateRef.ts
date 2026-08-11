@@ -1,4 +1,4 @@
-/* eslint-disable unicorn/prevent-abbreviations */
+/* eslint-disable unicorn/name-replacements */
 import type { ForwardedRef } from 'react';
 import {
   useEffect,

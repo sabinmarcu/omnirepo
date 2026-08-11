@@ -1,3 +1,3 @@
 import { compileConfigFor } from '../utils/compileConfig.js';
 
-export const jsxConfigCompiler = compileConfigFor('*.jsx');
+export const jsxConfigCompiler = compileConfigFor('*.@(jsx|tsx)');

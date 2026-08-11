@@ -12,7 +12,7 @@ export const tsRules = {
   // Replace Airbnb 'brace-style' rule with '@typescript-eslint' version
   // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/brace-style.md
   'brace-style': 'off',
-  '@stylistic/ts/brace-style': baseStyleRules['brace-style'],
+  '@stylistic/brace-style': baseStyleRules['brace-style'],
 
   // Replace Airbnb 'camelcase' rule with '@typescript-eslint/naming-convention'
   // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/naming-convention.md
@@ -45,7 +45,7 @@ export const tsRules = {
   // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/comma-dangle.md
   // The TypeScript version also adds 3 new options, all of which should be set to the same value as the base config
   'comma-dangle': 'off',
-  '@stylistic/ts/comma-dangle': [
+  '@stylistic/comma-dangle': [
     baseStyleRules['comma-dangle'][0],
     {
       ...baseStyleRules['comma-dangle'][1],
@@ -58,7 +58,7 @@ export const tsRules = {
   // Replace Airbnb 'comma-spacing' rule with '@typescript-eslint' version
   // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/comma-spacing.md
   'comma-spacing': 'off',
-  '@stylistic/ts/comma-spacing': baseStyleRules['comma-spacing'],
+  '@stylistic/comma-spacing': baseStyleRules['comma-spacing'],
 
   // Replace Airbnb 'default-param-last' rule with '@typescript-eslint' version
   // https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/default-param-last.md
@@ -68,17 +68,17 @@ export const tsRules = {
   // Replace Airbnb 'func-call-spacing' rule with '@typescript-eslint' version
   // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/func-call-spacing.md
   'func-call-spacing': 'off',
-  '@stylistic/ts/func-call-spacing': baseStyleRules['func-call-spacing'],
+  '@stylistic/function-call-spacing': baseStyleRules['func-call-spacing'],
 
   // Replace Airbnb 'keyword-spacing' rule with '@typescript-eslint' version
   // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/keyword-spacing.md
   'keyword-spacing': 'off',
-  '@stylistic/ts/keyword-spacing': baseStyleRules['keyword-spacing'],
+  '@stylistic/keyword-spacing': baseStyleRules['keyword-spacing'],
 
   // Replace Airbnb 'lines-between-class-members' rule with '@typescript-eslint' version
   // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/lines-between-class-members.md
   'lines-between-class-members': 'off',
-  '@stylistic/ts/lines-between-class-members': baseStyleRules['lines-between-class-members'],
+  '@stylistic/lines-between-class-members': baseStyleRules['lines-between-class-members'],
 
   // Replace Airbnb 'no-array-constructor' rule with '@typescript-eslint' version
   // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-array-constructor.md
@@ -103,7 +103,7 @@ export const tsRules = {
   // Replace Airbnb 'no-extra-semi' rule with '@typescript-eslint' version
   // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-extra-semi.md
   'no-extra-semi': 'off',
-  '@stylistic/ts/no-extra-semi': baseErrorsRules['no-extra-semi'],
+  '@stylistic/no-extra-semi': baseErrorsRules['no-extra-semi'],
 
   // Replace Airbnb 'no-implied-eval' and 'no-new-func' rules with '@typescript-eslint' version
   // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-implied-eval.md
@@ -139,7 +139,7 @@ export const tsRules = {
   // Replace Airbnb 'space-before-blocks' rule with '@typescript-eslint' version
   // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/space-before-blocks.md
   'space-before-blocks': 'off',
-  '@stylistic/ts/space-before-blocks': baseStyleRules['space-before-blocks'],
+  '@stylistic/space-before-blocks': baseStyleRules['space-before-blocks'],
 
   // Replace Airbnb 'no-throw-literal' rule with '@typescript-eslint' version
   // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-throw-literal.md
@@ -169,17 +169,17 @@ export const tsRules = {
   // Replace Airbnb 'quotes' rule with '@typescript-eslint' version
   // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/quotes.md
   quotes: 'off',
-  '@stylistic/ts/quotes': baseStyleRules.quotes,
+  '@stylistic/quotes': baseStyleRules.quotes,
 
   // Replace Airbnb 'semi' rule with '@typescript-eslint' version
   // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/semi.md
   semi: 'off',
-  '@stylistic/ts/semi': baseStyleRules.semi,
+  '@stylistic/semi': baseStyleRules.semi,
 
   // Replace Airbnb 'space-before-function-paren' rule with '@typescript-eslint' version
   // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/space-before-function-paren.md
   'space-before-function-paren': 'off',
-  '@stylistic/ts/space-before-function-paren': baseStyleRules['space-before-function-paren'],
+  '@stylistic/space-before-function-paren': baseStyleRules['space-before-function-paren'],
 
   // Replace Airbnb 'require-await' rule with '@typescript-eslint' version
   // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/require-await.md
@@ -194,12 +194,12 @@ export const tsRules = {
   // Replace Airbnb 'space-infix-ops' rule with '@typescript-eslint' version
   // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/space-infix-ops.md
   'space-infix-ops': 'off',
-  '@stylistic/ts/space-infix-ops': baseStyleRules['space-infix-ops'],
+  '@stylistic/space-infix-ops': baseStyleRules['space-infix-ops'],
 
   // Replace Airbnb 'object-curly-spacing' rule with '@typescript-eslint' version
   // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/object-curly-spacing.md
   'object-curly-spacing': 'off',
-  '@stylistic/ts/object-curly-spacing': baseStyleRules['object-curly-spacing'],
+  '@stylistic/object-curly-spacing': baseStyleRules['object-curly-spacing'],
 
   // Append 'ts' and 'tsx' to Airbnb 'import/extensions' rule
   // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/extensions.md
@@ -244,7 +244,7 @@ export const tsRules = {
   // Replace Airbnb 'indent' rule with '@typescript-eslint' version
   // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/indent.md
   indent: 'off',
-  '@stylistic/ts/indent': [
+  '@stylistic/indent': [
     baseStyleRules.indent[0],
     baseStyleRules.indent[1],
     {

@@ -36,11 +36,13 @@ type ThemeFamilySelectorProps = PropsWithChildren<{
 const ThemeFamilySelector = memo(({ globals, children }: ThemeFamilySelectorProps) => {
   useEffect(
     () => {
-      const { [THEME_FAMILY_GLOBAL_ID]: selection } = globals;
+      const selection = globals[THEME_FAMILY_GLOBAL_ID];
       if (!selection) return;
       const [group, theme] = splitToolbar.unpack(selection);
       const target = document.querySelector(rootNode);
       if (!target) return;
+      // The attribute value identifies the selected theme, so it is not boolean.
+      /* eslint-disable unicorn/prefer-toggle-attribute */
       if (
         isValidMapping(group)
         && themeMapping[group].list.some(({ value }: any) => value === theme)
@@ -49,6 +51,7 @@ const ThemeFamilySelector = memo(({ globals, children }: ThemeFamilySelectorProp
       } else {
         target.removeAttribute(dataAttribute);
       }
+      /* eslint-enable unicorn/prefer-toggle-attribute */
     },
   );
   return children;

@@ -24,13 +24,13 @@ export type UpdaterInputOfVariantContract<
   Prefix extends string = '',
   Params = Parameters<ReturnType<typeof rawContract<Generator, Prefix>>[1]>,
 > = (
-   Params extends [infer Input, ...infer Rest]
-     ? [
-       (
+  Params extends [infer Input, ...infer Rest]
+    ? [
+      (
          | UpdaterInputOfVariantContractVariants<Generator, Prefix, Params>
          | Input
-       ),
-       ...Rest,
-     ]
-     : unknown
+      ),
+      ...Rest,
+    ]
+    : unknown
 );

@@ -162,9 +162,9 @@ async function ensureRequiredDependencies({ Yarn }) {
   }
 }
 
-// eslint-disable-next-line unicorn/prevent-abbreviations
+// eslint-disable-next-line unicorn/name-replacements
 async function ensureDocsDependencies({ Yarn }) {
-  // eslint-disable-next-line unicorn/prevent-abbreviations
+  // eslint-disable-next-line unicorn/name-replacements
   const docsWorkspace = Yarn.workspace({ ident: DOCS_WORKSPACE_NAME });
   for (const workspace of Yarn.workspaces()) {
     if (DOCS_WORKSPACE_EXCLUDES.includes(workspace.ident)) {

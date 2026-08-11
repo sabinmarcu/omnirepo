@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/prevent-abbreviations */
 import {
   TOOLBAR_ID,
   DEFAULT_ITEMS_KEY,
@@ -9,7 +8,7 @@ import type {
   ToolbarArgType as ToolbarArgumentType,
   ToolbarItem,
 } from '../types.js';
-import { ident } from './ident.js';
+import { ident as identifier } from './ident.js';
 
 const defaultItemValues: ToolbarItem = {
   type: 'item',
@@ -21,14 +20,12 @@ const normalizeItems = <Data extends unknown>(
   id: string,
 ): NormalizedToolbarItemList<Data> => {
   const {
-    [TOOLBAR_ID]: {
-      items,
-      title,
-      icon,
-      preventDynamicIcon,
-      dynamicTitle,
-    },
-  } = argumentType;
+    items,
+    title,
+    icon,
+    preventDynamicIcon,
+    dynamicTitle,
+  } = argumentType[TOOLBAR_ID];
   if (!Array.isArray(items)) {
     return Object.fromEntries(
       Object.entries(items)
@@ -51,7 +48,7 @@ const normalizeItems = <Data extends unknown>(
             dynamicTitle,
             ...set,
             list: newSetItems,
-            ident: ident(id, key),
+            ident: identifier(id, key),
           };
           return [key, normalizedSet] as any;
         }),
@@ -82,7 +79,7 @@ const normalizeItems = <Data extends unknown>(
       icon: icon!,
       preventDynamicIcon: preventDynamicIcon!,
       dynamicTitle: dynamicTitle!,
-      ident: ident(id, DEFAULT_ITEMS_KEY),
+      ident: identifier(id, DEFAULT_ITEMS_KEY),
       list: normalizedItems,
     },
   };

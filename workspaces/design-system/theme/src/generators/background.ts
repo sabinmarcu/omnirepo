@@ -30,7 +30,7 @@ export const backgroundGenerator = (() => {
       surface: mixColor(baseReference, reference.elevated),
       elevated: mixColor(baseReference, reference.elevated, offsets.elevated),
       depressed: mixColor(baseReference, reference.depressed, offsets.depressed),
-      text: reference.elevated.toString(),
+      text: reference.elevated,
     } as const;
   };
   generator.default = 'page';

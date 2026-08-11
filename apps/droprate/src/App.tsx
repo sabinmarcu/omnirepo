@@ -1,7 +1,7 @@
 import { ThemeProvider } from '@sabinmarcu/mui-material-theme';
 import { GlobalStyles } from './GlobalStyles.js';
 import { ThemeSelector } from './components/ThemeSelector.js';
-// eslint-disable-next-line unicorn/prevent-abbreviations
+// eslint-disable-next-line unicorn/name-replacements
 import { DevTools } from './DevTools.js';
 import { CounterSection } from './components/CounterSection.js';
 import { RunsList } from './components/RunsList.js';

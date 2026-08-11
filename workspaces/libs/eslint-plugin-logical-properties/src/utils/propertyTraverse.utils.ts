@@ -22,10 +22,10 @@ export const segmentsIsEmpty = (input: string[]) => (
 function normlizePackInput(input: string, separator = '`') {
   const segments = [...input];
   let nextIndex = segments.indexOf(separator);
-  let open = true;
   if (nextIndex < 0) {
     return input;
   }
+  let open = true;
   do {
     if (open) {
       segments.splice(nextIndex, 1, `"${separator}`);
@@ -41,8 +41,8 @@ function normlizePackInput(input: string, separator = '`') {
 
 function normalizePackOutput(input: string, separator = '`') {
   return input
-    .replaceAll(`"${separator}`, `${separator}`)
-    .replaceAll(`${separator}"`, `${separator}`);
+    .replaceAll(`"${separator}`, separator)
+    .replaceAll(`${separator}"`, separator);
 }
 
 export const packer = {
@@ -92,7 +92,7 @@ export const generateObjectStringFromPath = (
   const maybeAccessor = current.match(/^\[(\d+)]$/);
   if (maybeAccessor) {
     const [,match] = maybeAccessor;
-    const index = Number.parseInt(match, 10)!;
+    const index = Number(match);
     const newArray = Array.from({ length: index + 2 });
     newArray[index] = next;
     return packer.pack(newArray);
@@ -143,9 +143,12 @@ export const generateObjectStringTestCases = (
   }: ObjectStringTestCase,
 ) => {
   const inputObject = typeof input === 'string' ? input : packer.pack(input);
-  const outputObject = output
-    ? (typeof output === 'string' ? output : packer.pack(output))
-    : undefined;
+  let outputObject: string | undefined;
+  if (typeof output === 'string') {
+    outputObject = output;
+  } else if (output) {
+    outputObject = packer.pack(output);
+  }
   const declarationGenerator = generateObjectStringTestCaseDeclaration.bind(
     undefined,
     declarationOptions,
