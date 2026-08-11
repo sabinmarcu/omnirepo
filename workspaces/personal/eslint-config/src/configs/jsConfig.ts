@@ -1,4 +1,4 @@
-import stylisticJsPlugin from '@stylistic/eslint-plugin-js';
+import stylisticPlugin from '@stylistic/eslint-plugin';
 import canonicalPlugin from 'eslint-plugin-canonical';
 import type {
   Config,
@@ -16,7 +16,7 @@ const jsConfig = [
   jsConfigCompiler({
     name: 'JS Config',
     plugins: {
-      '@stylistic/js': stylisticJsPlugin as any,
+      '@stylistic': stylisticPlugin as any,
       canonical: canonicalPlugin,
     },
   }),
