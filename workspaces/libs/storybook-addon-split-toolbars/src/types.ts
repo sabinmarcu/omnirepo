@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/prevent-abbreviations */
 import type { IconsProps } from 'storybook/internal/components';
 import type { InputType } from 'storybook/internal/types';
 

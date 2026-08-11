@@ -23,13 +23,13 @@ export const ToolbarMenuButton: FC<ToolbarMenuButtonProps> = ({
   description,
   onClick,
 }) => (
-    <IconButton
-      active={active}
-      title={description}
-      disabled={disabled}
-      onClick={disabled ? () => {} : onClick}
-    >
-      {icon && <Icons icon={icon} __suppressDeprecationWarning={true} />}
-      {title ? `\u00A0${title}` : null}
-    </IconButton>
+  <IconButton
+    active={active}
+    title={description}
+    disabled={disabled}
+    onClick={disabled ? () => {} : onClick}
+  >
+    {icon && <Icons icon={icon} __suppressDeprecationWarning />}
+    {title ? `\u{A0}${title}` : null}
+  </IconButton>
 );

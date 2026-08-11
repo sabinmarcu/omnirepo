@@ -1,14 +1,14 @@
 import type { Globals } from '@storybook/core/types';
-import type { Ident } from '../types.js';
+import type { Ident as Identifier } from '../types.js';
 import { DEFAULT_ITEMS_KEY } from '../constants.js';
 
-const identSeparator = '--';
+const identifierSeparator = '--';
 
 export const getGlobalIdent = (
   globals: Globals,
-  ident: Ident,
+  identifier: Identifier,
 ) => {
-  const { id, key } = ident;
+  const { id, key } = identifier;
   const globalValue = globals[id] as string | undefined;
   if (!globalValue) {
     return undefined;
@@ -16,7 +16,7 @@ export const getGlobalIdent = (
   if (key === DEFAULT_ITEMS_KEY) {
     return globalValue;
   }
-  const [valueKey, value] = globalValue.split(identSeparator);
+  const [valueKey, value] = globalValue.split(identifierSeparator);
   if (key === valueKey) {
     return value;
   }
@@ -24,21 +24,21 @@ export const getGlobalIdent = (
 };
 
 export const setGlobalIdent = (
-  ident: Ident,
+  identifier: Identifier,
   value: string,
 ) => {
-  if (ident.key === DEFAULT_ITEMS_KEY) {
+  if (identifier.key === DEFAULT_ITEMS_KEY) {
     return value;
   }
-  return [ident.key, value].join(identSeparator);
+  return [identifier.key, value].join(identifierSeparator);
 };
 
-export const unpackIdent = (ident: string) => {
-  const [key, value] = ident.split(identSeparator);
+export const unpackIdent = (identifier: string) => {
+  const [key, value] = identifier.split(identifierSeparator);
   return [key, value] as const;
 };
 
 export const ident = (id: string, key: string) => ({
   id,
   key,
-} satisfies Ident);
+} satisfies Identifier);

@@ -22,7 +22,7 @@ export const ToolbarMenuListItem = ({
   currentValue,
 }: ToolbarMenuListItemProps) => {
   const Icon = icon && (
-    <Icons style={{ opacity: 1 }} icon={icon} __suppressDeprecationWarning={true} />
+    <Icons style={{ opacity: 1 }} icon={icon} __suppressDeprecationWarning />
   );
 
   const Item: TooltipLinkListLink = {
