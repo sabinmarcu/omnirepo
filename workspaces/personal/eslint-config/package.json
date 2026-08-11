@@ -1,6 +1,6 @@
 {
   "name": "@sabinmarcu/eslint-config",
-  "version": "3.4.2",
+  "version": "3.4.3",
   "dependencies": {
     "@eslint/compat": "^2.1.0",
     "@eslint/eslintrc": "^3.3.6",
