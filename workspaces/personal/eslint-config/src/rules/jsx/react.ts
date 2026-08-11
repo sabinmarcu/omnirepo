@@ -674,7 +674,7 @@ const reactConfig = await conditionalConfig(
       name: 'JSX Config',
       rules: reactRules,
       plugins: {
-        react: reactPlugin,
+        react: reactPlugin.default ?? reactPlugin,
       },
       settings: {
         react: {
