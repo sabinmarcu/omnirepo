@@ -66,7 +66,7 @@ const variables = {
   dark: darkVariables,
 } as const;
 
-// eslint-disable-next-line unicorn/prevent-abbreviations
+// eslint-disable-next-line unicorn/name-replacements
 for (const [variant, vars] of Object.entries(variables)) {
   globalStyle(`[${variantSelector}=${variant}]`, {
     vars,
