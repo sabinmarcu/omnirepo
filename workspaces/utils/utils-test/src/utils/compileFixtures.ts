@@ -79,7 +79,7 @@ export const compileFixtures = <T extends unknown>(
   const supportedExtensions = Object.keys(parse);
   const files = fs.readdirSync(cwd)
     .filter((it) => supportedExtensions.some((extension) => it.endsWith(extension)))
-    .filter(((it) => !excludes.some((excl) => it.match(excl))));
+    .filter(((it) => excludes.every((excl) => !it.match(excl))));
   if (!files) {
     throw new Error(`cwd ${cwd} is empty`);
   }
@@ -89,9 +89,8 @@ export const compileFixtures = <T extends unknown>(
         supportedExtensions.find((extension) => it.endsWith(extension)) as keyof typeof parse
       ];
       const fixture = parser(cwd, path.resolve(cwd, it), options);
-      const name = ((fixture as any)?.name as string | undefined)
-        ? ((fixture as any).name as string | undefined)
-        : it.replace(/\.[^.]+$/, '').replaceAll(/[.-]/g, ' ');
+      const fixtureName = (fixture as any)?.name as string | undefined;
+      const name = fixtureName || it.replace(/\.[^.]+$/, '').replaceAll(/[.-]/g, ' ');
       return {
         ...(fixture as any),
         name,

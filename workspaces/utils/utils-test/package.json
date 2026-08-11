@@ -40,7 +40,7 @@
     "preset": "../../../.config/build.config.ts"
   },
   "dependencies": {
-    "glob": "^8.0.3",
+    "glob": "^13.0.6",
     "memfs": "^3.4.12",
     "moize": "^6.1.7",
     "yaml": "^2.5.0"
