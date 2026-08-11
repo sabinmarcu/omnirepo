@@ -1,8 +1,7 @@
-import glob from 'glob';
+import { glob } from 'glob';
 import path from 'node:path';
 // eslint-disable-next-line import/extensions -- Moize's ESM entry requires its .mjs extension.
 import moize from 'moize/mjs/index.mjs';
-import { promisify } from 'node:util';
 import { testWorkspaces as test } from '../../predicates/index.js';
 import { walker } from '../../utils/walkFs.js';
 import { resolveWorkspaces as resolve } from '../path/index.js';
@@ -12,7 +11,10 @@ import type {
   PathResolverFunctionAsync,
 } from '../../types.js';
 
-const globPromisified = promisify(glob);
+const sortPaths = (paths: string[]) => (
+  // eslint-disable-next-line unicorn/no-array-sort -- ES2023 is not targeted.
+  paths.sort((left, right) => left.localeCompare(right))
+);
 
 export const getWorkspacesPaths = moize.promise(async (
   from: string,
@@ -37,13 +39,13 @@ export const getWorkspacesPaths = moize.promise(async (
   }
   const packageJsonListMap = await Promise.all(
     workspacesList.map(
-      async (workspace) => globPromisified(
+      async (workspace) => glob(
         path.join(workspace, 'package.json'),
         { cwd: root },
       ),
     ),
   );
-  const packageJsonList = packageJsonListMap.flat();
+  const packageJsonList = sortPaths(packageJsonListMap.flat());
   return packageJsonList.map((it) => it.replace(/\/package\.json$/, ''));
 }) satisfies PathResolverFunctionAsync<string[]> as PathResolverFunctionAsync<string[]>;
 
@@ -68,12 +70,12 @@ export const getWorkspacesPathsSync = moize((
   } catch (error) {
     throw new Error('No workspaces found', { cause: error });
   }
-  const packageJsonList = workspacesList.flatMap(
+  const packageJsonList = sortPaths(workspacesList.flatMap(
     (workspace) => glob.sync(
       path.join(workspace, 'package.json'),
       { cwd: root },
     ),
-  );
+  ));
   return packageJsonList.map((it) => it.replace(/\/package\.json$/, ''));
 }) satisfies PathResolverFunction<string[]> as PathResolverFunction<string[]>;
 
