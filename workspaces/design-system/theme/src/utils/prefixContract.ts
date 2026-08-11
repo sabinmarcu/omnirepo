@@ -5,9 +5,9 @@ export const prefixContract = <
   const Contract extends ReturnType<typeof createGlobalThemeContract>,
   const Prefix extends string = string,
 >(
-    contract: Contract,
-    prefix?: Prefix,
-  ): Contract => {
+  contract: Contract,
+  prefix?: Prefix,
+): Contract => {
   if (!prefix) {
     return contract;
   }

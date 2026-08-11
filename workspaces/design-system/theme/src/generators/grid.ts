@@ -40,8 +40,8 @@ const createGridGenerator = <Amount extends number = 3>(
         return result;
       }
 
-      for (const index of Array.from({ length: amount }).map((_, index_) => index_)) {
-        const namePrefix = Array.from({ length: index }).fill('x').join('');
+      for (const index of Array.from({ length: amount }, (_, index_) => index_)) {
+        const namePrefix = 'x'.repeat(index);
         const [smallValue, largeValue] = pairGenerator(index, inputSize);
         result = {
           ...result,

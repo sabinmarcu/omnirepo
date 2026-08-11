@@ -63,8 +63,8 @@ export function selectorOfFamily<Families extends string>(family: Families) {
 export const createThemeFamily = <
   const Families extends string,
 >(
-    ...families: Families[]
-  ) => {
+  ...families: Families[]
+) => {
   const rootUpdater = createThemeVariant(undefined as any);
   const baseUpdater = createThemeVariant(baseKey);
   const familyUpdaters: Record<Families, ReturnType<typeof createThemeVariant>> = {} as any;
@@ -96,7 +96,7 @@ export const createThemeFamily = <
     baseUpdater(baseInput, selector, updateFunction);
     picker('base', selectorOfFamily('base'), updateFunction);
     for (const family of families) {
-      const { [family]: partialInput } = familiesInput;
+      const partialInput = (familiesInput as any)[family];
       const mergedInput = deepMerge(baseInput, partialInput ?? {});
       picker(family, selectorOfFamily(family), updateFunction);
       familyUpdaters[family](mergedInput as any, selector, updateFunction);
