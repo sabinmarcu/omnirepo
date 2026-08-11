@@ -33,11 +33,11 @@ export type PipedObservable<T> =
   & Subscription;
 
 export type ObservableFilterFunction<T> = (
-  filter: (input: T | undefined) => boolean
+  filter: (input: T | undefined) => boolean,
 ) => PipedObservable<T>;
 
 export type ObservableMapFunction<T> = <R>(
-  map: (input: T | undefined) => R
+  map: (input: T | undefined) => R,
 ) => PipedObservable<R>;
 
 export type TypeOfObservable<T extends Observable<any>> =

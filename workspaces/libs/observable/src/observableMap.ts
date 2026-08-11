@@ -24,11 +24,11 @@ export const wrapMapMethod = <
   InputMap extends Map<any, any>,
   MethodName extends MethodsOfMap,
 >(
-    source: InputMap,
-    method: MethodName,
-    store: Subject<InputMap>,
-  ) => {
-  const member = source[method];
+  source: InputMap,
+  method: MethodName,
+  store: Subject<InputMap>,
+) => {
+  const member = Reflect.get(source, method) as InputMap[MethodName];
   const replacement = (
     (...parameters: Parameters<typeof member>) => {
       const result = Reflect.apply((member as any), source, parameters);
@@ -44,7 +44,7 @@ export const observableMap = <K, V>(
   const store = subject(source);
   const newMap = new Map(source) as ObservableMap<K, V>;
   for (const key of MapKeysToWrap) {
-    newMap[key] = wrapMapMethod(source, key, store) as any;
+    Reflect.set(newMap, key, wrapMapMethod(source, key, store));
   }
   newMap.subscribe = store.subscribe;
   return newMap;

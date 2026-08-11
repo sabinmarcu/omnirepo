@@ -21,24 +21,24 @@ export const makeControllerFunction = <T>(
   valueStore: MutableStore<T>,
   subscriberStore: ObservableSubscriberStore<T>,
 ) => <Key extends keyof ObserverController<T> = 'next'>(
-    key: Key,
-  ) => (...arguments_: Parameters<ObserverController<T>[Key]>) => {
-      if (key === 'next') {
-        // eslint-disable-next-line no-param-reassign
-        valueStore.value = arguments_[0] as T;
+  key: Key,
+) => (...arguments_: Parameters<ObserverController<T>[Key]>) => {
+    if (key === 'next') {
+      // eslint-disable-next-line no-param-reassign
+      valueStore.value = arguments_[0] as T;
+    }
+    for (const subscriber of subscriberStore) {
+      const dispatcher = subscriber[key];
+      if (dispatcher) {
+        (dispatcher as any)(...arguments_);
       }
+    }
+    if (key === 'complete') {
       for (const subscriber of subscriberStore) {
-        const dispatcher = subscriber[key];
-        if (dispatcher) {
-          (dispatcher as any)(...arguments_);
-        }
+        subscriberStore.delete(subscriber);
       }
-      if (key === 'complete') {
-        for (const subscriber of subscriberStore) {
-          subscriberStore.delete(subscriber);
-        }
-      }
-    };
+    }
+  };
 
 export const makeController = <T>(
   valueStore: MutableStore<T>,
