@@ -35,8 +35,11 @@ export const makeRenderer = (
       return;
     }
 
-    canvas.width = Number.parseInt(style.getPropertyValue('width'), 10);
-    canvas.height = Number.parseInt(style.getPropertyValue('height'), 10);
+    /* CSS dimensions include units, so Number() would return NaN. */
+    /* eslint-disable unicorn/prefer-number-coercion */
+    canvas.width = Number.parseFloat(style.getPropertyValue('width'));
+    canvas.height = Number.parseFloat(style.getPropertyValue('height'));
+    /* eslint-enable unicorn/prefer-number-coercion */
 
     const col = Math.floor(canvas.width / every);
     const row = Math.floor(canvas.height / every);
@@ -46,15 +49,16 @@ export const makeRenderer = (
 
     realSpeed = Math.min(canvas.width, canvas.height) * (speed / 1000);
 
-    points = Array.from({ length: col * row })
-      .fill(0)
-      .map((_, index) => ({
+    points = Array.from(
+      { length: col * row },
+      (_, index) => ({
         x: Math.floor(index % col) * every + colPad / 2
           + Math.floor(Math.random() * variance * 2 - variance),
         y: Math.floor(index / col) * every + rowPad / 2
           + Math.floor(Math.random() * variance * 2 - variance),
         impulse: Math.random() * Math.PI * 2,
-      }));
+      }),
+    );
   };
 
   update();
@@ -62,13 +66,14 @@ export const makeRenderer = (
 
   let isRendering = true;
   const render = () => {
+    if (!isRendering || !context) {
+      return;
+    }
+
     const computedStyle = wnd?.getComputedStyle(canvas);
     const color = computedStyle?.getPropertyValue(canvasCSSProperty)
       || computedStyle?.getPropertyValue('color')
       || defaultColor;
-    if (!isRendering || !context) {
-      return;
-    }
 
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.fillStyle = color;
@@ -98,6 +103,7 @@ export const makeRenderer = (
     });
 
     context.strokeStyle = color;
+    const connectionsPath = new Path2D();
     for (const [
       index,
       {
@@ -116,27 +122,26 @@ export const makeRenderer = (
             , (y - y1),
           );
           if (distribution < every * 1.2) {
-            context.beginPath();
-            context.moveTo(x, y);
-            context.lineTo(x1, y1);
-            context.stroke();
+            connectionsPath.moveTo(x, y);
+            connectionsPath.lineTo(x1, y1);
           }
         }
       }
     }
+    context.stroke(connectionsPath);
 
+    const outerPointsPath = new Path2D();
+    const innerPointsPath = new Path2D();
     for (const {
       x, y,
     } of points) {
-      context.globalCompositeOperation = 'destination-out';
-      context.beginPath();
-      context.arc(x, y, size * 2.5, 0, Math.PI * 2);
-      context.fill();
-      context.globalCompositeOperation = 'source-over';
-      context.beginPath();
-      context.arc(x, y, size, 0, Math.PI * 2);
-      context.fill();
+      outerPointsPath.arc(x, y, size * 2.5, 0, Math.PI * 2);
+      innerPointsPath.arc(x, y, size, 0, Math.PI * 2);
     }
+    context.globalCompositeOperation = 'destination-out';
+    context.fill(outerPointsPath);
+    context.globalCompositeOperation = 'source-over';
+    context.fill(innerPointsPath);
 
     requestAnimationFrame(render);
   };
