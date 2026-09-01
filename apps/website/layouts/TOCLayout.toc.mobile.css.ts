@@ -2,21 +2,19 @@ import {
   globalStyle,
   style,
 } from '@vanilla-extract/css';
-import { media as mediaRaw } from '@/utils/responsive';
 import { zIndexLayers } from '@/constants/layers';
 import { iconSize } from '@/components/Icon.css';
 import { tooltipStyle } from '@/components/Tooltip.component.css';
+import { tocLayoutTOCStyles } from './TOCLayout.toc.css';
 import {
-  breakpoint,
-  tocLayoutTOCStyles,
-} from './TOCLayout.toc.css';
+  whenTOCDoesNotFit,
+  whenTOCFits,
+} from './TOCLayout.fit';
 import {
   emptyNavigationSelector,
   navigationSelector,
   navigationSpacing,
 } from './Navigation.css';
-
-const media = mediaRaw.bind(undefined, breakpoint);
 
 export const mobileTOCTriggerStyles = style({
   display: 'flex',
@@ -41,15 +39,12 @@ globalStyle([
   display: 'none',
 });
 
-globalStyle([
-  mobileTOCTriggerStyles,
-  `${mobileTOCTriggerStyles} + ${tooltipStyle.classNames.base}`,
-].join(', '), {
-  '@media': {
-    [media('gte')]: {
-      display: 'none',
-    },
-  },
+whenTOCFits(mobileTOCTriggerStyles, {
+  display: 'none',
+});
+
+whenTOCFits(`${mobileTOCTriggerStyles} + ${tooltipStyle.classNames.base}`, {
+  display: 'none',
 });
 
 const mobileTOCTriggerSelector = `${mobileTOCTriggerStyles} > input`;
@@ -71,24 +66,14 @@ globalStyle(`${mobileTOCTriggerStyles} > [role=button]`, {
   boxSizing: 'border-box',
 });
 
-globalStyle(tocLayoutTOCStyles, {
-  '@media': {
-    [media('lt')]: {
-      position: 'fixed',
-      zIndex: -1,
-      inset: 0,
-      opacity: 0,
-    },
-  },
+whenTOCDoesNotFit(tocLayoutTOCStyles, {
+  position: 'fixed',
+  zIndex: -1,
+  inset: 0,
+  opacity: 0,
 });
 
 globalStyle(`${tocLayoutTOCStyles} h2 label`, {
-  '@media': {
-    [media('gte')]: {
-      display: 'none',
-    },
-  },
-
   paddingBlock: 0,
   paddingInline: 0,
 
@@ -107,19 +92,16 @@ globalStyle(`${tocLayoutTOCStyles} h2 label`, {
   },
 });
 
+whenTOCFits(`${tocLayoutTOCStyles} h2 label`, {
+  display: 'none',
+});
+
 globalStyle(`${mobileTOCActiveSelector} ${tocLayoutTOCStyles}`, {
   opacity: 1,
   zIndex: zIndexLayers.toc,
 });
 
-globalStyle([
-  `${tocLayoutTOCStyles} section`,
-  `${tocLayoutTOCStyles} nav`,
-].join(', '), {
-  '@media': {
-    [media('lt')]: {
-      blockSize: '100%',
-    },
-  },
+whenTOCDoesNotFit(`${tocLayoutTOCStyles} nav`, {
+  blockSize: '100%',
 });
 

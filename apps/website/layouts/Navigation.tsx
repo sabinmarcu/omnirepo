@@ -13,7 +13,6 @@ import {
 import { grids } from './Navigation.grid';
 import { NavigationAnchor } from './Navigation.anchor';
 import { TOCMobileButton } from './TOCLayout.toc.mobile';
-import { TOCMobileButton as OldTOCMobileButton } from './PageTOCLayout.toc.mobile';
 import { navigationStyles } from './Navigation.css';
 
 export namespace Navigation {
@@ -30,34 +29,35 @@ export const Navigation = extendComponent(
     animatedNavigation,
   }: Navigation.Props) {
     return (
-    <nav className={navigationStyles({
-      empty,
-      animated: animatedNavigation,
-    })}>
-      {empty
-        ? <></>
-        : (
-          <>
-            <section {...grids.selector('major')}>
-              <NavigationList list={rootNavigation} />
-            </section>
-            {children
-              ? (<section {...grids.selector('minor')}>
-                {children}
-              </section>)
-              : null
-            }
-          </>
-        )}
-      <section {...grids.selector('settings')}>
-        <ThemeSelector />
-        <Experiments.Trigger />
-        <NavigationMobileButton />
-        <TOCMobileButton />
-        <OldTOCMobileButton />
-      </section>
-      <NavigationBackdrop />
-    </nav>
+      <nav className={navigationStyles({
+        empty,
+        animated: animatedNavigation,
+      })}
+      >
+        {empty
+          ? <></>
+          : (
+            <>
+              <section {...grids.selector('major')}>
+                <NavigationList list={rootNavigation} />
+              </section>
+              {children
+                ? (
+                  <section {...grids.selector('minor')}>
+                    {children}
+                  </section>
+                )
+                : null}
+            </>
+          )}
+        <section {...grids.selector('settings')}>
+          <ThemeSelector />
+          <Experiments.Trigger />
+          <NavigationMobileButton />
+          <TOCMobileButton />
+        </section>
+        <NavigationBackdrop />
+      </nav>
     );
   }),
   {

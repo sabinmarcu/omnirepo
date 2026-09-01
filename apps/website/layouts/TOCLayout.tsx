@@ -7,11 +7,13 @@ export namespace TOCLayout {
     & TOCLayoutTOC.Props
   );
 }
-export function TOCLayout({ toc, maxDepth, ...props }: TOCLayout.Props) {
+export function TOCLayout({
+  toc, maxDepth, ...props
+}: TOCLayout.Props) {
   return (
     <>
-      <TOCLayoutTOC toc={toc} maxDepth={maxDepth} />
       <PageLayout {...props} />
+      <TOCLayoutTOC toc={toc} maxDepth={maxDepth} />
     </>
   );
 }

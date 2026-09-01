@@ -1,10 +1,11 @@
 import { theme } from '@sabinmarcu/website-theme';
+import type { StyleRule } from '@vanilla-extract/css';
 import {
   globalStyle,
   createVar,
 } from '@vanilla-extract/css';
-import { zIndexLayers } from '@/constants/layers';
 import { recipe } from '@vanilla-extract/recipes';
+import { zIndexLayers } from '@/constants/layers';
 import { themedLinkStyle } from '@/components/ThemedLink.css';
 import { grids } from './Navigation.grid';
 import {
@@ -13,12 +14,19 @@ import {
   navigationAnimation,
   navigationAnimationPercent,
 } from './Navigation.animation.css';
-import { rootScrollTimeline } from './RootPageLayout.css';
+import {
+  rootPageLayoutStyles,
+  rootScrollTimeline,
+} from './RootPageLayout.css';
+
+/** Anchor exposed so out-of-flow siblings (the TOC) can position against the navbar's real box. */
+export const navigationAnchorName = '--navigation';
 
 export const navigationSpacing = createVar();
 export const navigationMinBlockSize = createVar();
 export const navigationMinInlineSize = createVar();
 export const navigationBlockOffset = createVar();
+export const navigationRows = createVar();
 export const navigationMobileElements = createVar();
 export const navigationInlineOffset = createVar();
 export const navigationStyles = recipe({
@@ -26,8 +34,6 @@ export const navigationStyles = recipe({
     empty: {
       true: {
         position: 'fixed',
-        insetBlockStart: 0,
-        insetInline: 0,
       },
     },
     animated: {
@@ -59,6 +65,8 @@ export const navigationStyles = recipe({
     ]),
 
     fontSize: theme.grid.l,
+
+    ...({ anchorName: navigationAnchorName } as StyleRule),
   },
 });
 
@@ -167,11 +175,11 @@ globalStyle(`${animatedNavigationSelector}:not(${emptyNavigationSelector}) > sec
   borderBlockWidth: blendSize(navigationBorderSize),
   borderInlineWidth: blendSize(navigationBorderSize),
   vars: {
-    [navigationBorderColor]: `${blendAnimation(theme.colors.background.elevated, undefined, true)}`,
+    [navigationBorderColor]: blendAnimation(theme.colors.background.elevated, undefined, true),
   },
 });
 
-globalStyle(`${navigationSectionsSelectors.settings}`, {
+globalStyle(navigationSectionsSelectors.settings, {
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -198,7 +206,7 @@ globalStyle([
   inlineSize: navigationMinInlineSize,
 });
 
-globalStyle(`${navigationSectionsSelectors.minor}`, {
+globalStyle(navigationSectionsSelectors.minor, {
   marginBlockStart: 0,
   vars: {
     [navigationBlendPercent]: '30%',
@@ -208,31 +216,31 @@ globalStyle(`${navigationSectionsSelectors.minor}`, {
 globalStyle('body', {
   vars: {
     [navigationBlockOffset]: '0px',
-  },
-});
-
-globalStyle(`body:has(${navigationSelector})`, {
-  vars: {
-    [navigationBlockOffset]: `calc(${navigationMinBlockSize} + ${navigationSpacing} * 3)`,
+    [navigationRows]: '1',
   },
 });
 
 globalStyle(`body:has(${navigationSelector} ${grids.rawSelector('minor')})`, {
   vars: {
-    [navigationBlockOffset]: `calc(${navigationMinBlockSize} * 2 + ${navigationSpacing} * 3)`,
+    [navigationRows]: '2',
+  },
+});
+
+globalStyle(`body:has(${navigationSelector})`, {
+  vars: {
+    [navigationBlockOffset]: `calc(${navigationMinBlockSize} * ${navigationRows} + ${navigationSpacing} * 3)`,
   },
 });
 
 globalStyle(`body:has(${navigationSelector}${animatedNavigationSelector})`, {
   vars: {
-    [navigationBlockOffset]: blendSize(navigationMinBlockSize),
+    [navigationBlockOffset]: `calc(${blendSize(navigationMinBlockSize)} * ${navigationRows})`,
   },
 });
 
-globalStyle(`body:has(${navigationSelector}${animatedNavigationSelector} ${grids.rawSelector('minor')})`, {
-  vars: {
-    [navigationBlockOffset]: `calc(${navigationMinBlockSize} * 2)`,
-  },
+// The navbar overlays content, so the scroller must reserve room when jumping to anchors.
+globalStyle(rootPageLayoutStyles, {
+  scrollPaddingBlockStart: `calc(${navigationBlockOffset} + ${theme.grid.m})`,
 });
 
 globalStyle(`body:has(${navigationSelector})`, {

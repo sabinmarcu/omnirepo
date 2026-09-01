@@ -3,13 +3,13 @@ import type {
   PropsWithChildren,
 } from 'react';
 import {
-  getRouteCategory,
-  isRouteWIP,
-} from '@/utils/routes';
-import {
   selector,
   families,
 } from '@sabinmarcu/website-theme';
+import {
+  getRouteCategory,
+  isRouteWIP,
+} from '@/utils/routes';
 import { rootThemeTrigger } from '@/app/layout.css';
 import {
   getPathname,

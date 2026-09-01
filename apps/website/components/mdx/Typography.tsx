@@ -1,8 +1,8 @@
-import { PageTOCLayout } from '@/layouts/PageTOCLayout';
 import type {
   HTMLAttributes,
   PropsWithChildren,
 } from 'react';
+import { TOCAnchor } from '@/layouts/TOCAnchor';
 
 export namespace Typography {
   export type Props = PropsWithChildren<
@@ -16,13 +16,11 @@ export function Typography({
   ...rest
 }: Typography.Props) {
   const Element = as;
-  const elementMatch = as.match('^h([0-9])$');
-  const level = (elementMatch ? Number.parseInt(elementMatch[1], 10) : undefined) ?? 0;
   return (
     <Element {...rest}>
-      <PageTOCLayout.Anchor prefix="heading" level={level}>
+      <TOCAnchor prefix="heading">
         {children}
-      </PageTOCLayout.Anchor>
+      </TOCAnchor>
     </Element>
   );
 }

@@ -1,4 +1,3 @@
-import { mobileMedia } from '@/utils/responsive';
 import { theme } from '@sabinmarcu/theme';
 import {
   createVar,
@@ -6,6 +5,7 @@ import {
 } from '@vanilla-extract/css';
 import type { RecipeVariants } from '@vanilla-extract/recipes';
 import { recipe } from '@vanilla-extract/recipes';
+import { mobileMedia } from '@/utils/responsive';
 
 const contentSize = createVar();
 

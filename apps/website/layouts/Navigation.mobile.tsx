@@ -8,9 +8,9 @@ import { mobileNavigationTriggerSelector } from './Navigation.mobile.constants';
 export function NavigationMobileButton() {
   return (
     <label htmlFor={mobileNavigationTriggerSelector} className={triggerStyles}>
-      <input type='checkbox' id={mobileNavigationTriggerSelector} />
-      <div role='button'>
-        <Icon icon='bars' />
+      <input type="checkbox" id={mobileNavigationTriggerSelector} />
+      <div role="button">
+        <Icon icon="bars" />
       </div>
     </label>
   );

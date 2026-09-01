@@ -1,8 +1,8 @@
+import type z from 'zod';
+import { Fragment } from 'react';
 import { ThemedLink } from '@/components/ThemedLink';
 import { ClientClickProxy } from '@/components/ClientClickProxy';
-import type z from 'zod';
 import type { tocSchema } from '@/models/schemas';
-import { Fragment } from 'react';
 import { tocLayoutTOCStyles } from './TOCLayout.toc.css';
 import { mobileTOCTriggerSelector } from './TOCLayout.toc.constants';
 import { TOCMobileCloseButton } from './TOCLayout.toc.mobile';
@@ -55,13 +55,12 @@ function TOCLayoutList({
         attributes: { id: slug },
         children,
       }) => (
-          <Fragment key={slug}>
-            <li><ThemedLink href={ `#${slug}` }>{title}</ThemedLink></li>
-            {children && children.length > 0
-              ? <TOCLayoutList toc={children} />
-              : null
-            }
-          </Fragment>
+        <Fragment key={slug}>
+          <li><ThemedLink href={`#${slug}`}>{title}</ThemedLink></li>
+          {children && children.length > 0
+            ? <TOCLayoutList toc={children} />
+            : null}
+        </Fragment>
       ))}
     </ul>
   );
@@ -73,15 +72,13 @@ export function TOCLayoutTOC({
 }: TOCLayoutTOC.Props) {
   return (
     <aside className={tocLayoutTOCStyles}>
-      <section>
-        <nav>
-          <h2>
-            <span>Table of Contents</span>
-            <TOCMobileCloseButton />
-          </h2>
-          <TOCLayoutList toc={toc} maxDepth={maxDepth} root />
-        </nav>
-      </section>
+      <nav>
+        <h2>
+          <span>Table of Contents</span>
+          <TOCMobileCloseButton />
+        </h2>
+        <TOCLayoutList toc={toc} maxDepth={maxDepth} root />
+      </nav>
     </aside>
   );
 }

@@ -1,5 +1,5 @@
-import type { NavigationItem } from '@/navigation/utils';
 import { ViewTransition } from 'react';
+import type { NavigationItem } from '@/navigation/utils';
 import { ClientClickProxy } from '@/components/ClientClickProxy';
 import { NavigationLink } from './Navigation.link';
 import { mobileNavigationTriggerSelector } from './Navigation.mobile.constants';

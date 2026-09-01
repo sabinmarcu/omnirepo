@@ -1,11 +1,11 @@
+import type { ComponentProps } from 'react';
 import { ThemedLink } from '@/components/ThemedLink';
 import {
   tocLinkProps,
 } from '@/utils/toc';
-import type { ComponentProps } from 'react';
-import { extractChildrenText } from './PageTOCLayout.utils';
+import { extractChildrenText } from './TOCAnchor.utils';
 
-export namespace PageTOCLayoutAnchor {
+export namespace TOCLink {
   export type Props = (
     & {
       text?: string
@@ -18,13 +18,13 @@ export namespace PageTOCLayoutAnchor {
   );
 }
 
-export function PageTOCLayoutLink({
+export function TOCLink({
   text,
   prefix,
   suffix,
   children,
   ...rest
-}: PageTOCLayoutAnchor.Props) {
+}: TOCLink.Props) {
   const props = tocLinkProps(
     text ?? extractChildrenText(children),
     {

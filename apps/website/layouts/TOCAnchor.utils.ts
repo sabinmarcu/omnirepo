@@ -1,6 +1,5 @@
 import type { PropsWithChildren } from 'react';
 import { Children } from 'react';
-import { tocAnchorSelector } from './PageTOCLayout.constants';
 
 export function extractChildrenText(
   children: PropsWithChildren<{}>['children'],
@@ -25,7 +24,7 @@ export function extractChildrenText(
         || typeof child === 'bigint'
         || typeof child === 'boolean'
       ) {
-        return `${child}`;
+        return String(child);
       }
       if (!('props' in child!) || !('children' in (child!.props as any))) {
         return undefined;
@@ -43,35 +42,4 @@ export function extractChildrenText(
     return '';
   }
   return extractedChildren.filter(Boolean).join(' ');
-}
-
-export function extractToc(
-  children: PropsWithChildren<{}>['children'],
-
-): any {
-  if (
-    typeof children === 'string'
-    || typeof children === 'number'
-    || typeof children === 'bigint'
-    || typeof children === 'boolean'
-  ) {
-    return undefined;
-  }
-  return Children.map(
-    children,
-    (child) => {
-      if (
-        typeof child === 'string'
-        || typeof child === 'number'
-        || typeof child === 'bigint'
-        || typeof child === 'boolean'
-      ) {
-        return undefined;
-      }
-      if ('props' in child! && 'children' in (child!.props as any)) {
-        return extractToc((child!.props as any).children);
-      }
-      return undefined;
-    },
-  ) as any;
 }
