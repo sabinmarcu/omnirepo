@@ -29,7 +29,7 @@ export const Grading = withStyles(function Grading({
         key={`grading-${index}`}
         {...{ [gradingPipSelector]: index < value }}
       >
-        <Icon icon='circle-notch' />
+        <Icon icon="circle-notch" />
       </div>
     ));
   return (

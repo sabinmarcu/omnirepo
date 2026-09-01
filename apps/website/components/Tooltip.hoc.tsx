@@ -51,13 +51,15 @@ export function withTooltip<
         <Tooltip
           style={{ positionAnchor: anchorVariable }}
           {...positionProps}
-        >{content}</Tooltip>
+        >
+          {content}
+        </Tooltip>
       </>
     );
   };
 
-  for (const extra of Object.keys(WrappedComponent)) {
-    (ComponentWithTooltip as any)[extra] = (WrappedComponent as any)[extra];
+  for (const [extra, value] of Object.entries(WrappedComponent as any)) {
+    (ComponentWithTooltip as any)[extra] = value;
   }
 
   ComponentWithTooltip.displayName = `withTooltip(${displayName})`;

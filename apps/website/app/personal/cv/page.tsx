@@ -26,7 +26,9 @@ export default async function CVPage() {
   cv.collectTOC();
 
   const overview = await cv.overview;
-  const { title, tagline, info } = overview;
+  const {
+    title, tagline, info,
+  } = overview;
 
   const pageContent = (
     <>
@@ -45,7 +47,8 @@ export default async function CVPage() {
       <br style={{
         clear: 'both',
         position: 'relative',
-      }} />
+      }}
+      />
       <Typography as="h2">{cv.tocSection('Work Projects')}</Typography>
       <ExperienceList list={await cv.featuredWorkProjects} />
       <Grid columns={2} grid>
@@ -70,7 +73,7 @@ export default async function CVPage() {
     </>
   );
 
-  const toc = cv.toc;
+  const { toc } = cv;
 
   return (
     <TOCLayout className={cvPageStyles} variant="large" maxDepth={3} toc={toc}>
@@ -79,9 +82,9 @@ export default async function CVPage() {
           <h1>{title}</h1>
           <p>{tagline}</p>
         </div>
-      <InfoTagList list={info} />
+        <InfoTagList list={info} />
       </header>
       {pageContent}
     </TOCLayout>
-  )
+  );
 }
