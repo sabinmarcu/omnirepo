@@ -19,7 +19,7 @@
     "@swc/jest": "^0.2.37",
     "@tscmono/cli": "^0.2.3",
     "@tscmono/preset-default": "^0.4.7",
-    "@vanilla-extract/dynamic": "^2.1.2",
+    "@vanilla-extract/dynamic": "^2.1.5",
     "@vitest/ui": "^3.1.1",
     "babel-plugin-module-rewrite": "^0.2.0",
     "eslint": "^9.39.5",
