@@ -1,0 +1,3 @@
+releases:
+  "@sabinmarcu/storybook-addon-theme-overrider": patch
+  "@sabinmarcu/theme-storybook": patch
