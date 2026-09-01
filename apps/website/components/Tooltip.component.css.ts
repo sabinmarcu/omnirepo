@@ -76,8 +76,10 @@ export const tooltipStyle = recipe({
 });
 
 const { classNames: { base: tooltipSelector } } = tooltipStyle;
-globalStyle(`${tooltipSelector}`, {
+globalStyle(tooltipSelector, {
   opacity: 0,
+  // Shown by hovering the anchor, never itself, so it must not intercept clicks.
+  pointerEvents: 'none',
   transition: 'opacity 0.2s ease-out',
 });
 

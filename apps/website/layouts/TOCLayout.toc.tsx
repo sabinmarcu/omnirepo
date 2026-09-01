@@ -4,8 +4,8 @@ import { ThemedLink } from '@/components/ThemedLink';
 import { ClientClickProxy } from '@/components/ClientClickProxy';
 import type { tocSchema } from '@/models/schemas';
 import { tocLayoutTOCStyles } from './TOCLayout.toc.css';
-import { mobileTOCTriggerSelector } from './TOCLayout.toc.constants';
-import { TOCMobileCloseButton } from './TOCLayout.toc.mobile';
+import { tocPopoverId } from './TOCLayout.toc.constants';
+import { TOCDrawerCloseButton } from './TOCLayout.toc.drawer';
 
 export namespace TOCLayoutTOC {
   export type Props = {
@@ -47,7 +47,7 @@ function TOCLayoutList({
   return (
     <ul>
       {root
-        ? (<ClientClickProxy delegate={mobileTOCTriggerSelector} />
+        ? (<ClientClickProxy delegate={tocPopoverId} />
         )
         : null}
       {restrictedLinks.map(({
@@ -71,11 +71,15 @@ export function TOCLayoutTOC({
   maxDepth,
 }: TOCLayoutTOC.Props) {
   return (
-    <aside className={tocLayoutTOCStyles}>
+    <aside
+      id={tocPopoverId}
+      popover="auto"
+      className={tocLayoutTOCStyles}
+    >
       <nav>
         <h2>
           <span>Table of Contents</span>
-          <TOCMobileCloseButton />
+          <TOCDrawerCloseButton />
         </h2>
         <TOCLayoutList toc={toc} maxDepth={maxDepth} root />
       </nav>

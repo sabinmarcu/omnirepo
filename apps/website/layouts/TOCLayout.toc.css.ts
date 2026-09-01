@@ -1,44 +1,71 @@
 import { theme } from '@sabinmarcu/theme';
 import {
   createVar,
+  fallbackVar,
   globalStyle,
   style,
 } from '@vanilla-extract/css';
 import { zIndexLayers } from '@/constants/layers';
 import {
-  navigationAnchorName,
-  navigationMobileElements,
+  navigationBlockOffset,
+  navigationMinBlockSize,
+  navigationRows,
+  navigationSpacing,
 } from './Navigation.css';
-import {
-  pageLayoutAnchorName,
-  pageLayoutSize,
-} from './PageLayout.css';
-import { whenTOCFits } from './TOCLayout.fit';
+import { whenTier } from './TOCLayout.tiers';
 
-const tocMargin = createVar();
-const tocPadding = createVar();
-const tocGap = createVar();
+export const tocMargin = createVar();
+export const tocPadding = createVar();
+export const tocGap = createVar();
 
+/**
+ * The `popover` attribute is always present so the drawer tier can use it, which means
+ * the UA popover defaults have to be neutralised for the tiers that render an inline rail.
+ */
 export const tocLayoutTOCStyles = style({
-  vars: {
-    [tocMargin]: theme.grid.xl,
-    [tocPadding]: theme.grid.m,
-    [tocGap]: theme.grid.l,
-  },
+  marginBlock: 0,
+  marginInline: 0,
+  paddingBlock: 0,
+  paddingInline: 0,
+
+  borderInlineStart: 'none',
+  borderInlineEnd: 'none',
+  borderBlockStart: 'none',
+  borderBlockEnd: 'none',
+
+  background: 'transparent',
+  color: 'inherit',
+  inlineSize: 'auto',
+  blockSize: 'auto',
 });
 
-// Block axis anchors to the navbar's rendered box, inline axis to the content column.
-whenTOCFits(tocLayoutTOCStyles, {
-  position: 'fixed',
+/**
+ * The animated-navigation experiment derives `navigationBlockOffset` from a var that
+ * `@keyframes` only sets on the navbar itself, so outside that subtree it is
+ * guaranteed-invalid. Falling back to the navbar's resting height keeps the rail
+ * anchored instead of collapsing every calc() to `auto`.
+ */
+const navigationRestingOffset = `calc(${navigationMinBlockSize} * ${navigationRows} + ${navigationSpacing} * 3)`;
+const railOffset = fallbackVar(navigationBlockOffset, navigationRestingOffset);
+
+// Overrides the UA `display: none` for closed popovers, so the rail stays in flow.
+whenTier(['centered', 'folded'], tocLayoutTOCStyles, {
+  display: 'block',
+  gridColumn: 1,
+  gridRow: 1,
+
+  position: 'sticky',
   zIndex: zIndexLayers.toc,
 
-  insetBlockStart: `calc(anchor(${navigationAnchorName} end) + ${tocMargin})`,
-  insetBlockEnd: tocMargin,
-  insetInlineStart: tocMargin,
-  insetInlineEnd: `calc(anchor(${pageLayoutAnchorName} start) + ${tocGap})`,
+  boxSizing: 'border-box',
+  insetBlockStart: `calc(${railOffset} + ${tocMargin})`,
+  insetBlockEnd: 'auto',
+  insetInlineStart: 'auto',
+  insetInlineEnd: 'auto',
+  blockSize: `calc(100dvb - ${railOffset} - ${tocMargin} * 2)`,
 
-  maxInlineSize: `calc(${pageLayoutSize} / 3)`,
-  justifySelf: 'end',
+  paddingInlineStart: tocMargin,
+  paddingInlineEnd: tocGap,
 });
 
 // eslint-disable-next-line logical-properties/overflow
@@ -56,7 +83,7 @@ globalStyle(`${tocLayoutTOCStyles} nav`, {
   background: theme.colors.background.depressed,
 });
 
-whenTOCFits(`${tocLayoutTOCStyles} nav`, {
+whenTier(['centered', 'folded'], `${tocLayoutTOCStyles} nav`, {
   borderStartStartRadius: '2px',
   borderStartEndRadius: '2px',
   borderEndEndRadius: '2px',
@@ -97,11 +124,5 @@ globalStyle(`${tocLayoutTOCStyles} ul ul`, {
 
 globalStyle(`${tocLayoutTOCStyles} li`, {
   listStyle: 'none',
-});
-
-globalStyle(`body:has(${tocLayoutTOCStyles})`, {
-  vars: {
-    [navigationMobileElements]: '4',
-  },
 });
 

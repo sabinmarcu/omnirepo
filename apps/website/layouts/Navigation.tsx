@@ -12,7 +12,6 @@ import {
 } from './Navigation.mobile';
 import { grids } from './Navigation.grid';
 import { NavigationAnchor } from './Navigation.anchor';
-import { TOCMobileButton } from './TOCLayout.toc.mobile';
 import { navigationStyles } from './Navigation.css';
 
 export namespace Navigation {
@@ -54,7 +53,6 @@ export const Navigation = extendComponent(
           <ThemeSelector />
           <Experiments.Trigger />
           <NavigationMobileButton />
-          <TOCMobileButton />
         </section>
         <NavigationBackdrop />
       </nav>

@@ -7,6 +7,9 @@ import {
 import type { RecipeVariants } from '@vanilla-extract/recipes';
 import { recipe } from '@vanilla-extract/recipes';
 
+/** Narrowest the page content column may compress to before the layout drops a gutter. */
+export const pageLayoutMinSize = 800;
+
 /** Inline sizes, in px, that the page content column is allowed to grow to. */
 export const pageLayoutSizes = {
   base: 1000,
@@ -15,6 +18,9 @@ export const pageLayoutSizes = {
 
 /** Anchor exposed so out-of-flow siblings (the TOC) can position against the content column. */
 export const pageLayoutAnchorName = '--page-layout-content';
+
+/** Exposed so gutter-aligned siblings can match the content column's inline padding. */
+export const pageLayoutInlinePadding = theme.grid.m;
 
 export const pageLayoutSize = createVar();
 export const pageLayoutStyles = recipe({
@@ -35,7 +41,7 @@ globalStyle(`:where(${pageLayoutStyles.classNames.base})`, {
   fontSize: '1.3rem',
   container: 'page-layout',
   containerType: 'inline-size',
-  paddingInline: theme.grid.m,
+  paddingInline: pageLayoutInlinePadding,
   ...({ anchorName: pageLayoutAnchorName } as StyleRule),
 });
 
