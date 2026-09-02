@@ -43,6 +43,7 @@
   "scripts": {
     "coverage": "vitest --run --coverage",
     "dev": "yarn moon run :dev",
+    "i18n:status": "node .github/scripts/translation-status.mjs",
     "lint": "yarn moon run :lint",
     "moon": "$(yarn bin moon)",
     "postinstall": "husky install && tscmono",
