@@ -2,7 +2,8 @@ import type {
   ComponentProps,
   PropsWithChildren,
 } from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
+import { getTranslations } from 'next-intl/server';
 import { withTheme } from '@/theme/runtime';
 import { cls } from '@/utils/cls';
 import {
@@ -26,6 +27,7 @@ export const LandingCard = withTheme<LandingCard.Props>(async function LandingCa
   href,
   ...rest
 }) {
+  const translate = await getTranslations('status');
   const inner = (
     <article
       {...rest}
@@ -36,7 +38,7 @@ export const LandingCard = withTheme<LandingCard.Props>(async function LandingCa
       )}
       data-rand={Math.random() * 3000}
     >
-      {wip ? <p className={wipTip}>Under Construction</p> : null}
+      {wip ? <p className={wipTip}>{translate('underConstruction')}</p> : null}
       {children}
     </article>
   );

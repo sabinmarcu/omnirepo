@@ -7,6 +7,9 @@ import {
   useState,
 } from 'react';
 import {
+  useTranslations,
+} from 'next-intl';
+import {
   sectionStyles,
   rootStyles,
   wrapperStyles,
@@ -35,6 +38,7 @@ const useOnInput = <T extends unknown>(
 };
 
 export default function KindlePageCounter() {
+  const translate = useTranslations('kindlePageCounter');
   const [wordsPerRow, setWordsPerRow] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(0);
   const [locationsPerPage, setLocationsPerPage] = useState(0);
@@ -73,35 +77,35 @@ export default function KindlePageCounter() {
       <div className={wrapperStyles}>
         <section className={sectionStyles}>
           <label>
-            <span>Words per Row</span>
-            <input type='number' value={wordsPerRow} onInput={onSetWordsPerRow} />
+            <span>{translate('wordsPerRow')}</span>
+            <input type="number" value={wordsPerRow} onInput={onSetWordsPerRow} />
           </label>
           <label>
-            <span>Rows per Page</span>
-            <input type='number' value={rowsPerPage} onInput={onSetRowsPerPage} />
+            <span>{translate('rowsPerPage')}</span>
+            <input type="number" value={rowsPerPage} onInput={onSetRowsPerPage} />
           </label>
           <label>
-            <span>Kindle Locations per Page</span>
-            <input type='number' value={locationsPerPage} onInput={onSetLocationsPerPage} />
+            <span>{translate('locationsPerPage')}</span>
+            <input type="number" value={locationsPerPage} onInput={onSetLocationsPerPage} />
           </label>
           <label>
-            <span>Current Kindle Location</span>
-            <input type='number' value={currentLocation} onInput={onSetCurrentLocation} />
+            <span>{translate('currentLocation')}</span>
+            <input type="number" value={currentLocation} onInput={onSetCurrentLocation} />
           </label>
           <label>
-            <span>Last Location in Book</span>
-            <input type='number' value={lastLocation} onInput={onSetLastLocation} />
+            <span>{translate('lastLocation')}</span>
+            <input type="number" value={lastLocation} onInput={onSetLastLocation} />
           </label>
         </section>
         <section className={sectionStyles}>
-          <h2>Results</h2>
+          <h2>{translate('results')}</h2>
           <label>
-            <span>Current Page</span>
-            <input type='number' value={currentPage} onInput={() => {}} />
+            <span>{translate('currentPage')}</span>
+            <input type="number" value={currentPage} onInput={() => {}} />
           </label>
           <label>
-            <span>Total Pages</span>
-            <input type='number' value={lastPage} onInput={() => {}} />
+            <span>{translate('totalPages')}</span>
+            <input type="number" value={lastPage} onInput={() => {}} />
           </label>
         </section>
       </div>

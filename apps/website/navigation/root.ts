@@ -1,31 +1,31 @@
 import { categoriesMap } from './categories';
 import { normalizeNavigationList } from './utils';
 
-export const rootNavigation = normalizeNavigationList([
+export const getRootNavigation = (translate: (key: string) => string) => normalizeNavigationList([
   {
     theme: 'base',
-    text: 'Home',
+    text: translate('home'),
     href: '/',
   },
   {
     ...categoriesMap.personal,
-    text: 'Personal',
+    text: translate('personal'),
   },
   {
     ...categoriesMap.articles,
-    text: 'Articles',
+    text: translate('articles'),
   },
   {
     ...categoriesMap.ramblings,
-    text: 'Ramblings',
+    text: translate('ramblings'),
   },
   {
     ...categoriesMap.projects,
     href: '/tools',
-    text: 'Tools',
+    text: translate('tools'),
   },
   {
     ...categoriesMap.snippets,
-    text: 'Snippets',
+    text: translate('snippets'),
   },
 ] as const);

@@ -1,4 +1,6 @@
 import { Icon } from '@/components/Icon';
+import { getTranslations } from 'next-intl/server';
+import { withTooltip } from '@/components/Tooltip.hoc';
 import {
   themeSelectionIcons,
   themeSelectionOrder,
@@ -12,22 +14,34 @@ import {
   themeSelectorStyles,
 } from './ThemeSelector.css';
 
+const ThemeSelectorOption = withTooltip(
+  function ThemeSelectorOption({
+    tooltip: _,
+    ...props
+  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { tooltip?: string }) {
+    return <button {...props} type="button" />;
+  },
+  undefined,
+  { position: 'bottom' },
+);
+
 export async function ThemeSelector() {
   const current = await getThemeVariant();
+  const translate = await getTranslations('theme');
   return (
     <ThemeSelectorRuntime>
-      <fieldset className={themeSelectorStyles} aria-label="Theme">
+      <fieldset className={themeSelectorStyles} aria-label={translate('label')}>
         {themeSelectionOrder.map((selection) => (
-          <button
-            type="button"
+          <ThemeSelectorOption
             key={selection}
             className={themeSelectorOptionStyle}
-            aria-label={themeSelectionsMap[selection]}
+            aria-label={translate(selection)}
             aria-pressed={current === selection}
+            tooltip={translate(selection)}
             {...{ [selectionDataAttribute]: selection }}
           >
             <Icon icon={themeSelectionIcons[selection]} />
-          </button>
+          </ThemeSelectorOption>
         ))}
       </fieldset>
     </ThemeSelectorRuntime>

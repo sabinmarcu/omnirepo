@@ -1,5 +1,7 @@
 import type { PropsWithChildren } from 'react';
-import { rootNavigation } from '@/navigation/root';
+import { getTranslations } from 'next-intl/server';
+import type { Locale } from '@/i18n/locales';
+import { getRootNavigation } from '@/navigation/root';
 import { withExperiment } from '@/experiments/components/withExperiment';
 import { extendComponent } from '@/utils/components';
 import { NavigationList } from './Navigation.list';
@@ -16,6 +18,7 @@ import { NavigationSettings } from './Navigation.settings';
 export namespace Navigation {
   export type Props = PropsWithChildren<(
     & { empty?: boolean }
+    & { localeParams?: Partial<Record<Locale, Record<string, string>>> }
     & withExperiment.Props<'animatedNavigation'>
   )>;
 }
@@ -24,8 +27,10 @@ export const Navigation = extendComponent(
   withExperiment('animatedNavigation')(async function Navigation({
     children,
     empty,
+    localeParams,
     animatedNavigation,
   }: Navigation.Props) {
+    const translate = await getTranslations('navigation');
     return (
       <nav className={navigationStyles({
         empty,
@@ -37,7 +42,7 @@ export const Navigation = extendComponent(
           : (
             <>
               <section {...grids.selector('major')}>
-                <NavigationList list={rootNavigation} />
+                <NavigationList list={getRootNavigation(translate)} />
               </section>
               {children
                 ? (
@@ -49,7 +54,7 @@ export const Navigation = extendComponent(
             </>
           )}
         <section {...grids.selector('settings')}>
-          <NavigationSettings />
+          <NavigationSettings localeParams={localeParams} />
           <NavigationMobileButton />
         </section>
         <NavigationBackdrop />

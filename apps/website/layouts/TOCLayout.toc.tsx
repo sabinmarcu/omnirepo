@@ -1,5 +1,5 @@
 import type z from 'zod';
-import { Fragment } from 'react';
+import { getTranslations } from 'next-intl/server';
 import { ThemedLink } from '@/components/ThemedLink';
 import { ClientClickProxy } from '@/components/ClientClickProxy';
 import type { tocSchema } from '@/models/schemas';
@@ -55,21 +55,22 @@ function TOCLayoutList({
         attributes: { id: slug },
         children,
       }) => (
-        <Fragment key={slug}>
-          <li><ThemedLink href={`#${slug}`}>{title}</ThemedLink></li>
+        <li key={slug}>
+          <ThemedLink href={`#${slug}`} raw>{title}</ThemedLink>
           {children && children.length > 0
             ? <TOCLayoutList toc={children} />
             : null}
-        </Fragment>
+        </li>
       ))}
     </ul>
   );
 }
 
-export function TOCLayoutTOC({
+export async function TOCLayoutTOC({
   toc,
   maxDepth,
 }: TOCLayoutTOC.Props) {
+  const translate = await getTranslations('tableOfContents');
   return (
     <aside
       id={tocPopoverId}
@@ -78,7 +79,7 @@ export function TOCLayoutTOC({
     >
       <nav>
         <h2>
-          <span>Table of Contents</span>
+          <span>{translate('label')}</span>
           <TOCDrawerCloseButton />
         </h2>
         <TOCLayoutList toc={toc} maxDepth={maxDepth} root />

@@ -1,4 +1,5 @@
 import { Icon } from '@/components/Icon';
+import { getTranslations } from 'next-intl/server';
 import { experimentsDialogStyle } from './Experiments.css';
 import { ExperimentList } from './Experiments.list';
 import { ExperimentsTrigger } from './Experiments.trigger';
@@ -6,6 +7,7 @@ import { experimentsDialogId } from './Experiments.constants';
 import './Experiments.mobile.css';
 
 export async function Experiments() {
+  const translate = await getTranslations('experiments');
   return (
     <dialog
       id={experimentsDialogId}
@@ -13,10 +15,10 @@ export async function Experiments() {
       {...{ closedby: 'any' }}
     >
       <header>
-        <p>Experiments</p>
+        <p>{translate('label')}</p>
         <button
           type="button"
-          aria-label="Close experiments"
+          aria-label={translate('close')}
           {...{
             commandfor: experimentsDialogId,
             command: 'close',
