@@ -1,0 +1,107 @@
+export const sourceHash = '56d86a8150a340f00d90662fad9caa887bfde913154fc98f49b89d37a7c135eb'
+
+
+import { Grid } from '@/components/Grid'
+import { TOCLink } from '@/layouts/TOCAnchor.link'
+export const company = 'Platform24'
+export const location = 'București, România'
+
+### !!experience Software Engineer
+
+#### Responsabil pentru aplicația destinată pacienților din platforma de sănătate a companiei
+
+<Grid columns={3} large>
+  * Aplicația web principală
+  * Design System
+  * Aplicația React Native
+</Grid>
+
+#### Responsabilitățile mele în cadrul echipei și în întreaga companie includ
+
+<Grid columns={2} large>
+  * Mentenanța și modernizarea aplicației principale pentru pacienți
+  * Mentenanța și dezvoltarea aplicației React Native pentru pacienți
+  * Securitatea și auditarea aplicațiilor web și native pentru pacienți
+  * Construirea și menținerea unei soluții embedded pentru servicii și aplicații în aplicațiile gazdă ale clienților (**FDC**)
+  * Asigurarea și susținerea personalizării whitelabel a aplicației pentru pacienți
+  * Colaborarea cu partenerii pentru integrarea cerințelor externe
+  * Mentenanța și eficientizarea testării, build-urilor și deployment-urilor
+  * Documentația externă pentru API-uri externe și SDK-uri embedded (**FDC**)
+</Grid>
+
+#### Inițiativele personale includ, dar nu se limitează la
+
+<Grid columns={2} large>
+  * Dezvoltarea și promovarea internă a <TOCLink prefix="project">whitelabel design system</TOCLink>
+  * Instrumente și pipeline-uri reutilizabile pentru monorepo-uri care pot atât publica pachete, cât și face deployment pentru Apps / MFEs (un exemplu perfect este design system)
+  * Stabilirea și aplicarea fluxului corect de dezvoltare a componentelor (_UX -> DS -> Apps / MFEs_)
+  * Eliminarea treptată a sistemelor și proceselor de build moștenite
+  * Restructurarea responsabilității asupra codului, proceselor și atribuțiilor
+</Grid>
+
+#### !featured
+
+#### !from December 2023
+
+#### !to September 2025
+
+### !!project Whitelabel Design System
+
+#### Design system complet personalizabil pentru fiecare partener
+
+* Permite personalizarea completă, de la culorile de brand și sistem până la maparea semantică a variabilelor către fațetele componentelor
+* Construit integral cu Vanilla Extract pentru a scrie cod complet type-safe și pentru a expune doar CSS generat la momentul build-ului
+* Folosește pachetul ESLint Logical Properties și React ARIA pentru accesibilitate.
+
+#### Flux unificat de la UX la Dev
+
+* Variabilele de design și mapările de variabile pentru primary color -> surface background sunt importate direct din figma
+* Variabilele, mapările și contractele sunt integrate direct în pachetele publicate
+* Devii folosesc variabile semantice și nu au acces la primitive sau mapări
+* Funcții de export asociate cu CSS layers pentru a fi folosite de DS sau aplicații
+
+#### Folosește cele mai recente tehnici CSS
+
+* Folosește CSS Layers pentru a delimita straturi clare de cascadă între reset, colecțiile de variabile, framework (design system) și stilurile aplicației.
+* Folosește CSS Containers pentru a încapsula stilurile și a crea componente și layout-uri cu adevărat responsive
+* CSS Variables și culorile și mapările specifice partenerilor sunt calculate și randate pe server
+
+#### Configurare modernă de Monorepo
+
+* Instrumentație completă pentru monorepo construită cu Yarn Plugins
+  <Grid columns={3}>
+  * Generare TSConfig
+  * Configurare ESLint
+  * Configurare Vite
+  * Verificări ale dependențelor
+  * Impunerea dependențelor
+  * Configurarea pașilor paraleli Gitlab CI
+  * Versionarea pachetelor cu Yarn
+  * Impunerea și automatizarea mesajelor de commit + instrumente
+  </Grid>
+* Configurare Gitlab CI pentru build, lint, testare și publicarea oricărui număr de pachete atunci când este necesar
+* Instrumente de configurare locale și CI pentru registry-uri npm private cu scope
+
+#### !from January 2024
+
+#### !to September 2025
+
+#### !featured
+
+#### !!skill Yarn 4
+
+#### !!skill Monorepo
+
+#### !!skill Design System
+
+#### !!skill Typescript
+
+#### !!skill Vanilla Extract
+
+#### !!skill Gitlab CI
+
+#### !!skill Figma
+
+#### !!skill JFrog
+
+#### !!skill NPM Registry
