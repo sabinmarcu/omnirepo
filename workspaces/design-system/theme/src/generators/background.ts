@@ -1,6 +1,7 @@
 import Color from 'colorjs.io';
 import {
   getColor,
+  isLightColor,
   mixColor,
 } from '../utils/color.js';
 import { colorspace } from '../constants.js';
@@ -13,7 +14,7 @@ export const backgroundGenerator = (() => {
   ) => {
     const baseColor = new Color(color);
     const base = baseColor.to(colorspace).toString();
-    const isLight = baseColor.luminance > 0.5;
+    const isLight = isLightColor(baseColor);
     const reference = {
       elevated: getColor(!isLight ? '#ffff' : '#000f'),
       depressed: getColor(isLight ? '#ffff' : '#000f'),
