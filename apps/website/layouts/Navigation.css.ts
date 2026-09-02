@@ -189,9 +189,10 @@ globalStyle(navigationSectionsSelectors.settings, {
 });
 
 globalStyle([
-  'button',
-  '[role=button]',
-].map((selector) => `${navigationSectionsSelectors.settings} ${selector}`).join(', '), {
+  `${navigationSectionsSelectors.settings} > button`,
+  `${navigationSectionsSelectors.settings} > [role=button]`,
+  `${navigationSectionsSelectors.settings} > label > [role=button]`,
+].join(', '), {
   background: 'transparent',
   borderInlineStart: 'none',
   borderInlineEnd: 'none',
