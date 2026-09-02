@@ -6,12 +6,8 @@ import { canonicalMetadata } from '@/i18n/metadata';
 import { ShowcaseLayout } from '@/layouts/ShowcaseLayout';
 import { ToolResource } from '@/models/ToolResource';
 
-// export const dynamicParams = false;
-// export const dynamic = 'force-static';
-
-export async function generateStaticParams() {
-  return ToolResource.slugs;
-}
+// No generateStaticParams here: the root layout reads `headers()` for host-based
+// canonical/robots metadata, so this route can never be prerendered.
 
 export async function generateMetadata(props: PageProps<'/[locale]/tools/[slug]'>): Promise<Metadata> {
   const { slug, locale } = await props.params;
