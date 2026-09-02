@@ -44,6 +44,30 @@ Use root scripts in [package.json](package.json) for common workflows.
 - Main CI steps: immutable install, constraints, `yarn moon ci`.
 - Versioning/publish is CI-driven when `.yarn/versions/*` files are present.
 
+## Agent Customization Files
+
+Customization lives in [\.github](.github) and is shared by VS Code Copilot Chat, Copilot CLI, Copilot cloud agent, and Copilot code review. Do not duplicate these files per tool.
+
+| Location | Purpose |
+| --- | --- |
+| [AGENTS.md](AGENTS.md) | Repository-wide agent instructions (this file) |
+| [\.github/instructions](.github/instructions) | Path-specific `*.instructions.md`, matched by `applyTo` globs |
+| [\.github/instructions/website](.github/instructions/website) | Website-scoped instructions, namespaced by folder |
+| [\.github/skills](.github/skills) | Reusable `SKILL.md` workflows |
+| [\.github/agents](.github/agents) | Custom `*.agent.md` definitions |
+
+Rules for adding customization:
+
+- Path-specific instruction files must live at or below `.github/instructions`, end in `.instructions.md`, and declare an `applyTo` glob in frontmatter. Subfolders are supported and are the preferred way to namespace by app or domain.
+- Put app-specific guidance in a namespaced subfolder, not in the root instructions folder.
+- Keep repository-wide guidance in this file; do not add `.github/copilot-instructions.md`, which would duplicate it.
+- Prefix website instruction filenames with `website-` so they remain identifiable once loaded, since only the basename is surfaced in some tools.
+
+Verify discovery after changing customization files:
+
+- Copilot CLI: `copilot plugins list --kind instruction` and `copilot skill list`
+- VS Code: discovery settings are pinned in [\.vscode/settings.json](.vscode/settings.json)
+
 ## Agent Guardrails
 
 - Prefer `rg`/`rg --files` for search.
@@ -65,3 +89,4 @@ Use root scripts in [package.json](package.json) for common workflows.
 - Root task defaults: [\.moon/tasks.yml](.moon/tasks.yml)
 - Root orchestration tasks: [moon.yml](moon.yml)
 - CI pipeline: [\.github/workflows/ci.yml](.github/workflows/ci.yml)
+- Agent customization layout: [\.github/instructions](.github/instructions)

@@ -1,6 +1,6 @@
 ---
 name: Website Content Translation
-description: "Use when creating or translating website MDX content."
+description: "Use when creating or translating website MDX content, adding locale variants, or editing apps/website/content."
 applyTo: "apps/website/content/**"
 ---
 
@@ -15,3 +15,8 @@ applyTo: "apps/website/content/**"
 - In CV content, never translate experience titles, company names, project names, or tool names. Keep their English source text verbatim.
 - Keep technical product names, programming-language names, file names, commands, API names, and code identifiers in English unless the surrounding text requires an established Romanian rendering.
 - Use Romanian diacritics: `ă`, `â`, `î`, `ș`, and `ț`.
+
+## Related
+
+- [website.instructions.md](./website.instructions.md) for app-wide routing, i18n, and styling rules.
+- [website-models.instructions.md](./website-models.instructions.md) for how content files are discovered and parsed.
