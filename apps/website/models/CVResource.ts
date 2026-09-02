@@ -1,4 +1,9 @@
 import { compareTimeline } from '@/utils/date';
+import { defaultLocale } from '@/i18n/domains';
+import {
+  locales,
+  type Locale,
+} from '@/i18n/locales';
 import {
   tocElementsToTree,
   tocSlug,
@@ -41,6 +46,15 @@ function getExperienceAnchorTitle(item: CVExperienceItem | CVDegreeItem) {
   ].filter(Boolean).join(' ');
 }
 
+function getExperienceTOCTitle(item: CVExperienceItem | CVDegreeItem) {
+  return [
+    'experience' in item
+      ? item.experience.title
+      : item.degree.title,
+    item.metadata.company,
+  ].filter(Boolean).join(' - ');
+}
+
 function getExperienceAnchor(item: CVExperienceItem | CVDegreeItem) {
   return tocSlug(getExperienceAnchorTitle(item), { prefix: 'experience' });
 }
@@ -54,14 +68,21 @@ function getHeadingAnchor(title: string) {
 }
 
 export class CVResource extends Resource {
+  private readonly contentLocale: string;
+
   private shouldCollectTOC = false;
 
   private tocList: tocElementsToTree.Element[] = [];
 
   private tocIds = new Set<string>();
 
-  static fromDefault() {
-    return this.from('personal/cv');
+  constructor(contentLocale: string = defaultLocale) {
+    super('personal/cv');
+    this.contentLocale = contentLocale;
+  }
+
+  static fromDefault(locale: string = defaultLocale) {
+    return new CVResource(locale);
   }
 
   collectTOC() {
@@ -89,11 +110,12 @@ export class CVResource extends Resource {
 
   public tocSection(
     title: string,
+    anchorTitle = title,
   ) {
     this.pushTOC({
       title,
       level: 2,
-      id: getHeadingAnchor(title),
+      id: getHeadingAnchor(anchorTitle),
     });
     return title;
   }
@@ -101,7 +123,7 @@ export class CVResource extends Resource {
   private tocExperienceItems(items: Array<CVExperienceItem | CVDegreeItem>) {
     for (const item of items) {
       this.pushTOC({
-        title: getExperienceAnchorTitle(item),
+        title: getExperienceTOCTitle(item),
         level: 3,
         id: getExperienceAnchor(item),
       });
@@ -119,11 +141,43 @@ export class CVResource extends Resource {
   }
 
   overviewResource = lazy(
-    async () => CVOverviewResource.from('personal/cv/overview.mdx'),
+    async () => (await CVOverviewResource.getLocalizedList(this.contentLocale))[0]!,
   );
 
   workplaceResources = lazy(
-    async () => CVWorkplaceResource.getList(),
+    async () => CVWorkplaceResource.getLocalizedList(this.contentLocale),
+  );
+
+  availableLocales = lazy<Locale[]>(
+    async () => {
+      const [overviewVariants, defaultWorkplaceResources] = await Promise.all([
+        CVOverviewResource.getVariants('overview'),
+        CVWorkplaceResource.getLocalizedList(defaultLocale),
+      ]);
+      const overviewLocales = new Set(
+        await Promise.all(overviewVariants.map((variant) => variant.locale)),
+      );
+      const workplaceIds = await Promise.all(
+        defaultWorkplaceResources.map((resource) => resource.id),
+      );
+
+      const availableLocales = await Promise.all(locales.map(async (locale) => {
+        if (!overviewLocales.has(locale)) {
+          return undefined;
+        }
+
+        const workplaceVariants = await Promise.all(
+          workplaceIds.map((id) => CVWorkplaceResource.getVariants(id)),
+        );
+        const fullyTranslated = await Promise.all(workplaceVariants.map(async (variants) => (
+          (await Promise.all(variants.map((variant) => variant.locale))).includes(locale)
+        )));
+
+        return fullyTranslated.every(Boolean) ? locale : undefined;
+      }));
+
+      return availableLocales.filter((locale): locale is Locale => !!locale);
+    },
   );
 
   overview = lazy(
@@ -189,10 +243,17 @@ export class CVResource extends Resource {
   );
 
   extracurricularExperiences = lazy<CVExperienceItem[]>(
-    async () => filterCollection('experience')(
-      await this.experiences,
-      ({ experience: { tag } }) => tag === 'extracurricular',
-    ),
+    async () => {
+      const list = filterCollection('experience')(
+        await this.experiences,
+        ({ experience: { tag } }) => tag === 'extracurricular',
+      );
+
+      this.tocExperienceItems(list);
+
+      return list;
+    },
+    { cached: false },
   );
 
   unknownExperiences = lazy<CVExperienceItem[]>(
@@ -328,7 +389,6 @@ export class CVResource extends Resource {
     ),
   );
 
-  
   featuredWorkProjects = lazy<CVProjectItem[]>(
     async () => {
       const list = filterCollection('project')(
@@ -339,8 +399,8 @@ export class CVResource extends Resource {
       return list;
     },
     { cached: false },
-  )
-  
+  );
+
   extendedWorkProjects = lazy<CVProjectItem[]>(
     async () => {
       const list = filterCollection('project')(
@@ -370,7 +430,6 @@ export class CVResource extends Resource {
       return result;
     },
   );
-
 
   private async normalizeCollection<Key extends keyof CVWorkplaceEntry['data']>(
     key: Key,
