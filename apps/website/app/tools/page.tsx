@@ -23,19 +23,17 @@ export default async function ToolsList() {
   );
   return (
     <>
-      <PageLayout
-        className={toolsPageStyles}
-        disableFooter
-      >
-        {cards.length === 0
-          ? <p>No Tools</p>
-          : (
-            <>
-              {cards}
-            </>
-          )}
+      <PageLayout>
+        <div className={toolsPageStyles}>
+          {cards.length === 0
+            ? <p>No Tools</p>
+            : (
+              <>
+                {cards}
+              </>
+            )}
+        </div>
       </PageLayout>
-      <PageLayout disableTransition />
     </>
   );
 }

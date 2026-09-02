@@ -17,6 +17,7 @@ import {
   tocMinInlineSize,
   whenTier,
 } from './TOCLayout.tiers';
+import { gridLines } from './grid.lines';
 
 const drawerDuration = '220ms';
 const drawerClosed = {
@@ -30,7 +31,7 @@ const drawerClosed = {
  */
 export const tocDrawerTriggerStyles = style({
   display: 'none',
-  gridColumn: 1,
+  gridColumn: `${gridLines.fullStart} / ${gridLines.contentStart}`,
   gridRow: 1,
 
   alignItems: 'center',

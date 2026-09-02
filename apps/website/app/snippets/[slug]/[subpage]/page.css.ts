@@ -4,9 +4,16 @@ import {
   globalStyle,
   style,
 } from '@vanilla-extract/css';
+import { gridLines } from '@/layouts/grid.lines';
 
 export const codeSectionSpacing = createVar();
-export const codeSectionStyle = style({});
+export const codeSectionStyle = style({
+  display: 'contents',
+});
+
+globalStyle(`${codeSectionStyle} > *`, {
+  gridColumn: gridLines.content,
+});
 
 globalStyle(`${codeSectionStyle} > h2`, {
   fontSize: `calc(${theme.grid.xl} * 1.25)`,

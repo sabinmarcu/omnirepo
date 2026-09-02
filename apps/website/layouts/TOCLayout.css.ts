@@ -16,6 +16,7 @@ import {
   pageLayoutSelector,
   pageLayoutSize,
 } from './PageLayout.css';
+import { gridLines } from './grid.lines';
 import {
   tocGap,
   tocMargin,
@@ -72,40 +73,65 @@ const rail = `${tocMinInlineSize}px`;
 export const tocTriggerMargin = pageLayoutInlinePadding;
 
 // The content column's own inline padding supplies the separation on the trailing side.
-const gutter = `calc(${tocTriggerMargin} + ${withBorder(tocTriggerInline)})`;
+const gutter = `calc(${tocTriggerMargin} * 2 + ${withBorder(tocTriggerInline)})`;
 
 // A trailing rail-sized track mirrors the real rail, so the content stays viewport-centred.
 // `safe` keeps the rail from clipping when the scrollbar makes the wrapper narrower
 // than the container the tier was matched against.
 whenTier('centered', tocLayoutStyles, {
-  gridTemplateColumns: `${rail} ${pageLayoutSize} ${rail}`,
-  justifyContent: 'safe center',
+  gridTemplateColumns: [
+    `[${gridLines.fullStart}]`,
+    `minmax(${rail}, 1fr)`,
+    `[${gridLines.wideStart}]`,
+    'minmax(0, 2fr)',
+    `[${gridLines.contentStart}]`,
+    pageLayoutSize,
+    `[${gridLines.contentEnd}]`,
+    'minmax(0, 2fr)',
+    `[${gridLines.wideEnd}]`,
+    `minmax(${rail}, 1fr)`,
+    `[${gridLines.fullEnd}]`,
+  ].join(' '),
 });
 
 // The rail holds its size and the content column absorbs the loss instead.
 whenTier('folded', tocLayoutStyles, {
-  gridTemplateColumns: `${rail} minmax(${pageLayoutMinSize}px, ${pageLayoutSize})`,
-  justifyContent: 'start',
+  gridTemplateColumns: [
+    `[${gridLines.fullStart}]`,
+    rail,
+    `[${gridLines.wideStart}]`,
+    'minmax(0, 2fr)',
+    `[${gridLines.contentStart}]`,
+    `minmax(${pageLayoutMinSize}px, ${pageLayoutSize})`,
+    `[${gridLines.contentEnd}]`,
+    'minmax(0, 2fr)',
+    `[${gridLines.wideEnd}]`,
+    '1fr',
+    `[${gridLines.fullEnd}]`,
+  ].join(' '),
 });
 
 // The rail collapses to a trigger strip in the content's logical-start gutter.
 whenTier('drawer', tocLayoutStyles, {
-  gridTemplateColumns: `${gutter} minmax(0, ${pageLayoutSize})`,
-  justifyContent: 'safe center',
+  gridTemplateColumns: [
+    `[${gridLines.fullStart}]`,
+    gutter,
+    `[${gridLines.wideStart}]`,
+    'minmax(0, 2fr)',
+    `[${gridLines.contentStart}]`,
+    `minmax(0, ${pageLayoutSize})`,
+    `[${gridLines.contentEnd}]`,
+    'minmax(0, 2fr)',
+    `[${gridLines.wideEnd}]`,
+    pageLayoutInlinePadding,
+    `[${gridLines.fullEnd}]`,
+  ].join(' '),
 });
 
 // Content precedes the rail in the DOM, so every tier places it explicitly.
 globalStyle(`${tocLayoutStyles} > ${pageLayoutSelector}`, {
-  gridColumn: 2,
+  gridColumn: gridLines.full,
   gridRow: 1,
-});
-
-// PageLayout is an inline-size container, so its intrinsic width is 0; without
-// neutralising its auto margins it would shrink to padding instead of filling the track.
-globalStyle(`${tocLayoutStyles} > ${pageLayoutSelector}`, {
-  boxSizing: 'border-box',
-  inlineSize: '100%',
-  minInlineSize: 0,
-  marginInlineStart: 0,
-  marginInlineEnd: 0,
+  gridTemplateColumns: 'subgrid',
+  containerType: 'normal',
 });

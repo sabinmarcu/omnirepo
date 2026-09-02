@@ -26,19 +26,17 @@ export default async function SnippetsList() {
   return (
     <RootPageLayout theme="snippets">
       <Navigation />
-      <PageLayout
-        className={snippetsPageStyles}
-        disableFooter
-      >
-        {cards.length === 0
-          ? <p>No Snippets</p>
-          : (
-            <>
-              {cards}
-            </>
-          )}
+      <PageLayout>
+        <div className={snippetsPageStyles}>
+          {cards.length === 0
+            ? <p>No Snippets</p>
+            : (
+              <>
+                {cards}
+              </>
+            )}
+        </div>
       </PageLayout>
-      <PageLayout disableTransition />
     </RootPageLayout>
   );
 }

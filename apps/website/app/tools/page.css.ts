@@ -1,4 +1,5 @@
 import { navigationMinBlockSize } from '@/layouts/Navigation.css';
+import { gridLines } from '@/layouts/grid.lines';
 import { mobileMedia } from '@/utils/responsive';
 import { theme } from '@sabinmarcu/theme';
 import {
@@ -10,9 +11,8 @@ import {
 const spacing = createVar();
 export const toolsPageStyles = style({
   display: 'grid',
+  gridColumn: gridLines.full,
   gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-  containerType: 'inline-size',
-  maxInlineSize: 'initial',
   gap: spacing,
   paddingBlockStart: `calc(${spacing} * 2)`,
   paddingInlineStart: spacing,

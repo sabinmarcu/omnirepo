@@ -12,6 +12,7 @@ import {
   navigationRows,
   navigationSpacing,
 } from './Navigation.css';
+import { gridLines } from './grid.lines';
 import { whenTier } from './TOCLayout.tiers';
 
 export const tocMargin = createVar();
@@ -51,7 +52,7 @@ const railOffset = fallbackVar(navigationBlockOffset, navigationRestingOffset);
 // Overrides the UA `display: none` for closed popovers, so the rail stays in flow.
 whenTier(['centered', 'folded'], tocLayoutTOCStyles, {
   display: 'block',
-  gridColumn: 1,
+  gridColumn: `${gridLines.fullStart} / ${gridLines.contentStart}`,
   gridRow: 1,
 
   position: 'sticky',

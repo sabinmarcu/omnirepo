@@ -53,13 +53,24 @@ export default async function SnippetLayoutPage(props: LayoutProps<'/snippets/[s
     );
   }
 
-  const Layout = (Array.isArray(content) && content.length > 1)
-    ? TOCLayout
-    : PageLayout;
-  return (
-    <Layout className={snippetLayoutPageStyles} toc={toc}>
-      <Typography as="h1">Source: {await page.title}</Typography>
+  const layoutContent = (
+    <>
+      <Typography as="h1">
+        Source:
+        {await page.title}
+      </Typography>
       {children}
-    </Layout>
+    </>
   );
+  return (Array.isArray(content) && content.length > 1)
+    ? (
+      <TOCLayout className={snippetLayoutPageStyles} toc={toc}>
+        {layoutContent}
+      </TOCLayout>
+    )
+    : (
+      <PageLayout className={snippetLayoutPageStyles}>
+        {layoutContent}
+      </PageLayout>
+    );
 }

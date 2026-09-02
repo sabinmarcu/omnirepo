@@ -8,6 +8,6 @@ import {
 
 globalStyle(`${pageLayoutStyles.classNames.base} > :first-child:is(h1,h2)`, {
   ...mobileMedia({
-    maxInlineSize: `calc(100cqw - ${navigationMobileElements} * ${navigationMinInlineSize})`,
+    maxInlineSize: `calc(100% - ${navigationMobileElements} * ${navigationMinInlineSize})`,
   }),
 });
