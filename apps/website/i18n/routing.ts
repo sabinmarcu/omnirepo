@@ -19,10 +19,20 @@ const pathnames = {
   '/tools/[slug]': '/tools/[slug]',
 } satisfies Pathnames<typeof locales>;
 
-export const routing = defineRouting({
+const baseRouting = {
   locales,
   defaultLocale,
-  localePrefix: 'as-needed',
-  domains: localeDomains.length > 0 ? localeDomains : undefined,
+  localePrefix: 'as-needed' as const,
   pathnames,
+};
+
+export const routing = defineRouting({
+  ...baseRouting,
+  localeDetection: false,
+  domains: localeDomains.length > 0 ? localeDomains : undefined,
+});
+
+export const fallbackRouting = defineRouting({
+  ...baseRouting,
+  localeDetection: true,
 });
