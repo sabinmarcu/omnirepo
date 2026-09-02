@@ -4,7 +4,7 @@ import {
   codehikeBlockObjectAnnotationSchema,
 } from '@/utils/mdx';
 import { z } from 'zod';
-import { supportedTypes } from '@/app/personal/cv/components/InfoTag.tag';
+import { supportedTypes } from '@/app/[locale]/personal/cv/components/InfoTag.tag';
 
 export const infoTagListSchema = codehikeBlockObjectAnnotationSchema(
   ...supportedTypes,

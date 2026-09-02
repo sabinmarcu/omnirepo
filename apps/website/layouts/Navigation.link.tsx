@@ -3,7 +3,7 @@
 import {
   type ComponentProps,
 } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname } from '@/i18n/navigation';
 import type { Simplify } from '@sabinmarcu/types';
 import { ThemedLink } from '@/components/ThemedLink';
 import { matchRoute } from '@/utils/routes';

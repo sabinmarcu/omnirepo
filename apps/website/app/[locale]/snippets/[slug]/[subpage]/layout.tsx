@@ -26,11 +26,13 @@ import { snippetLayoutPageStyles } from './layout.css';
 //   return slugs;
 // }
 
-export default async function SnippetLayoutPage(props: LayoutProps<'/snippets/[slug]/[subpage]'>) {
+export default async function SnippetLayoutPage(props: LayoutProps<'/[locale]/snippets/[slug]/[subpage]'>) {
   const { params, children } = props;
-  const { slug, subpage } = await params;
+  const {
+    slug, subpage, locale,
+  } = await params;
 
-  const snippet = await SnippetResource.fromSlug(slug);
+  const snippet = await SnippetResource.fromSlug(slug, locale);
   if (!snippet) {
     return null;
   }

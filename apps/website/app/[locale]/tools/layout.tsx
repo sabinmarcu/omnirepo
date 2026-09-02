@@ -3,7 +3,6 @@ import type {
   Metadata,
   ResolvingMetadata,
 } from 'next';
-import { Navigation } from '@/layouts/Navigation';
 import { RootPageLayout } from '@/layouts/RootPageLayout';
 import { MdxResource } from '@/models/MdxResource';
 import { layoutTitle } from '@/utils/metadata';
@@ -30,8 +29,7 @@ export default function SnippetsLayout({
   children,
 }: Readonly<PropsWithChildren<{}>>) {
   return (
-    <RootPageLayout theme='projects'>
-      <Navigation />
+    <RootPageLayout theme="projects">
       {children}
     </RootPageLayout>
   );
