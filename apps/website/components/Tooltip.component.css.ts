@@ -46,27 +46,30 @@ export const tooltipStyle = recipe({
     },
   },
   base: {
-    position: 'absolute',
+    position: 'fixed',
+    inset: 'auto',
 
-    inlineSize: 'auto',
+    inlineSize: 'max-content',
+    maxInlineSize: `calc(100vi - ${theme.grid.m} * 2)`,
     blockSize: 'auto',
 
-    marginBlock: tooltipSpacing,
-    marginInline: tooltipSpacing,
-    paddingInline: theme.grid.m,
+    marginBlock: theme.grid.xs,
+    marginInline: theme.grid.xs,
+    paddingBlock: theme.grid.xs,
+    paddingInline: theme.grid.s,
 
-    background: theme.colors.background.surface,
+    background: `color-mix(in oklch, ${theme.colors.background.surface} 82%, transparent)`,
 
     borderWidth: '1px',
     borderStyle: 'solid',
-    borderColor: theme.colors.background.elevated,
+    borderColor: theme.colors.primary.muted,
 
     borderStartStartRadius: '2px',
     borderStartEndRadius: '2px',
     borderEndEndRadius: '2px',
     borderEndStartRadius: '2px',
 
-    fontSize: theme.grid.l,
+    fontSize: theme.grid.m,
 
     vars: {
       [tooltipSpacing]: '0px',
@@ -78,13 +81,12 @@ export const tooltipStyle = recipe({
 const { classNames: { base: tooltipSelector } } = tooltipStyle;
 globalStyle(tooltipSelector, {
   opacity: 0,
-  // Shown by hovering the anchor, never itself, so it must not intercept clicks.
   pointerEvents: 'none',
   transition: 'opacity 0.2s ease-out',
 });
 
-globalStyle(`:has(+ ${tooltipSelector}):hover + ${tooltipSelector}`, {
-  opacity: 0.8,
+globalStyle(`${tooltipSelector}:popover-open`, {
+  opacity: 1,
 });
 
 export type TooltipStyleProps = RecipeVariants<typeof tooltipStyle>;
