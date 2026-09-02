@@ -1,4 +1,3 @@
-import { zIndexLayers } from '@/constants/layers';
 import {
   theme,
   families,
@@ -6,12 +5,12 @@ import {
   themes,
 } from '@sabinmarcu/website-theme';
 import {
-  createVar,
+  assignVars,
   globalStyle,
   style,
 } from '@vanilla-extract/css';
+import { zIndexLayers } from '@/constants/layers';
 
-const rootBackgroundColor = createVar('root-background');
 const commonBackgroundStyles = {
   content: '',
   position: 'absolute',
@@ -25,16 +24,7 @@ export const rootThemeTrigger = style({});
 export const rootBackgroundStyle = style({
   background: theme.colors.background.page,
   position: 'relative',
-  vars: {
-    [rootBackgroundColor]: theme.colors.primary.base,
-  },
   selectors: {
-    '&::before': {
-      ...commonBackgroundStyles,
-      background: rootBackgroundColor,
-      mixBlendMode: 'overlay',
-      opacity: 0.5,
-    },
     '&::after': {
       ...commonBackgroundStyles,
       background: 'radial-gradient(circle, white 0%, white 65%, hsla(from black h s l / 0.2) 100%)',
@@ -59,9 +49,10 @@ for (const family of families) {
       (trigger) => `${rootBackgroundStyle}:has(${trigger})`,
     ).join(', '),
     {
-      vars: {
-        [rootBackgroundColor]: themes[family].colors.primary.base,
-      },
+      vars: assignVars(
+        theme.colors.background,
+        themes[family].colors.background,
+      ),
     },
   );
 }

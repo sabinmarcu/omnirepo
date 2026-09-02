@@ -1,11 +1,11 @@
 import type { RecipeVariants } from '@vanilla-extract/recipes';
 import { recipe } from '@vanilla-extract/recipes';
 import { theme } from '@sabinmarcu/website-theme';
-import { themedLinkColor } from '@/components/ThemedLink.css';
 import {
   createVar,
   globalStyle,
 } from '@vanilla-extract/css';
+import { themedLinkColor } from '@/components/ThemedLink.css';
 import {
   animatedNavigationSelector,
   navigationBorderColor,

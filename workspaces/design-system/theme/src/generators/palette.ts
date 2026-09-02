@@ -1,6 +1,7 @@
 import Color from 'colorjs.io';
 import {
   getColor,
+  isLightColor,
 } from '../utils/color.js';
 import type { ThemeGenerator } from './types.js';
 import { colorspace } from '../constants.js';
@@ -14,7 +15,7 @@ export const paletteGenerator = (() => {
     const baseColor = new Color(color);
     const base = baseColor.to(colorspace).toString();
     const baseReference = defaultKey ?? base;
-    const contrast = getColor(baseColor.luminance <= 0.5 ? '#ffff' : '#000f');
+    const contrast = getColor(isLightColor(baseColor) ? '#000f' : '#ffff');
 
     return ({
       base,

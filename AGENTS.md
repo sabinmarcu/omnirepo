@@ -47,6 +47,11 @@ Use root scripts in [package.json](package.json) for common workflows.
 ## Agent Guardrails
 
 - Prefer `rg`/`rg --files` for search.
+- Package manager is Yarn Berry (Yarn 4). Only `yarn` commands are allowed.
+  - Never use `npx`, `npm`, or `pnpm`.
+  - Run installed binaries through Yarn directly: `yarn eslint`, `yarn tsc`, `yarn vitest`.
+  - For a binary that is not a dependency, use `yarn dlx <package>`.
+- Prefer `lint:fix` over non-fixing `lint` commands.
 - Keep changes focused; do not refactor unrelated files.
 - Do not edit generated outputs (`dist`, `.next`, coverage artifacts) unless explicitly requested.
 - When uncertain about architecture or boundaries, consult [ARCHITECTURE.md](ARCHITECTURE.md) first.

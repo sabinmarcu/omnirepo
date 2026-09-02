@@ -3,10 +3,10 @@
 import {
   type ComponentProps,
 } from 'react';
+import { usePathname } from '@/i18n/navigation';
+import type { Simplify } from '@sabinmarcu/types';
 import { ThemedLink } from '@/components/ThemedLink';
 import { matchRoute } from '@/utils/routes';
-import { usePathname } from 'next/navigation';
-import type { Simplify } from '@sabinmarcu/types';
 import type { NavigationLinkStylesProps } from './Navigation.link.css';
 import { navigationLinkStyles } from './Navigation.link.css';
 

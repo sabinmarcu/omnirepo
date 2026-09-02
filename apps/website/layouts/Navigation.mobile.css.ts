@@ -2,9 +2,9 @@ import {
   globalStyle,
   style,
 } from '@vanilla-extract/css';
+import { theme } from '@sabinmarcu/theme';
 import { zIndexLayers } from '@/constants/layers';
 import { mobileMedia } from '@/utils/responsive';
-import { theme } from '@sabinmarcu/theme';
 import {
   navigationMinBlockSize,
   navigationSectionsSelectors,

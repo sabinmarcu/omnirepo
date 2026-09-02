@@ -1,0 +1,104 @@
+import type en from './en';
+
+const messages = {
+  navigation: {
+    home: 'Acasă',
+    personal: 'Personal',
+    articles: 'Articole',
+    ramblings: 'Gânduri',
+    tools: 'Unelte',
+    snippets: 'Exerciții',
+  },
+  home: {
+    about: 'Despre mine',
+    cv: 'CV-ul meu',
+    stack: 'Tehnologiile mele',
+    activeProjects: 'Proiecte active',
+    articles: 'Articole',
+    blog: 'Blog',
+    tools: 'Unelte',
+    snippets: 'Fragmente de cod',
+  },
+  kindlePageCounter: {
+    wordsPerRow: 'Cuvinte pe rând',
+    rowsPerPage: 'Rânduri pe pagină',
+    locationsPerPage: 'Locații Kindle pe pagină',
+    currentLocation: 'Locația Kindle curentă',
+    lastLocation: 'Ultima locație din carte',
+    results: 'Rezultate',
+    currentPage: 'Pagina curentă',
+    totalPages: 'Numărul total de pagini',
+  },
+  footer: {
+    credit: 'Construit și întreținut de Sabin Marcu',
+  },
+  lists: {
+    noSnippets: 'Nu există fragmente de cod',
+    noTools: 'Nu există unelte',
+  },
+  status: {
+    underConstruction: 'În construcție',
+  },
+  tableOfContents: {
+    label: 'Cuprins',
+    close: 'Închide cuprinsul',
+  },
+  experiments: {
+    label: 'Experimente',
+    close: 'Închide experimentele',
+    default: 'implicit',
+    scanlines: {
+      title: 'Linii CRT',
+      description: 'Afișează linii CRT peste întreaga pagină',
+    },
+    animatedNavigation: {
+      title: 'Navigare animată',
+      description: 'Navigare animată pe baza derulării',
+    },
+    languageSuggestionBanner: {
+      title: 'Banner de sugestie pentru limbă',
+      description: 'Sugerează o versiune disponibilă în limba browserului',
+    },
+  },
+  cv: {
+    skills: 'Abilități',
+    languages: 'Limbi',
+    education: 'Educație',
+    publications: 'Publicații și conferințe',
+    recentExperience: 'Experiență recentă',
+    workProjects: 'Proiecte profesionale',
+    openSourceProjects: 'Proiecte open-source',
+    personalProjects: 'Proiecte personale',
+    academicProjects: 'Proiecte academice',
+    extracurricularInvolvement: 'Implicare extracurriculară',
+    competitionProjects: 'Proiecte de competiție',
+    extendedExperience: 'Experiență extinsă',
+  },
+  dates: {
+    present: 'Prezent',
+  },
+  languageSuggestion: {
+    available: 'Este disponibilă versiunea în {locale}',
+    continue: 'Continuă în {locale}',
+    dismiss: 'Închide',
+  },
+  translationFallback: {
+    notice: 'Această pagină este disponibilă momentan doar în engleză.',
+  },
+  settings: {
+    label: 'Setări',
+    language: 'Limba',
+    locale: {
+      en: 'Engleză',
+      ro: 'Română',
+    },
+  },
+  theme: {
+    label: 'Tema',
+    system: 'Determinată de sistem',
+    light: 'Luminoasă',
+    dark: 'Întunecată',
+  },
+} as const satisfies typeof en;
+
+export default messages;

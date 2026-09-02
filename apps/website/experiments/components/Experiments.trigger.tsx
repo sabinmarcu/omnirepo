@@ -1,25 +1,24 @@
-/* eslint-disable @typescript-eslint/no-shadow */
-/* eslint-disable prefer-arrow-callback */
-/* eslint-disable @typescript-eslint/no-redeclare */
-/* eslint-disable import/export */
-import { Icon } from '@/components/Icon';
-import type { ComponentProps } from 'react';
-import { withTooltip } from '@/components/Tooltip';
-import { ExperimentsTriggerClient } from './Experiments.trigger.runtime';
+import type { ButtonHTMLAttributes } from 'react';
+import { getTranslations } from 'next-intl/server';
+import { experimentsDialogId } from './Experiments.constants';
 
 export namespace ExperimentsTrigger {
-  export type Props = ComponentProps<typeof ExperimentsTriggerClient>;
+  export type Props = ButtonHTMLAttributes<HTMLButtonElement>;
 }
 
-export const ExperimentsTrigger = withTooltip(
-  function ExperimentsTrigger(props: ExperimentsTrigger.Props) {
-    return (
-      <ExperimentsTriggerClient {...props}>
-        <Icon icon="programming" />
-      </ExperimentsTriggerClient>
-    );
-  },
-  'Experiments',
-  { position: 'bottom' },
-);
+export async function ExperimentsTrigger(props: ExperimentsTrigger.Props) {
+  const translate = await getTranslations('experiments');
+  return (
+    <button
+      {...props}
+      type="button"
+      {...{
+        commandfor: experimentsDialogId,
+        command: 'show-modal',
+      }}
+    >
+      <span>{translate('label')}</span>
+    </button>
+  );
+}
 

@@ -1,5 +1,5 @@
 import { withTheme } from '@/theme/runtime';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import type { ComponentProps } from 'react';
 import { withStyles } from '@/hocs/withStyles';
 import {
@@ -8,7 +8,8 @@ import {
 
 export namespace ThemedLink {
   export type Props = (
-    & ComponentProps<typeof Link>
+    & Omit<ComponentProps<typeof Link>, 'href'>
+    & { href?: ComponentProps<typeof Link>['href'] | string }
     & { raw?: boolean }
   );
 }
@@ -27,7 +28,7 @@ export const ThemedLink = withStyles(withTheme<ThemedLink.Props>(
       );
     }
     return (
-      <Link {...props} />
+      <Link {...props as ComponentProps<typeof Link>} />
     );
   },
 ), themedLinkStyle);

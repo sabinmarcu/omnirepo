@@ -8,15 +8,22 @@ import {
   recmaCodeHike,
   type CodeHikeConfig,
 } from 'codehike/mdx';
-
+import createNextIntlPlugin from 'next-intl/plugin';
 import { remarkMdxToc } from 'remark-mdx-toc';
 import remarkHeadingId from 'remark-heading-id';
 
 const withVanillaExtract = createVanillaExtractPlugin();
+const withNextIntl = createNextIntlPlugin();
+
+// Comma-separated hostnames (wildcards allowed) permitted to fetch dev assets, e.g. Tailscale hosts.
+const allowedDevelopmentOrigins = (process.env.ALLOWED_DEV_ORIGINS ?? '')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 
 const nextConfig: NextConfig = {
   /* config options here */
-  typedRoutes: true,
+  allowedDevOrigins: allowedDevelopmentOrigins,
   transpilePackages: ['@sabinmarcu/theme'],
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
   outputFileTracingIncludes: {
@@ -57,5 +64,5 @@ const withMdx = createMdx({
   },
 });
 
-export default withMdx(withVanillaExtract(nextConfig));
+export default withNextIntl(withMdx(withVanillaExtract(nextConfig)));
 

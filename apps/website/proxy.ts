@@ -2,17 +2,23 @@ import {
   type NextProxy,
   NextResponse,
 } from 'next/server';
-import { headersMap } from './proxy.constants';
+import createMiddleware from 'next-intl/middleware';
+import { isRouteWIP } from './utils/routes';
+import { isLocale } from './i18n/locales';
+import { routing } from './i18n/routing';
 
-export const proxy: NextProxy = (request, event) => {
-  if (event) {
-    const headers = new Headers(request.headers);
-    headers.set(headersMap.pathname, request.nextUrl.pathname);
-    headers.set(headersMap.hash, request.nextUrl.hash);
-    headers.set(headersMap.query, request.nextUrl.search);
-    return NextResponse.next({ request: { headers } });
+const handleI18nRouting = createMiddleware(routing);
+
+export const proxy: NextProxy = (request) => {
+  const [, firstSegment, ...remainingSegments] = request.nextUrl.pathname.split('/');
+  const pathname = isLocale(firstSegment)
+    ? `/${remainingSegments.join('/')}`
+    : request.nextUrl.pathname;
+
+  if (isRouteWIP(pathname)) {
+    return NextResponse.redirect(new URL('/404', request.url));
   }
-  return NextResponse.next();
+  return handleI18nRouting(request);
 };
 
 export const config = {

@@ -14,6 +14,6 @@ export namespace Tooltip {
 }
 
 export const Tooltip = withStyles(function Tooltip(props: Tooltip.Props) {
-  return <div {...props} />;
+  return <div {...props} popover="hint" />;
 }, tooltipStyle);
 

@@ -1,5 +1,7 @@
 import { TOCLayoutTOC } from './TOCLayout.toc';
 import { PageLayout } from './PageLayout';
+import { TOCDrawerTrigger } from './TOCLayout.toc.drawer';
+import { tocLayoutStyles } from './TOCLayout.css';
 
 export namespace TOCLayout {
   export type Props = (
@@ -7,11 +9,14 @@ export namespace TOCLayout {
     & TOCLayoutTOC.Props
   );
 }
-export function TOCLayout({ toc, maxDepth, ...props }: TOCLayout.Props) {
+export function TOCLayout({
+  toc, maxDepth, ...props
+}: TOCLayout.Props) {
   return (
-    <>
-      <TOCLayoutTOC toc={toc} maxDepth={maxDepth} />
+    <div className={tocLayoutStyles}>
       <PageLayout {...props} />
-    </>
+      <TOCDrawerTrigger />
+      <TOCLayoutTOC toc={toc} maxDepth={maxDepth} />
+    </div>
   );
 }

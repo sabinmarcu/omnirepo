@@ -37,5 +37,9 @@
       "source.fixAll.eslint": "explicit"
     },
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "chat.tools.terminal.autoApprove": {
+    "yarn constraints": true,
+    "git add": true
   }
 }

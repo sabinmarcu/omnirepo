@@ -36,28 +36,41 @@ export function withTooltip<
 
     const anchorId = id();
     const anchorVariable = `--${anchorId}`;
+    const tooltipId = `tooltip-${anchorId}`;
     const positionValue = position ?? options?.position;
     const positionProps = (positionValue
       ? { position: positionValue }
       : {}
     );
+    const triggerStyle = {
+      ...(rest as any).style,
+      anchorName: [
+        (rest as any).style?.anchorName,
+        anchorVariable,
+      ].filter(Boolean).join(' '),
+    };
 
     return (
       <>
         <WrappedComponent
-          style={{ anchorName: anchorVariable }}
+          {...{ interestfor: tooltipId }}
+          {...{ tooltip: content } as any}
           {...(rest as any)}
+          style={triggerStyle}
         />
         <Tooltip
+          id={tooltipId}
           style={{ positionAnchor: anchorVariable }}
           {...positionProps}
-        >{content}</Tooltip>
+        >
+          {content}
+        </Tooltip>
       </>
     );
   };
 
-  for (const extra of Object.keys(WrappedComponent)) {
-    (ComponentWithTooltip as any)[extra] = (WrappedComponent as any)[extra];
+  for (const [extra, value] of Object.entries(WrappedComponent as any)) {
+    (ComponentWithTooltip as any)[extra] = value;
   }
 
   ComponentWithTooltip.displayName = `withTooltip(${displayName})`;

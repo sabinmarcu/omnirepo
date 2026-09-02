@@ -75,9 +75,11 @@ export function Icon({ icon, ...props }: Icon.Props) {
     : 'question';
   const iconPath = allIcons[ownIcon];
   const svgContent = use(fsp.readFile(iconPath, 'utf8'));
-  return (<span
-    {...props}
-    dangerouslySetInnerHTML={{ __html: svgContent }}
-    className={iconStyle}
-  />);
+  return (
+    <span
+      {...props}
+      dangerouslySetInnerHTML={{ __html: svgContent }}
+      className={iconStyle}
+    />
+  );
 }

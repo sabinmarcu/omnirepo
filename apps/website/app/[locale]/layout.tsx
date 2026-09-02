@@ -1,0 +1,123 @@
+import type { Metadata } from 'next';
+import { headers } from 'next/headers';
+import '../globals.css';
+import { NextIntlClientProvider } from 'next-intl';
+import { variantSelector } from '@sabinmarcu/website-theme';
+import { VT323 } from 'next/font/google';
+import { notFound } from 'next/navigation';
+import {
+  Experiments,
+} from '@/experiments';
+import { getThemeVariant } from '@/theme';
+import { withExperiment } from '@/experiments/components/withExperiment';
+import { isLocale } from '@/i18n/locales';
+import {
+  isConfiguredLocaleDomain,
+  localeDomain,
+} from '@/i18n/domains';
+import { cls } from '@/utils/cls';
+import {
+  rootBackgroundStyle,
+  scanLinesStyle,
+} from '../layout.css';
+
+const rootFont = VT323({
+  variable: '--font-root',
+  subsets: ['latin'],
+  preload: true,
+  weight: '400',
+});
+
+const metadata: Metadata = {
+  title: {
+    default: 'Unknown Page',
+    template: '%s | Sabin Marcu',
+  },
+  manifest: '/site.webmanifest',
+  icons: {
+    icon: [
+      {
+        url: '/favicon-96x96.png',
+        sizes: '96x96',
+        type: 'image/png',
+      },
+      {
+        url: '/favicon.svg',
+        type: 'image/svg+xml',
+      },
+    ],
+    shortcut: ['/favicon.ico'],
+    apple: [
+      {
+        url: '/apple-touch-icon.png',
+        sizes: '180x180',
+      },
+    ],
+  },
+};
+
+export namespace RootLayout {
+  export type Props = (
+    & LayoutProps<'/[locale]'>
+    & withExperiment.Props<'scanlines'>
+  );
+}
+
+export async function generateMetadata(
+  { params }: LayoutProps<'/[locale]'>,
+): Promise<Metadata> {
+  const { locale } = await params;
+  if (!isLocale(locale)) {
+    return metadata;
+  }
+
+  const host = (await headers()).get('host')?.split(':', 1)[0] ?? '';
+  const domain = localeDomain(locale);
+  if (!isConfiguredLocaleDomain(host) || !domain) {
+    return {
+      ...metadata,
+      robots: {
+        follow: false,
+        index: false,
+      },
+    };
+  }
+
+  return {
+    ...metadata,
+    metadataBase: new URL(`https://${domain.domain}`),
+  };
+}
+
+export default withExperiment('scanlines')(
+  async function RootLayout({
+    children,
+    scanlines,
+    params,
+  }: RootLayout.Props) {
+    const { locale } = await params;
+    if (!isLocale(locale)) {
+      notFound();
+    }
+
+    return (
+      <html
+        lang={locale}
+        {...{ [variantSelector]: await getThemeVariant() }}
+      >
+        <NextIntlClientProvider locale={locale}>
+          <body className={cls(
+            rootFont.variable,
+            rootFont.className,
+            rootBackgroundStyle,
+          )}
+          >
+            {children}
+            <Experiments />
+            {scanlines ? <div className={scanLinesStyle} /> : null}
+          </body>
+        </NextIntlClientProvider>
+      </html>
+    );
+  },
+);

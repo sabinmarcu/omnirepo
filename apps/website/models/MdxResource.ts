@@ -3,7 +3,12 @@ import {
   tocSchema,
   metadataSchema,
 } from './schemas';
+import {
+  defaultLocale,
+} from '@/i18n/domains';
+import { isLocale } from '@/i18n/locales';
 import { GenericMdxResource } from './GenericMdxResource';
+import { Resource } from './Resource';
 import { lazy } from './lazy';
 
 const mdxMetadataSchema = metadataSchema.extend({
@@ -28,16 +33,19 @@ export class MdxResource<
   }
 
   static async fromSlug<
-    T extends new (...arguments_: any[]) => any,
+    T extends new (
+      ...arguments_: any[]) => any,
   >(
     this: T,
     slug: string,
+    locale: string = defaultLocale,
   ): Promise<InstanceType<T> | undefined> {
     const list = await (this as any).getList() as InstanceType<T>[];
 
     for (const item of list) {
-      if (await (item as MdxResource).slug === slug) {
-        return item;
+      const resource = item as MdxResource;
+      if (await resource.slug === slug) {
+        return Resource.fromId.call(this, await resource.id, locale);
       }
     }
 
@@ -45,6 +53,10 @@ export class MdxResource<
   }
 
   public metadataSchema: MetadataSchema = mdxMetadataSchema as unknown as MetadataSchema;
+
+  variants = lazy<MdxResource[]>(
+    async () => (this.constructor as typeof MdxResource).getVariants(await this.id),
+  );
 
   title = lazy(
     async () => (await this.metadata).title,
@@ -58,7 +70,7 @@ export class MdxResource<
       }
 
       const pathDefinition = await this.pathDefinition;
-      return pathDefinition?.filename ?? 'unknown';
+      return pathDefinition?.id ?? 'unknown';
     },
   );
 

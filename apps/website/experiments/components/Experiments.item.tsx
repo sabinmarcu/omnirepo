@@ -1,4 +1,5 @@
 import type { experiments } from '../experiments';
+import { getTranslations } from 'next-intl/server';
 import {
   experimentsItemStyles,
 } from './Experiments.item.css';
@@ -7,8 +8,9 @@ import { ExperimentItemToggle } from './Experiments.item.toggle';
 
 export namespace ExperimentItem {
   export type Props = (
-    & typeof experiments[keyof typeof experiments]
+    & Omit<typeof experiments[keyof typeof experiments], 'title' | 'description'>
     & ExperimentItemToggle.ExperimentProp
+    & { title: string, description: string }
   );
 }
 
@@ -18,13 +20,14 @@ export async function ExperimentItem({
   description,
   default: defaultValue,
 }: ExperimentItem.Props) {
+  const translate = await getTranslations('experiments');
   return (
     <label className={experimentsItemStyles}>
       <div {...grids.selector('checkbox')}>
         <ExperimentItemToggle experiment={experiment} />
       </div>
       <p {...grids.selector('title')}>{title}</p>
-      <p {...grids.selector('description')}>{description} (default: {defaultValue})</p>
+      <p {...grids.selector('description')}>{description} ({translate('default')}: {defaultValue})</p>
     </label>
   );
 }

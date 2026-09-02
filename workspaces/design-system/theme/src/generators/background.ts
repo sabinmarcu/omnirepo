@@ -1,6 +1,7 @@
 import Color from 'colorjs.io';
 import {
   getColor,
+  isLightColor,
   mixColor,
 } from '../utils/color.js';
 import { colorspace } from '../constants.js';
@@ -13,15 +14,16 @@ export const backgroundGenerator = (() => {
   ) => {
     const baseColor = new Color(color);
     const base = baseColor.to(colorspace).toString();
-    const isLight = baseColor.luminance > 0.5;
+    const isLight = isLightColor(baseColor);
+    const text = getColor(isLight ? '#000f' : '#ffff');
     const reference = {
-      elevated: getColor(!isLight ? '#ffff' : '#000f'),
+      elevated: text,
       depressed: getColor(isLight ? '#ffff' : '#000f'),
+      text,
     };
     const baseReference = defaultKey ?? base;
     const offsets = {
-      elevated: isLight ? 80 : 40,
-
+      elevated: isLight ? 20 : 40,
       depressed: isLight ? 20 : 20,
     };
 
@@ -30,7 +32,7 @@ export const backgroundGenerator = (() => {
       surface: mixColor(baseReference, reference.elevated),
       elevated: mixColor(baseReference, reference.elevated, offsets.elevated),
       depressed: mixColor(baseReference, reference.depressed, offsets.depressed),
-      text: reference.elevated,
+      text: reference.text,
     } as const;
   };
   generator.default = 'page';

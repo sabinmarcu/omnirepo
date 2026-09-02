@@ -4,39 +4,39 @@ import {
   normalizeNavigationList,
 } from './utils';
 
-export const homepageNavigation = normalizeNavigationList([
+export const getHomepageNavigation = (translate: (key: string) => string) => normalizeNavigationList([
   {
     ...categoriesMap.personal,
-    text: 'About Me',
+    text: translate('about'),
   },
   extendCategory('personal', ({ href }) => ({
 
     href: `${href}/cv`,
-    text: 'My CV',
+    text: translate('cv'),
   })),
   extendCategory('personal', ({ href }) => ({
     href: `${href}/stack`,
-    text: 'My Tech Stack',
+    text: translate('stack'),
   })),
   {
     ...categoriesMap.projects,
-    text: 'Active Projects',
+    text: translate('activeProjects'),
   },
   {
     ...categoriesMap.articles,
-    text: 'Articles',
+    text: translate('articles'),
   },
   {
     ...categoriesMap.ramblings,
-    text: 'Blog',
+    text: translate('blog'),
   },
   {
     ...categoriesMap.projects,
     href: '/tools',
-    text: 'Tools',
+    text: translate('tools'),
   },
   {
     ...categoriesMap.snippets,
-    text: 'Code Snippets',
+    text: translate('snippets'),
   },
 ] as const);

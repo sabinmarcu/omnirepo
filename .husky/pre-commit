@@ -3,3 +3,20 @@
 
 yarn moon run :lint :test --affected --status=staged
 yarn constraints
+
+staged_files="$(git diff --cached --name-only --diff-filter=ACMR)"
+
+printf '%s\n' "$staged_files" | while IFS= read -r file; do
+	case "$file" in
+		apps/website/content/*.mdx)
+			case "$file" in
+				*.ro.mdx) continue ;;
+			esac
+
+			translation="${file%.mdx}.ro.mdx"
+			if ! printf '%s\n' "$staged_files" | grep -Fqx "$translation"; then
+				printf 'warning: %s is staged without %s\n' "$file" "$translation" >&2
+			fi
+			;;
+	esac
+done

@@ -1,11 +1,11 @@
+import type z from 'zod';
+import { getTranslations } from 'next-intl/server';
 import { ThemedLink } from '@/components/ThemedLink';
 import { ClientClickProxy } from '@/components/ClientClickProxy';
-import type z from 'zod';
 import type { tocSchema } from '@/models/schemas';
-import { Fragment } from 'react';
 import { tocLayoutTOCStyles } from './TOCLayout.toc.css';
-import { mobileTOCTriggerSelector } from './TOCLayout.toc.constants';
-import { TOCMobileCloseButton } from './TOCLayout.toc.mobile';
+import { tocPopoverId } from './TOCLayout.toc.constants';
+import { TOCDrawerCloseButton } from './TOCLayout.toc.drawer';
 
 export namespace TOCLayoutTOC {
   export type Props = {
@@ -47,7 +47,7 @@ function TOCLayoutList({
   return (
     <ul>
       {root
-        ? (<ClientClickProxy delegate={mobileTOCTriggerSelector} />
+        ? (<ClientClickProxy delegate={tocPopoverId} />
         )
         : null}
       {restrictedLinks.map(({
@@ -55,33 +55,35 @@ function TOCLayoutList({
         attributes: { id: slug },
         children,
       }) => (
-          <Fragment key={slug}>
-            <li><ThemedLink href={ `#${slug}` }>{title}</ThemedLink></li>
-            {children && children.length > 0
-              ? <TOCLayoutList toc={children} />
-              : null
-            }
-          </Fragment>
+        <li key={slug}>
+          <ThemedLink href={`#${slug}`} raw>{title}</ThemedLink>
+          {children && children.length > 0
+            ? <TOCLayoutList toc={children} />
+            : null}
+        </li>
       ))}
     </ul>
   );
 }
 
-export function TOCLayoutTOC({
+export async function TOCLayoutTOC({
   toc,
   maxDepth,
 }: TOCLayoutTOC.Props) {
+  const translate = await getTranslations('tableOfContents');
   return (
-    <aside className={tocLayoutTOCStyles}>
-      <section>
-        <nav>
-          <h2>
-            <span>Table of Contents</span>
-            <TOCMobileCloseButton />
-          </h2>
-          <TOCLayoutList toc={toc} maxDepth={maxDepth} root />
-        </nav>
-      </section>
+    <aside
+      id={tocPopoverId}
+      popover="auto"
+      className={tocLayoutTOCStyles}
+    >
+      <nav>
+        <h2>
+          <span>{translate('label')}</span>
+          <TOCDrawerCloseButton />
+        </h2>
+        <TOCLayoutList toc={toc} maxDepth={maxDepth} root />
+      </nav>
     </aside>
   );
 }

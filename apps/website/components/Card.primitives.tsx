@@ -47,9 +47,9 @@ export namespace CardThumbnail {
 export const CardThumbnail = withStyles(
   function CardThumbnail({ children, ...props }: CardThumbnail.Props) {
     return (
-    <div {...props}>
-      <div>{children}</div>
-    </div>
+      <div {...props}>
+        <div>{children}</div>
+      </div>
     );
   },
   cardThumbnailStyle,

@@ -1,49 +1,38 @@
-import { mobileMedia } from '@/utils/responsive';
 import { theme } from '@sabinmarcu/theme';
 import {
-  createVar,
   globalStyle,
 } from '@vanilla-extract/css';
 import type { RecipeVariants } from '@vanilla-extract/recipes';
 import { recipe } from '@vanilla-extract/recipes';
-
-const contentSize = createVar();
+import { mobileMedia } from '@/utils/responsive';
+import { gridLines } from './grid.lines';
 
 export const pageLayoutCodeStyles = recipe({
   variants: {
     variant: {
-      wide: {
-        vars: {
-          [contentSize]: '80vw',
-        },
-      },
+      wide: {},
     },
   },
   base: {
     background: theme.colors.background.depressed,
     paddingBlock: theme.grid.xl,
-    marginInline: 'calc(0px - (100vw - 100cqw) / 2)',
-    vars: {
-      [contentSize]: '100cqw',
-    },
+    display: 'grid',
+    gridColumn: gridLines.full,
+    gridTemplateColumns: 'subgrid',
   },
 });
 
 globalStyle(`${pageLayoutCodeStyles.classNames.base} > [data-container]`, {
   marginBlockStart: '0',
   marginBlockEnd: '0',
-  marginInlineStart: 'auto',
-  marginInlineEnd: 'auto',
-
-  inlineSize: contentSize,
+  gridColumn: gridLines.content,
+  ...mobileMedia({
+    gridColumn: `${gridLines.contentStart} / ${gridLines.fullEnd}`,
+  }),
 });
 
-globalStyle(pageLayoutCodeStyles.classNames.base, {
-  ...mobileMedia({
-    vars: {
-      [contentSize]: '100cqw',
-    },
-  }),
+globalStyle(`${pageLayoutCodeStyles.classNames.variants.variant.wide} > [data-container]`, {
+  gridColumn: gridLines.wide,
 });
 
 export type PageLayoutCodeStylesProps = RecipeVariants<typeof pageLayoutCodeStyles>;

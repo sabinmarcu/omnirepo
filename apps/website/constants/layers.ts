@@ -36,8 +36,10 @@ const zLayer = <
 export const zIndexLayers = {
   ...zLayer('crtOverlay'),
   ...zLayer('showcase'),
-  ...zLayer('navigation', 'backdrop', 'sections'),
+  // Below the navbar: the sticky TOC rail must never ride over it. The drawer is
+  // promoted to the top layer by the popover API and does not rely on this.
   ...zLayer('toc'),
+  ...zLayer('navigation', 'backdrop', 'sections'),
   ...zLayer('experiments'),
 };
 

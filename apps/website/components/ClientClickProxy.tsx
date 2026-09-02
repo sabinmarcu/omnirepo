@@ -25,13 +25,22 @@ export function ClientClickProxy({
       const element = reference.current.parentNode!;
       const handler = () => {
         const targetElement = document.querySelector(`#${delegate}`);
-        if (!targetElement || !('checked' in targetElement)) {
+
+        if (targetElement instanceof HTMLInputElement && targetElement.type === 'checkbox') {
+          targetElement.checked = toggle
+            ? !targetElement.checked
+            : false;
           return;
         }
 
-        targetElement.checked = toggle
-          ? !targetElement.checked
-          : false;
+        // Popovers light-dismiss on outside clicks and Escape, but not on clicks within.
+        if (targetElement instanceof HTMLElement && targetElement.hasAttribute('popover')) {
+          if (toggle) {
+            targetElement.togglePopover();
+          } else if (targetElement.matches(':popover-open')) {
+            targetElement.hidePopover();
+          }
+        }
       };
       element.addEventListener('click', handler);
       return () => element.removeEventListener('click', handler);

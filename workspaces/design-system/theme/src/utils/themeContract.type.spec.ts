@@ -31,18 +31,18 @@ type TestExtractContracts = ExtractContractsFromThemeStructure<typeof themeStruc
 //            contrast: string;
 //            muted: string;
 //            emphasis: string;
-//        }, CSSVarFunction>, UpdaterFunction<string | Record<"light" | "dark", string>>, "primary", ContractMeta], readonly [MapLeafNodes<{
+//        }, `var(--${string})`>, UpdaterFunction<string | Record<"light" | "dark", string>>, "primary", ContractMeta], readonly [MapLeafNodes<{
 //            base: string;
 //            contrast: string;
 //            muted: string;
 //            emphasis: string;
-//        }, CSSVarFunction>, UpdaterFunction<string | Record<"light" | "dark", string>>, "secondary", ContractMeta], readonly [MapLeafNodes<{
+//        }, `var(--${string})`>, UpdaterFunction<string | Record<"light" | "dark", string>>, "secondary", ContractMeta], readonly [MapLeafNodes<{
 //            readonly page: string;
 //            readonly surface: string;
 //            readonly elevated: string;
 //            readonly depressed: string;
 //            readonly text: string;
-//        }, CSSVarFunction>, UpdaterFunction<...>, "background", ContractMeta], readonly [...]]
+//        }, `var(--${string})`>, UpdaterFunction<...>, "background", ContractMeta], readonly [...]]
 
 type TestExtractContractsNames = TestExtractContracts[number][2];
 //     ^? type TestExtractContractsNames = "primary" | "secondary" | "background" | "grid"
@@ -55,13 +55,13 @@ type MapThemeToContractTest = MapThemeToContract<typeof themeStructure>;
 //                    contrast: string;
 //                    muted: string;
 //                    emphasis: string;
-//                }, CSSVarFunction>;
+//                }, `var(--${string})`>;
 //                readonly secondary: MapLeafNodes<{
 //                    base: string;
 //                    contrast: string;
 //                    muted: string;
 //                    emphasis: string;
-//                }, CSSVarFunction>;
+//                }, `var(--${string})`>;
 //            };
 //            readonly surfaces: {
 //                readonly background: MapLeafNodes<{
@@ -70,9 +70,17 @@ type MapThemeToContractTest = MapThemeToContract<typeof themeStructure>;
 //                    readonly elevated: string;
 //                    readonly depressed: string;
 //                    readonly text: string;
-//                }, CSSVarFunction>;
+//                }, `var(--${string})`>;
 //            };
-//            readonly grid: MapLeafNodes<...>;
+//            readonly grid: MapLeafNodes<{
+//                s: string;
+//                xs: string;
+//                xxs: string;
+//                m: string;
+//                l: string;
+//                xl: string;
+//                xxl: string;
+//            }, `var(--${string})`>;
 //        }
 
 type MapThemeToUpdateInputTest = MapThemeToUpdateInput<typeof themeStructure>;

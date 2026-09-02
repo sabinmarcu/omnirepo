@@ -1,4 +1,3 @@
-/* eslint-disable import/export */
 import {
   forwardRef,
   type HTMLAttributes,
@@ -11,7 +10,6 @@ export namespace NavigationAnchor {
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const NavigationAnchor = forwardRef<HTMLSpanElement, NavigationAnchor.Props>(
   ({
     id,
@@ -26,5 +24,6 @@ export const NavigationAnchor = forwardRef<HTMLSpanElement, NavigationAnchor.Pro
         navigationAnchorStyle,
         className,
       ].filter(Boolean).join(' ')}
-    />),
+    />
+  ),
 );

@@ -22,6 +22,8 @@ export const snippetsContentSchema = showcaseContentSchema.extend({
 export class SnippetResource extends ShowcaseResource<typeof snippetsContentSchema> {
   static resourceDirectory = 'snippets';
 
+  static translatable = true;
+
   public contentSchema = snippetsContentSchema;
 
   files = lazy<SourceResource[]>(
