@@ -1,9 +1,9 @@
-import { zIndexLayers } from '@/constants/layers';
 import { theme } from '@sabinmarcu/theme';
 import {
   globalStyle,
   style,
 } from '@vanilla-extract/css';
+import { zIndexLayers } from '@/constants/layers';
 
 export const experimentsDialogStyle = style({
   selectors: {
@@ -46,14 +46,14 @@ export const experimentsDialogStyle = style({
   },
 });
 
-globalStyle(`${experimentsDialogStyle} form`, {
+globalStyle(`${experimentsDialogStyle} header`, {
   display: 'flex',
   flexFlow: 'row nowrap',
   justifyContent: 'space-between',
   alignItems: 'center',
 });
 
-globalStyle(`${experimentsDialogStyle} form p`, {
+globalStyle(`${experimentsDialogStyle} header p`, {
   fontSize: `calc(${theme.grid.xl} * 1.2)`,
 });
 

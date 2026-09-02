@@ -1,25 +1,25 @@
-/* eslint-disable @typescript-eslint/no-shadow */
-/* eslint-disable prefer-arrow-callback */
-/* eslint-disable @typescript-eslint/no-redeclare */
-/* eslint-disable import/export */
-import { Icon } from '@/components/Icon';
-import type { ComponentProps } from 'react';
+import type { ButtonHTMLAttributes } from 'react';
 import { withTooltip } from '@/components/Tooltip';
-import { ExperimentsTriggerClient } from './Experiments.trigger.runtime';
+import { experimentsDialogId } from './Experiments.constants';
 
 export namespace ExperimentsTrigger {
-  export type Props = ComponentProps<typeof ExperimentsTriggerClient>;
+  export type Props = ButtonHTMLAttributes<HTMLButtonElement>;
 }
 
 export const ExperimentsTrigger = withTooltip(
   function ExperimentsTrigger(props: ExperimentsTrigger.Props) {
     return (
-      <ExperimentsTriggerClient {...props}>
-        <Icon icon="programming" />
-      </ExperimentsTriggerClient>
+      <button
+        {...props}
+        type="button"
+        {...{
+          commandfor: experimentsDialogId,
+          command: 'show-modal',
+        }}
+      >
+        <span>Experiments</span>
+      </button>
     );
   },
-  'Experiments',
-  { position: 'bottom' },
 );
 
