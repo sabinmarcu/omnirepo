@@ -106,7 +106,7 @@ whenTier('folded', tocLayoutStyles, {
     `[${gridLines.contentEnd}]`,
     'minmax(0, 2fr)',
     `[${gridLines.wideEnd}]`,
-    '1fr',
+    pageLayoutInlinePadding,
     `[${gridLines.fullEnd}]`,
   ].join(' '),
 });

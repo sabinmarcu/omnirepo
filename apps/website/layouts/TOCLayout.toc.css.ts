@@ -13,7 +13,10 @@ import {
   navigationSpacing,
 } from './Navigation.css';
 import { gridLines } from './grid.lines';
-import { whenTier } from './TOCLayout.tiers';
+import {
+  tocMinInlineSize,
+  whenTier,
+} from './TOCLayout.tiers';
 
 export const tocMargin = createVar();
 export const tocPadding = createVar();
@@ -69,6 +72,13 @@ whenTier(['centered', 'folded'], tocLayoutTOCStyles, {
   paddingInlineEnd: tocGap,
 });
 
+whenTier('centered', tocLayoutTOCStyles, {
+  justifySelf: 'end',
+  inlineSize: 'fit-content',
+  minInlineSize: `${tocMinInlineSize}px`,
+  maxInlineSize: 'min(450px, 100%)',
+});
+
 // eslint-disable-next-line logical-properties/overflow
 globalStyle(`${tocLayoutTOCStyles} nav`, {
   blockSize: '100%',
@@ -121,9 +131,20 @@ globalStyle(`${tocLayoutTOCStyles} h2`, {
 
 globalStyle(`${tocLayoutTOCStyles} ul ul`, {
   paddingInlineStart: tocPadding,
+  marginBlockStart: theme.grid.s,
 });
 
 globalStyle(`${tocLayoutTOCStyles} li`, {
   listStyle: 'none',
+});
+
+globalStyle(`${tocLayoutTOCStyles} li > a`, {
+  display: 'inline-block',
+  lineHeight: 1,
+});
+
+globalStyle(`${tocLayoutTOCStyles} nav > ul`, {
+  display: 'grid',
+  gap: theme.grid.l,
 });
 
