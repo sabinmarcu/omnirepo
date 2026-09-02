@@ -1,3 +1,4 @@
 releases:
   "@sabinmarcu/storybook-addon-theme-overrider": patch
+  "@sabinmarcu/theme": patch
   "@sabinmarcu/theme-storybook": patch

@@ -1,4 +1,6 @@
 import { globalStyle } from '@vanilla-extract/css';
+import { themeVariants } from '../constants.js';
+import { selectorOfVariant } from '../utils/variantContract.js';
 import { frameworkSetupLayer } from './layers.js';
 
 globalStyle(':root', {
@@ -8,3 +10,13 @@ globalStyle(':root', {
     },
   },
 });
+
+for (const variant of themeVariants) {
+  globalStyle(`:root${selectorOfVariant(variant)}`, {
+    '@layer': {
+      [frameworkSetupLayer]: {
+        colorScheme: variant,
+      },
+    },
+  });
+}
