@@ -1,28 +1,35 @@
 import { Icon } from '@/components/Icon';
 import {
+  themeSelectionIcons,
+  themeSelectionOrder,
   themeSelectionsMap,
 } from './ThemeSelector.constants';
+import { getThemeVariant } from './ThemeSelector.core';
+import { ThemeSelectorRuntime } from './ThemeSelector.runtime';
 import {
   selectionDataAttribute,
+  themeSelectorOptionStyle,
   themeSelectorStyles,
 } from './ThemeSelector.css';
-import {
-  getThemeVariant,
-  rotateThroughThemeVariant,
-} from './ThemeSelector.core';
 
 export async function ThemeSelector() {
   const current = await getThemeVariant();
-  const label = `Change theme. Currently: ${themeSelectionsMap[current]}`;
   return (
-    <button
-      onClick={rotateThroughThemeVariant}
-      className={themeSelectorStyles}
-      aria-label={label}
-    >
-      <Icon icon="sun-solid" {...{ [selectionDataAttribute]: 'light' }} />
-      <Icon icon="moon-solid" {...{ [selectionDataAttribute]: 'dark' }} />
-      <Icon icon="technology" {...{ [selectionDataAttribute]: 'system' }} />
-    </button>
+    <ThemeSelectorRuntime>
+      <fieldset className={themeSelectorStyles} aria-label="Theme">
+        {themeSelectionOrder.map((selection) => (
+          <button
+            type="button"
+            key={selection}
+            className={themeSelectorOptionStyle}
+            aria-label={themeSelectionsMap[selection]}
+            aria-pressed={current === selection}
+            {...{ [selectionDataAttribute]: selection }}
+          >
+            <Icon icon={themeSelectionIcons[selection]} />
+          </button>
+        ))}
+      </fieldset>
+    </ThemeSelectorRuntime>
   );
 }
