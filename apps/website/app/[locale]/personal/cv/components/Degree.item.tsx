@@ -1,4 +1,6 @@
 import type { CVDegreeItem } from '@/models/CV.types';
+import type { ContentLocation } from '@/models/ContentIndex';
+import type { Locale } from '@/i18n/locales';
 import { cls } from '@/utils/cls';
 import { ExperienceItemTitle } from './Experience.item.title';
 import { ExperienceItemDuration } from './Experience.item.duration';
@@ -10,6 +12,7 @@ import { degreeItemStyles } from './Degree.item.css';
 export namespace DegreeItem {
   export type Props = (
     CVDegreeItem
+    & { sourceLink?: { location: ContentLocation, locale: Locale } }
   );
 }
 
@@ -18,6 +21,7 @@ export function DegreeItem({
     title, from, to,
   },
   metadata,
+  sourceLink,
 }: DegreeItem.Props) {
   return (
     <section
@@ -29,6 +33,7 @@ export function DegreeItem({
       <ExperienceItemTitle
         {...{ experience: { title } } as any}
         metadata={metadata}
+        sourceLink={sourceLink}
       />
 
       <div {...grids.selector('metadata')}>
@@ -38,7 +43,8 @@ export function DegreeItem({
             to,
             from,
           },
-        } as any} />
+        } as any}
+        />
       </div>
     </section>
   );

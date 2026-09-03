@@ -1,14 +1,22 @@
 import type { CVPublicationItem } from '@/models/CV.types';
+import { Link } from '@/i18n/navigation';
+import type { ContentLocation } from '@/models/ContentIndex';
+import type { Locale } from '@/i18n/locales';
 import { publicationsItemStyle } from './Publications.item.css';
 
 export namespace PublicationItem {
   export type Props = {
     source: string,
-    publications: CVPublicationItem[]
+    publications: CVPublicationItem[],
+    sourceLink?: { location: ContentLocation, locale: Locale },
   };
 }
 
-export function PublicationItem({ source, publications }: PublicationItem.Props) {
+export function PublicationItem({
+  source,
+  publications,
+  sourceLink,
+}: PublicationItem.Props) {
   return (
     <li className={publicationsItemStyle}>
       <p>{source}</p>
@@ -19,11 +27,41 @@ export function PublicationItem({ source, publications }: PublicationItem.Props)
           },
         }) => (
           <li key={`${title}-${from}-${reference ?? 'noref'}`}>
-              <span>{title}</span>
-              {reference
-                ? (<span>, {reference}</span>)
-                : null}
-              <span>, {from}</span>
+            {sourceLink
+              ? (
+                <Link href={sourceLink.location} locale={sourceLink.locale}>
+                  <span>{title}</span>
+                  {reference
+                    ? (
+                      <span>
+                        ,
+                        {reference}
+                      </span>
+                    )
+                    : null}
+                  <span>
+                    ,
+                    {from}
+                  </span>
+                </Link>
+              )
+              : (
+                <>
+                  <span>{title}</span>
+                  {reference
+                    ? (
+                      <span>
+                        ,
+                        {reference}
+                      </span>
+                    )
+                    : null}
+                  <span>
+                    ,
+                    {from}
+                  </span>
+                </>
+              )}
           </li>
         ))}
       </ul>

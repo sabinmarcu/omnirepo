@@ -100,6 +100,7 @@ export function SearchClient({
             <Link
               className={searchResultLinkStyle}
               href={document.location}
+              locale={document.locale}
               onClick={onNavigate}
             >
               <strong>{document.title}</strong>

@@ -79,7 +79,14 @@ async function CvResult({
     return project
       ? (
         <li className={richResultStyle}>
-          <ExperienceItem {...project} tagProject />
+          <ExperienceItem
+            {...project}
+            tagProject
+            sourceLink={{
+              location: entry.location,
+              locale: entry.locale,
+            }}
+          />
           <MatchReason matchedVia={matchedVia} />
         </li>
       )
@@ -93,7 +100,13 @@ async function CvResult({
     return experience
       ? (
         <li className={richResultStyle}>
-          <ExperienceItem {...experience} />
+          <ExperienceItem
+            {...experience}
+            sourceLink={{
+              location: entry.location,
+              locale: entry.locale,
+            }}
+          />
           <MatchReason matchedVia={matchedVia} />
         </li>
       )
@@ -107,7 +120,13 @@ async function CvResult({
     return degree
       ? (
         <li className={richResultStyle}>
-          <DegreeItem {...degree} />
+          <DegreeItem
+            {...degree}
+            sourceLink={{
+              location: entry.location,
+              locale: entry.locale,
+            }}
+          />
           <MatchReason matchedVia={matchedVia} />
         </li>
       )
@@ -124,6 +143,10 @@ async function CvResult({
         <PublicationItem
           source={publication.publication.where}
           publications={[publication]}
+          sourceLink={{
+            location: entry.location,
+            locale: entry.locale,
+          }}
         />
       )
       : undefined;

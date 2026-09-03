@@ -13,6 +13,7 @@ const documents: SearchDocument[] = [
     text: 'A project about compiler tooling',
     type: 'project',
     location: { pathname: '/personal/cv' },
+    locale: 'en',
     tags: ['skills:typescript'],
   },
   {
@@ -24,6 +25,7 @@ const documents: SearchDocument[] = [
       pathname: '/tools/[slug]',
       params: { slug: 'typescript' },
     },
+    locale: 'en',
     tags: ['skills:typescript'],
   },
 ];

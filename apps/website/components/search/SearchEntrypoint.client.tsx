@@ -122,6 +122,7 @@ export function SearchEntrypointClient({
                 <Link
                   className={searchEntrypointResultStyle}
                   href={document.location}
+                  locale={document.locale}
                   onClick={() => setFocused(false)}
                 >
                   <span className={searchEntrypointResultTitleStyle}>

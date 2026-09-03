@@ -1,5 +1,7 @@
 import type { Simplify } from '@sabinmarcu/types';
 import { ThemedLink } from '@/components/ThemedLink';
+import type { ContentLocation } from '@/models/ContentIndex';
+import type { Locale } from '@/i18n/locales';
 import { NavigationAnchor } from '@/layouts/Navigation.anchor';
 import { tocAnchorProps } from '@/utils/toc';
 import { grids } from './Experience.item.grid';
@@ -15,9 +17,14 @@ export namespace ExperienceItemTitle {
   export type Props = Simplify<(
     & ExperienceItemData
     & ExperienceItemMetadata
+    & { sourceLink?: { location: ContentLocation, locale: Locale } }
   )>;
 }
-export function ExperienceItemTitle({ metadata, ...props }: ExperienceItemTitle.Props) {
+export function ExperienceItemTitle({
+  metadata,
+  sourceLink,
+  ...props
+}: ExperienceItemTitle.Props) {
   const title = pickExperienceField(props, 'title');
   const prefix = 'project' in props ? 'project' : 'experience';
   const link = 'project' in props ? props.project.link : undefined;
@@ -41,14 +48,19 @@ export function ExperienceItemTitle({ metadata, ...props }: ExperienceItemTitle.
       <span>{title}</span>
       {metadata
         ? (<span>{metadata.company}</span>)
-        : null
-      }
+        : null}
     </>
   );
 
-  const final = link
-    ? (<ThemedLink href={link as any}>{inner}</ThemedLink>)
-    : inner;
+  const final = sourceLink
+    ? (
+      <ThemedLink href={sourceLink.location} locale={sourceLink.locale}>
+        {inner}
+      </ThemedLink>
+    )
+    : (link
+      ? (<ThemedLink href={link as any}>{inner}</ThemedLink>)
+      : inner);
 
   return (
     <h3

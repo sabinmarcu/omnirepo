@@ -23,7 +23,11 @@ export function TagResultFallback({
 
   return (
     <li className={resultStyle}>
-      <Link className={resultTitleStyle} href={entry.location}>
+      <Link
+        className={resultTitleStyle}
+        href={entry.location}
+        locale={entry.locale}
+      >
         <strong>{entry.title}</strong>
       </Link>
       {entry.excerpt ? <p>{entry.excerpt}</p> : null}

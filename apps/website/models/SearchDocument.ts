@@ -1,3 +1,4 @@
+import type { Locale } from '@/i18n/locales';
 import type { ContentLocation } from './ContentIndex';
 import type { TagId } from './Tag';
 
@@ -12,5 +13,6 @@ export type SearchDocument = {
   text: string,
   type: SearchDocumentType,
   location: ContentLocation,
+  locale: Locale,
   tags: TagId[],
 };

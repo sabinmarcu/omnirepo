@@ -68,6 +68,7 @@ async function buildCorpus(locale: Locale): Promise<SearchDocument[]> {
       ].filter(Boolean).join(' '),
       type: entry.type,
       location: entry.location,
+      locale: entry.locale,
       tags: entry.tags,
     }));
 
@@ -93,6 +94,7 @@ async function buildCorpus(locale: Locale): Promise<SearchDocument[]> {
         pathname: '/tags/[...tag]',
         params: { tag: tagToPathSegments(id) },
       },
+      locale,
       tags: [id],
     };
   }));
