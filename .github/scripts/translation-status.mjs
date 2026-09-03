@@ -10,7 +10,7 @@ import path from 'node:path';
 
 const contentDirectory = path.resolve('apps/website/content');
 const writeHashes = process.argv.includes('--write');
-const sourceHashPattern = /^export const sourceHash = '([a-f0-9]+)'\n/m;
+const sourceHashPattern = /^export const sourceHash = '([a-f0-9]+)'\n+/m;
 const languageNeutralDirectories = new Set(['snippets']);
 
 const hash = (content) => createHash('sha256').update(content).digest('hex');
@@ -49,8 +49,11 @@ for (const sourceFile of sourceFiles) {
 
     if (writeHashes) {
       const nextContent = sourceHashPattern.test(translationContent)
-        ? translationContent.replace(sourceHashPattern, `export const sourceHash = '${sourceHash}'\n\n`)
-        : `export const sourceHash = '${sourceHash}'\n\n${translationContent}`;
+        ? translationContent.replace(
+          sourceHashPattern,
+          `export const sourceHash = '${sourceHash}'\n\n\n`,
+        )
+        : `export const sourceHash = '${sourceHash}'\n\n\n${translationContent}`;
       await writeFile(translationFile, nextContent);
     } else if (!storedHash) {
       untracked.push(sourceFile);
@@ -60,9 +63,9 @@ for (const sourceFile of sourceFiles) {
   } catch (error) {
     if (error.code === 'ENOENT') {
       missing.push(sourceFile);
-      continue;
+    } else {
+      throw error;
     }
-    throw error;
   }
 }
 
