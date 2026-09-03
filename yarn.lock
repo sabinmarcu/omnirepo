@@ -8178,9 +8178,7 @@ __metadata:
     next-intl: "npm:^4.14.2"
     react: "npm:^19.2.4"
     react-dom: "npm:^19.2.4"
-    remark-frontmatter: "npm:^5.0.0"
     remark-heading-id: "npm:^1.0.1"
-    remark-mdx-frontmatter: "npm:^5.2.0"
     remark-mdx-toc: "npm:^0.3.1"
     ts-reset: "npm:^0.0.1"
     typescript: "npm:^6.0.2"
@@ -16191,15 +16189,6 @@ __metadata:
   dependencies:
     is-plain-obj: "npm:^3.0.0"
   checksum: 10c0/8bf46c4629f55a6ad3a6c523277cd34591cf57dfcab01cf4f218a8780cd23d21901c393693484c449a46bad7b9cb6fbf24c3dd1c1b057e10fd6a076f24fd5f3f
-  languageName: node
-  linkType: hard
-
-"estree-util-value-to-estree@npm:^3.0.0":
-  version: 3.4.0
-  resolution: "estree-util-value-to-estree@npm:3.4.0"
-  dependencies:
-    "@types/estree": "npm:^1.0.0"
-  checksum: 10c0/e90e0c784b29182a3feb471589ab3c031be3ff1ab068b2b473e9ee96467f99442f2c571b2708ee3493906af5bf1a0aa9712d9f90fb113a30d99669100235ba4f
   languageName: node
   linkType: hard
 
@@ -24782,20 +24771,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"remark-mdx-frontmatter@npm:^5.2.0":
-  version: 5.2.0
-  resolution: "remark-mdx-frontmatter@npm:5.2.0"
-  dependencies:
-    "@types/mdast": "npm:^4.0.0"
-    estree-util-value-to-estree: "npm:^3.0.0"
-    toml: "npm:^3.0.0"
-    unified: "npm:^11.0.0"
-    unist-util-mdx-define: "npm:^1.0.0"
-    yaml: "npm:^2.0.0"
-  checksum: 10c0/72c6ee94c927e0ff9d941481b568d34f8103655cb30fe9315510410c733af7e89d6c64417cf2e59d8a2396f6e4663ba122e98a25e1277bda57be7f381a763e7d
-  languageName: node
-  linkType: hard
-
 "remark-mdx-toc@npm:^0.3.1":
   version: 0.3.1
   resolution: "remark-mdx-toc@npm:0.3.1"
@@ -27088,13 +27063,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"toml@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "toml@npm:3.0.0"
-  checksum: 10c0/8d7ed3e700ca602e5419fca343e1c595eb7aa177745141f0761a5b20874b58ee5c878cd045c408da9d130cb2b611c639912210ba96ce2f78e443569aa8060c18
-  languageName: node
-  linkType: hard
-
 "totalist@npm:^3.0.0":
   version: 3.0.1
   resolution: "totalist@npm:3.0.1"
@@ -27777,21 +27745,6 @@ __metadata:
     "@types/unist": "npm:^3.0.0"
     vscode-languageserver-types: "npm:^3.0.0"
   checksum: 10c0/ae78b09929de1ce27806bd1f10860201fcc47ef5aa12ef326fd897fae46893216a372c6c7c05727da0c0318f7dc44222fdcfaf46da6549688e755e52c923086d
-  languageName: node
-  linkType: hard
-
-"unist-util-mdx-define@npm:^1.0.0":
-  version: 1.1.2
-  resolution: "unist-util-mdx-define@npm:1.1.2"
-  dependencies:
-    "@types/estree": "npm:^1.0.0"
-    "@types/hast": "npm:^3.0.0"
-    "@types/mdast": "npm:^4.0.0"
-    estree-util-is-identifier-name: "npm:^3.0.0"
-    estree-util-scope: "npm:^1.0.0"
-    estree-walker: "npm:^3.0.0"
-    vfile: "npm:^6.0.0"
-  checksum: 10c0/83a78b427ccba7cb14101da9842dc31170ce7133dead795fd5e6ac0b9222b813753b2374a7208b192eb8916effbcf9acbdd5ae63f20069a12133f6a74d92c3cf
   languageName: node
   linkType: hard
 
@@ -29179,15 +29132,6 @@ __metadata:
   version: 1.10.2
   resolution: "yaml@npm:1.10.2"
   checksum: 10c0/5c28b9eb7adc46544f28d9a8d20c5b3cb1215a886609a2fd41f51628d8aaa5878ccd628b755dbcd29f6bb4921bd04ffbc6dcc370689bb96e594e2f9813d2605f
-  languageName: node
-  linkType: hard
-
-"yaml@npm:^2.0.0":
-  version: 2.8.1
-  resolution: "yaml@npm:2.8.1"
-  bin:
-    yaml: bin.mjs
-  checksum: 10c0/7c587be00d9303d2ae1566e03bc5bc7fe978ba0d9bf39cc418c3139d37929dfcb93a230d9749f2cb578b6aa5d9ebebc322415e4b653cb83acd8bc0bc321707f3
   languageName: node
   linkType: hard
 
