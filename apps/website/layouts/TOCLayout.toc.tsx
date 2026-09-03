@@ -70,6 +70,9 @@ export async function TOCLayoutTOC({
   toc,
   maxDepth,
 }: TOCLayoutTOC.Props) {
+  if (toc.length === 0) {
+    return null;
+  }
   const translate = await getTranslations('tableOfContents');
   return (
     <aside
