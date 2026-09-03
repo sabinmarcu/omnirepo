@@ -11,6 +11,7 @@ import {
   getProjectAnchor,
 } from './CVResource';
 import { SnippetResource } from './SnippetResource';
+import { ProjectResource } from './ProjectResource';
 import {
   tagMatchesPrefix,
   type TagId,
@@ -23,6 +24,7 @@ import { ToolResource } from './ToolResource';
 import {
   deriveCvTags,
   deriveEntryTags,
+  deriveProjectTags,
   deriveSkillTag,
   type EntryTagDerivation,
 } from './tagDerivation';
@@ -36,6 +38,7 @@ export type ContentLocation =
   | { pathname: '/tools/[slug]', params: { slug: string }, hash?: string }
   | { pathname: '/snippets/[slug]', params: { slug: string }, hash?: string }
   | { pathname: '/snippets/[slug]/[subpage]', params: { slug: string, subpage: string }, hash?: string }
+  | { pathname: '/projects/[slug]', params: { slug: string }, hash?: string }
   | { pathname: '/tags/[...tag]', params: { tag: string[] } };
 
 export type IndexEntry = {
@@ -202,10 +205,31 @@ const snippetProducer: IndexProducer = async (locale) => {
   })));
 };
 
+const projectProducer: IndexProducer = async (locale) => {
+  const resources = await ProjectResource.getLocalizedList(locale);
+  return Promise.all(resources.map(async (resource) => ({
+    id: `project:${await resource.id}`,
+    type: 'project' as const,
+    title: await resource.title,
+    excerpt: await resource.summary,
+    location: {
+      pathname: '/projects/[slug]' as const,
+      params: { slug: await resource.slug },
+    },
+    locale,
+    authoredTags: deriveProjectTags({
+      kind: await resource.kind,
+      status: await resource.status,
+      skills: await resource.skills,
+    }),
+  })));
+};
+
 const producers: IndexProducer[] = [
   cvProducer,
   toolProducer,
   snippetProducer,
+  projectProducer,
 ];
 
 function compareEntries(left: IndexEntry, right: IndexEntry) {

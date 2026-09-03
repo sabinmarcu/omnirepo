@@ -6,6 +6,7 @@ const messages = {
     personal: 'Personal',
     articles: 'Articole',
     ramblings: 'Gânduri',
+    projects: 'Proiecte',
     tools: 'Unelte',
     snippets: 'Exerciții',
   },
@@ -34,6 +35,7 @@ const messages = {
   },
   lists: {
     noSnippets: 'Nu există fragmente de cod',
+    noProjects: 'Nu există proiecte',
     noTools: 'Nu există unelte',
   },
   tags: {
@@ -115,6 +117,9 @@ const messages = {
   },
   relatedContent: {
     title: 'Conținut asociat',
+  },
+  projects: {
+    workedOnAt: 'Am lucrat la acest proiect în CV-ul meu',
   },
   search: {
     title: 'Căutare',

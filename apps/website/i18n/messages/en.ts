@@ -4,6 +4,7 @@ const messages = {
     personal: 'Personal',
     articles: 'Articles',
     ramblings: 'Ramblings',
+    projects: 'Projects',
     tools: 'Tools',
     snippets: 'Snippets',
   },
@@ -32,6 +33,7 @@ const messages = {
   },
   lists: {
     noSnippets: 'No snippets',
+    noProjects: 'No projects',
     noTools: 'No tools',
   },
   tags: {
@@ -113,6 +115,9 @@ const messages = {
   },
   relatedContent: {
     title: 'Related content',
+  },
+  projects: {
+    workedOnAt: 'Worked on this at my CV',
   },
   search: {
     title: 'Search',

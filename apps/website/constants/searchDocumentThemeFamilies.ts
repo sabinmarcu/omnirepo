@@ -6,7 +6,7 @@ export const searchDocumentThemeFamilies: Record<SearchDocumentType, typeof fami
   'cv-project': 'personal',
   degree: 'personal',
   experience: 'personal',
-  project: 'personal',
+  project: 'projects',
   publication: 'personal',
   skill: 'personal',
   snippet: 'snippets',
