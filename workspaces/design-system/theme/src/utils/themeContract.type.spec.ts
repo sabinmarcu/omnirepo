@@ -37,10 +37,12 @@ type TestExtractContracts = ExtractContractsFromThemeStructure<typeof themeStruc
 //            muted: string;
 //            emphasis: string;
 //        }, `var(--${string})`>, UpdaterFunction<string | Record<"light" | "dark", string>>, "secondary", ContractMeta], readonly [MapLeafNodes<{
-//            readonly page: string;
 //            readonly surface: string;
+//            readonly raised: string;
 //            readonly elevated: string;
+//            readonly page: string;
 //            readonly depressed: string;
+//            readonly recessed: string;
 //            readonly text: string;
 //        }, `var(--${string})`>, UpdaterFunction<...>, "background", ContractMeta], readonly [...]]
 
@@ -65,20 +67,19 @@ type MapThemeToContractTest = MapThemeToContract<typeof themeStructure>;
 //            };
 //            readonly surfaces: {
 //                readonly background: MapLeafNodes<{
-//                    readonly page: string;
 //                    readonly surface: string;
+//                    readonly raised: string;
 //                    readonly elevated: string;
+//                    readonly page: string;
 //                    readonly depressed: string;
+//                    readonly recessed: string;
 //                    readonly text: string;
 //                }, `var(--${string})`>;
 //            };
 //            readonly grid: MapLeafNodes<{
 //                s: string;
 //                xs: string;
-//                xxs: string;
-//                m: string;
-//                l: string;
-//                xl: string;
+//                ... 4 more ...;
 //                xxl: string;
 //            }, `var(--${string})`>;
 //        }
