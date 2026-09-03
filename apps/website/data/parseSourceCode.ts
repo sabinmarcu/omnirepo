@@ -1,16 +1,16 @@
 /* eslint-disable no-continue */
 import { PageLayout } from '@/layouts/PageLayout';
 
-const pageLayoutCodeVariants = Object.keys(
-  PageLayout.Code.selectors.variant,
+const pageLayoutInsetVariants = Object.keys(
+  PageLayout.Inset.selectors.variant,
 ) as unknown as (
-  keyof typeof PageLayout.Code.selectors.variant
+  keyof typeof PageLayout.Inset.selectors.variant
 )[];
 
 type GroupType = {
   name: string,
   comment?: string[],
-  variant?: typeof pageLayoutCodeVariants[number]
+  variant?: typeof pageLayoutInsetVariants[number]
   lines: string[]
 };
 
@@ -89,7 +89,7 @@ export function parseSourceCode(code: string) {
     }
     if (variantMatch) {
       const targetGroup = currentGroup ?? rootGroup;
-      if (!pageLayoutCodeVariants.includes(variantMatch[1] as any)) {
+      if (!pageLayoutInsetVariants.includes(variantMatch[1] as any)) {
         throw new Error(`Attempting to set invalid variant (${variantMatch[1]}) to group "${targetGroup.name}"`);
       }
       targetGroup.variant = variantMatch[1] as any;

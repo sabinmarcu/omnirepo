@@ -41,7 +41,8 @@
   "chat.tools.terminal.autoApprove": {
     "yarn constraints": true,
     "git add": true,
-    "yarn vitest": true
+    "yarn vitest": true,
+    "yarn eslint": true
   },
   "chat.useAgentsMdFile": true,
   "chat.instructionsFilesLocations": {

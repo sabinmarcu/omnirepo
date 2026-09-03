@@ -11,6 +11,7 @@ import {
   getProjectAnchor,
 } from './CVResource';
 import { SnippetResource } from './SnippetResource';
+import { ProjectResource } from './ProjectResource';
 import {
   tagMatchesPrefix,
   type TagId,
@@ -23,12 +24,13 @@ import { ToolResource } from './ToolResource';
 import {
   deriveCvTags,
   deriveEntryTags,
+  deriveProjectTags,
   deriveSkillTag,
   type EntryTagDerivation,
 } from './tagDerivation';
 
 export type ContentType =
-  | 'project' | 'experience' | 'degree' | 'publication'
+  | 'cv-project' | 'project' | 'experience' | 'degree' | 'publication'
   | 'skill' | 'snippet' | 'tool' | 'article';
 
 export type ContentLocation =
@@ -36,6 +38,7 @@ export type ContentLocation =
   | { pathname: '/tools/[slug]', params: { slug: string }, hash?: string }
   | { pathname: '/snippets/[slug]', params: { slug: string }, hash?: string }
   | { pathname: '/snippets/[slug]/[subpage]', params: { slug: string, subpage: string }, hash?: string }
+  | { pathname: '/projects/[slug]', params: { slug: string }, hash?: string }
   | { pathname: '/tags/[...tag]', params: { tag: string[] } };
 
 export type IndexEntry = {
@@ -45,6 +48,8 @@ export type IndexEntry = {
   location: ContentLocation,
   locale: Locale,
   excerpt?: string,
+  /** Canonical entry ID that supersedes this entry in search results. */
+  supersededBy?: string,
   /** Expanded, exclusions applied, deduplicated, sorted. The queryable set. */
   tags: TagId[],
   /** Pre-expansion tags as declared by content. */
@@ -61,7 +66,7 @@ function projectEntry(locale: Locale, item: CVProjectItem): IndexEntryInput {
   const { project, metadata } = item;
   return {
     id: `cv:project:${getProjectAnchor(item)}`,
-    type: 'project',
+    type: 'cv-project',
     title: project.title,
     location: {
       pathname: '/personal/cv',
@@ -70,6 +75,7 @@ function projectEntry(locale: Locale, item: CVProjectItem): IndexEntryInput {
     locale,
     from: project.from,
     to: project.to,
+    supersededBy: project.canonical ? `project:${project.canonical}` : undefined,
     authoredTags: deriveCvTags({
       company: metadata.company,
       from: project.from,
@@ -202,10 +208,31 @@ const snippetProducer: IndexProducer = async (locale) => {
   })));
 };
 
+const projectProducer: IndexProducer = async (locale) => {
+  const resources = await ProjectResource.getLocalizedList(locale);
+  return Promise.all(resources.map(async (resource) => ({
+    id: `project:${await resource.id}`,
+    type: 'project' as const,
+    title: await resource.title,
+    excerpt: await resource.summary,
+    location: {
+      pathname: '/projects/[slug]' as const,
+      params: { slug: await resource.slug },
+    },
+    locale,
+    authoredTags: deriveProjectTags({
+      kind: await resource.kind,
+      status: await resource.status,
+      skills: await resource.skills,
+    }),
+  })));
+};
+
 const producers: IndexProducer[] = [
   cvProducer,
   toolProducer,
   snippetProducer,
+  projectProducer,
 ];
 
 function compareEntries(left: IndexEntry, right: IndexEntry) {

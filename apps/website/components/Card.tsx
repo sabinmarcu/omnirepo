@@ -4,7 +4,7 @@ import {
   CardTitle,
   CardWrapper,
 } from './Card.primitives';
-import { ThemedLink } from './ThemedLink';
+import { ThemedLink } from './primitives/ThemedLink';
 
 export namespace Card {
   export type Props = (
@@ -22,7 +22,7 @@ export function Card({
   );
 
   if (href) {
-    return (<ThemedLink href={href as any}>{content}</ThemedLink>);
+    return (<ThemedLink decoration="none" href={href as any}>{content}</ThemedLink>);
   }
 
   return content;

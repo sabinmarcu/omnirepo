@@ -6,7 +6,7 @@ import { LocaleSuggestionBanner } from '@/i18n/LocaleSuggestionBanner';
 import { experimentEnabled } from '@/experiments/utils';
 import { CVResource } from '@/models/CVResource';
 import { Grid } from '@/components/Grid';
-import { Typography } from '@/components/mdx/Typography';
+import { Typography } from '@/components/primitives/Typography';
 import { TOCLayout } from '@/layouts/TOCLayout';
 import { redirect404 } from '@/utils/routes.ssr';
 import { InfoTagList } from './components/InfoTag';
@@ -130,7 +130,13 @@ export default async function CVPage({
   const { toc } = cv;
 
   return (
-    <TOCLayout className={cvPageStyles} variant="large" maxDepth={3} toc={toc}>
+    <TOCLayout
+      className={cvPageStyles}
+      {...{ [Typography.unstyledDataAttribute]: true }}
+      variant="large"
+      maxDepth={3}
+      toc={toc}
+    >
       {showLanguageSuggestionBanner
         ? <LocaleSuggestionBanner pathname="/personal/cv" availableLocales={availableLocales} />
         : null}

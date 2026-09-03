@@ -4,7 +4,10 @@ import {
   resolveTag,
   type TagRegistry,
 } from './TagRegistry';
-import type { TagId } from './Tag';
+import {
+  normalizeTagSegment,
+  type TagId,
+} from './Tag';
 
 export type EntryTagDerivation = {
   /** Canonical tags declared directly by the resource. */
@@ -51,6 +54,22 @@ export function deriveYearTags(
 
 export function deriveSkillTag(skill: string): TagId {
   return canonicalTag(resolveTag('skills', skill));
+}
+
+export function deriveProjectTags({
+  kind,
+  status,
+  skills,
+}: {
+  kind: string,
+  status: string,
+  skills: string[],
+}): TagId[] {
+  return uniqueSorted([
+    ...skills.map(deriveSkillTag),
+    `project:kind:${normalizeTagSegment(kind)}`,
+    `project:status:${normalizeTagSegment(status)}`,
+  ]);
 }
 
 export function deriveCvTags({

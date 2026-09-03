@@ -1,4 +1,4 @@
-import { Link } from '@/i18n/navigation';
+import { ThemedLink } from '@/components/primitives/ThemedLink';
 import {
   tagToPathSegments,
   type TagId,
@@ -22,7 +22,8 @@ export function TagPill({
   count,
 }: TagPill.Props) {
   return (
-    <Link
+    <ThemedLink
+      decoration="none"
       className={tagPillStyle}
       href={{
         pathname: '/tags/[...tag]',
@@ -33,6 +34,6 @@ export function TagPill({
       {count === undefined
         ? null
         : <span className={tagPillCountStyle}>{count}</span>}
-    </Link>
+    </ThemedLink>
   );
 }

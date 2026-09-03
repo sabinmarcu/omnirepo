@@ -4,28 +4,37 @@ import {
   Pre,
 } from 'codehike/code';
 import type { ComponentProps } from 'react';
+import { blockAnnotations } from './annotations';
 import { withStyles } from '@/hocs/withStyles';
 import { codeStyles } from './Code.css';
 
 export namespace Code {
   export type Props = (
-    & Omit<ComponentProps<typeof Pre>, 'code'>
-    & { code: RawCode }
+    & Omit<ComponentProps<typeof Pre>, 'code' | 'handlers'>
+    & (
+      | { code: RawCode, codeblock?: never }
+      | { codeblock: RawCode, code?: never }
+    )
   );
 }
 
 export const Code = withStyles(async function Code({
   code,
+  codeblock,
   ...rest
 }: Code.Props) {
+  const rawCode = code ?? codeblock;
   const highlighted = await highlight(
-    code,
+    rawCode,
     'github-from-css',
   );
   return (
     <Pre
       {...rest}
       code={highlighted}
+      handlers={blockAnnotations.filter(({ languages }) => (
+        !languages || languages.includes(rawCode.lang)
+      ))}
     />
   );
 }, codeStyles);

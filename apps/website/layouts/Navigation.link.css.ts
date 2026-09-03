@@ -5,16 +5,15 @@ import {
   createVar,
   globalStyle,
 } from '@vanilla-extract/css';
-import { themedLinkColor } from '@/components/ThemedLink.css';
+import { themedLinkColor } from '@/components/primitives/ThemedLink.css';
 import {
   animatedNavigationSelector,
   navigationBorderColor,
   navigationBorderSize,
+  navigationLinkBackground,
   navigationSpacing,
 } from './Navigation.css';
 import { blendAnimation } from './Navigation.animation.css';
-
-const navigationLinkBackground = createVar();
 
 const wipMeshSize = createVar('wip-mesh-size');
 const wipMeshColor = createVar('wip-mesh-color');
@@ -29,9 +28,6 @@ export const navigationLinkStyles = recipe({
   variants: {
     active: {
       true: {
-        vars: {
-          [navigationLinkBackground]: theme.colors.primary.muted,
-        },
         background: navigationLinkBackground,
       },
     },
@@ -73,6 +69,7 @@ export const navigationLinkStyles = recipe({
     alignItems: 'center',
     justifyContent: 'space-between',
     borderInlineEnd: `solid ${navigationBorderSize} ${navigationBorderColor}`,
+    textDecoration: 'none',
     ':visited': {
       color: theme.colors.background.text,
     },

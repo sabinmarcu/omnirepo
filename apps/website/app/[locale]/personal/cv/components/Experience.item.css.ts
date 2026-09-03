@@ -15,6 +15,9 @@ import { cvPageSpacing } from '../page.css';
 
 export const experienceItemBorderSize = createVar();
 export const experienceItemPadding = createVar();
+export const experienceItemCanonicalLinkStyle = style({
+  marginBlockStart: theme.grid.m,
+});
 export const experienceItemStyles = style({
   display: 'flex',
   flexFlow: 'column',
@@ -80,11 +83,11 @@ globalStyle(`${grids.extend('content', experienceItemStyles)} h3`, {
 });
 
 globalStyle(grids.extend('title', experienceItemStyles), {
-  lineHeight: '0.75em',
-  fontSize: theme.grid.xl,
+  lineHeight: '1em',
+  fontSize: theme.grid.l,
 });
 
-for (const columns of Array.from({ length: 5 }).fill(0).map((_, index) => index)) {
+for (const columns of Array.from({ length: 5 }, (_, index) => index)) {
   globalStyle(`:not(${experienceItemStyles}) + ${gridStyles.classNames.variants.grid.true} ${experienceItemStyles}:nth-child(${columns})`, {
     borderBlockStartWidth: `calc(clamp(0, calc(${columns} - ${gridColumns}), 1) * ${experienceItemBorderSize})`,
     paddingBlockStart: `calc(clamp(0, calc(${columns} - ${gridColumns}), 1) * ${experienceItemPadding})`,

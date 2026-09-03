@@ -1,4 +1,4 @@
-import { Link } from '@/i18n/navigation';
+import { ThemedLink } from '@/components/primitives/ThemedLink';
 import type { IndexEntry } from '@/models/ContentIndex';
 import {
   resultMetaStyle,
@@ -23,13 +23,14 @@ export function TagResultFallback({
 
   return (
     <li className={resultStyle}>
-      <Link
+      <ThemedLink
+        decoration="none"
         className={resultTitleStyle}
         href={entry.location}
         locale={entry.locale}
       >
         <strong>{entry.title}</strong>
-      </Link>
+      </ThemedLink>
       {entry.excerpt ? <p>{entry.excerpt}</p> : null}
       {period || matchedVia
         ? (

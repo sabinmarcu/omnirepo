@@ -7,14 +7,15 @@ import { recipe } from '@vanilla-extract/recipes';
 import { mobileMedia } from '@/utils/responsive';
 import { gridLines } from './grid.lines';
 
-export const pageLayoutCodeStyles = recipe({
+export const pageLayoutInsetStyles = recipe({
   variants: {
     variant: {
       wide: {},
     },
   },
   base: {
-    background: theme.colors.background.depressed,
+    background: theme.colors.background.recessed,
+    marginBlock: theme.grid.xl,
     paddingBlock: theme.grid.xl,
     display: 'grid',
     gridColumn: gridLines.full,
@@ -22,7 +23,7 @@ export const pageLayoutCodeStyles = recipe({
   },
 });
 
-globalStyle(`${pageLayoutCodeStyles.classNames.base} > [data-container]`, {
+globalStyle(`${pageLayoutInsetStyles.classNames.base} > [data-container]`, {
   marginBlockStart: '0',
   marginBlockEnd: '0',
   gridColumn: gridLines.content,
@@ -31,8 +32,8 @@ globalStyle(`${pageLayoutCodeStyles.classNames.base} > [data-container]`, {
   }),
 });
 
-globalStyle(`${pageLayoutCodeStyles.classNames.variants.variant.wide} > [data-container]`, {
+globalStyle(`${pageLayoutInsetStyles.classNames.variants.variant.wide} > [data-container]`, {
   gridColumn: gridLines.wide,
 });
 
-export type PageLayoutCodeStylesProps = RecipeVariants<typeof pageLayoutCodeStyles>;
+export type PageLayoutInsetStylesProps = RecipeVariants<typeof pageLayoutInsetStyles>;

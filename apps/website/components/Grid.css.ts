@@ -25,6 +25,7 @@ export const gridStyles = recipe({
         columns: 'initial',
         gridTemplateColumns: `repeat(${gridColumns}, 1fr)`,
         gap: theme.grid.xl,
+        rowGap: 0,
       },
     },
   },
@@ -37,7 +38,7 @@ export const gridStyles = recipe({
   },
 });
 
-globalStyle(`${gridStyles.classNames.variants.grid.true}`, {
+globalStyle(gridStyles.classNames.variants.grid.true, {
   display: 'grid-lanes',
 });
 

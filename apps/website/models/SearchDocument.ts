@@ -5,7 +5,7 @@ import type { TagId } from './Tag';
 
 export type SearchDocumentType =
   | 'tag'
-  | 'project' | 'experience' | 'degree' | 'publication'
+  | 'cv-project' | 'project' | 'experience' | 'degree' | 'publication'
   | 'skill' | 'snippet' | 'tool' | 'article';
 
 export type SearchDocument = {
@@ -17,4 +17,6 @@ export type SearchDocument = {
   locale: Locale,
   kind?: TagKind,
   tags: TagId[],
+  supersededBy?: string,
+  secondaryResults?: SearchDocument[],
 };

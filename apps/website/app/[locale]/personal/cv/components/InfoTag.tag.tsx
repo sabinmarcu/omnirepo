@@ -1,5 +1,5 @@
 import { Icon } from '@/components/Icon';
-import { ThemedLink } from '@/components/ThemedLink';
+import { ThemedLink } from '@/components/primitives/ThemedLink';
 import { infoTagTypes } from './InfoTag.types';
 import { infoTagStyles } from './InfoTag.tag.css';
 
@@ -30,12 +30,16 @@ export function InfoTag({
   );
 
   if (link) {
-    return <ThemedLink
-      variant="secondary"
-      target="_blank"
-      href={link as any}
-      className={infoTagStyles}
-    >{inner}</ThemedLink>;
+    return (
+      <ThemedLink
+        variant="secondary"
+        target="_blank"
+        href={link as any}
+        className={infoTagStyles}
+      >
+        {inner}
+      </ThemedLink>
+    );
   }
 
   return <p className={infoTagStyles}>{inner}</p>;

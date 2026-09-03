@@ -1,6 +1,6 @@
 import type z from 'zod';
 import { getTranslations } from 'next-intl/server';
-import { ThemedLink } from '@/components/ThemedLink';
+import { ThemedLink } from '@/components/primitives/ThemedLink';
 import { ClientClickProxy } from '@/components/ClientClickProxy';
 import type { tocSchema } from '@/models/schemas';
 import { tocLayoutTOCStyles } from './TOCLayout.toc.css';
@@ -56,7 +56,7 @@ function TOCLayoutList({
         children,
       }) => (
         <li key={slug}>
-          <ThemedLink href={`#${slug}`} raw>{title}</ThemedLink>
+          <ThemedLink href={`#${slug}`}>{title}</ThemedLink>
           {children && children.length > 0
             ? <TOCLayoutList toc={children} />
             : null}
@@ -70,12 +70,16 @@ export async function TOCLayoutTOC({
   toc,
   maxDepth,
 }: TOCLayoutTOC.Props) {
+  if (toc.length === 0) {
+    return null;
+  }
   const translate = await getTranslations('tableOfContents');
   return (
     <aside
       id={tocPopoverId}
       popover="auto"
       className={tocLayoutTOCStyles}
+      {...{ [ThemedLink.undecoratedDataAttribute]: true }}
     >
       <nav>
         <h2>

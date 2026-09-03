@@ -1,5 +1,6 @@
-import type { experiments } from '../experiments';
+/* eslint-disable unicorn/no-useless-template-literals */
 import { getTranslations } from 'next-intl/server';
+import type { experiments } from '../experiments';
 import {
   experimentsItemStyles,
 } from './Experiments.item.css';
@@ -22,12 +23,22 @@ export async function ExperimentItem({
 }: ExperimentItem.Props) {
   const translate = await getTranslations('experiments');
   return (
+    // eslint-disable-next-line jsx-a11y/label-has-associated-control
     <label className={experimentsItemStyles}>
       <div {...grids.selector('checkbox')}>
         <ExperimentItemToggle experiment={experiment} />
       </div>
       <p {...grids.selector('title')}>{title}</p>
-      <p {...grids.selector('description')}>{description} ({translate('default')}: {defaultValue})</p>
+      <p {...grids.selector('description')}>
+        {description}
+        {' '}
+        (
+        {translate('default')}
+        :
+        {' '}
+        {`${defaultValue}`}
+        )
+      </p>
     </label>
   );
 }

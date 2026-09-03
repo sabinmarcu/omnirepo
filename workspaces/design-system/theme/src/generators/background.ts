@@ -23,15 +23,24 @@ export const backgroundGenerator = (() => {
     };
     const baseReference = defaultKey ?? base;
     const offsets = {
+      surface: isLight ? 10 : undefined,
       elevated: isLight ? 20 : 40,
       depressed: isLight ? 20 : 20,
+      raised: isLight ? 30 : 50,
+      recessed: isLight ? 30 : 30,
     };
 
     return {
-      page: base,
-      surface: mixColor(baseReference, reference.elevated),
+      surface: mixColor(baseReference, reference.elevated, offsets.surface),
+
+      raised: mixColor(baseReference, reference.elevated, offsets.raised),
       elevated: mixColor(baseReference, reference.elevated, offsets.elevated),
+
+      page: base,
+
       depressed: mixColor(baseReference, reference.depressed, offsets.depressed),
+      recessed: mixColor(baseReference, reference.depressed, offsets.recessed),
+
       text: reference.text,
     } as const;
   };

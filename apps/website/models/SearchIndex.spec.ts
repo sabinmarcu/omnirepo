@@ -30,6 +30,16 @@ const documents: SearchDocument[] = [
     kind: undefined,
     tags: ['skills:typescript'],
   },
+  {
+    id: 'cv:project:compiler',
+    title: 'TypeScript compiler project',
+    text: 'A project about compiler tooling',
+    type: 'cv-project',
+    location: { pathname: '/personal/cv' },
+    locale: 'en',
+    tags: ['skills:typescript'],
+    supersededBy: 'project:compiler',
+  },
 ];
 
 describe('SearchIndex', () => {
@@ -51,5 +61,14 @@ describe('SearchIndex', () => {
 
   it('does not return an unfiltered corpus for an empty query', () => {
     expect(index.search(' '.repeat(3))).toEqual([]);
+  });
+
+  it('collapses CV entries behind their canonical project result', () => {
+    const [result] = index.search('compiler');
+
+    expect(result.id).toBe('project:compiler');
+    expect(result.secondaryResults?.map(({ id }) => id)).toEqual([
+      'cv:project:compiler',
+    ]);
   });
 });

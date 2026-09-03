@@ -6,6 +6,8 @@ import {
 } from '@sabinmarcu/website-theme';
 import {
   assignVars,
+  createVar,
+  fallbackVar,
   globalStyle,
   style,
 } from '@vanilla-extract/css';
@@ -33,10 +35,28 @@ export const rootBackgroundStyle = style({
   },
 });
 
+// `--dpr` is set on <html> by an inline script. Snapping the tile to whole device
+// pixels keeps every repeat identical; a raw CSS-px period lands on fractional
+// device pixels at non-integer DPRs and beats into a visible moiré band.
+const devicePixelRatio = 'var(--dpr, 1)';
+const snapToDevicePixels = (cssPixels: string) => [
+  `calc(round(${cssPixels} * ${devicePixelRatio}, 1)`,
+  `* 1px / ${devicePixelRatio})`,
+].join(' ');
+
+// Unitless CSS pixels, snapped to the device grid above.
+export const scanLineBaseSizeVar = createVar('scan-line-base-size');
+const scanLinePeriod = snapToDevicePixels(fallbackVar(scanLineBaseSizeVar, '4'));
+
 export const scanLinesStyle = style({
   ...commonBackgroundStyles,
-  background: 'repeating-linear-gradient(0deg, black, white 4px)',
+  // Fixed so the pattern is not re-rasterized at subpixel offsets while scrolling.
+  position: 'fixed',
+  background: `repeating-linear-gradient(0deg, black, white ${scanLinePeriod})`,
   mixBlendMode: 'overlay',
+  vars: {
+    [scanLineBaseSizeVar]: '4',
+  },
 });
 
 for (const family of families) {
@@ -51,7 +71,7 @@ for (const family of families) {
     {
       vars: assignVars(
         theme.colors.background,
-        themes[family].colors.background,
+        themes[family].colors.background as any,
       ),
     },
   );

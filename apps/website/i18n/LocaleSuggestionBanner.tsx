@@ -11,7 +11,7 @@ import {
   isLocale,
   type Locale,
 } from './locales';
-import { Link } from './navigation';
+import { ThemedLink } from '@/components/primitives/ThemedLink';
 import en from './messages/en';
 import ro from './messages/ro';
 import {
@@ -88,13 +88,14 @@ export function LocaleSuggestionBanner({
   return (
     <aside className={localeSuggestionBannerStyle} aria-live="polite">
       <span>{translate('available', { locale: suggestedLocaleLabel })}</span>
-      <Link
+      <ThemedLink
+        decoration="none"
         className={localeSuggestionBannerActionStyle}
         href={pathname as any}
         locale={suggestedLocale}
       >
         {translate('continue', { locale: suggestedLocaleLabel })}
-      </Link>
+      </ThemedLink>
       <button type="button" className={localeSuggestionBannerActionStyle} onClick={dismiss}>
         {translate('dismiss')}
       </button>

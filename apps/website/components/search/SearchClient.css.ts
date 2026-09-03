@@ -62,6 +62,22 @@ export const searchResultTypeStyle = style({
   fontSize: '0.8em',
 });
 
+export const searchSecondaryResultsStyle = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: theme.grid.xs,
+  paddingInlineStart: theme.grid.xxl,
+  marginBlockEnd: theme.grid.xs,
+  fontSize: '0.8em',
+});
+
+export const searchSecondaryResultListStyle = style({
+  display: 'inline-flex',
+  gap: theme.grid.xs,
+  padding: 0,
+  listStyle: 'none',
+});
+
 export const searchStatusStyle = style({
   color: theme.colors.primary.muted,
 });

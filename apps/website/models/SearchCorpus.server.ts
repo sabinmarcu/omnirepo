@@ -73,6 +73,7 @@ async function buildCorpus(locale: Locale): Promise<SearchDocument[]> {
       location: entry.location,
       locale: entry.locale,
       tags: entry.tags,
+      supersededBy: entry.supersededBy,
     }));
 
   const tagIds = new Set<TagId>([

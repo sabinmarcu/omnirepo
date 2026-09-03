@@ -1,5 +1,5 @@
 import type { ComponentProps } from 'react';
-import { ThemedLink } from '@/components/ThemedLink';
+import { ThemedLink } from '@/components/primitives/ThemedLink';
 import {
   tocLinkProps,
 } from '@/utils/toc';

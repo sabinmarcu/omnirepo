@@ -1,0 +1,48 @@
+export const title = 'Forever Winter Mods'
+export const slug = 'foreverwinter-mods'
+export const kind = 'CLI'
+export const status = 'active'
+export const repo = 'https://github.com/sabinmarcu/foreverwinter-mods-cli'
+export const skills = ['TypeScript', 'Node.js', 'React', 'Ink', '7z']
+
+An interactive CLI for installing, enabling, and disabling mod triplets for The Forever Winter.
+
+Mods for The Forever Winter are not individual files. A playable mod is a matching `.pak`, `.ucas`, and `.utoc` triplet, and a manual file copy can leave a partial installation behind. Forever Winter Mods makes that contract explicit: it discovers a game install, reads compatible archives, and operates on complete triplets only.
+
+The project is published as [`@sabinmarcu/foreverwinter`](https://www.npmjs.com/package/@sabinmarcu/foreverwinter).
+
+## A cautious installer
+
+The installer accepts `.zip`, `.7z`, and `.7zip` archives. It installs a single complete triplet immediately, while archives with several mods open an interactive selector. Existing installations are compared with the archive timestamp and labelled as new, update, older, or installed before anything is written.
+
+Archives that contain unexpected files are deliberately left alone. Instead of guessing how a mod should be installed, the tool asks the player to review its supplied instructions.
+
+## Discovery
+
+The CLI searches common Steam library locations on Windows and Linux before asking for a path. When automatic discovery is not appropriate, the target mods directory can be given directly:
+
+```sh
+yarn dlx @sabinmarcu/foreverwinter --path "/path/to/~mods"
+```
+
+This keeps the common case short without hiding the filesystem location that the command will affect.
+
+## Managing mods
+
+Enabled mods are complete `.pak`, `.ucas`, and `.utoc` triplets sharing one basename. Disabling a mod appends `.disabled` to each file, preserving the installed payload and making the change reversible.
+
+The interactive list presents installed triplets as units, so a player cannot accidentally toggle only part of a mod.
+
+## Installing archives
+
+Install an archive by passing it after the `install` command:
+
+```sh
+yarn dlx @sabinmarcu/foreverwinter install --path "/path/to/~mods" "/path/to/mod.7z"
+```
+
+For multi-mod archives, the terminal selector supports keyboard navigation and selecting individual eligible entries. Already-installed matches remain visible but cannot be selected again.
+
+### !summary
+
+An interactive CLI for installing, enabling, and disabling mod triplets for The Forever Winter.

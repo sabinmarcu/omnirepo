@@ -5,7 +5,7 @@ import {
   useState,
 } from 'react';
 import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/navigation';
+import { ThemedLink } from '@/components/primitives/ThemedLink';
 import { searchDocumentThemeFamilies } from '@/constants/searchDocumentThemeFamilies';
 import type {
   SearchDocumentType,
@@ -17,6 +17,8 @@ import {
   searchInputStyle,
   searchResultLinkStyle,
   searchResultsStyle,
+  searchSecondaryResultListStyle,
+  searchSecondaryResultsStyle,
   searchResultTypeStyle,
   searchSelectStyle,
   searchStatusStyle,
@@ -24,6 +26,7 @@ import {
 
 const searchableTypes: SearchDocumentType[] = [
   'article',
+  'cv-project',
   'degree',
   'experience',
   'project',
@@ -97,7 +100,8 @@ export function SearchClient({
       <ul className={searchResultsStyle}>
         {results.map((document) => (
           <li key={document.id}>
-            <Link
+            <ThemedLink
+              decoration="none"
               className={searchResultLinkStyle}
               href={document.location}
               locale={document.locale}
@@ -110,7 +114,30 @@ export function SearchClient({
               >
                 {translate(`${document.type === 'tag' ? 'tagKinds' : 'types'}.${document.type === 'tag' ? document.kind ?? 'tag' : document.type}`)}
               </span>
-            </Link>
+            </ThemedLink>
+            {document.secondaryResults?.length
+              ? (
+                <div className={searchSecondaryResultsStyle}>
+                  <span>{translate('alsoIn')}</span>
+                  <ul className={searchSecondaryResultListStyle}>
+                    {document.secondaryResults.map((secondary) => (
+                      <li key={secondary.id}>
+                        <ThemedLink
+                          decoration="none"
+                          className={searchResultTypeStyle}
+                          href={secondary.location}
+                          locale={secondary.locale}
+                          onClick={onNavigate}
+                          data-theme-family={searchDocumentThemeFamilies[secondary.type]}
+                        >
+                          {translate(`types.${secondary.type}`)}
+                        </ThemedLink>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )
+              : null}
           </li>
         ))}
       </ul>

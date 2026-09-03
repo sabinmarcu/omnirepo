@@ -1,4 +1,5 @@
 import { ShowcaseCard } from '@/components/ShowcaseCard';
+import { ProjectCard } from '@/components/ProjectCard';
 import type { Locale } from '@/i18n/locales';
 import type { IndexEntry } from '@/models/ContentIndex';
 import {
@@ -7,6 +8,7 @@ import {
   getProjectAnchor,
 } from '@/models/CVResource';
 import { SnippetResource } from '@/models/SnippetResource';
+import { ProjectResource } from '@/models/ProjectResource';
 import { ToolResource } from '@/models/ToolResource';
 import { DegreeItem } from '../../personal/cv/components/Degree.item';
 import { ExperienceItem } from '../../personal/cv/components/Experience.item';
@@ -60,6 +62,21 @@ async function ShowcaseResult({
   );
 }
 
+async function ProjectResult({ entry, matchedVia }: TagResult.Props) {
+  if (entry.location.pathname !== '/projects/[slug]' || entry.type !== 'project') {
+    return undefined;
+  }
+  const resource = await ProjectResource.fromSlug(entry.location.params.slug, entry.locale);
+  return resource
+    ? (
+      <li className={richResultStyle}>
+        <ProjectCard resource={resource} pathname="/projects" />
+        <MatchReason matchedVia={matchedVia} />
+      </li>
+    )
+    : undefined;
+}
+
 async function CvResult({
   entry,
   locale,
@@ -72,7 +89,7 @@ async function CvResult({
   const { hash } = entry.location;
   const cv = CVResource.fromDefault(locale);
 
-  if (entry.type === 'project') {
+  if (entry.type === 'cv-project') {
     const project = (await cv.projects).find((item) => (
       getProjectAnchor(item) === hash
     ));
@@ -172,9 +189,13 @@ export async function TagResult({
       return await ShowcaseResult(props)
         ?? <TagResultFallback entry={entry} matchedVia={matchedVia} />;
     }
+    case 'project': {
+      return await ProjectResult(props)
+        ?? <TagResultFallback entry={entry} matchedVia={matchedVia} />;
+    }
     case 'degree':
     case 'experience':
-    case 'project':
+    case 'cv-project':
     case 'publication': {
       return await CvResult(props)
         ?? <TagResultFallback entry={entry} matchedVia={matchedVia} />;

@@ -8179,6 +8179,7 @@ __metadata:
     react: "npm:^19.2.4"
     react-dom: "npm:^19.2.4"
     remark-heading-id: "npm:^1.0.1"
+    remark-mdx-images: "npm:^3.0.0"
     remark-mdx-toc: "npm:^0.3.1"
     ts-reset: "npm:^0.0.1"
     typescript: "npm:^6.0.2"
@@ -24768,6 +24769,17 @@ __metadata:
     lodash: "npm:^4.17.21"
     unist-util-visit: "npm:^1.4.0"
   checksum: 10c0/1efbcba7d27d88df79733fcbc9d6241b8ebb0ae987cd7a689c3006c9fb08660d61456d8c33a9cbfeb0b61c10c5ef63532d4bfe547dba7307c75c2e3c14a51e50
+  languageName: node
+  linkType: hard
+
+"remark-mdx-images@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "remark-mdx-images@npm:3.0.0"
+  dependencies:
+    "@types/mdast": "npm:^4.0.0"
+    unified: "npm:^11.0.0"
+    unist-util-visit: "npm:^5.0.0"
+  checksum: 10c0/995e9bb5fcf0d18c2ce8caa7b548695eaab59d605947c814a6b3e84d7020c22ef469d14996c85a8cba1b45470ab1e5c7b8f9ddcb4a26c4c5a0a6f383520f8e38
   languageName: node
   linkType: hard
 

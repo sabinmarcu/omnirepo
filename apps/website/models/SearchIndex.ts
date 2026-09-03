@@ -38,11 +38,29 @@ export class SearchIndex {
       return [];
     }
 
-    return this.engine.search(normalizedQuery)
-      .map(({ id }) => this.documentsById.get(String(id)))
-      .filter((document): document is SearchDocument => (
-        !!document && (type === 'all' || document.type === type)
-      ))
+    const groupedResults = new Map<string, Array<{ document: SearchDocument, score: number }>>();
+    for (const { id, score } of this.engine.search(normalizedQuery)) {
+      const document = this.documentsById.get(String(id));
+      if (document && (type === 'all' || document.type === type)) {
+        const groupId = document.supersededBy ?? document.id;
+        const group = groupedResults.get(groupId) ?? [];
+        group.push({
+          document,
+          score,
+        });
+        groupedResults.set(groupId, group);
+      }
+    }
+
+    return [...groupedResults.values()]
+      .map((group) => group.toSorted((left, right) => (
+        right.score - left.score
+        || Number(right.document.type === 'project') - Number(left.document.type === 'project')
+      )))
+      .map(([primary, ...secondary]) => ({
+        ...primary.document,
+        secondaryResults: secondary.map(({ document }) => document),
+      }))
       .slice(0, limit);
   }
 }

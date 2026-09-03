@@ -4,6 +4,7 @@ const messages = {
     personal: 'Personal',
     articles: 'Articles',
     ramblings: 'Ramblings',
+    projects: 'Projects',
     tools: 'Tools',
     snippets: 'Snippets',
   },
@@ -32,6 +33,7 @@ const messages = {
   },
   lists: {
     noSnippets: 'No snippets',
+    noProjects: 'No projects',
     noTools: 'No tools',
   },
   tags: {
@@ -44,9 +46,9 @@ const messages = {
     matchedVia: 'Matched via {tags}',
     types: {
       article: 'Articles',
+      'cv-project': 'Portfolio Projects',
       degree: 'Education',
       experience: 'Experience',
-      portfolioProject: 'Portfolio Projects',
       project: 'Projects',
       publication: 'Publications',
       skill: 'Skills',
@@ -102,6 +104,7 @@ const messages = {
     extracurricularInvolvement: 'Extracurricular involvement',
     competitionProjects: 'Competition projects',
     extendedExperience: 'Extended experience',
+    fullWriteUp: 'Full write-up',
   },
   dates: {
     present: 'Present',
@@ -114,6 +117,9 @@ const messages = {
   relatedContent: {
     title: 'Related content',
   },
+  projects: {
+    workedOnAt: 'Worked on this at my CV',
+  },
   search: {
     title: 'Search',
     placeholder: 'Search projects, experience, tools, snippets, and tags',
@@ -124,12 +130,13 @@ const messages = {
     error: 'The search index could not be loaded.',
     emptyQuery: 'Enter a search term to begin.',
     noResults: 'No results found for “{query}”.',
+    alsoIn: 'Also in:',
     shortcut: 'Ctrl K',
     types: {
       article: 'Article',
+      'cv-project': 'Portfolio project',
       degree: 'Education',
       experience: 'Experience',
-      portfolioProject: 'Portfolio project',
       project: 'Project',
       publication: 'Publication',
       skill: 'Skill',

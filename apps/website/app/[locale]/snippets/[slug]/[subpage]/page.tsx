@@ -5,7 +5,7 @@ import { redirect404 } from '@/utils/routes.ssr';
 import { canonicalMetadata } from '@/i18n/metadata';
 import { TranslationFallbackNotice } from '@/i18n/TranslationFallbackNotice';
 import { Code } from '@/components/Code';
-import { Typography } from '@/components/mdx/Typography';
+import { Typography } from '@/components/primitives/Typography';
 import { PageLayout } from '@/layouts/PageLayout';
 import { SnippetResource } from '@/models/SnippetResource';
 import { codeSectionStyle } from './page.css';
@@ -69,16 +69,20 @@ export default async function SnippetPageSubpage(
             variant,
             comment,
           }) => (
-            <section key={title} className={codeSectionStyle}>
+            <section
+              key={title}
+              className={codeSectionStyle}
+              {...{ [Typography.unstyledDataAttribute]: true }}
+            >
               {title !== 'ROOT'
                 ? (<Typography as="h2">{title}</Typography>)
                 : null}
               {comment
                 ? (<p dangerouslySetInnerHTML={{ __html: comment }} />)
                 : null}
-              <PageLayout.Code variant={variant}>
+              <PageLayout.Inset variant={variant}>
                 <Code code={content} />
-              </PageLayout.Code>
+              </PageLayout.Inset>
             </section>
           ))}
       </>

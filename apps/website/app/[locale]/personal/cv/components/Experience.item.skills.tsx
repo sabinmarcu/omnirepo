@@ -1,5 +1,6 @@
 import type { Simplify } from '@sabinmarcu/types';
-import { SkillPill } from '@/components/SkillPill';
+import { TagPill } from '@/components/TagPill';
+import { resolveTag } from '@/models/TagRegistry';
 import type {
   ExperienceItemData,
 } from './Experience.item.types';
@@ -20,7 +21,7 @@ export function ExperienceItemSkills(props: ExperienceItemSkills.Props) {
         {...grids.selector('skills')}
       >
         {skill.map((it) => (
-          <SkillPill key={it} skill={it} />
+          <TagPill key={it} id={resolveTag('skills', it)} label={it} />
         ))}
       </div>
     );

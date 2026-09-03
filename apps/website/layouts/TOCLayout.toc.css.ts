@@ -79,6 +79,8 @@ whenTier('centered', tocLayoutTOCStyles, {
   maxInlineSize: 'min(450px, 100%)',
 });
 
+const tocLayoutTocBackground = createVar();
+const tocLayoutTocBorder = createVar();
 // eslint-disable-next-line logical-properties/overflow
 globalStyle(`${tocLayoutTOCStyles} nav`, {
   blockSize: '100%',
@@ -90,8 +92,12 @@ globalStyle(`${tocLayoutTOCStyles} nav`, {
   overflowX: 'hidden',
   overflowY: 'auto',
 
-  fontSize: theme.grid.l,
-  background: theme.colors.background.depressed,
+  fontSize: theme.grid.m,
+  background: tocLayoutTocBackground,
+  vars: {
+    [tocLayoutTocBackground]: theme.colors.background.depressed,
+    [tocLayoutTocBorder]: theme.colors.background.elevated,
+  },
 });
 
 whenTier(['centered', 'folded'], `${tocLayoutTOCStyles} nav`, {
@@ -100,16 +106,16 @@ whenTier(['centered', 'folded'], `${tocLayoutTOCStyles} nav`, {
   borderEndEndRadius: '2px',
   borderEndStartRadius: '2px',
 
-  borderInlineStart: `solid 1px ${theme.colors.primary.muted}`,
-  borderInlineEnd: `solid 1px ${theme.colors.primary.muted}`,
-  borderBlockStart: `solid 1px ${theme.colors.primary.muted}`,
-  borderBlockEnd: `solid 1px ${theme.colors.primary.muted}`,
+  borderInlineStart: `solid 1px ${tocLayoutTocBorder}`,
+  borderInlineEnd: `solid 1px ${tocLayoutTocBorder}`,
+  borderBlockStart: `solid 1px ${tocLayoutTocBorder}`,
+  borderBlockEnd: `solid 1px ${tocLayoutTocBorder}`,
 });
 
 globalStyle(`${tocLayoutTOCStyles} h2`, {
   fontSize: theme.grid.xl,
 
-  background: theme.colors.background.depressed,
+  background: tocLayoutTocBackground,
   borderBlockEnd: `solid 1px ${theme.colors.primary.muted}`,
 
   position: 'sticky',

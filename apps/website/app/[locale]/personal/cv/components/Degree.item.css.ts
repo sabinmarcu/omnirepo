@@ -15,7 +15,7 @@ globalStyle(grids.extend('title', overrideSelector), {
 });
 
 globalStyle(`${grids.extend('title', overrideSelector)} span:last-of-type:not(:only-child)`, {
-  fontSize: theme.grid.l,
+  fontSize: theme.grid.m,
   opacity: 0.6,
 });
 

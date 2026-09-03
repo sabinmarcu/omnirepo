@@ -11,11 +11,13 @@ import {
 import createNextIntlPlugin from 'next-intl/plugin';
 import { remarkMdxToc } from 'remark-mdx-toc';
 import remarkHeadingId from 'remark-heading-id';
+import remarkMdxImages from 'remark-mdx-images';
 
 const withVanillaExtract = createVanillaExtractPlugin();
 const withNextIntl = createNextIntlPlugin();
 
-// Comma-separated hostnames (wildcards allowed) permitted to fetch dev assets, e.g. Tailscale hosts.
+// Comma-separated hostnames (wildcards allowed) permitted to fetch dev assets,
+// such as Tailscale hosts.
 const allowedDevelopmentOrigins = (process.env.ALLOWED_DEV_ORIGINS ?? '')
   .split(',')
   .map((origin) => origin.trim())
@@ -45,6 +47,7 @@ const nextConfig: NextConfig = {
 const chConfig: CodeHikeConfig = {
   components: {
     code: 'CodehikeCode',
+    inlineCode: 'CodehikeInlineCode',
   },
 };
 
@@ -58,6 +61,7 @@ const withMdx = createMdx({
       }],
       [remarkMdxToc as any, { name: 'toc' }],
       [remarkCodeHike, chConfig],
+      remarkMdxImages,
     ],
     recmaPlugins: [[recmaCodeHike, chConfig]],
     jsx: true,

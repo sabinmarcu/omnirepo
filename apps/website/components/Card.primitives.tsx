@@ -1,10 +1,10 @@
-import { withStyles } from '@/hocs/withStyles';
 import type {
   ComponentProps,
   HTMLAttributes,
   PropsWithChildren,
 } from 'react';
-import { Typography } from './mdx/Typography';
+import { withStyles } from '@/hocs/withStyles';
+import { Typography } from './primitives/Typography';
 import {
   cardThumbnailStyle,
   cardTitleStyle,
@@ -19,7 +19,7 @@ export namespace CardWrapper {
 
 export const CardWrapper = withStyles(
   function CardWrapper(props: CardWrapper.Props) {
-    return (<article {...props} />);
+    return (<article {...props} {...{ [Typography.unstyledDataAttribute]: true }} />);
   },
   cardWrapperStyle,
 );

@@ -6,6 +6,7 @@ const messages = {
     personal: 'Personal',
     articles: 'Articole',
     ramblings: 'Gânduri',
+    projects: 'Proiecte',
     tools: 'Unelte',
     snippets: 'Exerciții',
   },
@@ -34,6 +35,7 @@ const messages = {
   },
   lists: {
     noSnippets: 'Nu există fragmente de cod',
+    noProjects: 'Nu există proiecte',
     noTools: 'Nu există unelte',
   },
   tags: {
@@ -46,9 +48,9 @@ const messages = {
     matchedVia: 'Potrivire prin {tags}',
     types: {
       article: 'Articole',
+      'cv-project': 'Proiecte de portofoliu',
       degree: 'Educație',
       experience: 'Experiență',
-      portfolioProject: 'Proiecte de portofoliu',
       project: 'Proiecte',
       publication: 'Publicații',
       skill: 'Abilități',
@@ -104,6 +106,7 @@ const messages = {
     extracurricularInvolvement: 'Implicare extracurriculară',
     competitionProjects: 'Proiecte de competiție',
     extendedExperience: 'Experiență extinsă',
+    fullWriteUp: 'Descriere completă',
   },
   dates: {
     present: 'Prezent',
@@ -116,6 +119,9 @@ const messages = {
   relatedContent: {
     title: 'Conținut asociat',
   },
+  projects: {
+    workedOnAt: 'Am lucrat la acest proiect în CV-ul meu',
+  },
   search: {
     title: 'Căutare',
     placeholder: 'Caută proiecte, experiență, unelte, fragmente de cod și etichete',
@@ -126,12 +132,13 @@ const messages = {
     error: 'Indexul de căutare nu a putut fi încărcat.',
     emptyQuery: 'Introdu un termen pentru a începe căutarea.',
     noResults: 'Nu există rezultate pentru „{query}”.',
+    alsoIn: 'De asemenea în:',
     shortcut: 'Ctrl K',
     types: {
       article: 'Articol',
+      'cv-project': 'Proiect de portofoliu',
       degree: 'Educație',
       experience: 'Experiență',
-      portfolioProject: 'Proiect de portofoliu',
       project: 'Proiect',
       publication: 'Publicație',
       skill: 'Abilitate',

@@ -79,6 +79,11 @@ export const searchEntrypointShortcutStyle = style({
   },
 });
 
+globalStyle(`${searchEntrypointStyle}[data-focused="true"] ${searchEntrypointShortcutStyle}`, {
+  opacity: 0,
+  visibility: 'hidden',
+});
+
 export const searchEntrypointResultsStyle = style({
   position: 'absolute',
   insetBlockStart: `calc(100% + ${navigationSpacing})`,
@@ -135,6 +140,22 @@ export const searchEntrypointResultLabelStyle = style({
   color: theme.colors.primary.muted,
   fontSize: '0.75em',
   lineHeight: 1,
+});
+
+export const searchEntrypointSecondaryResultsStyle = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: navigationSpacing,
+  paddingInlineStart: theme.grid.xxl,
+  marginBlockEnd: navigationSpacing,
+  fontSize: '0.8em',
+});
+
+export const searchEntrypointSecondaryResultListStyle = style({
+  display: 'inline-flex',
+  gap: navigationSpacing,
+  padding: 0,
+  listStyle: 'none',
 });
 
 globalStyle(`${searchEntrypointIconStyle} svg`, {

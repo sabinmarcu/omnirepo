@@ -18,6 +18,9 @@ vi.mock('./CVResource', () => ({
 vi.mock('./SnippetResource', () => ({
   SnippetResource: { getLocalizedList: vi.fn() },
 }));
+vi.mock('./ProjectResource', () => ({
+  ProjectResource: { getLocalizedList: vi.fn() },
+}));
 vi.mock('./ToolResource', () => ({
   ToolResource: { getLocalizedList: vi.fn() },
 }));
@@ -29,7 +32,7 @@ describe('ContentIndex', () => {
   const entries: IndexEntryInput[] = [
     {
       id: 'project:older',
-      type: 'project',
+      type: 'cv-project',
       title: 'Older React project',
       location: { pathname: '/personal/cv' },
       locale: 'en',
@@ -38,7 +41,7 @@ describe('ContentIndex', () => {
     },
     {
       id: 'project:newer',
-      type: 'project',
+      type: 'cv-project',
       title: 'Newer React project',
       location: { pathname: '/personal/cv' },
       locale: 'en',
@@ -88,7 +91,7 @@ describe('ContentIndex', () => {
       ...entries,
       {
         id: 'project:typescript',
-        type: 'project',
+        type: 'cv-project',
         title: 'TypeScript project',
         location: { pathname: '/personal/cv' },
         locale: 'en',

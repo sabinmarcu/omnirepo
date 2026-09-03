@@ -12,7 +12,7 @@ export const footerStyles = style({
   marginBlockStart: '3cqh',
   paddingBlockStart: '1cqh',
   paddingBlockEnd: '5cqh',
-  color: theme.colors.primary.muted,
+  color: `oklch(from ${theme.colors.background.text} l c h / 0.4)`,
   gap: theme.grid.s,
   borderBlockStart: `dashed 2px ${theme.colors.background.elevated}`,
 });

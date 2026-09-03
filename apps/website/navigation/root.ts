@@ -21,6 +21,10 @@ export const getRootNavigation = (translate: (key: string) => string) => normali
   },
   {
     ...categoriesMap.projects,
+    text: translate('projects'),
+  },
+  {
+    theme: 'projects',
     href: '/tools',
     text: translate('tools'),
   },

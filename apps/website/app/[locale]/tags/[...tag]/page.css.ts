@@ -41,12 +41,7 @@ export const tagListStyle = style({
   gap: theme.grid.s,
 });
 
-export const resultGroupStyle = style({
-  display: 'grid',
-  gridColumn: gridLines.full,
-  gridTemplateColumns: 'subgrid',
-  gap: theme.grid.xl,
-});
+export const resultGroupStyle = style({});
 
 export const resultListStyle = style({
   display: 'grid',
@@ -58,7 +53,8 @@ export const resultListStyle = style({
 
 globalStyle(`${resultGroupStyle} > h3`, {
   paddingBlockStart: theme.grid.xl,
-  fontSize: '3.5rem',
+  paddingBlockEnd: theme.grid.xxl,
+  fontSize: theme.grid.xxl,
   lineHeight: '1em',
 });
 
@@ -77,15 +73,11 @@ globalStyle(`${resultGroupStyle} ${showcaseListStyle}`, {
 });
 
 const compactCvResultSelector = [
-  `${resultGroupStyle}[data-content-type="project"]`,
+  `${resultGroupStyle}[data-content-type="cv-project"]`,
   `${resultGroupStyle}[data-content-type="experience"]`,
 ].join(', ');
 const compactCvResultScopeSelector = `:is(${compactCvResultSelector})`;
 const compactCvExperienceItemSelector = `${compactCvResultScopeSelector} ${experienceItemStyles}`;
-
-globalStyle(`${compactCvResultScopeSelector} ${resultListStyle}`, {
-  paddingBlockStart: theme.grid.xl,
-});
 
 globalStyle(compactCvExperienceItemSelector, {
   vars: {
@@ -122,6 +114,7 @@ globalStyle(`${compactCvExperienceItemSelector} ${experienceItemGrids.rawSelecto
     justifyContent: 'initial',
     alignContent: 'start',
     lineHeight: '1em',
+    marginBlockStart: 0,
   }, true),
 });
 

@@ -6,7 +6,7 @@ import {
 } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { zIndexLayers } from '@/constants/layers';
-import { themedLinkStyle } from '@/components/ThemedLink.css';
+import { themedLinkStyle } from '@/components/primitives/ThemedLink.css';
 import { grids } from './Navigation.grid';
 import {
   blendAnimation,
@@ -64,7 +64,7 @@ export const navigationStyles = recipe({
       [minor, minor],
     ]),
 
-    fontSize: theme.grid.l,
+    fontSize: theme.grid.m,
 
     ...({ anchorName: navigationAnchorName } as StyleRule),
   },
@@ -106,6 +106,7 @@ const navigationBackground = createVar();
 export const navigationBorderSize = createVar();
 export const navigationBorderColor = createVar();
 export const navigationBorderRadius = createVar();
+export const navigationLinkBackground = createVar();
 globalStyle(`${navigationSelector} > section`, {
   display: 'inline-flex',
   flexFlow: 'row nowrap',
@@ -125,6 +126,7 @@ globalStyle(`${navigationSelector} > section`, {
   vars: {
     [navigationBlendPercent]: '50%',
     [navigationBackground]: `color-mix(in hsl, ${theme.colors.primary.base} ${navigationBlendPercent}, ${theme.colors.background.page})`,
+    [navigationLinkBackground]: `color-mix(in hsl, ${theme.colors.primary.muted} ${navigationBlendPercent}, ${theme.colors.background.page})`,
     [navigationBorderRadius]: '3px',
   },
 });

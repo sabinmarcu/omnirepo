@@ -13,9 +13,9 @@ import {
 } from 'react';
 import { useTranslations } from 'next-intl';
 import {
-  Link,
   useRouter,
 } from '@/i18n/navigation';
+import { ThemedLink } from '@/components/primitives/ThemedLink';
 import { useSearchIndex } from './useSearchIndex';
 import { searchDocumentThemeFamilies } from '@/constants/searchDocumentThemeFamilies';
 import {
@@ -26,6 +26,8 @@ import {
   searchEntrypointResultStyle,
   searchEntrypointResultTitleStyle,
   searchEntrypointResultsStyle,
+  searchEntrypointSecondaryResultListStyle,
+  searchEntrypointSecondaryResultsStyle,
   searchEntrypointShortcutStyle,
   searchEntrypointStyle,
 } from './SearchEntrypoint.css';
@@ -95,6 +97,7 @@ export function SearchEntrypointClient({
     <div
       className={searchEntrypointStyle}
       data-search-entrypoint
+      data-focused={focused}
       onFocus={() => setFocused(true)}
       onBlur={handleBlur}
     >
@@ -119,7 +122,8 @@ export function SearchEntrypointClient({
           <ul className={searchEntrypointResultsStyle}>
             {results.map((document) => (
               <li key={document.id}>
-                <Link
+                <ThemedLink
+                  decoration="none"
                   className={searchEntrypointResultStyle}
                   href={document.location}
                   locale={document.locale}
@@ -132,11 +136,34 @@ export function SearchEntrypointClient({
                     className={searchEntrypointResultLabelStyle}
                     data-theme-family={searchDocumentThemeFamilies[document.type]}
                   >
-                    {document.type === 'tag'
-                      ? translate(`tagKinds.${document.kind ?? 'tag'}`)
-                      : translate(document.type === 'project' ? 'types.portfolioProject' : `types.${document.type}`)}
+                    {translate(document.type === 'tag'
+                      ? `tagKinds.${document.kind ?? 'tag'}`
+                      : `types.${document.type}`)}
                   </span>
-                </Link>
+                </ThemedLink>
+                {document.secondaryResults?.length
+                  ? (
+                    <div className={searchEntrypointSecondaryResultsStyle}>
+                      <span>{translate('alsoIn')}</span>
+                      <ul className={searchEntrypointSecondaryResultListStyle}>
+                        {document.secondaryResults.map((secondary) => (
+                          <li key={secondary.id}>
+                            <ThemedLink
+                              decoration="none"
+                              className={searchEntrypointResultLabelStyle}
+                              href={secondary.location}
+                              locale={secondary.locale}
+                              onClick={() => setFocused(false)}
+                              data-theme-family={searchDocumentThemeFamilies[secondary.type]}
+                            >
+                              {translate(`types.${secondary.type}`)}
+                            </ThemedLink>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )
+                  : null}
               </li>
             ))}
           </ul>

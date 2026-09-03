@@ -1,6 +1,9 @@
+import { getTranslations } from 'next-intl/server';
 import {
+  experienceItemCanonicalLinkStyle,
   experienceItemStyles,
 } from './Experience.item.css';
+import { ThemedLink } from '@/components/primitives/ThemedLink';
 import { ExperienceItemDuration } from './Experience.item.duration';
 import { grids } from './Experience.item.grid';
 import { ExperienceItemLocation } from './Experience.item.location';
@@ -22,7 +25,7 @@ export namespace ExperienceItem {
   );
 }
 
-export function ExperienceItem({
+export async function ExperienceItem({
   metadata,
   tagResult,
   sourceLink,
@@ -33,6 +36,8 @@ export function ExperienceItem({
   } = 'experience' in props
     ? props.experience
     : props.project;
+  const canonical = 'project' in props ? props.project.canonical : undefined;
+  const translate = canonical ? await getTranslations('cv') : undefined;
   const summary = (
     <>
       <ExperienceItemTitle {...props} metadata={metadata} sourceLink={sourceLink} />
@@ -55,10 +60,24 @@ export function ExperienceItem({
           </div>
         )
         : summary}
-      {children
+      {children || canonical
         ? (
           <div {...grids.selector('content')}>
             {children}
+            {canonical
+              ? (
+                <p className={experienceItemCanonicalLinkStyle}>
+                  <ThemedLink
+                    href={{
+                      pathname: '/projects/[slug]',
+                      params: { slug: canonical },
+                    }}
+                  >
+                    {translate?.('fullWriteUp')}
+                  </ThemedLink>
+                </p>
+              )
+              : null}
           </div>
         )
         : null}
