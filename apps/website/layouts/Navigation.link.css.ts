@@ -5,7 +5,7 @@ import {
   createVar,
   globalStyle,
 } from '@vanilla-extract/css';
-import { themedLinkColor } from '@/components/ThemedLink.css';
+import { themedLinkColor } from '@/components/primitives/ThemedLink.css';
 import {
   animatedNavigationSelector,
   navigationBorderColor,

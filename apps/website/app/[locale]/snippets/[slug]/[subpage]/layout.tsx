@@ -1,5 +1,5 @@
 import { PageLayout } from '@/layouts/PageLayout';
-import { Typography } from '@/components/mdx/Typography';
+import { Typography } from '@/components/primitives/Typography';
 import { SnippetResource } from '@/models/SnippetResource';
 import { TOCLayout } from '@/layouts/TOCLayout';
 import { snippetLayoutPageStyles } from './layout.css';

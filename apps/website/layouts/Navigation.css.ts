@@ -6,7 +6,7 @@ import {
 } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { zIndexLayers } from '@/constants/layers';
-import { themedLinkStyle } from '@/components/ThemedLink.css';
+import { themedLinkStyle } from '@/components/primitives/ThemedLink.css';
 import { grids } from './Navigation.grid';
 import {
   blendAnimation,

@@ -5,7 +5,7 @@ import {
 } from 'react';
 import type { Simplify } from '@sabinmarcu/types';
 import { usePathname } from '@/i18n/navigation';
-import { ThemedLink } from '@/components/ThemedLink';
+import { ThemedLink } from '@/components/primitives/ThemedLink';
 import { matchRoute } from '@/utils/routes';
 import type { NavigationLinkStylesProps } from './Navigation.link.css';
 import { navigationLinkStyles } from './Navigation.link.css';

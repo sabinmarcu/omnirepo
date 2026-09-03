@@ -1,10 +1,10 @@
-import { withStyles } from '@/hocs/withStyles';
 import type {
   ComponentProps,
   HTMLAttributes,
   PropsWithChildren,
 } from 'react';
-import { Typography } from './mdx/Typography';
+import { withStyles } from '@/hocs/withStyles';
+import { Typography } from './primitives/Typography';
 import {
   cardThumbnailStyle,
   cardTitleStyle,

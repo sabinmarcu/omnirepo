@@ -1,5 +1,5 @@
 import { Icon } from '@/components/Icon';
-import { ThemedLink } from '@/components/ThemedLink';
+import { ThemedLink } from '@/components/primitives/ThemedLink';
 import { infoTagTypes } from './InfoTag.types';
 import { infoTagStyles } from './InfoTag.tag.css';
 

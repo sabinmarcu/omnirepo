@@ -4,7 +4,7 @@ import {
   CardTitle,
   CardWrapper,
 } from './Card.primitives';
-import { ThemedLink } from './ThemedLink';
+import { ThemedLink } from './primitives/ThemedLink';
 
 export namespace Card {
   export type Props = (

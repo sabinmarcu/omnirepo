@@ -1,6 +1,6 @@
 import type { MDXComponents } from 'mdx/types';
-import { ThemedLink } from './components/ThemedLink';
-import { Typography } from './components/mdx/Typography';
+import { ThemedLink } from './components/primitives/ThemedLink';
+import { Typography } from './components/primitives/Typography';
 import { Code } from './components/Code';
 
 const components: MDXComponents = {

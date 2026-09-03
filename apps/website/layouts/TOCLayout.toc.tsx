@@ -1,6 +1,6 @@
 import type z from 'zod';
 import { getTranslations } from 'next-intl/server';
-import { ThemedLink } from '@/components/ThemedLink';
+import { ThemedLink } from '@/components/primitives/ThemedLink';
 import { ClientClickProxy } from '@/components/ClientClickProxy';
 import type { tocSchema } from '@/models/schemas';
 import { tocLayoutTOCStyles } from './TOCLayout.toc.css';

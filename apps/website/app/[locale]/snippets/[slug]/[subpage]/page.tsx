@@ -5,7 +5,7 @@ import { redirect404 } from '@/utils/routes.ssr';
 import { canonicalMetadata } from '@/i18n/metadata';
 import { TranslationFallbackNotice } from '@/i18n/TranslationFallbackNotice';
 import { Code } from '@/components/Code';
-import { Typography } from '@/components/mdx/Typography';
+import { Typography } from '@/components/primitives/Typography';
 import { PageLayout } from '@/layouts/PageLayout';
 import { SnippetResource } from '@/models/SnippetResource';
 import { codeSectionStyle } from './page.css';
