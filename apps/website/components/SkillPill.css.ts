@@ -9,6 +9,8 @@ export const skillPillStyle = style({
   display: 'inline-grid',
   placeItems: 'center',
   paddingInline: theme.grid.s,
+  color: 'inherit',
+  textDecoration: 'none',
 
   borderInlineStart: `solid 1px ${skillPillBorderColor}`,
   borderInlineEnd: `solid 1px ${skillPillBorderColor}`,
