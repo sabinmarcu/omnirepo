@@ -14,7 +14,6 @@ import type {
   CVProjectItem,
   CVPublicationGroups,
   CVPublicationItem,
-  CVViewModel,
   CVWorkplaceEntry,
 } from './CV.types';
 import { Resource } from './Resource';
@@ -33,7 +32,7 @@ function filterCollection<Key extends string>(property: Key) {
   ) => (
     input
       .filter(predicate)
-      .sort((a, b) => compareTimeline(a[property], b[property]))
+      .toSorted((a, b) => compareTimeline(a[property], b[property]))
   );
 }
 
