@@ -6,7 +6,7 @@ import {
 import type { PageLayoutStylesProps } from './PageLayout.css';
 import { pageLayoutStyles } from './PageLayout.css';
 import { Footer } from './Footer';
-import { PageLayoutCode } from './PageLayout.code';
+import { PageLayoutInset } from './PageLayout.inset';
 import './PageLayout.mobile.css';
 
 export namespace PageLayout {
@@ -53,4 +53,4 @@ export function PageLayout({
     : innerContent;
 }
 
-PageLayout.Code = PageLayoutCode;
+PageLayout.Inset = PageLayoutInset;

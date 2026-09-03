@@ -80,9 +80,9 @@ export default async function SnippetPageSubpage(
               {comment
                 ? (<p dangerouslySetInnerHTML={{ __html: comment }} />)
                 : null}
-              <PageLayout.Code variant={variant}>
+              <PageLayout.Inset variant={variant}>
                 <Code code={content} />
-              </PageLayout.Code>
+              </PageLayout.Inset>
             </section>
           ))}
       </>
