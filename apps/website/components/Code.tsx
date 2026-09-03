@@ -4,6 +4,7 @@ import {
   Pre,
 } from 'codehike/code';
 import type { ComponentProps } from 'react';
+import { blockAnnotations } from './annotations';
 import { withStyles } from '@/hocs/withStyles';
 import { codeStyles } from './Code.css';
 
@@ -31,6 +32,9 @@ export const Code = withStyles(async function Code({
     <Pre
       {...rest}
       code={highlighted}
+      handlers={blockAnnotations.filter(({ languages }) => (
+        !languages || languages.includes(rawCode.lang)
+      ))}
     />
   );
 }, codeStyles);
