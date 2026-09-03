@@ -29,5 +29,6 @@ export const proxy: NextProxy = (request) => {
 };
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+  // Skip API routes, Next internals, and any path with a file extension (public assets).
+  matcher: ['/((?!api|_next|.*\\..*).*)'],
 };
