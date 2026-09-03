@@ -1,8 +1,6 @@
 import type { TagId } from '@/models/Tag';
 
-export const ignoredTagPatterns = [
-  'skills:*',
-] as const;
+export const ignoredTagPatterns: readonly string[] = [];
 
 export function isIgnoredTag(id: TagId): boolean {
   const segments = id.split(':');
