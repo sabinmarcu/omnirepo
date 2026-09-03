@@ -97,6 +97,7 @@ export function SearchEntrypointClient({
     <div
       className={searchEntrypointStyle}
       data-search-entrypoint
+      data-focused={focused}
       onFocus={() => setFocused(true)}
       onBlur={handleBlur}
     >

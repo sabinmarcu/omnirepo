@@ -79,6 +79,11 @@ export const searchEntrypointShortcutStyle = style({
   },
 });
 
+globalStyle(`${searchEntrypointStyle}[data-focused="true"] ${searchEntrypointShortcutStyle}`, {
+  opacity: 0,
+  visibility: 'hidden',
+});
+
 export const searchEntrypointResultsStyle = style({
   position: 'absolute',
   insetBlockStart: `calc(100% + ${navigationSpacing})`,
