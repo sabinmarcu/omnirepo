@@ -75,10 +75,14 @@ globalStyle(`${resultGroupStyle} ${showcaseListStyle}`, {
   paddingBlockStart: 0,
 });
 
-const projectResultSelector = `${resultGroupStyle}[data-content-type="project"]`;
-const projectExperienceItemSelector = `${projectResultSelector} ${experienceItemStyles}`;
+const compactCvResultSelector = [
+  `${resultGroupStyle}[data-content-type="project"]`,
+  `${resultGroupStyle}[data-content-type="experience"]`,
+].join(', ');
+const compactCvResultScopeSelector = `:is(${compactCvResultSelector})`;
+const compactCvExperienceItemSelector = `${compactCvResultScopeSelector} ${experienceItemStyles}`;
 
-globalStyle(projectExperienceItemSelector, {
+globalStyle(compactCvExperienceItemSelector, {
   display: 'grid',
   gridTemplateColumns: 'minmax(14rem, 1fr) minmax(0, 2fr)',
   columnGap: theme.grid.xl,
@@ -88,12 +92,12 @@ globalStyle(projectExperienceItemSelector, {
   },
 });
 
-globalStyle(projectExperienceItemSelector, {
+globalStyle(compactCvExperienceItemSelector, {
   display: 'grid-lanes',
   columns: 2,
 });
 
-globalStyle(`${projectExperienceItemSelector} ${experienceItemGrids.rawSelector('summary')}`, {
+globalStyle(`${compactCvExperienceItemSelector} ${experienceItemGrids.rawSelector('summary')}`, {
   gridColumn: 1,
   gridRow: 1,
   display: 'grid',
@@ -101,47 +105,47 @@ globalStyle(`${projectExperienceItemSelector} ${experienceItemGrids.rawSelector(
   gap: theme.grid.xxs,
 });
 
-globalStyle(`${projectExperienceItemSelector} ${experienceItemGrids.rawSelector('title')}`, {
+globalStyle(`${compactCvExperienceItemSelector} ${experienceItemGrids.rawSelector('title')}`, {
   display: 'grid',
   justifyContent: 'initial',
   alignContent: 'start',
   lineHeight: '1em',
 });
 
-globalStyle(`${projectExperienceItemSelector} ${experienceItemGrids.rawSelector('title')} > a`, {
+globalStyle(`${compactCvExperienceItemSelector} ${experienceItemGrids.rawSelector('title')} > a`, {
   display: 'grid',
   gap: theme.grid.xxs,
 });
 
 globalStyle([
-  `${projectExperienceItemSelector} ${experienceItemGrids.rawSelector('title')} > span:nth-child(3):empty`,
-  `${projectExperienceItemSelector} ${experienceItemGrids.rawSelector('title')} > a > span:nth-child(3):empty`,
+  `${compactCvExperienceItemSelector} ${experienceItemGrids.rawSelector('title')} > span:nth-child(3):empty`,
+  `${compactCvExperienceItemSelector} ${experienceItemGrids.rawSelector('title')} > a > span:nth-child(3):empty`,
 ].join(', '), {
   display: 'none',
 });
 
-globalStyle(`${projectExperienceItemSelector} ${experienceItemGrids.rawSelector('metadata')}`, {
+globalStyle(`${compactCvExperienceItemSelector} ${experienceItemGrids.rawSelector('metadata')}`, {
   display: 'block',
   alignItems: 'start',
   justifyContent: 'start',
 });
 
-globalStyle(`${projectExperienceItemSelector} ${experienceItemGrids.rawSelector('location')}`, {
+globalStyle(`${compactCvExperienceItemSelector} ${experienceItemGrids.rawSelector('location')}`, {
   display: 'none',
 });
 
-globalStyle(`${projectExperienceItemSelector} ${experienceItemGrids.rawSelector('content')}`, {
+globalStyle(`${compactCvExperienceItemSelector} ${experienceItemGrids.rawSelector('content')}`, {
   gridColumn: 2,
   gridRow: 1,
   marginBlockStart: 0,
 });
 
-globalStyle(`${projectExperienceItemSelector} ${experienceItemGrids.rawSelector('skills')}`, {
+globalStyle(`${compactCvExperienceItemSelector} ${experienceItemGrids.rawSelector('skills')}`, {
   gridColumn: 2,
   gridRow: 2,
 });
 
-globalStyle(`${projectResultSelector} ${resultListStyle} > li:first-child ${experienceItemStyles}`, {
+globalStyle(`${compactCvResultScopeSelector} ${resultListStyle} > li:first-child ${experienceItemStyles}`, {
   paddingBlockStart: 0,
   borderBlockStartWidth: 0,
 });

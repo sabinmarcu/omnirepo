@@ -17,14 +17,14 @@ export namespace ExperienceItem {
   export type Props = (
     & ExperienceItemMetadata
     & ExperienceItemData
-    & { tagProject?: boolean }
+    & { tagResult?: boolean }
     & { sourceLink?: { location: ContentLocation, locale: Locale } }
   );
 }
 
 export function ExperienceItem({
   metadata,
-  tagProject,
+  tagResult,
   sourceLink,
   ...props
 }: ExperienceItem.Props) {
@@ -48,7 +48,7 @@ export function ExperienceItem({
   );
   return (
     <section className={experienceItemStyles}>
-      {tagProject
+      {tagResult
         ? (
           <div {...grids.selector('summary')}>
             {summary}

@@ -81,7 +81,7 @@ async function CvResult({
         <li className={richResultStyle}>
           <ExperienceItem
             {...project}
-            tagProject
+            tagResult
             sourceLink={{
               location: entry.location,
               locale: entry.locale,
@@ -102,6 +102,7 @@ async function CvResult({
         <li className={richResultStyle}>
           <ExperienceItem
             {...experience}
+            tagResult
             sourceLink={{
               location: entry.location,
               locale: entry.locale,
