@@ -90,7 +90,7 @@ globalStyle(`${tocLayoutTOCStyles} nav`, {
   overflowX: 'hidden',
   overflowY: 'auto',
 
-  fontSize: theme.grid.l,
+  fontSize: theme.grid.m,
   background: theme.colors.background.depressed,
 });
 

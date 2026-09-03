@@ -80,8 +80,8 @@ globalStyle(`${grids.extend('content', experienceItemStyles)} h3`, {
 });
 
 globalStyle(grids.extend('title', experienceItemStyles), {
-  lineHeight: '0.75em',
-  fontSize: theme.grid.xl,
+  lineHeight: '1em',
+  fontSize: theme.grid.l,
 });
 
 for (const columns of Array.from({ length: 5 }).fill(0).map((_, index) => index)) {

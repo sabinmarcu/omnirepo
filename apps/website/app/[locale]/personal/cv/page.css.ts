@@ -1,12 +1,12 @@
 import { theme } from '@sabinmarcu/website-theme';
-import { mobileMedia } from '@/utils/responsive';
-import { rootViewportContainer } from '@/layouts/RootPageLayout.css';
-import { sectionStyles } from './components/Section.css';
 import {
   createVar,
   globalStyle,
   style,
 } from '@vanilla-extract/css';
+import { mobileMedia } from '@/utils/responsive';
+import { rootViewportContainer } from '@/layouts/RootPageLayout.css';
+import { sectionStyles } from './components/Section.css';
 
 export const cvPageSpacing = createVar();
 export const cvPageStyles = style({
@@ -72,7 +72,7 @@ globalStyle(`${cvPageStyles} h2`, {
   borderBlockEnd: `solid 2px ${theme.colors.primary.muted}`,
   color: theme.colors.primary.base,
   lineHeight: '1em',
-  fontSize: `calc(${theme.grid.xl} * 1.6)`,
+  fontSize: theme.grid.xl,
   paddingBlockEnd: theme.grid.s,
   marginBlockEnd: theme.grid.l,
   display: 'flex',

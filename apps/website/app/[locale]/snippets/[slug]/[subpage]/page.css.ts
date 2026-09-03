@@ -17,17 +17,23 @@ globalStyle(`${codeSectionStyle} > *`, {
 
 globalStyle(`${codeSectionStyle} > h2`, {
   fontSize: `calc(${theme.grid.xl} * 1.25)`,
+  borderInlineStart: 'none',
+  borderInlineEnd: 'none',
+  borderBlockStart: 'none',
+  borderBlockEnd: 'none',
 });
 
 globalStyle(`${codeSectionStyle}:not(:first-of-type) > h2`, {
-  paddingBlockStart: `calc(${codeSectionSpacing} * 2)`,
+  marginBlockStart: `calc(${codeSectionSpacing} * 2)`,
 });
 
-globalStyle(`${codeSectionStyle} > h2:not(:has(+ p))`, {
-  paddingBlockEnd: theme.grid.m,
+globalStyle([
+  `${codeSectionStyle} > h2:not(:has(+ p))`,
+  `${codeSectionStyle} > p`,
+].join(', '), {
+  marginBlockEnd: theme.grid.m,
 });
 
 globalStyle(`${codeSectionStyle} > p`, {
-  fontSize: theme.grid.l,
-  paddingBlockEnd: theme.grid.m,
+  marginBlockStart: theme.grid.s,
 });

@@ -1,11 +1,13 @@
-import { mobileMedia } from '@/utils/responsive';
 import { theme } from '@sabinmarcu/theme';
 import { style } from '@vanilla-extract/css';
 import { merge as deepMerge } from 'ts-deepmerge';
+import { mobileMedia } from '@/utils/responsive';
 
 export const codeStyles = style(deepMerge(
   {
     background: theme.colors.background.surface,
+
+    fontSize: '1rem',
 
     paddingBlock: theme.grid.m,
     paddingInline: theme.grid.m,

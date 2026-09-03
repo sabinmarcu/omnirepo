@@ -1,5 +1,6 @@
 import type { Simplify } from '@sabinmarcu/types';
 import { ThemedLink } from '@/components/primitives/ThemedLink';
+import { Typography } from '@/components/primitives/Typography';
 import type { ContentLocation } from '@/models/ContentIndex';
 import type { Locale } from '@/i18n/locales';
 import { NavigationAnchor } from '@/layouts/Navigation.anchor';
@@ -63,10 +64,11 @@ export function ExperienceItemTitle({
       : inner);
 
   return (
-    <h3
+    <Typography
+      as="h3"
       {...grids.selector('title')}
     >
       {final}
-    </h3>
+    </Typography>
   );
 }

@@ -54,7 +54,7 @@ globalStyle(`${experimentsDialogStyle} header`, {
 });
 
 globalStyle(`${experimentsDialogStyle} header p`, {
-  fontSize: `calc(${theme.grid.xl} * 1.2)`,
+  fontSize: theme.grid.l,
 });
 
 globalStyle(`${experimentsDialogStyle} button`, {

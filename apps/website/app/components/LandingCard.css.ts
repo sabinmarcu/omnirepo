@@ -29,7 +29,7 @@ export const wrapperStyle = style({
   background: `oklch(from ${color} l c h / ${colorIntensity})`,
   backdropFilter: 'blur(10px)',
 
-  fontSize: '2.5rem',
+  fontSize: theme.grid.xl,
 
   borderInlineStart: `solid ${borderSize} ${color}`,
   borderInlineEnd: `solid ${borderSize} ${color}`,
@@ -69,6 +69,8 @@ export const wrapperStyle = style({
   position: 'relative',
   alignItems: 'center',
   justifyContent: 'center',
+
+  textTransform: 'uppercase',
 });
 
 globalStyle(['a', 'a:visited', 'a:link'].map(
@@ -125,7 +127,6 @@ export const wipTip = style({
   opacity: '0.2',
   userSelect: 'none',
   fontWeight: 'bold',
-  fontSize: '1.8rem',
-  textTransform: 'uppercase',
+  fontSize: theme.grid.l,
   zIndex: '-0',
 });

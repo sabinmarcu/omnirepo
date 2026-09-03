@@ -19,7 +19,7 @@ export namespace CardWrapper {
 
 export const CardWrapper = withStyles(
   function CardWrapper(props: CardWrapper.Props) {
-    return (<article {...props} />);
+    return (<article {...props} {...{ [Typography.unstyledDataAttribute]: true }} />);
   },
   cardWrapperStyle,
 );

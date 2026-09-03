@@ -69,7 +69,11 @@ export default async function SnippetPageSubpage(
             variant,
             comment,
           }) => (
-            <section key={title} className={codeSectionStyle}>
+            <section
+              key={title}
+              className={codeSectionStyle}
+              {...{ [Typography.unstyledDataAttribute]: true }}
+            >
               {title !== 'ROOT'
                 ? (<Typography as="h2">{title}</Typography>)
                 : null}

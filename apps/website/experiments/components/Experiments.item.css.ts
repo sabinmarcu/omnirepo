@@ -18,7 +18,7 @@ export const experimentsItemStyles = style({
     ['empty' as any, description],
   ] as const),
 
-  fontSize: theme.grid.l,
+  fontSize: theme.grid.m,
   borderBlockStart: `dashed 2px ${theme.colors.background.elevated}`,
   paddingBlock: theme.grid.xxs,
 });

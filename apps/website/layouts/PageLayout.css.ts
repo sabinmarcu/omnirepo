@@ -51,7 +51,6 @@ globalStyle(`:where(${pageLayoutStyles.classNames.base})`, {
   gridAutoRows: 'auto',
   marginBlockStart: '0',
   marginBlockEnd: '0',
-  fontSize: '1.3rem',
   container: 'page-layout',
   containerType: 'inline-size',
   ...({ anchorName: pageLayoutAnchorName } as StyleRule),
@@ -77,9 +76,5 @@ globalStyle(`body:has(${pageLayoutStyles.classNames.variants.variant.large})`, {
 export const pageLayoutLargeSelector = pageLayoutStyles.classNames.variants.variant.large;
 
 export const pageLayoutSelector = pageLayoutStyles.classNames.base;
-globalStyle(`${pageLayoutSelector} h1`, {
-  fontSize: '3.5rem',
-  lineHeight: '1em',
-});
 
 export type PageLayoutStylesProps = RecipeVariants<typeof pageLayoutStyles>;

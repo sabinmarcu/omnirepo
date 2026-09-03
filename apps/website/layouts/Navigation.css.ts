@@ -64,7 +64,7 @@ export const navigationStyles = recipe({
       [minor, minor],
     ]),
 
-    fontSize: theme.grid.l,
+    fontSize: theme.grid.m,
 
     ...({ anchorName: navigationAnchorName } as StyleRule),
   },

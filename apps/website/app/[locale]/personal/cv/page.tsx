@@ -130,7 +130,13 @@ export default async function CVPage({
   const { toc } = cv;
 
   return (
-    <TOCLayout className={cvPageStyles} variant="large" maxDepth={3} toc={toc}>
+    <TOCLayout
+      className={cvPageStyles}
+      {...{ [Typography.unstyledDataAttribute]: true }}
+      variant="large"
+      maxDepth={3}
+      toc={toc}
+    >
       {showLanguageSuggestionBanner
         ? <LocaleSuggestionBanner pathname="/personal/cv" availableLocales={availableLocales} />
         : null}
