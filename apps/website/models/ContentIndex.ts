@@ -28,7 +28,7 @@ import {
 } from './tagDerivation';
 
 export type ContentType =
-  | 'project' | 'experience' | 'degree' | 'publication'
+  | 'cv-project' | 'project' | 'experience' | 'degree' | 'publication'
   | 'skill' | 'snippet' | 'tool' | 'article';
 
 export type ContentLocation =
@@ -61,7 +61,7 @@ function projectEntry(locale: Locale, item: CVProjectItem): IndexEntryInput {
   const { project, metadata } = item;
   return {
     id: `cv:project:${getProjectAnchor(item)}`,
-    type: 'project',
+    type: 'cv-project',
     title: project.title,
     location: {
       pathname: '/personal/cv',

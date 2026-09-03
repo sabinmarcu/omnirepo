@@ -133,9 +133,9 @@ export function SearchEntrypointClient({
                     className={searchEntrypointResultLabelStyle}
                     data-theme-family={searchDocumentThemeFamilies[document.type]}
                   >
-                    {document.type === 'tag'
-                      ? translate(`tagKinds.${document.kind ?? 'tag'}`)
-                      : translate(document.type === 'project' ? 'types.portfolioProject' : `types.${document.type}`)}
+                    {translate(document.type === 'tag'
+                      ? `tagKinds.${document.kind ?? 'tag'}`
+                      : `types.${document.type}`)}
                   </span>
                 </ThemedLink>
               </li>

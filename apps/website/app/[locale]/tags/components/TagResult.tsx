@@ -72,7 +72,7 @@ async function CvResult({
   const { hash } = entry.location;
   const cv = CVResource.fromDefault(locale);
 
-  if (entry.type === 'project') {
+  if (entry.type === 'cv-project') {
     const project = (await cv.projects).find((item) => (
       getProjectAnchor(item) === hash
     ));
@@ -174,7 +174,7 @@ export async function TagResult({
     }
     case 'degree':
     case 'experience':
-    case 'project':
+    case 'cv-project':
     case 'publication': {
       return await CvResult(props)
         ?? <TagResultFallback entry={entry} matchedVia={matchedVia} />;

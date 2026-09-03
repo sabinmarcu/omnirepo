@@ -231,7 +231,7 @@ export default async function TagPage({
           data-content-type={type}
         >
           <h3>
-            {translate(type === 'project' ? 'types.portfolioProject' : `types.${type}`)}
+            {translate(`types.${type}`)}
             {' '}
             (
             {typeEntries.length}

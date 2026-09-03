@@ -44,9 +44,9 @@ const messages = {
     matchedVia: 'Matched via {tags}',
     types: {
       article: 'Articles',
+      'cv-project': 'Portfolio Projects',
       degree: 'Education',
       experience: 'Experience',
-      portfolioProject: 'Portfolio Projects',
       project: 'Projects',
       publication: 'Publications',
       skill: 'Skills',
@@ -127,9 +127,9 @@ const messages = {
     shortcut: 'Ctrl K',
     types: {
       article: 'Article',
+      'cv-project': 'Portfolio project',
       degree: 'Education',
       experience: 'Experience',
-      portfolioProject: 'Portfolio project',
       project: 'Project',
       publication: 'Publication',
       skill: 'Skill',

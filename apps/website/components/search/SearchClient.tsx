@@ -24,6 +24,7 @@ import {
 
 const searchableTypes: SearchDocumentType[] = [
   'article',
+  'cv-project',
   'degree',
   'experience',
   'project',

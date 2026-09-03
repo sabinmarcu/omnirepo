@@ -46,9 +46,9 @@ const messages = {
     matchedVia: 'Potrivire prin {tags}',
     types: {
       article: 'Articole',
+      'cv-project': 'Proiecte de portofoliu',
       degree: 'Educație',
       experience: 'Experiență',
-      portfolioProject: 'Proiecte de portofoliu',
       project: 'Proiecte',
       publication: 'Publicații',
       skill: 'Abilități',
@@ -129,9 +129,9 @@ const messages = {
     shortcut: 'Ctrl K',
     types: {
       article: 'Articol',
+      'cv-project': 'Proiect de portofoliu',
       degree: 'Educație',
       experience: 'Experiență',
-      portfolioProject: 'Proiect de portofoliu',
       project: 'Proiect',
       publication: 'Publicație',
       skill: 'Abilitate',
