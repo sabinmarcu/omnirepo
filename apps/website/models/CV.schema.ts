@@ -88,6 +88,7 @@ export function workplaceExperienceTagSchema<const T extends readonly string[]>(
 }
 
 export const projectsSpecificSchema = z.object({
+  canonical: codehikeBlockAnnotationSchema().optional(),
   link: codehikeBlockAnnotationSchema().optional(),
 });
 
@@ -130,6 +131,7 @@ export const workplaceProjectSchema = z.array(
     children,
     featured,
     tag,
+    canonical,
     link,
   }) => ({
     title,
@@ -139,6 +141,7 @@ export const workplaceProjectSchema = z.array(
     featured: !!featured,
     skill: skill.map(({ title: skillTitle }) => skillTitle),
     tag: (tag?.title ?? 'unknown') as typeof validProjectTagValues[number] | 'unknown',
+    canonical: canonical?.title ?? undefined,
     link: link?.title ?? undefined,
   }) as const)));
 

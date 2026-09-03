@@ -26,6 +26,8 @@ import {
   searchEntrypointResultStyle,
   searchEntrypointResultTitleStyle,
   searchEntrypointResultsStyle,
+  searchEntrypointSecondaryResultListStyle,
+  searchEntrypointSecondaryResultsStyle,
   searchEntrypointShortcutStyle,
   searchEntrypointStyle,
 } from './SearchEntrypoint.css';
@@ -138,6 +140,29 @@ export function SearchEntrypointClient({
                       : `types.${document.type}`)}
                   </span>
                 </ThemedLink>
+                {document.secondaryResults?.length
+                  ? (
+                    <div className={searchEntrypointSecondaryResultsStyle}>
+                      <span>{translate('alsoIn')}</span>
+                      <ul className={searchEntrypointSecondaryResultListStyle}>
+                        {document.secondaryResults.map((secondary) => (
+                          <li key={secondary.id}>
+                            <ThemedLink
+                              decoration="none"
+                              className={searchEntrypointResultLabelStyle}
+                              href={secondary.location}
+                              locale={secondary.locale}
+                              onClick={() => setFocused(false)}
+                              data-theme-family={searchDocumentThemeFamilies[secondary.type]}
+                            >
+                              {translate(`types.${secondary.type}`)}
+                            </ThemedLink>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )
+                  : null}
               </li>
             ))}
           </ul>

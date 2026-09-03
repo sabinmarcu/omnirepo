@@ -137,6 +137,22 @@ export const searchEntrypointResultLabelStyle = style({
   lineHeight: 1,
 });
 
+export const searchEntrypointSecondaryResultsStyle = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: navigationSpacing,
+  paddingInlineStart: theme.grid.xxl,
+  marginBlockEnd: navigationSpacing,
+  fontSize: '0.8em',
+});
+
+export const searchEntrypointSecondaryResultListStyle = style({
+  display: 'inline-flex',
+  gap: navigationSpacing,
+  padding: 0,
+  listStyle: 'none',
+});
+
 globalStyle(`${searchEntrypointIconStyle} svg`, {
   inlineSize: '1em',
   blockSize: '1em',

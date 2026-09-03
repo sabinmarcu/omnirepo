@@ -104,6 +104,7 @@ const messages = {
     extracurricularInvolvement: 'Extracurricular involvement',
     competitionProjects: 'Competition projects',
     extendedExperience: 'Extended experience',
+    fullWriteUp: 'Full write-up',
   },
   dates: {
     present: 'Present',
@@ -129,6 +130,7 @@ const messages = {
     error: 'The search index could not be loaded.',
     emptyQuery: 'Enter a search term to begin.',
     noResults: 'No results found for “{query}”.',
+    alsoIn: 'Also in:',
     shortcut: 'Ctrl K',
     types: {
       article: 'Article',

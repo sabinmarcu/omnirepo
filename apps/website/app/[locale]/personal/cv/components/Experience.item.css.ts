@@ -15,6 +15,9 @@ import { cvPageSpacing } from '../page.css';
 
 export const experienceItemBorderSize = createVar();
 export const experienceItemPadding = createVar();
+export const experienceItemCanonicalLinkStyle = style({
+  marginBlockStart: theme.grid.m,
+});
 export const experienceItemStyles = style({
   display: 'flex',
   flexFlow: 'column',

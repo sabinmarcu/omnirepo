@@ -17,4 +17,6 @@ export type SearchDocument = {
   locale: Locale,
   kind?: TagKind,
   tags: TagId[],
+  supersededBy?: string,
+  secondaryResults?: SearchDocument[],
 };

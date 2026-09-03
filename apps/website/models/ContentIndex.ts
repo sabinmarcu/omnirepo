@@ -48,6 +48,8 @@ export type IndexEntry = {
   location: ContentLocation,
   locale: Locale,
   excerpt?: string,
+  /** Canonical entry ID that supersedes this entry in search results. */
+  supersededBy?: string,
   /** Expanded, exclusions applied, deduplicated, sorted. The queryable set. */
   tags: TagId[],
   /** Pre-expansion tags as declared by content. */
@@ -73,6 +75,7 @@ function projectEntry(locale: Locale, item: CVProjectItem): IndexEntryInput {
     locale,
     from: project.from,
     to: project.to,
+    supersededBy: project.canonical ? `project:${project.canonical}` : undefined,
     authoredTags: deriveCvTags({
       company: metadata.company,
       from: project.from,

@@ -17,6 +17,8 @@ import {
   searchInputStyle,
   searchResultLinkStyle,
   searchResultsStyle,
+  searchSecondaryResultListStyle,
+  searchSecondaryResultsStyle,
   searchResultTypeStyle,
   searchSelectStyle,
   searchStatusStyle,
@@ -113,6 +115,29 @@ export function SearchClient({
                 {translate(`${document.type === 'tag' ? 'tagKinds' : 'types'}.${document.type === 'tag' ? document.kind ?? 'tag' : document.type}`)}
               </span>
             </ThemedLink>
+            {document.secondaryResults?.length
+              ? (
+                <div className={searchSecondaryResultsStyle}>
+                  <span>{translate('alsoIn')}</span>
+                  <ul className={searchSecondaryResultListStyle}>
+                    {document.secondaryResults.map((secondary) => (
+                      <li key={secondary.id}>
+                        <ThemedLink
+                          decoration="none"
+                          className={searchResultTypeStyle}
+                          href={secondary.location}
+                          locale={secondary.locale}
+                          onClick={onNavigate}
+                          data-theme-family={searchDocumentThemeFamilies[secondary.type]}
+                        >
+                          {translate(`types.${secondary.type}`)}
+                        </ThemedLink>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )
+              : null}
           </li>
         ))}
       </ul>

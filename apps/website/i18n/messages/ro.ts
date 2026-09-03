@@ -106,6 +106,7 @@ const messages = {
     extracurricularInvolvement: 'Implicare extracurriculară',
     competitionProjects: 'Proiecte de competiție',
     extendedExperience: 'Experiență extinsă',
+    fullWriteUp: 'Descriere completă',
   },
   dates: {
     present: 'Prezent',
@@ -131,6 +132,7 @@ const messages = {
     error: 'Indexul de căutare nu a putut fi încărcat.',
     emptyQuery: 'Introdu un termen pentru a începe căutarea.',
     noResults: 'Nu există rezultate pentru „{query}”.',
+    alsoIn: 'De asemenea în:',
     shortcut: 'Ctrl K',
     types: {
       article: 'Articol',

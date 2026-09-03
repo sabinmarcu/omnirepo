@@ -4,6 +4,7 @@ import { Typography } from '@/components/primitives/Typography';
 import type { ContentLocation } from '@/models/ContentIndex';
 import type { Locale } from '@/i18n/locales';
 import { NavigationAnchor } from '@/layouts/Navigation.anchor';
+import { ProjectResource } from '@/models/ProjectResource';
 import { tocAnchorProps } from '@/utils/toc';
 import { grids } from './Experience.item.grid';
 import type {
@@ -21,16 +22,24 @@ export namespace ExperienceItemTitle {
     & { sourceLink?: { location: ContentLocation, locale: Locale } }
   )>;
 }
-export function ExperienceItemTitle({
+export async function ExperienceItemTitle({
   metadata,
   sourceLink,
   ...props
 }: ExperienceItemTitle.Props) {
   const title = pickExperienceField(props, 'title');
-  const prefix = 'project' in props ? 'project' : 'experience';
-  const link = 'project' in props ? props.project.link : undefined;
   if (!title) {
     return null;
+  }
+  const prefix = 'project' in props ? 'project' : 'experience';
+  const canonical = 'project' in props ? props.project.canonical : undefined;
+  let link: string | undefined;
+  if ('project' in props) {
+    link = props.project.link;
+    if (canonical) {
+      const project = await ProjectResource.fromSlug(canonical);
+      link = project ? await project.repo : undefined;
+    }
   }
 
   const anchor = tocAnchorProps(
@@ -53,6 +62,7 @@ export function ExperienceItemTitle({
     </>
   );
 
+  // eslint-disable-next-line no-nested-ternary
   const final = sourceLink
     ? (
       <ThemedLink href={sourceLink.location} locale={sourceLink.locale}>
