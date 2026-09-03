@@ -15,11 +15,13 @@ export namespace ExperienceItem {
   export type Props = (
     & ExperienceItemMetadata
     & ExperienceItemData
+    & { tagProject?: boolean }
   );
 }
 
 export function ExperienceItem({
   metadata,
+  tagProject,
   ...props
 }: ExperienceItem.Props) {
   const {
@@ -27,8 +29,8 @@ export function ExperienceItem({
   } = 'experience' in props
     ? props.experience
     : props.project;
-  return (
-    <section className={experienceItemStyles}>
+  const summary = (
+    <>
       <ExperienceItemTitle {...props} metadata={metadata} />
       {(metadata && metadata.location) || ((props as any).from)
         ? (
@@ -38,14 +40,24 @@ export function ExperienceItem({
           </div>
         )
         : null}
+    </>
+  );
+  return (
+    <section className={experienceItemStyles}>
+      {tagProject
+        ? (
+          <div {...grids.selector('summary')}>
+            {summary}
+          </div>
+        )
+        : summary}
       {children
         ? (
           <div {...grids.selector('content')}>
             {children}
           </div>
         )
-        : null
-      }
+        : null}
       <ExperienceItemSkills {...props} />
     </section>
   );

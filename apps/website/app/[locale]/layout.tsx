@@ -99,7 +99,6 @@ export default withExperiment('scanlines')(
     if (!isLocale(locale)) {
       notFound();
     }
-
     return (
       <html
         lang={locale}

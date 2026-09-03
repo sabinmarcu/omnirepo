@@ -12,9 +12,13 @@ const pathnames = {
   '/': '/',
   '/personal': '/personal',
   '/personal/cv': '/personal/cv',
+  '/search': '/search',
+  '/search-index': '/search-index',
   '/snippets': '/snippets',
   '/snippets/[slug]': '/snippets/[slug]',
   '/snippets/[slug]/[subpage]': '/snippets/[slug]/[subpage]',
+  '/tags': '/tags',
+  '/tags/[...tag]': '/tags/[...tag]',
   '/tools': '/tools',
   '/tools/[slug]': '/tools/[slug]',
 } satisfies Pathnames<typeof locales>;

@@ -14,6 +14,7 @@ import { grids } from './Navigation.grid';
 import { NavigationAnchor } from './Navigation.anchor';
 import { navigationStyles } from './Navigation.css';
 import { NavigationSettings } from './Navigation.settings';
+import { SearchEntrypoint } from '@/components/search/SearchEntrypoint';
 
 export namespace Navigation {
   export type Props = PropsWithChildren<(
@@ -43,6 +44,7 @@ export const Navigation = extendComponent(
             <>
               <section {...grids.selector('major')}>
                 <NavigationList list={getRootNavigation(translate)} />
+                <SearchEntrypoint shortcut />
               </section>
               {children
                 ? (

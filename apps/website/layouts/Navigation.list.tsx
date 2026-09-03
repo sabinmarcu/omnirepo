@@ -19,7 +19,10 @@ export function NavigationList({
 }: NavigationList.Props) {
   return (
     <>
-      <ClientClickProxy delegate={mobileNavigationTriggerSelector} />
+      <ClientClickProxy
+        delegate={mobileNavigationTriggerSelector}
+        ignoreSelector="[data-search-entrypoint]"
+      />
       <ViewTransition>
         {list.map(({
           text,

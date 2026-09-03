@@ -8,6 +8,7 @@ import { lazy } from './lazy';
 export const showcaseContentSchema = z.object({
   preview: codehikeBlockAnnotationSchema().optional(),
   showcase: codehikeBlockAnnotationSchema(),
+  skill: z.array(codehikeBlockAnnotationSchema()).optional(),
   children: z.custom<ReactNode>(),
 });
 
@@ -17,6 +18,10 @@ export class ShowcaseResource<
   static resourceDirectory = '';
 
   public contentSchema = showcaseContentSchema as unknown as ContentSchema;
+
+  skills = lazy(
+    async () => (await this.content).skill?.map(({ title }) => title) ?? [],
+  );
 
   showcase = lazy(
     async () => {

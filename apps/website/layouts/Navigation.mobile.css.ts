@@ -105,6 +105,28 @@ globalStyle(`${navigationSelector}${navigationSelector} > section:not(${grids.ra
   }),
 });
 
+globalStyle(`${navigationSelector}${navigationSelector} > section${grids.rawSelector('major')}`, {
+  ...mobileMedia({
+    display: 'grid',
+    gridTemplateColumns: '1fr',
+    alignContent: 'start',
+  }),
+});
+
+globalStyle(`${navigationSelector}${navigationSelector} > section${grids.rawSelector('major')} > [data-search-entrypoint]`, {
+  ...mobileMedia({
+    gridColumn: 1,
+    gridRow: 1,
+  }),
+});
+
+globalStyle(`${navigationSelector}${navigationSelector} > section:not(${grids.rawSelector('settings')}) > *`, {
+  ...mobileMedia({
+    inlineSize: '100%',
+    boxSizing: 'border-box',
+  }),
+});
+
 globalStyle(`${navigationSelector}${navigationSelector} > section${grids.rawSelector('settings')}`, {
   ...mobileMedia({
     borderEndStartRadius: navigationBorderRadius,

@@ -10,6 +10,7 @@ import {
   animatedNavigationSelector,
   navigationBorderColor,
   navigationBorderSize,
+  navigationSpacing,
 } from './Navigation.css';
 import { blendAnimation } from './Navigation.animation.css';
 
@@ -40,6 +41,7 @@ export const navigationLinkStyles = recipe({
         position: 'relative',
         ':after': {
           content: 'WIP',
+          marginInlineStart: navigationSpacing,
           opacity: '0.5',
         },
         ':before': {
@@ -76,11 +78,6 @@ export const navigationLinkStyles = recipe({
     },
     ':hover': {
       background: themedLinkColor,
-    },
-    selectors: {
-      '&:last-of-type': {
-        borderInlineEnd: 'none',
-      },
     },
   },
 });

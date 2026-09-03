@@ -1,0 +1,58 @@
+import {
+  describe,
+  expect,
+  it,
+} from 'vitest';
+import {
+  expandTags,
+  resolveTag,
+  tagRegistry,
+  validateRegistry,
+  type TagRegistry,
+} from './TagRegistry';
+import { observedTags } from './tagInventory.generated';
+
+describe('TagRegistry', () => {
+  it('expands implied topics transitively', () => {
+    expect(expandTags(['skills:react'])).toEqual([
+      'lang:typescript',
+      'skills:react',
+      'topics:frontend',
+    ]);
+  });
+
+  it('reports implication cycles with their chain', () => {
+    const cyclicRegistry: TagRegistry = {
+      alpha: { implies: ['beta'] },
+      beta: { implies: ['alpha'] },
+    };
+
+    expect(() => expandTags(['alpha'], cyclicRegistry)).toThrow('alpha -> beta -> alpha');
+  });
+
+  it('resolves aliases while allowing unknown tags', () => {
+    expect(resolveTag('skills', 'ReactJS')).toBe('skills:react');
+    expect(resolveTag('skills', 'Some Unheard Of Thing')).toBe('skills:some-unheard-of-thing');
+  });
+
+  it('preserves direct tag IDs ahead of another tag\'s alias', () => {
+    const registry: TagRegistry = {
+      'skills:angular': { label: 'Angular' },
+      'skills:angularjs': { aliases: ['angular'] },
+    };
+
+    expect(resolveTag('skills', 'Angular', registry)).toBe('skills:angular');
+    expect(resolveTag('skills', 'AngularJS', registry)).toBe('skills:angularjs');
+  });
+
+  it('rejects invalid registry references and namespace collisions', () => {
+    expect(() => validateRegistry([], {
+      alpha: { implies: ['missing'] },
+    })).toThrow('Unresolvable implied tag');
+    expect(() => validateRegistry(['skills'], {})).toThrow('Bare tag collides with namespace');
+  });
+
+  it('accepts the application registry', () => {
+    expect(() => validateRegistry(observedTags, tagRegistry)).not.toThrow();
+  });
+});

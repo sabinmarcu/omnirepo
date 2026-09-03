@@ -6,7 +6,6 @@ import {
 import {
   defaultLocale,
 } from '@/i18n/domains';
-import { isLocale } from '@/i18n/locales';
 import { GenericMdxResource } from './GenericMdxResource';
 import { Resource } from './Resource';
 import { lazy } from './lazy';
@@ -45,7 +44,7 @@ export class MdxResource<
     for (const item of list) {
       const resource = item as MdxResource;
       if (await resource.slug === slug) {
-        return Resource.fromId.call(this, await resource.id, locale);
+        return Reflect.apply(Resource.fromId, this, [await resource.id, locale]);
       }
     }
 

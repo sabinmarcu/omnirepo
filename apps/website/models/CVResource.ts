@@ -14,7 +14,6 @@ import type {
   CVProjectItem,
   CVPublicationGroups,
   CVPublicationItem,
-  CVViewModel,
   CVWorkplaceEntry,
 } from './CV.types';
 import { Resource } from './Resource';
@@ -33,7 +32,7 @@ function filterCollection<Key extends string>(property: Key) {
   ) => (
     input
       .filter(predicate)
-      .sort((a, b) => compareTimeline(a[property], b[property]))
+      .toSorted((a, b) => compareTimeline(a[property], b[property]))
   );
 }
 
@@ -55,15 +54,15 @@ function getExperienceTOCTitle(item: CVExperienceItem | CVDegreeItem) {
   ].filter(Boolean).join(' - ');
 }
 
-function getExperienceAnchor(item: CVExperienceItem | CVDegreeItem) {
+export function getExperienceAnchor(item: CVExperienceItem | CVDegreeItem) {
   return tocSlug(getExperienceAnchorTitle(item), { prefix: 'experience' });
 }
 
-function getProjectAnchor(item: CVProjectItem) {
+export function getProjectAnchor(item: CVProjectItem) {
   return tocSlug(item.project.title, { prefix: 'project' });
 }
 
-function getHeadingAnchor(title: string) {
+export function getHeadingAnchor(title: string) {
   return tocSlug(title, { prefix: 'heading' });
 }
 

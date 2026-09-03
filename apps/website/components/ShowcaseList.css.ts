@@ -1,14 +1,15 @@
-import { navigationMinBlockSize } from '@/layouts/Navigation.css';
-import { gridLines } from '@/layouts/grid.lines';
-import { mobileMedia } from '@/utils/responsive';
 import { theme } from '@sabinmarcu/theme';
 import {
   createVar,
+  globalStyle,
   style,
 } from '@vanilla-extract/css';
+import { navigationMinBlockSize } from '@/layouts/Navigation.css';
+import { gridLines } from '@/layouts/grid.lines';
+import { mobileMedia } from '@/utils/responsive';
 
 const spacing = createVar();
-export const snippetsPageStyles = style({
+export const showcaseListStyle = style({
   display: 'grid',
   gridColumn: gridLines.full,
   gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
@@ -24,4 +25,8 @@ export const snippetsPageStyles = style({
     flexFlow: 'column nowrap',
     paddingBlockStart: `calc(${navigationMinBlockSize} + ${spacing} * 2)`,
   }),
+});
+
+globalStyle(`${showcaseListStyle} > *`, {
+  maxInlineSize: '50cqw',
 });

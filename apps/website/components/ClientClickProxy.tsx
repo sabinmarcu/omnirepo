@@ -10,11 +10,13 @@ export namespace ClientClickProxy {
   export type Props = {
     delegate: string,
     toggle?: boolean,
+    ignoreSelector?: string,
   };
 }
 export function ClientClickProxy({
   delegate,
   toggle,
+  ignoreSelector,
 }: ClientClickProxy.Props) {
   const reference = useRef<HTMLSpanElement>(null);
   useEffect(
@@ -23,7 +25,15 @@ export function ClientClickProxy({
         return undefined;
       }
       const element = reference.current.parentNode!;
-      const handler = () => {
+      const handler = (event: Event) => {
+        if (
+          ignoreSelector
+          && event.target instanceof Element
+          && event.target.closest(ignoreSelector)
+        ) {
+          return;
+        }
+
         const targetElement = document.querySelector(`#${delegate}`);
 
         if (targetElement instanceof HTMLInputElement && targetElement.type === 'checkbox') {
@@ -45,7 +55,7 @@ export function ClientClickProxy({
       element.addEventListener('click', handler);
       return () => element.removeEventListener('click', handler);
     },
-    [delegate, toggle],
+    [delegate, ignoreSelector, toggle],
   );
   return (
     <span ref={reference} className={clientClickProxyStyles} />

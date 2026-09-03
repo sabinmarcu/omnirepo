@@ -4,8 +4,7 @@ import { canonicalMetadata } from '@/i18n/metadata';
 import { Navigation } from '@/layouts/Navigation';
 import { PageLayout } from '@/layouts/PageLayout';
 import { ToolResource } from '@/models/ToolResource';
-import { ShowcaseCard } from '@/components/ShowcaseCard';
-import { toolsPageStyles } from './page.css';
+import { ShowcaseList } from '@/components/ShowcaseList';
 
 export async function generateMetadata(
   { params }: PageProps<'/[locale]/tools'>,
@@ -23,28 +22,13 @@ export default async function ToolsList({
   const translate = await getTranslations('lists');
   const { locale } = await params;
   const list = await ToolResource.getLocalizedList(locale);
-  const cards = await Promise.all(
-    list.map(async (tool) => (
-      <ShowcaseCard
-        key={await tool.id}
-        resource={tool}
-        pathname="/tools"
-      />
-    )),
-  );
   return (
     <>
       <Navigation />
       <PageLayout>
-        <div className={toolsPageStyles}>
-          {cards.length === 0
-            ? <p>{translate('noTools')}</p>
-            : (
-              <>
-                {cards}
-              </>
-            )}
-        </div>
+        {list.length === 0
+          ? <p>{translate('noTools')}</p>
+          : <ShowcaseList resources={list} pathname="/tools" />}
       </PageLayout>
     </>
   );

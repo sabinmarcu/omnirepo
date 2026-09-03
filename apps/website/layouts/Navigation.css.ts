@@ -110,7 +110,7 @@ globalStyle(`${navigationSelector} > section`, {
   display: 'inline-flex',
   flexFlow: 'row nowrap',
   justifyContent: 'flex-start',
-  alignItems: 'center',
+  alignItems: 'flex-start',
   zIndex: zIndexLayers.navigationSections,
 
   marginInline: navigationSpacing,
@@ -143,11 +143,25 @@ globalStyle(`${animatedNavigationSelector} > section`, {
 
 globalStyle(`:where(${navigationSelector} > section > *)`, {
   paddingBlock: `calc(${navigationSpacing} * 0.75)`,
-  paddingInline: navigationSpacing,
+  paddingInline: `calc(${navigationSpacing} * 1.5)`,
   lineHeight: '1.2em',
   color: theme.colors.background.text,
-  inlineSize: '100%',
   blockSize: '100%',
+});
+
+globalStyle(navigationSectionsSelectors.major, {
+  overflow: 'visible',
+});
+
+globalStyle(`${navigationSectionsSelectors.major}:has([data-search-entrypoint]:focus-within)`, {
+  zIndex: zIndexLayers.navigationSearch,
+});
+
+globalStyle(`${navigationSectionsSelectors.major} > [data-search-entrypoint]`, {
+  flex: '1 1 auto',
+  alignSelf: 'stretch',
+  minInlineSize: '10rem',
+  padding: 0,
 });
 
 globalStyle(`${navigationSelector} > section > ${themedLinkStyle.classNames.base}`, {
