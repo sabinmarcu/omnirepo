@@ -1,5 +1,7 @@
 import { theme } from '@sabinmarcu/theme';
 import { globalStyle } from '@vanilla-extract/css';
+import { monoLisaCode } from '@/fonts/MonoLisaCode.css';
+import { monoLisaText } from '@/fonts/MonoLisaText.css';
 import './codehike.css';
 
 globalStyle('html, body', {
@@ -11,13 +13,18 @@ globalStyle('html, body', {
 globalStyle('body', {
   color: theme.colors.background.text,
   background: theme.colors.background.page,
-  fontFamily: 'Arial, Helvetica, sans-serif',
+  fontFamily: `${monoLisaText}, sans-serif`,
   WebkitFontSmoothing: 'antialiased',
   MozOsxFontSmoothing: 'grayscale',
   containerName: 'body-container',
   containerType: 'size',
   inlineSize: '100cqw',
   blockSize: '100cqh',
+});
+
+globalStyle('code, kbd, pre, samp', {
+  fontFamily: `${monoLisaCode}, monospace`,
+  fontVariantLigatures: 'common-ligatures discretionary-ligatures',
 });
 
 globalStyle('*', {

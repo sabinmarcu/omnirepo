@@ -3,7 +3,6 @@ import { headers } from 'next/headers';
 import '../globals.css';
 import { NextIntlClientProvider } from 'next-intl';
 import { variantSelector } from '@sabinmarcu/website-theme';
-import { VT323 } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import {
   Experiments,
@@ -15,18 +14,10 @@ import {
   isConfiguredLocaleDomain,
   localeDomain,
 } from '@/i18n/domains';
-import { cls } from '@/utils/cls';
 import {
   rootBackgroundStyle,
   scanLinesStyle,
 } from '../layout.css';
-
-const rootFont = VT323({
-  variable: '--font-root',
-  subsets: ['latin'],
-  preload: true,
-  weight: '400',
-});
 
 const metadata: Metadata = {
   title: {
@@ -115,12 +106,7 @@ export default withExperiment('scanlines')(
           />
         </head>
         <NextIntlClientProvider locale={locale}>
-          <body className={cls(
-            rootFont.variable,
-            rootFont.className,
-            rootBackgroundStyle,
-          )}
-          >
+          <body className={rootBackgroundStyle}>
             {children}
             <Experiments />
             {scanlines ? <div className={scanLinesStyle} /> : null}
