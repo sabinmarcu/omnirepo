@@ -3,6 +3,7 @@ import type { families } from '@sabinmarcu/website-theme';
 import { getTranslations } from 'next-intl/server';
 import { TagPill } from '@/components/TagPill';
 import { ShowcaseList } from '@/components/ShowcaseList';
+import { ProjectList } from '@/components/ProjectList';
 import { isIgnoredTag } from '@/constants/ignoredTagPatterns';
 import {
   getPathname,
@@ -23,6 +24,7 @@ import {
 } from '@/models/ContentIndex';
 import type { ShowcaseResource } from '@/models/ShowcaseResource';
 import { SnippetResource } from '@/models/SnippetResource';
+import { ProjectResource } from '@/models/ProjectResource';
 import {
   normalizeTagSegment,
   parseTag,
@@ -49,11 +51,13 @@ import {
   tagListStyle,
   tagPageStyle,
 } from './page.css';
+import { Typography } from '@/components/primitives/Typography';
 
 const contentTypeOrder: ContentType[] = [
   'tool',
   'snippet',
   'project',
+  'cv-project',
   'experience',
   'publication',
   'degree',
@@ -63,6 +67,7 @@ const contentTypeOrder: ContentType[] = [
 
 const contentTypeThemeFamilies: Record<Exclude<ContentType, 'skill'>, typeof families[number]> = {
   article: 'articles',
+  'cv-project': 'personal',
   degree: 'personal',
   experience: 'personal',
   project: 'projects',
@@ -136,6 +141,18 @@ async function getShowcaseResources(
     return resources.filter(isShowcaseResource);
   }
   return [];
+}
+
+async function getProjectResources(
+  entries: IndexEntry[],
+  locale: Locale,
+): Promise<ProjectResource[]> {
+  const resources = await Promise.all(entries.flatMap((entry) => (
+    entry.location.pathname === '/projects/[slug]'
+      ? [ProjectResource.fromSlug(entry.location.params.slug, locale)]
+      : []
+  )));
+  return resources.filter((resource): resource is ProjectResource => !!resource);
 }
 
 export async function generateMetadata({
@@ -220,51 +237,56 @@ export default async function TagPage({
       return null;
     }
     const showcaseResources = await getShowcaseResources(type, typeEntries, locale);
+    const projectResources = type === 'project'
+      ? await getProjectResources(typeEntries, locale)
+      : [];
+    let resultContent = (
+      <ul className={resultListStyle}>
+        {typeEntries.map((entry) => {
+          const matchedTags = matchingAuthoredTags(entry, id);
+          const matchedVia = matchedTags.includes(id)
+            ? undefined
+            : translate('matchedVia', {
+              tags: matchedTags.map(label).join(', '),
+            });
+          return (
+            <TagResult
+              key={entry.id}
+              entry={entry}
+              locale={locale}
+              matchedVia={matchedVia}
+            />
+          );
+        })}
+      </ul>
+    );
+    if (showcaseResources.length > 0) {
+      resultContent = (
+        <ShowcaseList
+          resources={showcaseResources}
+          pathname={type === 'tool' ? '/tools' : '/snippets'}
+        />
+      );
+    }
+    if (projectResources.length > 0) {
+      resultContent = <ProjectList pathname="/projects" resources={projectResources} />;
+    }
     return (
       <PageLayout
         disableFooter
         data-theme-family={contentTypeThemeFamilies[type]}
+        className={resultGroupStyle}
+        data-content-type={type}
         key={type}
       >
-        <section
-          className={resultGroupStyle}
-          data-content-type={type}
-        >
-          <h3>
-            {translate(`types.${type}`)}
-            {' '}
-            (
-            {typeEntries.length}
-            )
-          </h3>
-          {showcaseResources.length > 0
-            ? (
-              <ShowcaseList
-                resources={showcaseResources}
-                pathname={type === 'tool' ? '/tools' : '/snippets'}
-              />
-            )
-            : (
-              <ul className={resultListStyle}>
-                {typeEntries.map((entry) => {
-                  const matchedTags = matchingAuthoredTags(entry, id);
-                  const matchedVia = matchedTags.includes(id)
-                    ? undefined
-                    : translate('matchedVia', {
-                      tags: matchedTags.map(label).join(', '),
-                    });
-                  return (
-                    <TagResult
-                      key={entry.id}
-                      entry={entry}
-                      locale={locale}
-                      matchedVia={matchedVia}
-                    />
-                  );
-                })}
-              </ul>
-            )}
-        </section>
+        <h3>
+          {translate(`types.${type}`)}
+          {' '}
+          (
+          {typeEntries.length}
+          )
+        </h3>
+        {resultContent}
       </PageLayout>
     );
   }));
@@ -272,29 +294,32 @@ export default async function TagPage({
   return (
     <>
       <Navigation />
-      <PageLayout disableFooter>
-        <main className={tagPageStyle}>
-          <header className={tagHeaderStyle}>
-            <h1>{label(id)}</h1>
-            {description
-              ? (
-                <div className={tagDescriptionStyle}>
-                  <TranslationFallbackNotice locale={locale} resource={description} />
-                  {await description.content}
-                </div>
-              )
-              : null}
-          </header>
-        </main>
-      </PageLayout>
-      {related.length > 0
-        ? (
-          <PageLayout disableFooter data-theme-family="base">
-            <section
+      <main>
+        <header>
+          <PageLayout className={tagPageStyle} disableFooter>
+            <div className={tagHeaderStyle}>
+              <Typography as="h1">{label(id)}</Typography>
+              {description
+                ? (
+                  <div className={tagDescriptionStyle}>
+                    <TranslationFallbackNotice locale={locale} resource={description} />
+                    {await description.content}
+                  </div>
+                )
+                : null}
+            </div>
+          </PageLayout>
+        </header>
+        {related.length > 0
+          ? (
+            <PageLayout
+              disableFooter
+              data-theme-family="base"
               className={resultGroupStyle}
               data-content-type="related"
+              {...{ [Typography.unstyledDataAttribute]: true }}
             >
-              <h3>{translate('related')}</h3>
+              <Typography as="h3">{translate('related')}</Typography>
               <div className={tagListStyle}>
                 {related.map(([relatedId, count]) => (
                   <TagPill
@@ -305,14 +330,14 @@ export default async function TagPage({
                   />
                 ))}
               </div>
-            </section>
-          </PageLayout>
-        )
-        : null}
-      {entries.length === 0
-        ? <PageLayout><p>{translate('empty')}</p></PageLayout>
-        : resultSections}
-      <PageLayout className={tagFooterStyle} />
+            </PageLayout>
+          )
+          : null}
+        {entries.length === 0
+          ? <PageLayout><p>{translate('empty')}</p></PageLayout>
+          : resultSections}
+        <PageLayout className={tagFooterStyle} />
+      </main>
     </>
   );
 }

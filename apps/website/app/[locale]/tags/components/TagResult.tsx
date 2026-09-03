@@ -1,4 +1,5 @@
 import { ShowcaseCard } from '@/components/ShowcaseCard';
+import { ProjectCard } from '@/components/ProjectCard';
 import type { Locale } from '@/i18n/locales';
 import type { IndexEntry } from '@/models/ContentIndex';
 import {
@@ -7,6 +8,7 @@ import {
   getProjectAnchor,
 } from '@/models/CVResource';
 import { SnippetResource } from '@/models/SnippetResource';
+import { ProjectResource } from '@/models/ProjectResource';
 import { ToolResource } from '@/models/ToolResource';
 import { DegreeItem } from '../../personal/cv/components/Degree.item';
 import { ExperienceItem } from '../../personal/cv/components/Experience.item';
@@ -58,6 +60,21 @@ async function ShowcaseResult({
       <MatchReason matchedVia={matchedVia} />
     </li>
   );
+}
+
+async function ProjectResult({ entry, matchedVia }: TagResult.Props) {
+  if (entry.location.pathname !== '/projects/[slug]' || entry.type !== 'project') {
+    return undefined;
+  }
+  const resource = await ProjectResource.fromSlug(entry.location.params.slug, entry.locale);
+  return resource
+    ? (
+      <li className={richResultStyle}>
+        <ProjectCard resource={resource} pathname="/projects" />
+        <MatchReason matchedVia={matchedVia} />
+      </li>
+    )
+    : undefined;
 }
 
 async function CvResult({
@@ -170,6 +187,10 @@ export async function TagResult({
     case 'tool':
     case 'snippet': {
       return await ShowcaseResult(props)
+        ?? <TagResultFallback entry={entry} matchedVia={matchedVia} />;
+    }
+    case 'project': {
+      return await ProjectResult(props)
         ?? <TagResultFallback entry={entry} matchedVia={matchedVia} />;
     }
     case 'degree':
