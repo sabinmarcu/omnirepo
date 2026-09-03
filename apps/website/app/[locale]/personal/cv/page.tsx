@@ -8,6 +8,7 @@ import { CVResource } from '@/models/CVResource';
 import { Grid } from '@/components/Grid';
 import { Typography } from '@/components/mdx/Typography';
 import { TOCLayout } from '@/layouts/TOCLayout';
+import { redirect404 } from '@/utils/routes.ssr';
 import { InfoTagList } from './components/InfoTag';
 import {
   cvPageStyles,
@@ -22,9 +23,6 @@ import { ExperienceList } from './components/Experience';
 import { LanguageList } from './components/Language';
 import { DegreeList } from './components/Degree.list';
 import { PublicationsList } from './components/Publications.list';
-import { ContentIndex } from '@/models/ContentIndex';
-import { RelatedContent } from '@/components/RelatedContent';
-import { redirect404 } from '@/utils/routes.ssr';
 
 export async function generateMetadata(
   { params }: PageProps<'/[locale]/personal/cv'>,
@@ -130,10 +128,6 @@ export default async function CVPage({
   );
 
   const { toc } = cv;
-  const index = await ContentIndex.forLocale(locale);
-  const cvEntryIds = index.entries
-    .filter(({ id }) => id.startsWith('cv:'))
-    .map(({ id }) => id);
 
   return (
     <TOCLayout className={cvPageStyles} variant="large" maxDepth={3} toc={toc}>
@@ -148,11 +142,6 @@ export default async function CVPage({
         <InfoTagList list={info} />
       </header>
       {pageContent}
-      <RelatedContent
-        locale={locale}
-        entryIds={cvEntryIds}
-        excludeIdPrefix="cv:"
-      />
     </TOCLayout>
   );
 }
