@@ -1,9 +1,9 @@
+import { z } from 'zod';
 import {
   codehikeBlockAnnotationSchema,
   codehikeBlockArrayAnnotationSchema,
   codehikeBlockObjectAnnotationSchema,
 } from '@/utils/mdx';
-import { z } from 'zod';
 import { supportedTypes } from '@/app/[locale]/personal/cv/components/InfoTag.tag';
 
 export const infoTagListSchema = codehikeBlockObjectAnnotationSchema(

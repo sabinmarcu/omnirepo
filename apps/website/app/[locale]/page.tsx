@@ -4,10 +4,12 @@ import { getTranslations } from 'next-intl/server';
 import { getHomepageNavigation } from '@/navigation/home';
 import { canonicalMetadata } from '@/i18n/metadata';
 import { Navigation } from '@/layouts/Navigation';
+import { SearchEntrypoint } from '@/components/search/SearchEntrypoint';
 import { LandingCard } from '../components/LandingCard';
 import { LandingCardList } from '../components/LandingCardList';
 import { LandingLogo } from '../components/LandingLogo';
 import {
+  landingPageSearch,
   landingPageWrapper,
 } from './page.css';
 
@@ -29,6 +31,9 @@ export default async function Home() {
       <main className={landingPageWrapper}>
         <Navigation empty />
         <LandingLogo />
+        <div className={landingPageSearch}>
+          <SearchEntrypoint shortcut />
+        </div>
         <LandingCardList>
           {homepageNavigation.map(({
             text,
