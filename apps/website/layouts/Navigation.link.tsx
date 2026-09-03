@@ -3,8 +3,8 @@
 import {
   type ComponentProps,
 } from 'react';
-import { usePathname } from '@/i18n/navigation';
 import type { Simplify } from '@sabinmarcu/types';
+import { usePathname } from '@/i18n/navigation';
 import { ThemedLink } from '@/components/ThemedLink';
 import { matchRoute } from '@/utils/routes';
 import type { NavigationLinkStylesProps } from './Navigation.link.css';
@@ -28,9 +28,12 @@ export function NavigationLink({
   ...props
 }: NavigationLink.Props) {
   const pathname = usePathname();
-  const cleanHref = `${href}`.replace(/\/?$/, '');
+  const hrefPath = String(href);
+  const cleanHref = hrefPath === '/'
+    ? hrefPath
+    : hrefPath.replace(/\/?$/, '');
   const active = !!matchRoute(
-    strictMatch
+    strictMatch || cleanHref === '/'
       ? cleanHref
       : `${cleanHref}/[[...rest]]`,
     pathname,
