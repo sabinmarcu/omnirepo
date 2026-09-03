@@ -48,6 +48,7 @@
     "moon": "$(yarn bin moon)",
     "postinstall": "husky install && tscmono",
     "publish:idempotent": "node .github/scripts/idempotent-publish.mjs",
+    "tags:inventory": "node .github/scripts/tag-inventory.mjs",
     "test": "yarn moon run :test"
   },
   "devDependencies": {
