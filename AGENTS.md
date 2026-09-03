@@ -76,6 +76,7 @@ Verify discovery after changing customization files:
   - Run installed binaries through Yarn directly: `yarn eslint`, `yarn tsc`, `yarn vitest`.
   - For a binary that is not a dependency, use `yarn dlx <package>`.
 - Prefer `lint:fix` over non-fixing `lint` commands.
+- After each user message, run `yarn eslint --fix` on every file edited in that work group. Report any remaining findings that ESLint cannot fix.
 - Keep changes focused; do not refactor unrelated files.
 - Do not edit generated outputs (`dist`, `.next`, coverage artifacts) unless explicitly requested.
 - When uncertain about architecture or boundaries, consult [ARCHITECTURE.md](ARCHITECTURE.md) first.

@@ -40,7 +40,8 @@
   },
   "chat.tools.terminal.autoApprove": {
     "yarn constraints": true,
-    "git add": true
+    "git add": true,
+    "yarn vitest": true
   },
   "chat.useAgentsMdFile": true,
   "chat.instructionsFilesLocations": {
