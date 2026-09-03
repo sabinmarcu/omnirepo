@@ -29,4 +29,7 @@ export const showcaseListStyle = style({
 
 globalStyle(`${showcaseListStyle} > *`, {
   maxInlineSize: '50cqw',
+  ...mobileMedia({
+    maxInlineSize: 'none',
+  }),
 });

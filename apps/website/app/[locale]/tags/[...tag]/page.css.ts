@@ -6,6 +6,7 @@ import {
 import { showcaseListStyle } from '@/components/ShowcaseList.css';
 import { footerStyles } from '@/layouts/Footer.css';
 import { gridLines } from '@/layouts/grid.lines';
+import { mobileMedia } from '@/utils/responsive';
 import { grids as experienceItemGrids } from '../../personal/cv/components/Experience.item.grid';
 import {
   experienceItemPadding,
@@ -87,66 +88,86 @@ globalStyle(`${compactCvResultScopeSelector} ${resultListStyle}`, {
 });
 
 globalStyle(compactCvExperienceItemSelector, {
-  display: 'grid',
-  gridTemplateColumns: 'minmax(14rem, 1fr) minmax(0, 2fr)',
-  columnGap: theme.grid.xl,
-  rowGap: theme.grid.s,
   vars: {
     [experienceItemPadding]: theme.grid.m,
   },
+  ...mobileMedia({
+    display: 'grid',
+    gridTemplateColumns: 'minmax(14rem, 1fr) minmax(0, 2fr)',
+    columnGap: theme.grid.xl,
+    rowGap: theme.grid.s,
+  }, true),
 });
 
 globalStyle(compactCvExperienceItemSelector, {
-  display: 'grid-lanes',
-  columns: 2,
+  ...mobileMedia({
+    display: 'grid-lanes',
+    columns: 2,
+  }, true),
 });
 
 globalStyle(`${compactCvExperienceItemSelector} ${experienceItemGrids.rawSelector('summary')}`, {
-  gridColumn: 1,
-  gridRow: 1,
-  display: 'grid',
-  alignContent: 'start',
-  gap: theme.grid.xxs,
+  ...mobileMedia({
+    gridColumn: 1,
+    gridRow: 1,
+    display: 'grid',
+    alignContent: 'start',
+    gap: theme.grid.xxs,
+  }, true),
 });
 
 globalStyle(`${compactCvExperienceItemSelector} ${experienceItemGrids.rawSelector('title')}`, {
-  display: 'grid',
-  justifyContent: 'initial',
-  alignContent: 'start',
-  lineHeight: '1em',
+  ...mobileMedia({
+    display: 'grid',
+    justifyContent: 'initial',
+    alignContent: 'start',
+    lineHeight: '1em',
+  }, true),
 });
 
 globalStyle(`${compactCvExperienceItemSelector} ${experienceItemGrids.rawSelector('title')} > a`, {
-  display: 'grid',
-  gap: theme.grid.xxs,
+  ...mobileMedia({
+    display: 'grid',
+    gap: theme.grid.xxs,
+  }, true),
 });
 
 globalStyle([
   `${compactCvExperienceItemSelector} ${experienceItemGrids.rawSelector('title')} > span:nth-child(3):empty`,
   `${compactCvExperienceItemSelector} ${experienceItemGrids.rawSelector('title')} > a > span:nth-child(3):empty`,
 ].join(', '), {
-  display: 'none',
+  ...mobileMedia({
+    display: 'none',
+  }, true),
 });
 
 globalStyle(`${compactCvExperienceItemSelector} ${experienceItemGrids.rawSelector('metadata')}`, {
-  display: 'block',
-  alignItems: 'start',
-  justifyContent: 'start',
+  ...mobileMedia({
+    display: 'block',
+    alignItems: 'start',
+    justifyContent: 'start',
+  }, true),
 });
 
 globalStyle(`${compactCvExperienceItemSelector} ${experienceItemGrids.rawSelector('location')}`, {
-  display: 'none',
+  ...mobileMedia({
+    display: 'none',
+  }, true),
 });
 
 globalStyle(`${compactCvExperienceItemSelector} ${experienceItemGrids.rawSelector('content')}`, {
-  gridColumn: 2,
-  gridRow: 1,
-  marginBlockStart: 0,
+  ...mobileMedia({
+    gridColumn: 2,
+    gridRow: 1,
+    marginBlockStart: 0,
+  }, true),
 });
 
 globalStyle(`${compactCvExperienceItemSelector} ${experienceItemGrids.rawSelector('skills')}`, {
-  gridColumn: 2,
-  gridRow: 2,
+  ...mobileMedia({
+    gridColumn: 2,
+    gridRow: 2,
+  }, true),
 });
 
 globalStyle(`${compactCvResultScopeSelector} ${resultListStyle} > li:first-child ${experienceItemStyles}`, {
