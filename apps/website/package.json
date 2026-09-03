@@ -26,6 +26,7 @@
     "codehike": "^1.0.7",
     "critters": "^0.0.25",
     "date-fns": "^4.1.0",
+    "minisearch": "^7.2.0",
     "moize": "^6.1.7",
     "next": "16.2.1",
     "next-intl": "^4.14.2",

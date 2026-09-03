@@ -6,12 +6,12 @@ const zLayer = <
   const RootLayer extends string,
   const SubLayers extends string,
 >(
-    label: RootLayer,
-    ...children: SubLayers[]
-  ): (
+  label: RootLayer,
+  ...children: SubLayers[]
+): (
     & { [Key in RootLayer]: number }
     & { [Key in SubLayers as CamelCase<`${RootLayer}-${SubLayers}`>]: number }
-  ) => {
+) => {
   lastZLayer = Number.parseInt(
     `${(lastZLayer + 10) / 10}`,
     10,
@@ -39,7 +39,7 @@ export const zIndexLayers = {
   // Below the navbar: the sticky TOC rail must never ride over it. The drawer is
   // promoted to the top layer by the popover API and does not rely on this.
   ...zLayer('toc'),
-  ...zLayer('navigation', 'backdrop', 'sections'),
+  ...zLayer('navigation', 'backdrop', 'sections', 'search'),
   ...zLayer('experiments'),
 };
 
