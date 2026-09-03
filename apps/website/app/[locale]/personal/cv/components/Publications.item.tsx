@@ -1,5 +1,5 @@
 import type { CVPublicationItem } from '@/models/CV.types';
-import { Link } from '@/i18n/navigation';
+import { ThemedLink } from '@/components/primitives/ThemedLink';
 import type { ContentLocation } from '@/models/ContentIndex';
 import type { Locale } from '@/i18n/locales';
 import { publicationsItemStyle } from './Publications.item.css';
@@ -29,7 +29,7 @@ export function PublicationItem({
           <li key={`${title}-${from}-${reference ?? 'noref'}`}>
             {sourceLink
               ? (
-                <Link href={sourceLink.location} locale={sourceLink.locale}>
+                <ThemedLink href={sourceLink.location} locale={sourceLink.locale}>
                   <span>{title}</span>
                   {reference
                     ? (
@@ -43,7 +43,7 @@ export function PublicationItem({
                     ,
                     {from}
                   </span>
-                </Link>
+                </ThemedLink>
               )
               : (
                 <>

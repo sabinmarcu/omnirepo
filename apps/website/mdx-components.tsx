@@ -4,7 +4,7 @@ import { Typography } from './components/primitives/Typography';
 import { Code } from './components/Code';
 
 const components: MDXComponents = {
-  a: (props: any) => (<ThemedLink {...(props as any)} raw />),
+  a: (props: any) => (<ThemedLink {...(props as any)} />),
   h1: (props: any) => (<Typography as="h1" {...props} />),
   h2: (props: any) => (<Typography as="h2" {...props} />),
   h3: (props: any) => (<Typography as="h3" {...props} />),

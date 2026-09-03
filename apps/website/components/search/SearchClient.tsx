@@ -5,7 +5,7 @@ import {
   useState,
 } from 'react';
 import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/navigation';
+import { ThemedLink } from '@/components/primitives/ThemedLink';
 import { searchDocumentThemeFamilies } from '@/constants/searchDocumentThemeFamilies';
 import type {
   SearchDocumentType,
@@ -97,7 +97,8 @@ export function SearchClient({
       <ul className={searchResultsStyle}>
         {results.map((document) => (
           <li key={document.id}>
-            <Link
+            <ThemedLink
+              decoration="none"
               className={searchResultLinkStyle}
               href={document.location}
               locale={document.locale}
@@ -110,7 +111,7 @@ export function SearchClient({
               >
                 {translate(`${document.type === 'tag' ? 'tagKinds' : 'types'}.${document.type === 'tag' ? document.kind ?? 'tag' : document.type}`)}
               </span>
-            </Link>
+            </ThemedLink>
           </li>
         ))}
       </ul>

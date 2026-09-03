@@ -2,10 +2,11 @@ import type {
   ComponentProps,
   PropsWithChildren,
 } from 'react';
-import { Link } from '@/i18n/navigation';
 import { getTranslations } from 'next-intl/server';
+import type { Link } from '@/i18n/navigation';
 import { withTheme } from '@/theme/runtime';
 import { cls } from '@/utils/cls';
+import { ThemedLink } from '@/components/primitives/ThemedLink';
 import {
   wrapperStyle,
   wipStyle,
@@ -43,7 +44,7 @@ export const LandingCard = withTheme<LandingCard.Props>(async function LandingCa
     </article>
   );
   return (href
-    ? (<Link href={href as any}>{inner}</Link>)
+    ? (<ThemedLink decoration="none" href={href as any}>{inner}</ThemedLink>)
     : inner
   );
 });

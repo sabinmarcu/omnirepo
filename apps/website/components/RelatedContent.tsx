@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import type { Locale } from '@/i18n/locales';
-import { Link } from '@/i18n/navigation';
+import { ThemedLink } from '@/components/primitives/ThemedLink';
 import {
   ContentIndex,
   type IndexEntry,
@@ -77,10 +77,10 @@ export async function RelatedContent({
       <ul className={relatedContentListStyle}>
         {entries.map((entry) => (
           <li key={entry.id}>
-            <Link className={relatedContentLinkStyle} href={entry.location}>
+            <ThemedLink decoration="none" className={relatedContentLinkStyle} href={entry.location}>
               <strong>{entry.title}</strong>
               <span className={relatedContentTypeStyle}>{entry.type}</span>
-            </Link>
+            </ThemedLink>
           </li>
         ))}
       </ul>

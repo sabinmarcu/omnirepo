@@ -4,16 +4,18 @@ import {
   type ComponentProps,
 } from 'react';
 import type { Simplify } from '@sabinmarcu/types';
-import { usePathname } from '@/i18n/navigation';
-import { ThemedLink } from '@/components/primitives/ThemedLink';
+import {
+  Link,
+  usePathname,
+} from '@/i18n/navigation';
 import { matchRoute } from '@/utils/routes';
 import type { NavigationLinkStylesProps } from './Navigation.link.css';
 import { navigationLinkStyles } from './Navigation.link.css';
 
-type HrefParam = Pick<ComponentProps<typeof ThemedLink>, 'href'>;
+type HrefParam = Pick<ComponentProps<typeof Link>, 'href'>;
 export namespace NavigationLink {
   export type Props = Simplify<(
-    & Omit<ComponentProps<typeof ThemedLink>, 'href'>
+    & Omit<ComponentProps<typeof Link>, 'href'>
     & Partial<HrefParam>
     & Omit<Exclude<NavigationLinkStylesProps, undefined>, 'active'>
     & { strictMatch?: boolean }
@@ -41,7 +43,7 @@ export function NavigationLink({
   const hrefParam = (href ? { href } : {}) as unknown as
     HrefParam;
   return (
-    <ThemedLink
+    <Link
       className={[
         className,
         navigationLinkStyles({

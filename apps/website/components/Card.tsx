@@ -22,7 +22,7 @@ export function Card({
   );
 
   if (href) {
-    return (<ThemedLink href={href as any}>{content}</ThemedLink>);
+    return (<ThemedLink decoration="none" href={href as any}>{content}</ThemedLink>);
   }
 
   return content;

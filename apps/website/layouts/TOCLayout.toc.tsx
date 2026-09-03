@@ -56,7 +56,7 @@ function TOCLayoutList({
         children,
       }) => (
         <li key={slug}>
-          <ThemedLink href={`#${slug}`} raw>{title}</ThemedLink>
+          <ThemedLink href={`#${slug}`}>{title}</ThemedLink>
           {children && children.length > 0
             ? <TOCLayoutList toc={children} />
             : null}
@@ -76,6 +76,7 @@ export async function TOCLayoutTOC({
       id={tocPopoverId}
       popover="auto"
       className={tocLayoutTOCStyles}
+      {...{ [ThemedLink.undecoratedDataAttribute]: true }}
     >
       <nav>
         <h2>

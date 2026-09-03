@@ -13,9 +13,9 @@ import {
 } from 'react';
 import { useTranslations } from 'next-intl';
 import {
-  Link,
   useRouter,
 } from '@/i18n/navigation';
+import { ThemedLink } from '@/components/primitives/ThemedLink';
 import { useSearchIndex } from './useSearchIndex';
 import { searchDocumentThemeFamilies } from '@/constants/searchDocumentThemeFamilies';
 import {
@@ -119,7 +119,8 @@ export function SearchEntrypointClient({
           <ul className={searchEntrypointResultsStyle}>
             {results.map((document) => (
               <li key={document.id}>
-                <Link
+                <ThemedLink
+                  decoration="none"
                   className={searchEntrypointResultStyle}
                   href={document.location}
                   locale={document.locale}
@@ -136,7 +137,7 @@ export function SearchEntrypointClient({
                       ? translate(`tagKinds.${document.kind ?? 'tag'}`)
                       : translate(document.type === 'project' ? 'types.portfolioProject' : `types.${document.type}`)}
                   </span>
-                </Link>
+                </ThemedLink>
               </li>
             ))}
           </ul>
