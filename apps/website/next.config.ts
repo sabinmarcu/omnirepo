@@ -16,7 +16,8 @@ import remarkMdxImages from 'remark-mdx-images';
 const withVanillaExtract = createVanillaExtractPlugin();
 const withNextIntl = createNextIntlPlugin();
 
-// Comma-separated hostnames (wildcards allowed) permitted to fetch dev assets, e.g. Tailscale hosts.
+// Comma-separated hostnames (wildcards allowed) permitted to fetch dev assets,
+// such as Tailscale hosts.
 const allowedDevelopmentOrigins = (process.env.ALLOWED_DEV_ORIGINS ?? '')
   .split(',')
   .map((origin) => origin.trim())

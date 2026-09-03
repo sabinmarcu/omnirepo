@@ -87,7 +87,7 @@ globalStyle(grids.extend('title', experienceItemStyles), {
   fontSize: theme.grid.l,
 });
 
-for (const columns of Array.from({ length: 5 }).fill(0).map((_, index) => index)) {
+for (const columns of Array.from({ length: 5 }, (_, index) => index)) {
   globalStyle(`:not(${experienceItemStyles}) + ${gridStyles.classNames.variants.grid.true} ${experienceItemStyles}:nth-child(${columns})`, {
     borderBlockStartWidth: `calc(clamp(0, calc(${columns} - ${gridColumns}), 1) * ${experienceItemBorderSize})`,
     paddingBlockStart: `calc(clamp(0, calc(${columns} - ${gridColumns}), 1) * ${experienceItemPadding})`,

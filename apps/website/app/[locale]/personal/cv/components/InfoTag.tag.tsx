@@ -30,12 +30,16 @@ export function InfoTag({
   );
 
   if (link) {
-    return <ThemedLink
-      variant="secondary"
-      target="_blank"
-      href={link as any}
-      className={infoTagStyles}
-    >{inner}</ThemedLink>;
+    return (
+      <ThemedLink
+        variant="secondary"
+        target="_blank"
+        href={link as any}
+        className={infoTagStyles}
+      >
+        {inner}
+      </ThemedLink>
+    );
   }
 
   return <p className={infoTagStyles}>{inner}</p>;

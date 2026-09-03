@@ -12,10 +12,7 @@ const zLayer = <
     & { [Key in RootLayer]: number }
     & { [Key in SubLayers as CamelCase<`${RootLayer}-${SubLayers}`>]: number }
 ) => {
-  lastZLayer = Number.parseInt(
-    `${(lastZLayer + 10) / 10}`,
-    10,
-  ) * 10;
+  lastZLayer = ((lastZLayer + 10) / 10) * 10;
 
   let accumulator = {
     [label]: lastZLayer,
