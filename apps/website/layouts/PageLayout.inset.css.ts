@@ -14,7 +14,8 @@ export const pageLayoutInsetStyles = recipe({
     },
   },
   base: {
-    background: theme.colors.background.depressed,
+    background: theme.colors.background.recessed,
+    marginBlock: theme.grid.xl,
     paddingBlock: theme.grid.xl,
     display: 'grid',
     gridColumn: gridLines.full,
