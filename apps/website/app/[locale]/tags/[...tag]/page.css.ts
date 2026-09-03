@@ -3,14 +3,14 @@ import {
   globalStyle,
   style,
 } from '@vanilla-extract/css';
+import { showcaseListStyle } from '@/components/ShowcaseList.css';
+import { footerStyles } from '@/layouts/Footer.css';
+import { gridLines } from '@/layouts/grid.lines';
+import { grids as experienceItemGrids } from '../../personal/cv/components/Experience.item.grid';
 import {
   experienceItemPadding,
   experienceItemStyles,
 } from '../../personal/cv/components/Experience.item.css';
-import { grids as experienceItemGrids } from '../../personal/cv/components/Experience.item.grid';
-import { showcaseListStyle } from '@/components/ShowcaseList.css';
-import { footerStyles } from '@/layouts/Footer.css';
-import { gridLines } from '@/layouts/grid.lines';
 
 export const tagPageStyle = style({
   display: 'grid',
@@ -56,7 +56,7 @@ export const resultListStyle = style({
 });
 
 globalStyle(`${resultGroupStyle} > h3`, {
-  paddingBlock: theme.grid.xl,
+  paddingBlockStart: theme.grid.xl,
   fontSize: '3.5rem',
   lineHeight: '1em',
 });
@@ -81,6 +81,10 @@ const compactCvResultSelector = [
 ].join(', ');
 const compactCvResultScopeSelector = `:is(${compactCvResultSelector})`;
 const compactCvExperienceItemSelector = `${compactCvResultScopeSelector} ${experienceItemStyles}`;
+
+globalStyle(`${compactCvResultScopeSelector} ${resultListStyle}`, {
+  paddingBlockStart: theme.grid.xl,
+});
 
 globalStyle(compactCvExperienceItemSelector, {
   display: 'grid',
