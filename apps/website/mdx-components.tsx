@@ -1,7 +1,7 @@
 import type { MDXComponents } from 'mdx/types';
 import { ThemedLink } from './components/primitives/ThemedLink';
 import { Typography } from './components/primitives/Typography';
-import { Code } from './components/Code';
+import { CodehikeCode } from './components/CodehikeCode';
 
 const components: MDXComponents = {
   a: (props: any) => (<ThemedLink {...(props as any)} />),
@@ -11,7 +11,7 @@ const components: MDXComponents = {
   h4: (props: any) => (<Typography as="h4" {...props} />),
   h5: (props: any) => (<Typography as="h5" {...props} />),
   h6: (props: any) => (<Typography as="h6" {...props} />),
-  CodehikeCode: Code as any,
+  CodehikeCode,
 };
 
 export function useMDXComponents(): MDXComponents {

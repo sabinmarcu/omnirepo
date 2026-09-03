@@ -9,17 +9,22 @@ import { codeStyles } from './Code.css';
 
 export namespace Code {
   export type Props = (
-    & Omit<ComponentProps<typeof Pre>, 'code'>
-    & { code: RawCode }
+    & Omit<ComponentProps<typeof Pre>, 'code' | 'handlers'>
+    & (
+      | { code: RawCode, codeblock?: never }
+      | { codeblock: RawCode, code?: never }
+    )
   );
 }
 
 export const Code = withStyles(async function Code({
   code,
+  codeblock,
   ...rest
 }: Code.Props) {
+  const rawCode = code ?? codeblock;
   const highlighted = await highlight(
-    code,
+    rawCode,
     'github-from-css',
   );
   return (
