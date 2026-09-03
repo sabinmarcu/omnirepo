@@ -31,6 +31,7 @@ import {
   type TagId,
 } from '@/models/Tag';
 import {
+  canonicalTag,
   expandTags,
   tagLabel,
   tagRegistry,
@@ -182,7 +183,17 @@ export default async function TagPage({
     });
   }
 
-  const id = tagFromPathSegments(segments);
+  const requestedId = tagFromPathSegments(segments);
+  const id = canonicalTag(requestedId);
+  if (id !== requestedId) {
+    return redirect({
+      locale,
+      href: {
+        pathname: '/tags/[...tag]',
+        params: { tag: id.split(':') },
+      },
+    });
+  }
   if (parseTag(id).namespace === 'org') {
     return redirect404();
   }

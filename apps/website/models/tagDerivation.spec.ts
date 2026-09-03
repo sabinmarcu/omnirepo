@@ -75,4 +75,18 @@ describe('deriveEntryTags', () => {
   it('keeps unregistered skills usable', () => {
     expect(deriveSkillTag('Some Unheard Of Thing')).toBe('skills:some-unheard-of-thing');
   });
+
+  it('canonicalizes equivalent skill tags before indexing', () => {
+    const registry: TagRegistry = {
+      'skills:typescript': { canonical: 'lang:typescript' },
+      'lang:typescript': { label: 'TypeScript' },
+    };
+
+    expect(deriveEntryTags({
+      authoredTags: ['skills:typescript'],
+    }, registry)).toMatchObject({
+      authoredTags: ['lang:typescript'],
+      tags: ['lang:typescript'],
+    });
+  });
 });

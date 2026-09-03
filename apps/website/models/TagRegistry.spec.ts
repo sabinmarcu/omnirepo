@@ -4,6 +4,7 @@ import {
   it,
 } from 'vitest';
 import {
+  canonicalTag,
   expandTags,
   resolveTag,
   tagRegistry,
@@ -45,11 +46,28 @@ describe('TagRegistry', () => {
     expect(resolveTag('skills', 'AngularJS', registry)).toBe('skills:angularjs');
   });
 
+  it('resolves canonical equivalents while retaining their direct override', () => {
+    const registry: TagRegistry = {
+      'skills:typescript': { canonical: 'lang:typescript' },
+      'lang:typescript': { label: 'TypeScript' },
+    };
+
+    expect(canonicalTag('skills:typescript', registry)).toBe('lang:typescript');
+    expect(expandTags(['skills:typescript'], registry)).toEqual(['lang:typescript']);
+  });
+
   it('rejects invalid registry references and namespace collisions', () => {
     expect(() => validateRegistry([], {
       alpha: { implies: ['missing'] },
     })).toThrow('Unresolvable implied tag');
     expect(() => validateRegistry(['skills'], {})).toThrow('Bare tag collides with namespace');
+    expect(() => validateRegistry([], {
+      'skills:typescript': { canonical: 'lang:typescript' },
+    })).toThrow('Unresolvable canonical tag');
+    expect(() => validateRegistry([], {
+      alpha: { canonical: 'beta' },
+      beta: { canonical: 'alpha' },
+    })).toThrow('Tag canonical cycle');
   });
 
   it('accepts the application registry', () => {

@@ -28,7 +28,7 @@ export const tagRegistryData = {
     label: 'AngularJS',
   },
   'skills:css3': {
-    implies: ['topics:frontend', 'lang:css'],
+    canonical: 'lang:css',
     label: 'CSS3',
   },
   'skills:graphql': {
@@ -54,7 +54,7 @@ export const tagRegistryData = {
     label: 'React',
   },
   'skills:typescript': {
-    implies: ['lang:typescript'],
+    canonical: 'lang:typescript',
     label: 'TypeScript',
   },
   'skills:vanilla-extract': {
@@ -73,6 +73,9 @@ export const tagRegistryData = {
   'lang:css': {
     label: 'CSS',
   },
+  'lang:c-cpp': {
+    label: 'C/C++',
+  },
   'lang:graphql': {
     label: 'GraphQL',
   },
@@ -84,6 +87,9 @@ export const tagRegistryData = {
   },
   'lang:typescript': {
     label: 'TypeScript',
+  },
+  'skills:c-c': {
+    canonical: 'lang:c-cpp',
   },
 } satisfies TagRegistry;
 

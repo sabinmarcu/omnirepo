@@ -1,4 +1,5 @@
 import {
+  canonicalTag,
   expandTags,
   resolveTag,
   type TagRegistry,
@@ -49,7 +50,7 @@ export function deriveYearTags(
 }
 
 export function deriveSkillTag(skill: string): TagId {
-  return resolveTag('skills', skill);
+  return canonicalTag(resolveTag('skills', skill));
 }
 
 export function deriveCvTags({
@@ -84,9 +85,11 @@ export function deriveEntryTags(
   { authoredTags, excludedTags = [] }: EntryTagDerivation,
   registry?: TagRegistry,
 ): DerivedEntryTags {
-  const normalizedAuthoredTags = uniqueSorted(authoredTags);
+  const normalizedAuthoredTags = uniqueSorted(
+    authoredTags.map((tag) => canonicalTag(tag, registry)),
+  );
   const expandedTags = expandTags(normalizedAuthoredTags, registry);
-  const exclusions = new Set(excludedTags);
+  const exclusions = new Set(excludedTags.map((tag) => canonicalTag(tag, registry)));
 
   return {
     authoredTags: normalizedAuthoredTags,

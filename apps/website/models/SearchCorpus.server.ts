@@ -12,6 +12,7 @@ import {
   type TagId,
 } from './Tag';
 import {
+  canonicalTag,
   tagLabel,
   tagRegistry,
 } from './TagRegistry';
@@ -77,7 +78,9 @@ async function buildCorpus(locale: Locale): Promise<SearchDocument[]> {
     ...Object.keys(tagRegistry),
   ]);
   const publicTagIds = [...tagIds].filter((id) => (
-    parseTag(id).namespace !== 'org' && !isIgnoredTag(id)
+    canonicalTag(id) === id
+    && parseTag(id).namespace !== 'org'
+    && !isIgnoredTag(id)
   ));
   const tagDocuments = await Promise.all(publicTagIds.map(async (id): Promise<SearchDocument> => {
     const title = label(id);

@@ -14,6 +14,8 @@ export { promotedTags } from './TagRegistry.data';
 export type TagDefinition = {
   /** Display override. Default is prettify(last segment). Locale-neutral. */
   label?: string,
+  /** Equivalent tag that owns search and route identity. */
+  canonical?: TagId,
   aliases?: string[],
   implies?: TagId[],
 };
@@ -22,6 +24,22 @@ export type TagRegistry = Partial<Record<TagId, TagDefinition>>;
 
 /** Absence is the normal case, not an error. */
 export const tagRegistry: TagRegistry = tagRegistryData;
+
+/** Follows canonical equivalents to the tag that owns search and route identity. */
+export function canonicalTag(id: TagId, registry: TagRegistry = tagRegistry): TagId {
+  const chain = new Set<TagId>();
+  let current = id;
+  let target = registry[current]?.canonical;
+  while (target) {
+    if (chain.has(current)) {
+      throw new Error(`Tag canonical cycle: ${[...chain, current].join(' -> ')}`);
+    }
+    chain.add(current);
+    current = target;
+    target = registry[current]?.canonical;
+  }
+  return current;
+}
 
 function tagId(namespace: TagNamespace | undefined, segment: string): TagId {
   return namespace ? `${namespace}:${segment}` : segment;
@@ -80,7 +98,7 @@ function expandTag(
 export function expandTags(ids: TagId[], registry: TagRegistry = tagRegistry): TagId[] {
   const expanded = new Set<TagId>();
   for (const id of ids) {
-    expandTag(id, registry, expanded, []);
+    expandTag(canonicalTag(id, registry), registry, expanded, []);
   }
   return [...expanded].toSorted((left, right) => left.localeCompare(right));
 }
@@ -116,6 +134,10 @@ export function validateRegistry(
       throw new Error(`Bare tag collides with namespace: ${id}`);
     }
 
+    if (definition?.canonical && !knownIds.has(definition.canonical)) {
+      throw new Error(`Unresolvable canonical tag: ${id} -> ${definition.canonical}`);
+    }
+
     for (const impliedId of definition?.implies ?? []) {
       if (!knownIds.has(impliedId)) {
         throw new Error(`Unresolvable implied tag: ${id} -> ${impliedId}`);
@@ -141,6 +163,7 @@ export function validateRegistry(
 
   expandTags([], registry);
   for (const id of Object.keys(registry)) {
+    canonicalTag(id, registry);
     expandTags([id], registry);
   }
 }
