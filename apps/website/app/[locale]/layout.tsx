@@ -56,6 +56,10 @@ const metadata: Metadata = {
   },
 };
 
+// Runs before first paint so pixel-locked patterns (scanlines) never render at
+// the wrong period. Re-runs on resize to catch zoom and monitor changes.
+const devicePixelRatioScript = '(()=>{const s=()=>document.documentElement.style.setProperty(\'--dpr\',String(window.devicePixelRatio||1));s();window.addEventListener(\'resize\',s)})()';
+
 export namespace RootLayout {
   export type Props = (
     & LayoutProps<'/[locale]'>
@@ -104,6 +108,12 @@ export default withExperiment('scanlines')(
         lang={locale}
         {...{ [variantSelector]: await getThemeVariant() }}
       >
+        <head>
+          <script
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{ __html: devicePixelRatioScript }}
+          />
+        </head>
         <NextIntlClientProvider locale={locale}>
           <body className={cls(
             rootFont.variable,
