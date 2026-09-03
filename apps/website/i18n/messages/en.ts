@@ -80,6 +80,9 @@ const messages = {
     continue: 'Continue in {locale}',
     dismiss: 'Dismiss',
   },
+  relatedContent: {
+    title: 'Related content',
+  },
   translationFallback: {
     notice: 'This page is currently available only in English.',
   },

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { canonicalMetadata } from '@/i18n/metadata';
-import { locales } from '@/i18n/locales';
+import { isLocale } from '@/i18n/locales';
 import { LocaleSuggestionBanner } from '@/i18n/LocaleSuggestionBanner';
 import { experimentEnabled } from '@/experiments/utils';
 import { CVResource } from '@/models/CVResource';
@@ -22,6 +22,9 @@ import { ExperienceList } from './components/Experience';
 import { LanguageList } from './components/Language';
 import { DegreeList } from './components/Degree.list';
 import { PublicationsList } from './components/Publications.list';
+import { ContentIndex } from '@/models/ContentIndex';
+import { RelatedContent } from '@/components/RelatedContent';
+import { redirect404 } from '@/utils/routes.ssr';
 
 export async function generateMetadata(
   { params }: PageProps<'/[locale]/personal/cv'>,
@@ -47,6 +50,9 @@ export default async function CVPage({
     experimentEnabled('languageSuggestionBanner'),
   ]);
   const { locale } = await params;
+  if (!isLocale(locale)) {
+    return redirect404();
+  }
   const cv = CVResource.fromDefault(locale);
   const availableLocales = await cv.availableLocales;
 
@@ -124,6 +130,10 @@ export default async function CVPage({
   );
 
   const { toc } = cv;
+  const index = await ContentIndex.forLocale(locale);
+  const cvEntryIds = index.entries
+    .filter(({ id }) => id.startsWith('cv:'))
+    .map(({ id }) => id);
 
   return (
     <TOCLayout className={cvPageStyles} variant="large" maxDepth={3} toc={toc}>
@@ -138,6 +148,11 @@ export default async function CVPage({
         <InfoTagList list={info} />
       </header>
       {pageContent}
+      <RelatedContent
+        locale={locale}
+        entryIds={cvEntryIds}
+        excludeIdPrefix="cv:"
+      />
     </TOCLayout>
   );
 }

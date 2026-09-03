@@ -82,6 +82,9 @@ const messages = {
     continue: 'Continuă în {locale}',
     dismiss: 'Închide',
   },
+  relatedContent: {
+    title: 'Conținut asociat',
+  },
   translationFallback: {
     notice: 'Această pagină este disponibilă momentan doar în engleză.',
   },
