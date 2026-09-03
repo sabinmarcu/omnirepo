@@ -139,6 +139,12 @@ const messages = {
       tag: 'Etichetă',
       tool: 'Unealtă',
     },
+    tagKinds: {
+      tag: 'Etichetă',
+      language: 'Limbaj',
+      skill: 'Abilitate',
+      topic: 'Subiect',
+    },
   },
   translationFallback: {
     notice: 'Această pagină este disponibilă momentan doar în engleză.',

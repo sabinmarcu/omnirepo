@@ -6,6 +6,7 @@ import {
 import {
   canonicalTag,
   expandTags,
+  tagKind,
   resolveTag,
   tagRegistry,
   validateRegistry,
@@ -46,6 +47,21 @@ describe('TagRegistry', () => {
     expect(resolveTag('skills', 'AngularJS', registry)).toBe('skills:angularjs');
   });
 
+  it('inherits kind from its namespace while allowing an override', () => {
+    const registry: TagRegistry = {
+      lang: { kind: 'language' },
+      skills: { kind: 'skill' },
+      topics: { kind: 'topic' },
+      'lang:typescript': { kind: 'tag' },
+    };
+
+    expect(tagKind('lang:css', registry)).toBe('language');
+    expect(tagKind('skills:react', registry)).toBe('skill');
+    expect(tagKind('topics:frontend', registry)).toBe('topic');
+    expect(tagKind('lang:typescript', registry)).toBe('tag');
+    expect(tagKind('opensource', registry)).toBe('tag');
+  });
+
   it('resolves canonical equivalents while retaining their direct override', () => {
     const registry: TagRegistry = {
       'skills:typescript': { canonical: 'lang:typescript' },
@@ -61,6 +77,9 @@ describe('TagRegistry', () => {
       alpha: { implies: ['missing'] },
     })).toThrow('Unresolvable implied tag');
     expect(() => validateRegistry(['skills'], {})).toThrow('Bare tag collides with namespace');
+    expect(() => validateRegistry([], {
+      lang: { label: 'Language' },
+    })).toThrow('Namespace definition cannot include tag metadata');
     expect(() => validateRegistry([], {
       'skills:typescript': { canonical: 'lang:typescript' },
     })).toThrow('Unresolvable canonical tag');

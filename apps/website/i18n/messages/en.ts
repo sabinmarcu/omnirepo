@@ -137,6 +137,12 @@ const messages = {
       tag: 'Tag',
       tool: 'Tool',
     },
+    tagKinds: {
+      tag: 'Tag',
+      language: 'Language',
+      skill: 'Skill',
+      topic: 'Topic',
+    },
   },
   translationFallback: {
     notice: 'This page is currently available only in English.',

@@ -13,7 +13,9 @@ import {
 } from './Tag';
 import {
   canonicalTag,
+  isTagNamespace,
   tagLabel,
+  tagKind,
   tagRegistry,
 } from './TagRegistry';
 import { TagResource } from './TagResource';
@@ -78,7 +80,8 @@ async function buildCorpus(locale: Locale): Promise<SearchDocument[]> {
     ...Object.keys(tagRegistry),
   ]);
   const publicTagIds = [...tagIds].filter((id) => (
-    canonicalTag(id) === id
+    !isTagNamespace(id)
+    && canonicalTag(id) === id
     && parseTag(id).namespace !== 'org'
     && !isIgnoredTag(id)
   ));
@@ -98,6 +101,7 @@ async function buildCorpus(locale: Locale): Promise<SearchDocument[]> {
         params: { tag: tagToPathSegments(id) },
       },
       locale,
+      kind: tagKind(id),
       tags: [id],
     };
   }));

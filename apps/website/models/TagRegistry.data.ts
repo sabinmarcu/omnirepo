@@ -1,6 +1,15 @@
 import type { TagRegistry } from './TagRegistry';
 
 export const tagRegistryData = {
+  lang: {
+    kind: 'language',
+  },
+  skills: {
+    kind: 'skill',
+  },
+  topics: {
+    kind: 'topic',
+  },
   academic: {
     label: 'Academic',
   },

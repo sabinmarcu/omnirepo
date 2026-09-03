@@ -14,6 +14,7 @@ const documents: SearchDocument[] = [
     type: 'project',
     location: { pathname: '/personal/cv' },
     locale: 'en',
+    kind: undefined,
     tags: ['skills:typescript'],
   },
   {
@@ -26,6 +27,7 @@ const documents: SearchDocument[] = [
       params: { slug: 'typescript' },
     },
     locale: 'en',
+    kind: undefined,
     tags: ['skills:typescript'],
   },
 ];

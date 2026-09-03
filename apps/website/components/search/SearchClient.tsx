@@ -108,7 +108,7 @@ export function SearchClient({
                 className={searchResultTypeStyle}
                 data-theme-family={searchDocumentThemeFamilies[document.type]}
               >
-                {translate(`types.${document.type}`)}
+                {translate(`${document.type === 'tag' ? 'tagKinds' : 'types'}.${document.type === 'tag' ? document.kind ?? 'tag' : document.type}`)}
               </span>
             </Link>
           </li>

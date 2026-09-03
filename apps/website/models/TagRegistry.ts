@@ -11,9 +11,20 @@ import {
 
 export { promotedTags } from './TagRegistry.data';
 
+export const tagKinds = [
+  'tag',
+  'language',
+  'skill',
+  'topic',
+] as const;
+
+export type TagKind = typeof tagKinds[number];
+
 export type TagDefinition = {
   /** Display override. Default is prettify(last segment). Locale-neutral. */
   label?: string,
+  /** Search-result category. Namespace definitions supply inherited defaults. */
+  kind?: TagKind,
   /** Equivalent tag that owns search and route identity. */
   canonical?: TagId,
   aliases?: string[],
@@ -24,6 +35,16 @@ export type TagRegistry = Partial<Record<TagId, TagDefinition>>;
 
 /** Absence is the normal case, not an error. */
 export const tagRegistry: TagRegistry = tagRegistryData;
+
+export function isTagNamespace(id: TagId): id is TagNamespace {
+  return tagNamespaces.includes(id as TagNamespace);
+}
+
+/** Per-tag override -> namespace default -> generic tag. */
+export function tagKind(id: TagId, registry: TagRegistry = tagRegistry): TagKind {
+  const { namespace } = parseTag(id);
+  return registry[id]?.kind ?? (namespace ? registry[namespace]?.kind : undefined) ?? 'tag';
+}
 
 /** Follows canonical equivalents to the tag that owns search and route identity. */
 export function canonicalTag(id: TagId, registry: TagRegistry = tagRegistry): TagId {
@@ -130,33 +151,34 @@ export function validateRegistry(
 
   for (const [id, definition] of Object.entries(registry)) {
     const tag = parseTag(id);
-    if (tag.segments.length === 1 && tagNamespaces.includes(id as TagNamespace)) {
-      throw new Error(`Bare tag collides with namespace: ${id}`);
-    }
-
-    if (definition?.canonical && !knownIds.has(definition.canonical)) {
-      throw new Error(`Unresolvable canonical tag: ${id} -> ${definition.canonical}`);
-    }
-
-    for (const impliedId of definition?.implies ?? []) {
-      if (!knownIds.has(impliedId)) {
-        throw new Error(`Unresolvable implied tag: ${id} -> ${impliedId}`);
+    if (isTagNamespace(id)) {
+      if (definition?.aliases || definition?.implies || definition?.label) {
+        throw new Error(`Namespace definition cannot include tag metadata: ${id}`);
       }
-    }
-
-    for (const alias of definition?.aliases ?? []) {
-      const normalizedAlias = tagId(tag.namespace, normalizeTagSegment(alias));
-      const existing = claimedAliases.get(normalizedAlias);
-      if (existing && existing !== id) {
-        throw new Error(`Alias is claimed by multiple tags: ${normalizedAlias}`);
+    } else {
+      if (definition?.canonical && !knownIds.has(definition.canonical)) {
+        throw new Error(`Unresolvable canonical tag: ${id} -> ${definition.canonical}`);
       }
-      claimedAliases.set(normalizedAlias, id);
+
+      for (const impliedId of definition?.implies ?? []) {
+        if (!knownIds.has(impliedId)) {
+          throw new Error(`Unresolvable implied tag: ${id} -> ${impliedId}`);
+        }
+      }
+
+      for (const alias of definition?.aliases ?? []) {
+        const normalizedAlias = tagId(tag.namespace, normalizeTagSegment(alias));
+        const existing = claimedAliases.get(normalizedAlias);
+        if (existing && existing !== id) {
+          throw new Error(`Alias is claimed by multiple tags: ${normalizedAlias}`);
+        }
+        claimedAliases.set(normalizedAlias, id);
+      }
     }
   }
 
   for (const id of knownIds) {
-    const tag = parseTag(id);
-    if (tag.segments.length === 1 && tagNamespaces.includes(id as TagNamespace)) {
+    if (isTagNamespace(id) && !registry[id]) {
       throw new Error(`Bare tag collides with namespace: ${id}`);
     }
   }
