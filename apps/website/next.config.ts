@@ -11,6 +11,7 @@ import {
 import createNextIntlPlugin from 'next-intl/plugin';
 import { remarkMdxToc } from 'remark-mdx-toc';
 import remarkHeadingId from 'remark-heading-id';
+import remarkMdxImages from 'remark-mdx-images';
 
 const withVanillaExtract = createVanillaExtractPlugin();
 const withNextIntl = createNextIntlPlugin();
@@ -59,6 +60,7 @@ const withMdx = createMdx({
       }],
       [remarkMdxToc as any, { name: 'toc' }],
       [remarkCodeHike, chConfig],
+      remarkMdxImages,
     ],
     recmaPlugins: [[recmaCodeHike, chConfig]],
     jsx: true,
