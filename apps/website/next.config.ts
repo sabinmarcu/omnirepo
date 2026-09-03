@@ -45,6 +45,7 @@ const nextConfig: NextConfig = {
 const chConfig: CodeHikeConfig = {
   components: {
     code: 'CodehikeCode',
+    inlineCode: 'CodehikeInlineCode',
   },
 };
 
