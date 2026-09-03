@@ -12,13 +12,18 @@ globalStyle('body', {
 });
 
 export const iconStyle = style({
+  display: 'inline-grid',
+  placeItems: 'center',
   aspectRatio: '1',
   inlineSize: iconSize,
+  blockSize: iconSize,
+  lineHeight: 1,
 });
 
 globalStyle(`${iconStyle} svg`, {
   aspectRatio: '1',
   inlineSize: iconSize,
+  blockSize: iconSize,
   fill: 'currentColor',
 });
 
