@@ -84,6 +84,7 @@ export const searchEntrypointResultsStyle = style({
   insetBlockStart: `calc(100% + ${navigationSpacing})`,
   insetInline: 0,
   display: 'grid',
+  gridTemplateColumns: 'minmax(0, 1fr)',
   maxBlockSize: 'min(22rem, 60vh)',
   margin: 0,
   padding: navigationSpacing,
@@ -100,6 +101,7 @@ export const searchEntrypointResultsStyle = style({
 
 export const searchEntrypointResultStyle = style({
   display: 'flex',
+  minInlineSize: 0,
   alignItems: 'center',
   justifyContent: 'space-between',
   gap: navigationSpacing,
@@ -114,6 +116,7 @@ export const searchEntrypointResultStyle = style({
 });
 
 export const searchEntrypointResultTitleStyle = style({
+  flex: 1,
   minInlineSize: 0,
   overflow: 'hidden',
   textOverflow: 'ellipsis',
