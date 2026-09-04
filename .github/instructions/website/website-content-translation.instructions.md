@@ -19,4 +19,5 @@ applyTo: "apps/website/content/**"
 ## Related
 
 - [website.instructions.md](./website.instructions.md) for app-wide routing, i18n, and styling rules.
+- [website-content-authoring.instructions.md](./website-content-authoring.instructions.md) for per-content-type authoring rules.
 - [website-models.instructions.md](./website-models.instructions.md) for how content files are discovered and parsed.

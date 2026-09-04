@@ -42,7 +42,8 @@
     "yarn constraints": true,
     "git add": true,
     "yarn vitest": true,
-    "yarn eslint": true
+    "yarn eslint": true,
+    "yarn npm info": true
   },
   "chat.useAgentsMdFile": true,
   "chat.instructionsFilesLocations": {

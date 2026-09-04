@@ -12,6 +12,7 @@ applyTo: "apps/website/**"
 - For architecture context, link to [ARCHITECTURE.md](../../../ARCHITECTURE.md) instead of copying it.
 - Companion instructions in this folder:
   - [website-models.instructions.md](./website-models.instructions.md) for content resource models.
+  - [website-content-authoring.instructions.md](./website-content-authoring.instructions.md) for writing MDX content per content type.
   - [website-content-translation.instructions.md](./website-content-translation.instructions.md) for MDX content and locale variants.
 
 ## Implementation Rules

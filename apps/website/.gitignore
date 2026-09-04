@@ -41,3 +41,7 @@ yarn-error.log*
 next-env.d.ts
 
 !tsconfig.next.json
+
+# Next really likes these. I don't
+AGENTS.md
+CLAUDE.md
