@@ -46,4 +46,7 @@ export const typographyStyles = styleVariants({
     ...headingBase,
     fontSize: theme.grid.m,
   }),
+  p: whenStyled({
+    paddingBlock: theme.grid.s,
+  }),
 });

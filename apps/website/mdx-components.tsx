@@ -13,6 +13,7 @@ const components: MDXComponents = {
   h4: (props: any) => (<Typography as="h4" {...props} />),
   h5: (props: any) => (<Typography as="h5" {...props} />),
   h6: (props: any) => (<Typography as="h6" {...props} />),
+  p: (props: any) => (<Typography as="p" {...props} />),
   img: ({
     src, alt, ...rest
   }: any) => (
