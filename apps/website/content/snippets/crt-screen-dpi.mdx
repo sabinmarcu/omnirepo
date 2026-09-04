@@ -1,0 +1,38 @@
+export const title = 'CRT Screen DPI Fix'
+export const slug = 'crt-screen-dpi'
+
+The original CRT screen used a `repeating-linear-gradient` with a fixed CSS-pixel period. That looks fine when one CSS pixel maps neatly to one device pixel, but it starts to shimmer at fractional display scale. A four-pixel CSS repeat at `1.25x`, `1.5x`, or a browser zoom level can land between physical pixels, so each repeated tile gets rasterized with slightly different antialiasing. The eye reads that as a slow moire band instead of a stable scanline pattern.
+
+The fix is to choose the scanline period in CSS pixels, convert it to device pixels, round that value to the nearest whole device pixel, then convert it back:
+
+```txt
+snappedCssPixels = round(cssPixels * devicePixelRatio) / devicePixelRatio
+```
+
+For a `4px` target period at `1.25x`, the browser would otherwise paint a `5` device-pixel repeat already, so the result stays `4px`. At `1.4x`, the unsnapped period is `5.6` device pixels; snapping turns that into `6` device pixels, or about `4.286px` in CSS space. The number changes slightly, but every repeat now starts and ends on the same physical pixel grid, which is the part the scanline illusion actually needs.
+
+CSS cannot read `window.devicePixelRatio` directly, so the JavaScript snippet stores it on the root element as `--dpr`. The CSS then uses `round()` inside `calc()` to keep the tile period locked to whole device pixels. The overlay is also `position: fixed`, so scrolling does not keep re-rasterizing the pattern at subpixel offsets.
+
+### !showcase crt-screen-dpi.tsx
+
+### !!skill JavaScript
+
+### !!skill CSS3
+
+### !!skill Vanilla Extract
+
+### !!file JavaScript
+
+#### !lang js
+
+#### !source crt-screen-dpi.js
+
+#### !slug script
+
+### !!file CSS
+
+#### !lang ts
+
+#### !source crt-screen-dpi.css.ts
+
+#### !slug styles
