@@ -27,6 +27,14 @@ function restrictLinksToMaxDepth(
   return result;
 }
 
+function countLinks(toc: TOCLayoutTOC.Props['toc']): number {
+  let count = 0;
+  for (const link of toc) {
+    count += 1 + countLinks(link.children);
+  }
+  return count;
+}
+
 export function TOCLayout({
   toc,
   maxDepth = Infinity,
@@ -34,7 +42,7 @@ export function TOCLayout({
 }: TOCLayout.Props) {
   const restrictedToc = restrictLinksToMaxDepth(toc, maxDepth);
 
-  if (restrictedToc.length < 2) {
+  if (countLinks(restrictedToc) < 2) {
     return <PageLayout {...props} />;
   }
 
