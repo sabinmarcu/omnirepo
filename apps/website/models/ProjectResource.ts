@@ -19,6 +19,8 @@ import type { tocSchema } from './schemas';
 
 const projectFileSchema = codehikeBlockAnnotationSchema().and(z.object({
   slug: codehikeBlockAnnotationSchema().optional(),
+  entrydepth: codehikeBlockAnnotationSchema(z.coerce.number().int().positive()).optional(),
+  maxdepth: codehikeBlockAnnotationSchema(z.coerce.number().int().positive()).optional(),
 }));
 
 export const projectContentSchema = z.object({
@@ -31,6 +33,8 @@ const projectMetadataSchema = contentMetadataSchema.extend({
   kind: z.string(),
   status: z.string(),
   repo: z.url(),
+  entryDepth: z.number().int().positive().optional(),
+  maxDepth: z.number().int().positive().optional(),
 });
 
 export type ProjectPage = {
@@ -38,6 +42,8 @@ export type ProjectPage = {
   slug: string,
   content: ReactNode,
   toc: Awaited<ReturnType<typeof tocElementsToTree>>,
+  entryDepth?: number,
+  maxDepth?: number,
 };
 
 const annotationPattern = /^!{1,2}[a-zA-Z][\w-]*(\s|$)/;
@@ -64,11 +70,17 @@ function isEmptyFragment(node: ReactNode): boolean {
 }
 
 function projectPageContent(section: z.infer<typeof projectFileSchema>) {
-  if (isEmptyFragment(section.children) && section.slug?.children) {
-    return section.slug.children;
+  if (!isEmptyFragment(section.children)) {
+    return section.children;
   }
 
-  return section.children;
+  const annotationContent = [
+    section.entrydepth?.children,
+    section.maxdepth?.children,
+    section.slug?.children,
+  ].find((node) => node !== undefined && !isEmptyFragment(node));
+
+  return annotationContent ?? section.children;
 }
 
 export class ProjectResource extends ContentResource<
@@ -108,10 +120,12 @@ export class ProjectResource extends ContentResource<
         file = [], summary, children,
       },
       toc,
-      rawMdxContent] = await Promise.all([
+      rawMdxContent,
+      metadata] = await Promise.all([
         this.content,
         this.toc,
         this.rawMdxContent,
+        this.metadata,
       ]);
       const partitions: TOCElement[][] = [[]];
 
@@ -129,12 +143,20 @@ export class ProjectResource extends ContentResource<
           slug: await this.slug,
           content: file.length === 0 && !summary ? rawMdxContent : children,
           toc: tocElementsToTree(partitions[0]),
+          entryDepth: metadata.entryDepth,
+          maxDepth: metadata.maxDepth,
         },
         ...file.map((section, index) => ({
           title: section.title,
           slug: section.slug?.title ?? section.title.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-').replaceAll(/(^-|-$)/g, ''),
           content: projectPageContent(section),
           toc: tocElementsToTree(partitions[index + 1] ?? []),
+          entryDepth: section.entrydepth
+            ? Number(section.entrydepth.title)
+            : metadata.entryDepth,
+          maxDepth: section.maxdepth
+            ? Number(section.maxdepth.title)
+            : metadata.maxDepth,
         })),
       ];
     },

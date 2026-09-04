@@ -26,7 +26,11 @@ export default async function ProjectSubpage({ params }: PageProps<'/[locale]/pr
   const page = project ? await project.getPage(subpage) : undefined;
   if (!project || !page) return redirect404();
   return (
-    <TOCLayout toc={page.toc}>
+    <TOCLayout
+      toc={page.toc}
+      entryDepth={page.entryDepth}
+      maxDepth={page.maxDepth}
+    >
       <TranslationFallbackNotice locale={locale} resource={project} />
       {page.content}
     </TOCLayout>

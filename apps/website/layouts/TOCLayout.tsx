@@ -7,20 +7,31 @@ export namespace TOCLayout {
   export type Props = (
     & PageLayout.Props
     & TOCLayoutTOC.Props
-    & { maxDepth?: number }
+    & {
+      entryDepth?: number,
+      maxDepth?: number,
+    }
   );
 }
 
-function restrictLinksToMaxDepth(
+function restrictLinksToDepthRange(
   toc: TOCLayoutTOC.Props['toc'],
+  entryDepth: Exclude<TOCLayout.Props['entryDepth'], undefined>,
   maxDepth: Exclude<TOCLayout.Props['maxDepth'], undefined>,
 ) {
   const result: TOCLayoutTOC.Props['toc'] = [];
   for (const link of toc) {
-    if (link.depth <= maxDepth) {
+    const children = restrictLinksToDepthRange(
+      link.children,
+      entryDepth,
+      maxDepth,
+    );
+    if (link.depth < entryDepth) {
+      result.push(...children);
+    } else if (link.depth <= maxDepth) {
       result.push({
         ...link,
-        children: restrictLinksToMaxDepth(link.children, maxDepth),
+        children,
       });
     }
   }
@@ -37,10 +48,11 @@ function countLinks(toc: TOCLayoutTOC.Props['toc']): number {
 
 export function TOCLayout({
   toc,
+  entryDepth = -Infinity,
   maxDepth = Infinity,
   ...props
 }: TOCLayout.Props) {
-  const restrictedToc = restrictLinksToMaxDepth(toc, maxDepth);
+  const restrictedToc = restrictLinksToDepthRange(toc, entryDepth, maxDepth);
 
   if (countLinks(restrictedToc) < 2) {
     return <PageLayout {...props} />;

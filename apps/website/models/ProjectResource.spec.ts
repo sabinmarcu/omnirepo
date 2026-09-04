@@ -15,6 +15,10 @@ describe('ProjectResource', () => {
     Object.assign(project, {
       title: Promise.resolve('Video Trimmer'),
       slug: Promise.resolve('video-trimmer'),
+      metadata: Promise.resolve({
+        entryDepth: 2,
+        maxDepth: 3,
+      }),
       content: Promise.resolve({
         summary: {
           title: 'summary',
@@ -24,6 +28,14 @@ describe('ProjectResource', () => {
           {
             title: 'Installing',
             children: 'Install',
+            entrydepth: {
+              title: 3,
+              children: undefined,
+            },
+            maxdepth: {
+              title: 4,
+              children: undefined,
+            },
           },
           {
             title: 'Usage',
@@ -74,9 +86,17 @@ describe('ProjectResource', () => {
     ]);
     await expect(project.getPage('video-trimmer')).resolves.toMatchObject({
       toc: [expect.objectContaining({ value: 'Video Trimmer' })],
+      entryDepth: 2,
+      maxDepth: 3,
     });
     await expect(project.getPage('installing')).resolves.toMatchObject({
       toc: [expect.objectContaining({ value: 'Installing' })],
+      entryDepth: 3,
+      maxDepth: 4,
+    });
+    await expect(project.getPage('usage')).resolves.toMatchObject({
+      entryDepth: 2,
+      maxDepth: 3,
     });
     await expect(project.summary).resolves.toBe('Card summary');
   });
@@ -86,6 +106,7 @@ describe('ProjectResource', () => {
     Object.assign(project, {
       title: Promise.resolve('Current Website'),
       slug: Promise.resolve('current-website'),
+      metadata: Promise.resolve({ maxDepth: 3 }),
       content: Promise.resolve({
         file: [
           {
@@ -119,6 +140,34 @@ describe('ProjectResource', () => {
     await expect(project.getPage('typography')).resolves.toMatchObject({
       content: 'Rendered typography content',
       toc: [expect.objectContaining({ value: 'Heading Two' })],
+      maxDepth: 3,
+    });
+  });
+
+  it('uses unary depth annotation content when the file annotation body is empty', async () => {
+    const project = ProjectResource.from({});
+    Object.assign(project, {
+      title: Promise.resolve('Current Website'),
+      slug: Promise.resolve('current-website'),
+      metadata: Promise.resolve({}),
+      content: Promise.resolve({
+        file: [{
+          title: 'Annotations',
+          children: createElement(Fragment),
+          entrydepth: {
+            title: 2,
+            children: 'Rendered annotations content',
+          },
+        }],
+        children: 'Overview',
+      }),
+      rawMdxContent: Promise.resolve('Unused raw content'),
+      toc: Promise.resolve([]),
+    });
+
+    await expect(project.getPage('annotations')).resolves.toMatchObject({
+      content: 'Rendered annotations content',
+      entryDepth: 2,
     });
   });
 
@@ -127,6 +176,7 @@ describe('ProjectResource', () => {
     Object.assign(project, {
       title: Promise.resolve('Single page'),
       slug: Promise.resolve('single-page'),
+      metadata: Promise.resolve({}),
       content: Promise.resolve({
         children: undefined,
       }),
@@ -145,6 +195,7 @@ describe('ProjectResource', () => {
     Object.assign(project, {
       title: Promise.resolve('Summary'),
       slug: Promise.resolve('summary'),
+      metadata: Promise.resolve({}),
       content: Promise.resolve({
         summary: {
           title: 'summary',

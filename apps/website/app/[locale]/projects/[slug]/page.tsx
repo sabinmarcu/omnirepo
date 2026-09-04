@@ -51,7 +51,11 @@ export default async function ProjectPage({ params }: PageProps<'/[locale]/proje
     project.modifiedAt,
   ]);
   return (
-    <TOCLayout toc={page.toc}>
+    <TOCLayout
+      toc={page.toc}
+      entryDepth={page.entryDepth}
+      maxDepth={page.maxDepth}
+    >
       <TranslationFallbackNotice locale={locale} resource={project} />
       <Typography as="h1">{await project.title}</Typography>
       <p className={projectDatesStyle}>

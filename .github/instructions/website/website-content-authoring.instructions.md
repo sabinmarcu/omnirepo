@@ -50,6 +50,7 @@ export const modifiedAt = '04.09.2026'
 - `tags` is an array of canonical, lower-case tag IDs. Use semantic namespaces such as `lang:typescript`, `tool:react`, `topics:frontend`, `project:kind:cli`, and `project:status:active`.
 - `createdAt` and `modifiedAt` use `DD.MM.YYYY` calendar dates. Keep locale variants aligned with their source file.
 - `!!skill` annotations are reserved for CV content. Do not use them in projects, tools, or snippets.
+- Projects may export optional positive integers `entryDepth` and `maxDepth` to limit the heading range shown in their table of contents. A `## !entrydepth <positive integer>` or `## !maxdepth <positive integer>` annotation inside a `# !!file` block overrides the corresponding value for its subpage.
 
 ## Tags
 
