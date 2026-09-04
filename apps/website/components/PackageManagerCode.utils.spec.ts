@@ -19,8 +19,8 @@ function format(input: string) {
 describe('package manager commands', () => {
   it('formats package installation', () => {
     expect(format('install X Y Z')).toEqual({
-      yarn: 'yarn install X Y Z',
-      pnpm: 'pnpm install X Y Z',
+      yarn: 'yarn add X Y Z',
+      pnpm: 'pnpm add X Y Z',
       npm: 'npm install X Y Z',
     });
   });

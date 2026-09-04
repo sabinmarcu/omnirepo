@@ -27,13 +27,13 @@ export const packageManagers = [
   {
     name: 'yarn',
     format: (command) => (command.operation === 'install'
-      ? `yarn install ${command.packages}`
+      ? `yarn add ${command.packages}`
       : `yarn dlx${command.package ? ` -p ${command.package}` : ''} ${command.command}`),
   },
   {
     name: 'pnpm',
     format: (command) => (command.operation === 'install'
-      ? `pnpm install ${command.packages}`
+      ? `pnpm add ${command.packages}`
       : `pnpm dlx${command.package ? ` --package ${command.package}` : ''} ${command.command}`),
   },
   {
