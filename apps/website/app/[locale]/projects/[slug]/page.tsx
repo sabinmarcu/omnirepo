@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 import { TranslationFallbackNotice } from '@/i18n/TranslationFallbackNotice';
 import { ThemedLink } from '@/components/primitives/ThemedLink';
 import { Icon } from '@/components/Icon';
@@ -8,8 +9,12 @@ import { canonicalMetadata } from '@/i18n/metadata';
 import { PageLayout } from '@/layouts/PageLayout';
 import { TOCLayout } from '@/layouts/TOCLayout';
 import { ProjectResource } from '@/models/ProjectResource';
+import { formatContentDate } from '@/models/ContentResource';
 import { redirect404 } from '@/utils/routes.ssr';
-import { projectResourceLinkStyle } from './page.css';
+import {
+  projectDatesStyle,
+  projectResourceLinkStyle,
+} from './page.css';
 
 export async function generateMetadata(
   { params }: PageProps<'/[locale]/projects/[slug]'>,
@@ -40,10 +45,21 @@ export default async function ProjectPage({ params }: PageProps<'/[locale]/proje
   if (!project) return redirect404();
   const page = await project.getPage(await project.slug);
   if (!page) return redirect404();
+  const [translate, createdAt, modifiedAt] = await Promise.all([
+    getTranslations('projects'),
+    project.createdAt,
+    project.modifiedAt,
+  ]);
   return (
     <TOCLayout toc={page.toc}>
       <TranslationFallbackNotice locale={locale} resource={project} />
       <Typography as="h1">{await project.title}</Typography>
+      <p className={projectDatesStyle}>
+        {translate('createdAndLastUpdated', {
+          createdAt: formatContentDate(createdAt, locale),
+          modifiedAt: formatContentDate(modifiedAt, locale),
+        })}
+      </p>
       <PageLayout.Inset>
         <ThemedLink className={projectResourceLinkStyle} href={await project.repo}>
           <Icon icon="github" />

@@ -20,24 +20,11 @@ describe('showcaseContentSchema', () => {
     children: null,
   };
 
-  it('accepts showcase content without skills', () => {
+  it('accepts showcase content without annotations', () => {
     expect(showcaseContentSchema.parse({
       showcase,
       children: null,
-    }).skill).toBeUndefined();
-  });
-
-  it('parses optional skill annotations', () => {
-    expect(showcaseContentSchema.parse({
-      showcase,
-      skill: [
-        {
-          title: 'TypeScript',
-          children: null,
-        },
-      ],
-      children: null,
-    }).skill).toHaveLength(1);
+    }).showcase).toEqual(showcase);
   });
 });
 

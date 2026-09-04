@@ -6,3 +6,9 @@ export const projectResourceLinkStyle = style({
   alignItems: 'center',
   gap: theme.grid.s,
 });
+
+export const projectDatesStyle = style({
+  color: theme.colors.background.text,
+  marginBlock: 0,
+  opacity: 0.7,
+});

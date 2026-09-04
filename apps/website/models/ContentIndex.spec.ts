@@ -68,6 +68,40 @@ describe('ContentIndex', () => {
     ]);
   });
 
+  it('sorts published content by latest modification', () => {
+    const index = new ContentIndex([
+      {
+        id: 'tool:older',
+        type: 'tool',
+        title: 'Older tool',
+        location: {
+          pathname: '/tools/[slug]',
+          params: { slug: 'older' },
+        },
+        locale: 'en',
+        modifiedAt: '02.09.2026',
+        authoredTags: ['skills:react'],
+      },
+      {
+        id: 'tool:newer',
+        type: 'tool',
+        title: 'Newer tool',
+        location: {
+          pathname: '/tools/[slug]',
+          params: { slug: 'newer' },
+        },
+        locale: 'en',
+        modifiedAt: '04.09.2026',
+        authoredTags: ['skills:react'],
+      },
+    ], registry);
+
+    expect(index.byTag('skills:react').map(({ id }) => id)).toEqual([
+      'tool:newer',
+      'tool:older',
+    ]);
+  });
+
   it('applies exclusions after implication expansion', () => {
     const index = new ContentIndex([
       {

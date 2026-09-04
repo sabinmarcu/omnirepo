@@ -10,9 +10,12 @@ import {
   type TOCElement,
 } from '@/utils/toc';
 import { extractChildrenText } from '@/layouts/TOCAnchor.utils';
-import { MdxResource } from './MdxResource';
+import {
+  ContentResource,
+  contentMetadataSchema,
+} from './ContentResource';
 import { lazy } from './lazy';
-import { tocSchema } from './schemas';
+import type { tocSchema } from './schemas';
 
 const projectFileSchema = codehikeBlockAnnotationSchema().and(z.object({
   slug: codehikeBlockAnnotationSchema().optional(),
@@ -24,14 +27,10 @@ export const projectContentSchema = z.object({
   children: z.custom<ReactNode>(),
 });
 
-const projectMetadataSchema = z.object({
-  title: z.string(),
-  slug: z.string().optional(),
+const projectMetadataSchema = contentMetadataSchema.extend({
   kind: z.string(),
   status: z.string(),
   repo: z.url(),
-  skills: z.array(z.string()),
-  toc: tocSchema,
 });
 
 export type ProjectPage = {
@@ -72,7 +71,7 @@ function projectPageContent(section: z.infer<typeof projectFileSchema>) {
   return section.children;
 }
 
-export class ProjectResource extends MdxResource<
+export class ProjectResource extends ContentResource<
   typeof projectContentSchema,
   typeof projectMetadataSchema
 > {
@@ -94,10 +93,6 @@ export class ProjectResource extends MdxResource<
 
   repo = lazy(
     async () => (await this.metadata).repo,
-  );
-
-  skills = lazy(
-    async () => (await this.metadata).skills,
   );
 
   summary = lazy(

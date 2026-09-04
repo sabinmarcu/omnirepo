@@ -70,7 +70,7 @@ async function ProjectResult({ entry, matchedVia }: TagResult.Props) {
   return resource
     ? (
       <li className={richResultStyle}>
-        <ProjectCard resource={resource} pathname="/projects" />
+        <ProjectCard locale={entry.locale} resource={resource} pathname="/projects" />
         <MatchReason matchedVia={matchedVia} />
       </li>
     )

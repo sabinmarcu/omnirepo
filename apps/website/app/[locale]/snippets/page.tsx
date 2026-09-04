@@ -4,6 +4,7 @@ import { canonicalMetadata } from '@/i18n/metadata';
 import { RootPageLayout } from '@/layouts/RootPageLayout';
 import { Navigation } from '@/layouts/Navigation';
 import { PageLayout } from '@/layouts/PageLayout';
+import { sortByModifiedAt } from '@/models/ContentResource';
 import { SnippetResource } from '@/models/SnippetResource';
 import { ShowcaseList } from '@/components/ShowcaseList';
 
@@ -22,7 +23,7 @@ export default async function SnippetsList({
 }: PageProps<'/[locale]/snippets'>) {
   const translate = await getTranslations('lists');
   const { locale } = await params;
-  const list = await SnippetResource.getLocalizedList(locale);
+  const list = await sortByModifiedAt(await SnippetResource.getLocalizedList(locale));
   return (
     <RootPageLayout theme="snippets">
       <Navigation />

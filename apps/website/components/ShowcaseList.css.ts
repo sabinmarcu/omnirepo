@@ -33,3 +33,7 @@ globalStyle(`${showcaseListStyle} > *`, {
     maxInlineSize: 'none',
   }),
 });
+
+globalStyle(showcaseListStyle, {
+  display: 'grid-lanes',
+});

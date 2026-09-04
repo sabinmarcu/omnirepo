@@ -1,9 +1,11 @@
+import { getTranslations } from 'next-intl/server';
 import { Card } from '@/components/Card';
 import { Icon } from '@/components/Icon';
 import { TagPill } from '@/components/TagPill';
 import { ThemedLink } from '@/components/primitives/ThemedLink';
 import { withTooltip } from '@/components/Tooltip.hoc';
-import { resolveTag } from '@/models/TagRegistry';
+import { formatContentDate } from '@/models/ContentResource';
+import { tagLabel } from '@/models/TagRegistry';
 import { extendPathname } from '@/utils/routes';
 import type { ProjectResource } from '@/models/ProjectResource';
 import {
@@ -11,13 +13,15 @@ import {
   projectCardKindStyle,
   projectCardMetaStyle,
   projectCardRepoStyle,
-  projectCardSkillsStyle,
+  projectCardTagsStyle,
   projectCardStatusStyle,
   projectCardTitleStyle,
+  projectCardUpdatedStyle,
 } from './ProjectCard.css';
 
 export namespace ProjectCard {
   export type Props = {
+    locale: string,
     pathname: string,
     resource: ProjectResource,
   };
@@ -41,15 +45,31 @@ function ProjectCardRepo({ href }: { href: string }) {
   );
 }
 
-export async function ProjectCard({ pathname, resource }: ProjectCard.Props) {
-  const [slug, title, kind, status, skills, summary, repo] = await Promise.all([
+export async function ProjectCard(
+  {
+    locale, pathname, resource,
+  }: ProjectCard.Props,
+) {
+  const [
+    translate,
+    slug,
+    title,
+    kind,
+    status,
+    tags,
+    summary,
+    repo,
+    modifiedAt,
+  ] = await Promise.all([
+    getTranslations('projects'),
     resource.slug,
     resource.title,
     resource.kind,
     resource.status,
-    resource.skills,
+    resource.tags,
     resource.summary,
     resource.repo,
+    resource.modifiedAt,
   ]);
   const href = extendPathname(pathname, slug) as any;
 
@@ -62,17 +82,20 @@ export async function ProjectCard({ pathname, resource }: ProjectCard.Props) {
         <Card.Title className={projectCardTitleStyle}>
           <ThemedLink href={href}>{title}</ThemedLink>
           <span className={projectCardKindStyle}>{kind}</span>
+          <p className={projectCardUpdatedStyle}>
+            {translate('lastUpdated', { date: formatContentDate(modifiedAt, locale) })}
+          </p>
         </Card.Title>
         <ProjectCardStatus tooltip={status} />
         <ProjectCardRepo href={repo} />
       </div>
       {summary ? <div className={projectCardMetaStyle}>{summary}</div> : null}
-      <div className={projectCardSkillsStyle}>
-        {skills.map((skill) => (
+      <div className={projectCardTagsStyle}>
+        {tags.map((tag) => (
           <TagPill
-            key={skill}
-            id={resolveTag('skills', skill)}
-            label={skill}
+            key={tag}
+            id={tag}
+            label={tagLabel(tag, (id) => id)}
           />
         ))}
       </div>

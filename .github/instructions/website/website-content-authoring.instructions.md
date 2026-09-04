@@ -34,10 +34,25 @@ Applies to authored content in [apps/website/content](../../../apps/website/cont
 - Images colocate with their MDX and use plain markdown: `![alt](./shot.png)`. Local paths become optimized static imports; remote URLs pass through unchanged. Always write meaningful `alt`.
 - Avoid `fill`-style images and animated GIFs through the optimizer; prefer sized images or `<video>` for motion.
 
+## Common Metadata
+
+Projects, tools, and snippets use these metadata exports in addition to their type-specific fields:
+
+```mdx
+export const title = 'Example'
+export const slug = 'example'
+export const tags = ['lang:typescript', 'tool:react']
+export const createdAt = '04.09.2026'
+export const modifiedAt = '04.09.2026'
+```
+
+- `tags` is an array of canonical, lower-case tag IDs. Use semantic namespaces such as `lang:typescript`, `tool:react`, `topics:frontend`, `project:kind:cli`, and `project:status:active`.
+- `createdAt` and `modifiedAt` use `DD.MM.YYYY` calendar dates. Keep locale variants aligned with their source file.
+- `!!skill` annotations are reserved for CV content. Do not use them in projects, tools, or snippets.
+
 ## Tags
 
-- Tags come from authored `!!skill` annotations and per-type derivations; there is no free-form tag list in content.
-- Canonical form is namespaced: `skills:typescript`, `lang:typescript`, `topics:frontend`, `year:2024`, `project:kind:cli`, `project:status:active`.
+- Tag description pages are taxonomy content: they represent a tag rather than carry tags themselves. They contain prose only, with no `title`, `slug`, `tags`, `createdAt`, or `modifiedAt` exports.
 - Equivalences, aliases, implications, labels, and promoted tags live in [models/TagRegistry.data.ts](../../../apps/website/models/TagRegistry.data.ts), not in content. Add an alias there instead of renaming a skill in prose.
 - Tag description pages live in `content/tags/` using flat dotted filenames: `skills.typescript.mdx` maps to `skills:typescript`. They contain prose only, no metadata exports.
 
@@ -53,7 +68,9 @@ export const slug = 'foreverwinter-mods'
 export const kind = 'CLI'
 export const status = 'active'
 export const repo = 'https://github.com/sabinmarcu/foreverwinter-mods-cli'
-export const skills = ['TypeScript', 'Node.js']
+export const tags = ['project:kind:cli', 'project:status:active', 'lang:typescript', 'tool:node-js']
+export const createdAt = '03.09.2026'
+export const modifiedAt = '04.09.2026'
 ```
 
 Authoring rules:
@@ -61,7 +78,7 @@ Authoring rules:
 - **Do not write a top-level `# Title`.** The route renders the metadata `title` as the `h1`, then a links section, then your content.
 - Do not hand-write a repository link in prose. `repo` renders it.
 - Body content starts at `##`.
-- `kind` and `status` are short display values and also become `project:kind:*` and `project:status:*` tags.
+- `kind` and `status` are short display values. Add matching `project:kind:*` and `project:status:*` values to `tags`.
 - End the file with a trailing summary block used by cards and search excerpts:
 
 ```mdx
@@ -77,16 +94,15 @@ One or two sentences describing the project.
 
 Location: `content/tools/<name>.mdx`. A tool is a small running utility; the live component is the subject.
 
-- Metadata: `title`, `slug`.
+- Metadata: `title`, `slug`, `tags`, `createdAt`, `modifiedAt`.
 - `### !showcase <file>.tsx` is the rendered component; `### !preview <file>.tsx` is the card preview.
-- `### !!skill <Name>` per skill.
 - Keep the implementation in colocated `.tsx` / `.css.ts` files.
 
 ## Snippets
 
 Location: `content/snippets/<name>.mdx`. A snippet is a case study where the code is the subject.
 
-- Metadata: `title`, `slug`, plus optional short intro prose.
+- Metadata: `title`, `slug`, `tags`, `createdAt`, `modifiedAt`, plus optional short intro prose.
 - `### !showcase` and optional `### !preview` behave as in tools.
 - Each source view is a `### !!file <Label>` block with:
   - `#### !source <file>` — the colocated file to render

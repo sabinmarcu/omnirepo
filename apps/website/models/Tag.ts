@@ -1,5 +1,6 @@
 export const tagNamespaces = [
   'skills',
+  'tool',
   'project',
   'topics',
   'lang',

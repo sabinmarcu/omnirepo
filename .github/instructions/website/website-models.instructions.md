@@ -12,9 +12,10 @@ Applies to the resource model layer in [apps/website/models](../../../apps/websi
 
 ## Hierarchy
 
-Two branches descend from `Resource`. Extend the most specialized (most derived) class that already provides the behavior you need; do not extend `Resource` or `GenericMdxResource` directly unless no subclass fits.
+Three branches descend from `Resource`. Extend the most specialized (most derived) class that already provides the behavior you need; do not extend `Resource` or `GenericMdxResource` directly unless no subclass fits.
 
-- MDX branch: `Resource` → `GenericMdxResource` → `MdxResource` → `ShowcaseResource` → `ToolResource` / `SnippetResource`
+- Content branch: `Resource` → `GenericMdxResource` → `MdxResource` → `ContentResource` → `ShowcaseResource` → `ToolResource` / `SnippetResource`; `ProjectResource` extends `ContentResource`
+- Tag branch: `Resource` → `GenericMdxResource` → `TagResource` (taxonomy pages are tags themselves, not tagged content)
 - Source branch: `Resource` → `SourceResource` (parses code files; deliberately separate from MDX concerns)
 - Aggregate: `CVResource` extends `Resource` directly and composes `CVOverviewResource` and `CVWorkplaceResource` into a view model
 
@@ -23,6 +24,7 @@ Two branches descend from `Resource`. Extend the most specialized (most derived)
 | `Resource` | Discovery, locale variants, stable `id`, `locale`, `variants` |
 | `GenericMdxResource` | MDX import, CodeHike `parse`, `metadataSchema` / `contentSchema` validation |
 | `MdxResource` | `.mdx` filter, `slug`, static `slugs` / `fromSlug`, `title`, `toc` |
+| `ContentResource` | Authored `tags`, `createdAt`, and `modifiedAt` metadata for published non-CV content |
 | `ShowcaseResource` | `preview` / `showcase` / `overview` composition into `SourceResource` instances |
 | `SourceResource` | Code parsing, language metadata, section grouping, generated TOC |
 

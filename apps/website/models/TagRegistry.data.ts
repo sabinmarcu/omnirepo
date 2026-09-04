@@ -7,6 +7,9 @@ export const tagRegistryData = {
   skills: {
     kind: 'skill',
   },
+  tool: {
+    kind: 'tag',
+  },
   topics: {
     kind: 'topic',
   },

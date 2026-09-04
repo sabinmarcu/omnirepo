@@ -10,6 +10,7 @@ import {
   getExperienceAnchor,
   getProjectAnchor,
 } from './CVResource';
+import { compareModifiedAt } from './ContentResource';
 import { SnippetResource } from './SnippetResource';
 import { ProjectResource } from './ProjectResource';
 import {
@@ -24,7 +25,6 @@ import { ToolResource } from './ToolResource';
 import {
   deriveCvTags,
   deriveEntryTags,
-  deriveProjectTags,
   deriveSkillTag,
   type EntryTagDerivation,
 } from './tagDerivation';
@@ -54,6 +54,7 @@ export type IndexEntry = {
   tags: TagId[],
   /** Pre-expansion tags as declared by content. */
   authoredTags: TagId[],
+  modifiedAt?: string,
   from?: string,
   to?: string,
 };
@@ -189,7 +190,8 @@ const toolProducer: IndexProducer = async (locale) => {
       params: { slug: await resource.slug },
     },
     locale,
-    authoredTags: (await resource.skills).map(deriveSkillTag),
+    modifiedAt: await resource.modifiedAt,
+    authoredTags: await resource.tags,
   })));
 };
 
@@ -204,7 +206,8 @@ const snippetProducer: IndexProducer = async (locale) => {
       params: { slug: await resource.slug },
     },
     locale,
-    authoredTags: (await resource.skills).map(deriveSkillTag),
+    modifiedAt: await resource.modifiedAt,
+    authoredTags: await resource.tags,
   })));
 };
 
@@ -220,11 +223,8 @@ const projectProducer: IndexProducer = async (locale) => {
       params: { slug: await resource.slug },
     },
     locale,
-    authoredTags: deriveProjectTags({
-      kind: await resource.kind,
-      status: await resource.status,
-      skills: await resource.skills,
-    }),
+    modifiedAt: await resource.modifiedAt,
+    authoredTags: await resource.tags,
   })));
 };
 
@@ -236,8 +236,13 @@ const producers: IndexProducer[] = [
 ];
 
 function compareEntries(left: IndexEntry, right: IndexEntry) {
+  const modifiedAtComparison = left.modifiedAt && right.modifiedAt
+    ? compareModifiedAt(left.modifiedAt, right.modifiedAt)
+    : Number(Boolean(right.modifiedAt)) - Number(Boolean(left.modifiedAt));
+
   return (
-    (right.from ?? '').localeCompare(left.from ?? '')
+    modifiedAtComparison
+    || (right.from ?? '').localeCompare(left.from ?? '')
     || left.title.localeCompare(right.title)
   );
 }

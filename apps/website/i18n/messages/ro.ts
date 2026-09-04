@@ -120,6 +120,8 @@ const messages = {
     title: 'Conținut asociat',
   },
   projects: {
+    createdAndLastUpdated: 'Creat: {createdAt}, ultima actualizare: {modifiedAt}',
+    lastUpdated: 'Ultima actualizare: {date}',
     workedOnAt: 'Am lucrat la acest proiect în CV-ul meu',
   },
   search: {

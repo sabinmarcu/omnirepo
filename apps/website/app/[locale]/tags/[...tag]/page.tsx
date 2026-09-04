@@ -41,6 +41,7 @@ import {
 import { TagResource } from '@/models/TagResource';
 import { ToolResource } from '@/models/ToolResource';
 import { redirect404 } from '@/utils/routes.ssr';
+import { Typography } from '@/components/primitives/Typography';
 import { TagResult } from '../components/TagResult';
 import {
   resultGroupStyle,
@@ -51,7 +52,6 @@ import {
   tagListStyle,
   tagPageStyle,
 } from './page.css';
-import { Typography } from '@/components/primitives/Typography';
 
 const contentTypeOrder: ContentType[] = [
   'tool',
@@ -269,7 +269,7 @@ export default async function TagPage({
       );
     }
     if (projectResources.length > 0) {
-      resultContent = <ProjectList pathname="/projects" resources={projectResources} />;
+      resultContent = <ProjectList locale={locale} pathname="/projects" resources={projectResources} />;
     }
     return (
       <PageLayout

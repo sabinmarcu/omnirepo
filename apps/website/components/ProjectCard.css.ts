@@ -12,6 +12,9 @@ export const projectCardTitleStyle = style({
   alignItems: 'center',
   gap: theme.grid.s,
   paddingInlineEnd: `calc(${theme.grid.m} * 3)`,
+  lineHeight: 0.8,
+  marginBlockStart: theme.grid.s,
+  marginBlockEnd: theme.grid.m,
 });
 
 export const projectCardStatusStyle = style({
@@ -40,6 +43,14 @@ export const projectCardMetaStyle = style({
   paddingInline: theme.grid.m,
 });
 
+export const projectCardUpdatedStyle = style({
+  color: theme.colors.background.text,
+  fontSize: theme.grid.m,
+  marginBlock: 0,
+  opacity: 0.3,
+  flex: '100%',
+});
+
 export const projectCardKindStyle = style({
   display: 'inline-block',
   fontSize: theme.grid.m,
@@ -56,7 +67,7 @@ export const projectCardKindStyle = style({
   paddingInline: theme.grid.s,
 });
 
-export const projectCardSkillsStyle = style({
+export const projectCardTagsStyle = style({
   display: 'flex',
   flexFlow: 'row wrap',
   gap: theme.grid.s,

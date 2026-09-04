@@ -5,7 +5,7 @@ import {
   tocElementsToTree,
   type TOCElement,
 } from '@/utils/toc';
-import { MdxResource } from './MdxResource';
+import { ContentResource } from './ContentResource';
 import { SourceResource } from './SourceResource';
 import { lazy } from './lazy';
 import type { tocSchema } from './schemas';
@@ -13,7 +13,6 @@ import type { tocSchema } from './schemas';
 export const showcaseContentSchema = z.object({
   preview: codehikeBlockAnnotationSchema().optional(),
   showcase: codehikeBlockAnnotationSchema(),
-  skill: z.array(codehikeBlockAnnotationSchema()).optional(),
   children: z.custom<ReactNode>(),
 });
 
@@ -41,14 +40,10 @@ function overviewToc(toc: z.infer<typeof tocSchema>) {
 
 export class ShowcaseResource<
   ContentSchema extends typeof showcaseContentSchema = typeof showcaseContentSchema,
-> extends MdxResource<ContentSchema> {
+> extends ContentResource<ContentSchema> {
   static resourceDirectory = '';
 
   public contentSchema = showcaseContentSchema as unknown as ContentSchema;
-
-  skills = lazy(
-    async () => (await this.content).skill?.map(({ title }) => title) ?? [],
-  );
 
   showcase = lazy(
     async () => {
