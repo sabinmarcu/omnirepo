@@ -16,9 +16,6 @@ applyTo: "apps/website/**"
 
 ## Implementation Rules
 
-- Keep website styling on the Vanilla Extract and theme-contract path described in [STYLING.md](../../../STYLING.md).
-- Use `@sabinmarcu/website-theme` only inside [apps/website](../../../apps/website).
-- Do not introduce `@sabinmarcu/website-theme` into non-website packages.
 - Preserve the existing TOC flow (build-time metadata and resource models) rather than adding runtime DOM TOC scanning.
 - For MDX pages that need TOC entries, use markdown heading syntax so heading metadata can be generated.
 

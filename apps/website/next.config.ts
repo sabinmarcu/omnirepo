@@ -1,20 +1,28 @@
 import type { NextConfig } from 'next';
+import { fileURLToPath } from 'node:url';
 import {
   createVanillaExtractPlugin,
 } from '@vanilla-extract/next-plugin';
 import createMdx from '@next/mdx';
-import {
-  remarkCodeHike,
-  recmaCodeHike,
-  type CodeHikeConfig,
-} from 'codehike/mdx';
+import type { CodeHikeConfig } from 'codehike/mdx';
 import createNextIntlPlugin from 'next-intl/plugin';
-import { remarkMdxToc } from 'remark-mdx-toc';
-import remarkHeadingId from 'remark-heading-id';
-import remarkMdxImages from 'remark-mdx-images';
 
-const withVanillaExtract = createVanillaExtractPlugin();
+const withVanillaExtract = createVanillaExtractPlugin({
+  unstable_turbopack: {
+    mode: 'auto',
+    glob: ['**/*.css.ts', '**/*.css.tsx'],
+  },
+});
 const withNextIntl = createNextIntlPlugin();
+const remarkCodeHikePlugin = fileURLToPath(
+  new URL('mdx-plugins/remarkCodeHike.mjs', import.meta.url),
+);
+const remarkMdxTocPlugin = fileURLToPath(
+  new URL('mdx-plugins/remarkMdxToc.mjs', import.meta.url),
+);
+const recmaCodeHikePlugin = fileURLToPath(
+  new URL('mdx-plugins/recmaCodeHike.mjs', import.meta.url),
+);
 
 // Comma-separated hostnames (wildcards allowed) permitted to fetch dev assets,
 // such as Tailscale hosts.
@@ -40,7 +48,6 @@ const nextConfig: NextConfig = {
   experimental: {
     externalDir: true,
     typedEnv: true,
-    viewTransition: true,
   },
 };
 
@@ -55,15 +62,15 @@ const withMdx = createMdx({
   extension: /\.(md|mdx)$/,
   options: {
     remarkPlugins: [
-      [remarkHeadingId, {
+      ['remark-heading-id', {
         defaults: true,
         uniqueDefaults: true,
       }],
-      [remarkMdxToc as any, { name: 'toc' }],
-      [remarkCodeHike, chConfig],
-      remarkMdxImages,
+      [remarkMdxTocPlugin, { name: 'toc' }],
+      [remarkCodeHikePlugin, chConfig],
+      'remark-mdx-images',
     ],
-    recmaPlugins: [[recmaCodeHike, chConfig]],
+    recmaPlugins: [[recmaCodeHikePlugin, chConfig]],
     jsx: true,
   },
 });

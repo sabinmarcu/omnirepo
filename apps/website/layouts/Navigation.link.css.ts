@@ -35,6 +35,17 @@ export const navigationLinkStyles = recipe({
       true: {
         cursor: 'not-allowed',
         position: 'relative',
+        vars: {
+          [wipMeshSize]: '15px',
+          [wipMeshColor]: theme.colors.warning.base,
+        },
+        '@media': {
+          '(prefers-color-scheme: dark)': {
+            vars: {
+              [wipMeshColor]: `hsla(from ${theme.colors.warning.base} h s l / 0.1)`,
+            },
+          },
+        },
         ':after': {
           content: 'WIP',
           marginInlineStart: navigationSpacing,
@@ -47,17 +58,6 @@ export const navigationLinkStyles = recipe({
           backgroundImage: `repeating-linear-gradient(45deg, ${wipMeshSteps})`,
           backgroundAttachment: 'fixed',
           opacity: 0.15,
-          vars: {
-            [wipMeshSize]: '15px',
-            [wipMeshColor]: theme.colors.warning.base,
-          },
-          '@media': {
-            '(prefers-color-scheme: dark)': {
-              vars: {
-                [wipMeshColor]: `hsla(from ${theme.colors.warning.base} h s l / 0.1)`,
-              },
-            },
-          },
         },
       },
     },

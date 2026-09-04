@@ -34,9 +34,7 @@ Use root scripts in [package.json](package.json) for common workflows.
 
 ## Styling Conventions
 
-- Preferred path for website and design-system work: Vanilla Extract with theme contracts.
-- Use [STYLING.md](STYLING.md) as source of truth.
-- Important scope rule from [STYLING.md](STYLING.md): `@sabinmarcu/website-theme` is website-only; use `@sabinmarcu/theme` elsewhere.
+- Use [styling.instructions.md](.github/instructions/styling.instructions.md) as the source of truth for styling lanes, theme boundaries, website styling, and Turbopack guidance.
 
 ## CI And Publishing
 
@@ -86,7 +84,7 @@ Verify discovery after changing customization files:
 
 - Quality workflow: [TESTING_AND_LINTING.md](TESTING_AND_LINTING.md)
 - Architecture overview: [ARCHITECTURE.md](ARCHITECTURE.md)
-- Styling reference: [STYLING.md](STYLING.md)
+- Styling reference: [styling.instructions.md](.github/instructions/styling.instructions.md)
 - Root task defaults: [\.moon/tasks.yml](.moon/tasks.yml)
 - Root orchestration tasks: [moon.yml](moon.yml)
 - CI pipeline: [\.github/workflows/ci.yml](.github/workflows/ci.yml)
