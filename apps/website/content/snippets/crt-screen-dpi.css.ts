@@ -82,6 +82,11 @@ const crtFlickerAnimation = keyframes({
 // #endregion ignore
 
 // #region DPI-Locked Scanlines
+/**
+ * Locks the scanline period to integer device pixels using CSS `round()`
+ * and the `--dpr` CSS variable, preventing subpixel shimmer and moiré artifacts
+ * at fractional display scales.
+ */
 const devicePixelRatio = 'var(--dpr, 1)';
 const snapToDevicePixels = (cssPixels: string) => [
   `calc(round(${cssPixels} * ${devicePixelRatio}, 1)`,
