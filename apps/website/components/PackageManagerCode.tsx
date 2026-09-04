@@ -1,4 +1,5 @@
 import type { RawCode } from 'codehike/code';
+import { cookies } from 'next/headers';
 import { CodeWithTabs } from './CodeWithTabs';
 import {
   packageManagers,
@@ -12,13 +13,22 @@ export namespace PackageManagerCode {
   };
 }
 
-export function PackageManagerCode({
+export async function PackageManagerCode({
   codeblock,
   command: commandInput,
 }: PackageManagerCode.Props) {
   const command = parsePackageCommand(commandInput || codeblock.value);
+  const selectedManager = (await cookies()).get('package-manager')?.value;
+  const initialSyncedLabel = packageManagers.some(
+    (manager) => manager.name === selectedManager,
+  )
+    ? selectedManager
+    : undefined;
+
   return (
     <CodeWithTabs
+      syncStorageKey="package-manager"
+      initialSyncedLabel={initialSyncedLabel}
       tabs={packageManagers.map((manager) => ({
         lang: 'sh',
         meta: manager.name,
