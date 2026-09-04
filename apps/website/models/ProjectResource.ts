@@ -1,4 +1,8 @@
-import type { ReactNode } from 'react';
+import {
+  Fragment,
+  isValidElement,
+  type ReactNode,
+} from 'react';
 import z from 'zod';
 import { codehikeBlockAnnotationSchema } from '@/utils/mdx';
 import {
@@ -51,6 +55,21 @@ function flattenToc(toc: z.infer<typeof tocSchema>): TOCElement[] {
     },
     ...flattenToc(children),
   ]);
+}
+
+function isEmptyFragment(node: ReactNode): boolean {
+  if (!isValidElement(node) || node.type !== Fragment) return false;
+
+  const { children } = node.props as { children?: ReactNode };
+  return children === undefined;
+}
+
+function projectPageContent(section: z.infer<typeof projectFileSchema>) {
+  if (isEmptyFragment(section.children) && section.slug?.children) {
+    return section.slug.children;
+  }
+
+  return section.children;
 }
 
 export class ProjectResource extends MdxResource<
@@ -119,7 +138,7 @@ export class ProjectResource extends MdxResource<
         ...file.map((section, index) => ({
           title: section.title,
           slug: section.slug?.title ?? section.title.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-').replaceAll(/(^-|-$)/g, ''),
-          content: section.children,
+          content: projectPageContent(section),
           toc: tocElementsToTree(partitions[index + 1] ?? []),
         })),
       ];

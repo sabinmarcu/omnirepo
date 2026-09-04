@@ -1,4 +1,8 @@
 import {
+  Fragment,
+  createElement,
+} from 'react';
+import {
   describe,
   expect,
   it,
@@ -75,6 +79,47 @@ describe('ProjectResource', () => {
       toc: [expect.objectContaining({ value: 'Installing' })],
     });
     await expect(project.summary).resolves.toBe('Card summary');
+  });
+
+  it('uses slug annotation content when the file annotation body is empty', async () => {
+    const project = ProjectResource.from({});
+    Object.assign(project, {
+      title: Promise.resolve('Current Website'),
+      slug: Promise.resolve('current-website'),
+      content: Promise.resolve({
+        file: [
+          {
+            title: 'Typography',
+            children: createElement(Fragment),
+            slug: {
+              title: 'typography',
+              children: 'Rendered typography content',
+            },
+          },
+        ],
+        children: 'Overview',
+      }),
+      rawMdxContent: Promise.resolve('Unused raw content'),
+      toc: Promise.resolve([
+        {
+          depth: 1,
+          value: '!!file Typography',
+          attributes: { id: 'file-typography' },
+          children: [],
+        },
+        {
+          depth: 2,
+          value: 'Heading Two',
+          attributes: { id: 'heading-two' },
+          children: [],
+        },
+      ]),
+    });
+
+    await expect(project.getPage('typography')).resolves.toMatchObject({
+      content: 'Rendered typography content',
+      toc: [expect.objectContaining({ value: 'Heading Two' })],
+    });
   });
 
   it('uses raw MDX content when the project has no sections', async () => {
