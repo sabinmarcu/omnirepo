@@ -5,6 +5,13 @@ import type {
   $ZodType,
 } from 'zod/v4/core';
 
+// Mirrors CodeHike's `CodeBlock` block shape without depending on its bundled zod version.
+export const codehikeCodeBlockSchema = z.object({
+  meta: z.string(),
+  value: z.string(),
+  lang: z.string(),
+});
+
 export function codehikeBlockAnnotationSchema<const Schema extends $ZodType = $ZodString>(
   schema?: Schema,
 ) {

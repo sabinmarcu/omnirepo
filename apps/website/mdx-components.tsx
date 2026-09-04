@@ -4,6 +4,7 @@ import { ThemedLink } from './components/primitives/ThemedLink';
 import { Typography } from './components/primitives/Typography';
 import { CodehikeCode } from './components/CodehikeCode';
 import { CodehikeInlineCode } from './components/CodehikeInlineCode';
+import { CodeWithTabs } from './components/CodeWithTabs';
 
 const components: MDXComponents = {
   a: (props: any) => (<ThemedLink {...(props as any)} />),
@@ -25,6 +26,7 @@ const components: MDXComponents = {
   ),
   CodehikeCode,
   CodehikeInlineCode,
+  CodeWithTabs,
 };
 
 export function useMDXComponents(): MDXComponents {
