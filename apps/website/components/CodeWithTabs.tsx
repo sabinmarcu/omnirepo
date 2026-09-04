@@ -8,7 +8,11 @@ const codeWithTabsSchema = z.object({
   tabs: z.array(codehikeCodeBlockSchema).min(1),
 });
 
-export function CodeWithTabs(props: unknown) {
+export namespace CodeWithTabs {
+  export type Props = z.input<typeof codeWithTabsSchema>;
+}
+
+export function CodeWithTabs(props: CodeWithTabs.Props) {
   const { tabs } = codeWithTabsSchema.parse(props);
   return (
     <PageLayout.Inset>

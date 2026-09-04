@@ -20,6 +20,9 @@ const remarkCodeHikePlugin = fileURLToPath(
 const remarkMdxTocPlugin = fileURLToPath(
   new URL('mdx-plugins/remarkMdxToc.mjs', import.meta.url),
 );
+const remarkPackageCommandsPlugin = fileURLToPath(
+  new URL('mdx-plugins/remarkPackageCommands.mjs', import.meta.url),
+);
 const recmaCodeHikePlugin = fileURLToPath(
   new URL('mdx-plugins/recmaCodeHike.mjs', import.meta.url),
 );
@@ -67,6 +70,7 @@ const withMdx = createMdx({
         uniqueDefaults: true,
       }],
       [remarkMdxTocPlugin, { name: 'toc' }],
+      remarkPackageCommandsPlugin,
       [remarkCodeHikePlugin, chConfig],
       'remark-mdx-images',
     ],

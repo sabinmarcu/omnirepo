@@ -31,6 +31,7 @@ Applies to authored content in [apps/website/content](../../../apps/website/cont
 - Annotation keywords are an English authoring contract. Never translate or rename them.
 - Ordinary markdown headings feed the table of contents. Use them for real document structure only.
 - Fenced code blocks render through CodeHike. Inline highlighted code uses `` _`code`_ ``; plain backticks stay unhighlighted but keep the pill styling.
+- Use an empty `` ```sh !package <command> `` fence for package-manager-neutral `install` and `exec` commands. It renders Yarn, pnpm, and npm variants as tabs; `exec --package <package> <command>` handles binaries supplied by a differently named package.
 - Wrap sibling code blocks in `<CodeWithTabs>` and mark each one with `` ```<lang> !!tabs <Label> `` to render them as one tabbed block. `CodeWithTabs` is registered globally, so it needs no import.
 - Images colocate with their MDX and use plain markdown: `![alt](./shot.png)`. Local paths become optimized static imports; remote URLs pass through unchanged. Always write meaningful `alt`.
 - Avoid `fill`-style images and animated GIFs through the optimizer; prefer sized images or `<video>` for motion.
