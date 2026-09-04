@@ -2,7 +2,6 @@ import { PageLayout } from '@/layouts/PageLayout';
 import { Typography } from '@/components/primitives/Typography';
 import { SnippetResource } from '@/models/SnippetResource';
 import { TOCLayout } from '@/layouts/TOCLayout';
-import { snippetLayoutPageStyles } from './layout.css';
 
 // export const dynamicParams = false;
 // export const dynamic = 'force-static';
@@ -48,7 +47,7 @@ export default async function SnippetLayoutPage(props: LayoutProps<'/[locale]/sn
   const content = await page.content;
   if (pageSlug === 'overview') {
     return (
-      <TOCLayout className={snippetLayoutPageStyles} toc={toc}>
+      <TOCLayout toc={toc}>
         <Typography as="h1">{title}</Typography>
         {children}
       </TOCLayout>
@@ -66,12 +65,12 @@ export default async function SnippetLayoutPage(props: LayoutProps<'/[locale]/sn
   );
   return (Array.isArray(content) && content.length > 1)
     ? (
-      <TOCLayout className={snippetLayoutPageStyles} toc={toc}>
+      <TOCLayout toc={toc}>
         {layoutContent}
       </TOCLayout>
     )
     : (
-      <PageLayout className={snippetLayoutPageStyles}>
+      <PageLayout>
         {layoutContent}
       </PageLayout>
     );

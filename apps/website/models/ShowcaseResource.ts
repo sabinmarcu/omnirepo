@@ -1,9 +1,14 @@
 import type { ReactNode } from 'react';
 import z from 'zod';
 import { codehikeBlockAnnotationSchema } from '@/utils/mdx';
+import {
+  tocElementsToTree,
+  type TOCElement,
+} from '@/utils/toc';
 import { MdxResource } from './MdxResource';
 import { SourceResource } from './SourceResource';
 import { lazy } from './lazy';
+import type { tocSchema } from './schemas';
 
 export const showcaseContentSchema = z.object({
   preview: codehikeBlockAnnotationSchema().optional(),
@@ -11,6 +16,28 @@ export const showcaseContentSchema = z.object({
   skill: z.array(codehikeBlockAnnotationSchema()).optional(),
   children: z.custom<ReactNode>(),
 });
+
+const annotationPattern = /^!{1,2}[a-zA-Z][\w-]*(\s|$)/;
+
+function flattenToc(toc: z.infer<typeof tocSchema>): TOCElement[] {
+  return toc.flatMap(({
+    value, depth, attributes, children,
+  }) => [
+    {
+      title: value,
+      level: depth,
+      id: attributes.id,
+    },
+    ...flattenToc(children),
+  ]);
+}
+
+function overviewToc(toc: z.infer<typeof tocSchema>) {
+  return tocElementsToTree(
+    flattenToc(toc)
+      .filter(({ title }) => !annotationPattern.test(title)),
+  );
+}
 
 export class ShowcaseResource<
   ContentSchema extends typeof showcaseContentSchema = typeof showcaseContentSchema,
@@ -70,9 +97,10 @@ export class ShowcaseResource<
     async () => {
       const pathDefinition = await this.pathDefinition;
       const baseDirectory = pathDefinition?.dirname;
-      const {
-        children,
-      } = await this.content;
+      const [{ children }, toc] = await Promise.all([
+        this.content,
+        this.toc,
+      ]);
 
       const childPath = (children as any)?.props?.children;
       if (!childPath) {
@@ -87,6 +115,7 @@ export class ShowcaseResource<
             title: 'Overview',
             slug: 'overview',
           },
+          toc: overviewToc(toc),
         },
       );
     },

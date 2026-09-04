@@ -22,6 +22,7 @@ export namespace SourceResource {
   export type Options = {
     prefix?: string,
     metadata?: Metadata,
+    toc?: z.infer<typeof tocSchema>,
   };
 }
 
@@ -108,6 +109,10 @@ export class SourceResource extends Resource {
 
   toc = lazy<z.infer<typeof tocSchema>>(
     async () => {
+      if (this.options.toc) {
+        return this.options.toc;
+      }
+
       const content = await this.content;
       const elements: tocElementsToTree.Element[] = [];
 

@@ -10,24 +10,7 @@ import { TOCDrawerCloseButton } from './TOCLayout.toc.drawer';
 export namespace TOCLayoutTOC {
   export type Props = {
     toc: z.infer<typeof tocSchema>,
-    maxDepth?: number,
   };
-}
-
-function restrictLinksToMaxDepth(
-  toc: TOCLayoutTOC.Props['toc'],
-  maxDepth: Exclude<TOCLayoutTOC.Props['maxDepth'], undefined>,
-) {
-  const result: TOCLayoutTOC.Props['toc'] = [];
-  for (const link of toc) {
-    if (link.depth <= maxDepth) {
-      result.push({
-        ...link,
-        children: restrictLinksToMaxDepth(link.children, maxDepth),
-      });
-    }
-  }
-  return result;
 }
 
 namespace TOCLayoutList {
@@ -39,18 +22,15 @@ namespace TOCLayoutList {
 
 function TOCLayoutList({
   toc,
-  maxDepth = Infinity,
   root,
 }: TOCLayoutList.Props) {
-  const restrictedLinks = restrictLinksToMaxDepth(toc, maxDepth);
-
   return (
     <ul>
       {root
         ? (<ClientClickProxy delegate={tocPopoverId} />
         )
         : null}
-      {restrictedLinks.map(({
+      {toc.map(({
         value: title,
         attributes: { id: slug },
         children,
@@ -68,11 +48,7 @@ function TOCLayoutList({
 
 export async function TOCLayoutTOC({
   toc,
-  maxDepth,
 }: TOCLayoutTOC.Props) {
-  if (toc.length === 0) {
-    return null;
-  }
   const translate = await getTranslations('tableOfContents');
   return (
     <aside
@@ -86,7 +62,7 @@ export async function TOCLayoutTOC({
           <span>{translate('label')}</span>
           <TOCDrawerCloseButton />
         </h2>
-        <TOCLayoutList toc={toc} maxDepth={maxDepth} root />
+        <TOCLayoutList toc={toc} root />
       </nav>
     </aside>
   );

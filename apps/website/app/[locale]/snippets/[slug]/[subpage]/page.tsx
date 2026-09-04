@@ -1,6 +1,7 @@
 import type {
   Metadata,
 } from 'next';
+import { Fragment } from 'react';
 import { redirect404 } from '@/utils/routes.ssr';
 import { canonicalMetadata } from '@/i18n/metadata';
 import { TranslationFallbackNotice } from '@/i18n/TranslationFallbackNotice';
@@ -8,7 +9,6 @@ import { Code } from '@/components/Code';
 import { Typography } from '@/components/primitives/Typography';
 import { PageLayout } from '@/layouts/PageLayout';
 import { SnippetResource } from '@/models/SnippetResource';
-import { codeSectionStyle } from './page.css';
 
 export async function generateMetadata(props: PageProps<'/[locale]/snippets/[slug]/[subpage]'>): Promise<Metadata> {
   const { params } = props;
@@ -56,6 +56,20 @@ export default async function SnippetPageSubpage(
   const fallbackNotice = (
     <TranslationFallbackNotice locale={locale} resource={snippet} />
   );
+  const pageSlug = await page.slug;
+  if (pageSlug === 'overview') {
+    const Overview = await page.Component;
+
+    return (
+      <>
+        {fallbackNotice}
+        {typeof Overview === 'function'
+          ? <Overview />
+          : Overview}
+      </>
+    );
+  }
+
   const content = await page.content;
   if (content && Array.isArray(content)) {
     return (
@@ -66,24 +80,19 @@ export default async function SnippetPageSubpage(
           .map(({
             title,
             content,
-            variant,
             comment,
           }) => (
-            <section
-              key={title}
-              className={codeSectionStyle}
-              {...{ [Typography.unstyledDataAttribute]: true }}
-            >
+            <Fragment key={title}>
               {title !== 'ROOT'
                 ? (<Typography as="h2">{title}</Typography>)
                 : null}
               {comment
                 ? (<p dangerouslySetInnerHTML={{ __html: comment }} />)
                 : null}
-              <PageLayout.Inset variant={variant}>
+              <PageLayout.Inset>
                 <Code code={content} />
               </PageLayout.Inset>
-            </section>
+            </Fragment>
           ))}
       </>
     );
