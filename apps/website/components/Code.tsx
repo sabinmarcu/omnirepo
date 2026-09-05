@@ -13,6 +13,7 @@ import {
   noShellPromptAnnotation,
 } from './annotations';
 import { lineNumbers } from './annotations/LineNumbers';
+import { shellPrompt } from './annotations/ShellPrompt';
 import {
   codeStyles,
 } from './Code.css';
@@ -84,6 +85,9 @@ export const Code = withStyles(async function Code({
   const hasCopyAnnotation = highlighted.annotations.some(
     ({ name }) => name === 'copy',
   );
+  const hasNoCopyAnnotation = highlighted.annotations.some(
+    ({ name }) => name === 'no-copy',
+  );
   const hasNoLanguageAnnotation = highlighted.annotations.some(
     ({ name }) => name === 'no-language',
   );
@@ -94,7 +98,8 @@ export const Code = withStyles(async function Code({
     && !hasLineNumbersAnnotation;
   const disableShellPrompt = hasNoShellPromptAnnotation
     && !hasShellPromptAnnotation;
-  const showCopy = hasCopyAnnotation;
+  const isShell = shellPrompt.enabledByDefault?.(highlighted.lang) ?? false;
+  const showCopy = hasCopyAnnotation || (isShell && !hasNoCopyAnnotation);
   const showLanguage = hasLanguageAnnotation || !hasNoLanguageAnnotation;
   const restoredHighlighted = {
     ...highlighted,
