@@ -1,0 +1,76 @@
+export const title = 'Cutrail'
+export const slug = 'cutrail'
+export const kind = 'Aplicație desktop'
+export const status = 'active'
+export const repo = 'https://github.com/sabinmarcu/cutrail'
+export const tags = ['project:kind:desktop-application', 'project:status:active', 'lang:typescript', 'tool:electron', 'tool:react', 'tool:vite', 'tool:ffmpeg']
+export const createdAt = '04.07.2026'
+export const modifiedAt = '05.09.2026'
+
+Cutrail există pentru a extrage rapid clipuri dintr-un videoclip mai lung, fără a transforma o sarcină scurtă într-un proiect de editare video. Deschide o sursă, marchează părțile care merită păstrate și exportă-le ca fișiere separate. Este o unealtă desktop pentru decupare, nu un editor cu scop general.
+
+Aplicația combină un editor cu o bibliotecă. Biblioteca scanează un director sursă ales, grupează videoclipurile sursă și exporturile Cutrail și deschide o sursă selectată în propria fereastră de editor. Fiecare editor rămâne independent, astfel încât mai multe videoclipuri pot fi pregătite în același timp.
+
+Cutrail invocă FFmpeg ca proces extern pentru export și folosește FFprobe pentru a inspecta sursa. Aplicația nu implementează propriul ei codec sau propria conductă de codificare. Fiecare interval poate folosi decupare rapidă sau precisă, în funcție de dacă contează mai mult viteza sau limitele exacte.
+
+Sursele cu mai multe piste audio pot păstra pistele utile împreună. Editorul expune pistele individual, iar FFmpeg mixează fiecare pistă activă în fluxul audio de ieșire al clipului. Dezactivarea tuturor pistelor produce un export fără sunet.
+
+![Mai multe ferestre Cutrail arată navigarea prin videoclipurile sursă, editoare independente, intervale de clip și controale ale pistelor audio.](./assets/cutrail/cutrail-editor-workflow.png)
+
+# !!file Library and utility windows
+
+## !slug library
+
+# Fereastra Bibliotecă și ferestrele utilitare
+
+Biblioteca este punctul de plecare pentru răsfoirea videoclipurilor sursă și a exporturilor anterioare. Susține căutare după nume sau extensie, vizualizări în grilă și listă, filtrare, grupare și sortare. Fiecare card de sursă arată detaliile fișierului și câte clipuri a identificat Cutrail. Selectarea unei surse o deschide într-o fereastră de editor.
+
+![Biblioteca Cutrail grupează videoclipurile sursă după dată și arată numărul de clipuri extrase pentru fiecare sursă.](./assets/cutrail/cutrail-library.png)
+
+Un export înregistrează metadate pentru amprenta sursei, interval și variantă. Biblioteca folosește mai întâi aceste metadate pentru a asocia clipurile cu o sursă. Exporturile mai vechi, fără aceste metadate, pot fi în continuare potrivite după numele fișierului, în timp ce fișierele pe care Cutrail nu le poate clasifica sunt lăsate ca fiind străine, nu tratate ca propriul ei rezultat.
+
+## Opțiuni
+
+Fereastra Opțiuni controlează comportamentul la nivel de aplicație, comun ecranului de pornire și ferestrelor de editor. Alege fereastra de pornire, acuratețea implicită de decupare, directoarele sursă și de ieșire, culoarea de accent și dacă bara de meniu din fereastră este afișată.
+
+De asemenea, controlează modul în care sunt rezolvate FFmpeg și FFprobe: automat, din binarele incluse, sau dintr-o instalare locală. Sursele cu mai multe piste pot ascunde pista implicită, păstrând editorul concentrat pe pistele alternative care vor fi incluse într-un export.
+
+![Fereastra Opțiuni configurează comportamentul de pornire, decuparea, rezolvarea FFmpeg și FFprobe, directoarele și audio-ul cu mai multe piste.](./assets/cutrail/cutrail-options.png)
+
+## Alte ferestre
+
+Fereastra Despre documentează identitatea aplicației, versiunea, mentenerul, legătura către proiect și licența MIT. Licențe și mențiuni include mențiunile privind aplicații terțe livrate cu aplicația, inclusiv informațiile de licențiere pentru FFmpeg și FFprobe.
+
+![Fereastra Despre identifică Cutrail ca o unealtă desktop open-source pentru decuparea videoclipurilor mai lungi.](./assets/cutrail/cutrail-about.png)
+
+![Fereastra Licențe și mențiuni include licențierea FFmpeg și FFprobe și mențiunile privind aplicații terțe.](./assets/cutrail/cutrail-licenses-and-notices.png)
+
+# !!file Editor
+
+## !slug editor
+
+# Fluxuri și concepte ale editorului
+
+Fiecare videoclip sursă se deschide într-o fereastră de editor independentă. Vizualizarea principală a videoclipului este asociată cu o cronologie a intervalelor, un panou pentru pistele audio și o listă de clipuri. Editorul se concentrează pe trei lucruri: alegerea intervalelor, decizia asupra pistelor audio de păstrat și exportul rezultatului.
+
+## Intervale
+
+Un interval descrie un moment de început și unul de sfârșit în sursă. Adaugă intervale pentru a surprinde mai mult de un moment din același videoclip. Cronologia păstrează limitele intervalului vizibile față de durata sursei, în timp ce playerul oferă referința vizuală pentru ajustarea lor.
+
+Fiecare interval alege un mod de decupare. Decuparea rapidă favorizează viteza; decuparea precisă favorizează limite exacte de început și sfârșit. Un interval poate fi duplicat, eliminat sau exportat independent. Lista de clipuri păstrează fiecare interval și modul selectat, selecția pistelor audio și starea exportului.
+
+## Piste audio
+
+Editorul citește fluxurile audio din sursă și arată fiecare pistă cu o formă de undă. Pistele pot fi active sau dezactivate pentru fiecare interval. La export, FFmpeg mixează pistele active împreună într-un singur flux audio. Astfel este posibil să fie păstrate, de exemplu, mai multe canale înregistrate într-un singur clip, în loc să fie ales doar unul.
+
+Când nicio pistă nu este activă, clipul este exportat fără sunet. Opțiunea de a ascunde pista audio implicită a sursei se aplică atunci când sunt disponibile mai multe piste, iar pistele rămase sunt cele care contează.
+
+## Export
+
+Un export scrie fiecare interval configurat în directorul de ieșire selectat. Cutrail transmite intervalul, modul de decupare și selecția audio activă către FFmpeg, apoi stochează metadate alături de rezultat, astfel încât să poată fi recunoscut ulterior în Bibliotecă. Rezultatul este un fișier de tip clip, nu un proiect Cutrail editabil.
+
+Cutrail asociază fișierele `.mp4`, `.mkv`, `.webm`, `.mov` și `.avi` cu aplicația desktop. Deschiderea unuia dintre aceste fișiere suportate din sistemul de operare creează direct o fereastră de editor.
+
+# !summary
+
+O aplicație desktop pentru extragerea rapidă a clipurilor din videoclipuri mai lungi. Cutrail folosește FFmpeg pentru export, grupează videoclipurile sursă și clipurile într-o bibliotecă și poate mixa pistele audio active în fiecare clip.

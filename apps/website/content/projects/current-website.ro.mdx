@@ -1,0 +1,343 @@
+export const title = 'Site-ul curent'
+export const slug = 'current-website'
+export const kind = 'Website'
+export const status = 'active'
+export const repo = 'https://github.com/sabinmarcu/omnirepo'
+export const tags = ['project:kind:website', 'project:status:active', 'tool:next-js', 'tool:react', 'tool:mdx', 'tool:codehike', 'topics:typography']
+export const createdAt = '02.09.2026'
+export const modifiedAt = '05.09.2026'
+
+Acesta este site-ul pe care îl citești acum. Este construit ca o aplicație Next.js și React în acest monorepo, cu fișiere MDX care oferă conținutul publicat pentru proiecte, unelte și fragmente de cod.
+
+## Structură
+
+Aplicația păstrează rutele, layout-urile, componentele, modelele și codul pentru temă împreună, sub `apps/website`. Conținutul locuiește alături de aplicație, în colecții tipizate, astfel încât un articol poate oferi atât textul propriu-zis, cât și metadatele folosite pentru navigare, căutare și listarea proiectelor.
+
+## Pagini de referință
+
+Unele detalii sunt mai ușor de întreținut ca pagini de referință scurte decât în interiorul unei prezentări generale. Pagina de tipografie înregistrează ierarhia de titluri folosită pe site, în timp ce pagina de adnotări adună blocurile de autorizare folosite atât de oameni, cât și de agenți.
+
+# !!file Typography
+
+## !slug typography
+
+# Titlu de nivel unu
+
+Primul titlu stabilește nivelul cel mai de sus al ierarhiei documentului și oferă titlurilor următoare un părinte clar.
+
+## Titlu de nivel doi
+
+Al doilea titlu împarte articolul în ideile sale principale. Trebuie să creeze o pauză vizibilă fără a face pagina să pară un teanc de carduri fără legătură.
+
+### Titlu de nivel trei
+
+Al treilea titlu grupează detalii înrudite în interiorul unei secțiuni mai mari. Scara lui trebuie să păstreze ierarhia, menținând în același timp relația cu textul însoțitor imediată.
+
+#### Titlu de nivel patru
+
+Al patrulea titlu identifică un subiect punctual sau un argument secundar. Este adesea punctul în care cititorii scanează, compară și decid ce detaliu merită atenție.
+
+##### Titlu de nivel cinci
+
+Al cincilea titlu este compact, în mod intenționat. Trebuie să rămână distinct față de textul obișnuit, integrându-se totodată natural în materialul tehnic sau de referință, dens.
+
+###### Titlu de nivel șase
+
+Al șaselea titlu încheie ierarhia. Chiar și la dimensiunea sa cea mai mică, trebuie să păstreze suficient contrast pentru a funcționa ca etichetă, nu ca o propoziție îngroșată din greșeală.
+
+# !!file Annotations
+
+## !slug annotations
+
+## !entrydepth 2
+## !maxdepth 3
+
+# Adnotări
+
+Adnotările sunt micile marcaje autorizate care transformă un MDX simplu în conținut structurat pentru site. Ele definesc subpaginile proiectelor, slug-uri stabile, rezumate, fișiere puse în prim-plan și detalii de prezentare a codului, fără a muta aceste informații în codul rutelor.
+
+Această pagină adună elementele de bază utile atât la scrierea manuală, cât și la solicitarea agenților să producă conținut. Fiecare secțiune arată mai întâi tiparul sursă, apoi explică ce face pagina redată cu el.
+
+## Încadrare și valori implicite pentru bloc
+
+Adnotările de prezentare la nivel de bloc controlează cromatica implicită, indicatorii de linie, anteturile și controalele de suprapunere fără a necesita o componentă personalizată în fișierul MDX.
+
+### Eticheta limbajului
+
+Blocurile de cod își arată limbajul curent ca etichetă, în mod implicit. Nu schimbă și nu modifică codul. Folosește `!no-language` pentru a o ascunde, sau `!language` pentru a o activa explicit.
+
+<CodeWithTabs>
+
+```ts !!tabs Default
+export const packageManagers = ['yarn', 'pnpm', 'npm'];
+```
+
+```ts !!tabs !no-language
+// !noop language
+// !language
+export const packageManagers = ['yarn', 'pnpm', 'npm'];
+```
+
+```ts !!tabs !no-language
+// !noop no-language
+// !no-language
+export const packageManagers = ['yarn', 'pnpm', 'npm'];
+```
+
+</CodeWithTabs>
+
+### Numerotarea liniilor
+
+Codul care nu este de tip shell afișează numerotarea liniilor în mod implicit. Blocurile de shell o omit, astfel încât comenzile scurte să rămână compacte, dar `!line-numbers` reactivează opțiunea pentru un exemplu individual de shell. Folosește `!no-line-numbers` pentru a dezactiva valoarea implicită pentru orice limbaj.
+
+<CodeWithTabs>
+
+```ts !!tabs Default
+const managers = [
+  'yarn',
+  'pnpm',
+  'npm',
+];
+```
+
+```ts !!tabs !line-numbers
+// !noop line-numbers
+// !line-numbers
+const managers = [
+  'yarn',
+  'pnpm',
+  'npm',
+];
+```
+
+```ts !!tabs !no-line-numbers
+// !noop no-line-numbers
+// !no-line-numbers
+const managers = [
+  'yarn',
+  'pnpm',
+  'npm',
+];
+```
+
+```sh !!tabs shell script example
+# !noop line-numbers
+# !line-numbers
+# !noop no-shell-prompt
+# !no-shell-prompt
+function website_build() {
+  local project=${1:-website}
+
+  if [[ $project == website ]]; then
+    yarn install --immutable
+    yarn moon run "$project:build"
+  else
+    print "Unknown project: $project" >&2
+    return 1
+  fi
+}
+```
+
+</CodeWithTabs>
+
+### Butonul de copiere
+
+Blocurile de shell arată un buton de copiere în mod implicit, în timp ce blocurile care nu sunt de tip shell păstrează butoanele de copiere opționale. Folosește `!copy` pentru a activa copierea, sau `!no-copy` pentru a o ascunde.
+
+```ts
+// !noop copy
+// !copy
+export const packageManagers = ['yarn', 'pnpm', 'npm'];
+```
+
+Când `!copy` este prezent alături de eticheta limbajului, ambele împart aceeași bară de suprapunere.
+
+### Prefixul de shell
+
+Proiectul rulează prin sarcinile Yarn și Moon ale repository-ului. Blocurile de shell arată prefixul `$` și un buton de copiere în mod implicit. Folosește `!no-shell-prompt` sau `!no-copy` atunci când un bloc de shell nu trebuie să arate unul dintre acestea, sau folosește `!shell-prompt` și `!copy` pentru a le adăuga la un alt limbaj de cod.
+
+<CodeWithTabs>
+
+```sh !!tabs Default
+yarn moon run website:build
+```
+
+```sh !!tabs !no-shell-prompt
+# !noop no-shell-prompt
+# !no-shell-prompt
+yarn moon run website:build
+```
+
+```sh !!tabs !no-copy
+# !noop no-copy
+# !no-copy
+yarn moon run website:build
+```
+
+```sh !!tabs !no-copy !no-shell-prompt
+# !noop no-copy
+# !no-copy
+# !noop no-shell-prompt
+# !no-shell-prompt
+yarn moon run website:build
+```
+
+</CodeWithTabs>
+
+### Nume de fișier
+
+Metadatele simple ale unei fenced code block sunt redate ca nume de fișier deasupra blocului de cod.
+
+````mdx package-manager.ts
+```ts package-manager.ts
+export const packageManagers = ['yarn', 'pnpm', 'npm'];
+```
+````
+
+## Adnotări vizuale și de linie
+
+Adnotările pot atrage atenția asupra unei părți specifice dintr-un exemplu sau pot ajusta prezentarea liniilor fără a schimba codul pe care cititorii îl pot copia.
+
+### Cod marcat
+
+`!mark` evidențiază linia următoare. Adaugă un interval sau o expresie regulată pentru a marca doar o parte a unei linii, și adaugă o culoare după selector pentru a suprascrie accentul temei.
+
+```ts
+function publish(version: string) {
+  // !noop mark blue
+  // !mark blue
+  assertCleanWorkingTree();
+  // !noop mark[/version/] gold
+  // !mark[/version/] gold
+  return createRelease(version);
+}
+```
+
+### Diferențe (Diffs)
+
+`!diff +` și `!diff -` identifică liniile adăugate și eliminate. Stilizarea diferențelor reutilizează adnotarea de marcaj, astfel încât ambele funcționalități păstrează aceeași structură vizuală.
+
+Folosește `!noop` înaintea unui marcator de adnotare pentru a arăta acel marcator ca și cod, în loc de a fi interpretat. Prefixul `noop` este omis din linia redată.
+
+````ts
+export function packageCommand(manager: string) {
+  // !noop diff -
+  // !diff -
+  return `${manager} install`;
+  // !noop diff +
+  // !diff +
+  return manager === 'npm' ? 'npm install' : `${manager} add`;
+}
+````
+
+### Detalii pliate
+
+`!fold` înlocuiește conținutul inline corespunzător cu o elipsă extensibilă. Elementul disclosure nativ păstrează textul integral în documentul redat pe server și rămâne extensibil fără JavaScript.
+
+```tsx
+// !noop fold[/className="(.*?)"/gm]
+// !fold[/className="(.*?)"/gm]
+export function Status() {
+  return <span className="status status--ready">Ready</span>;
+}
+```
+
+### Încadrarea automată a textului
+
+`!word-wrap` păstrează liniile lungi în interiorul lățimii disponibile și aliniază textul încadrat cu indentarea originală.
+
+```ts
+// !noop word-wrap
+// !word-wrap
+const command = createPackageManagerCommand({ manager: 'yarn', operation: 'exec', package: 'typescript', executable: 'tsc', arguments: ['--watch', '--preserveWatchOutput'] });
+```
+
+## Componente complexe
+
+Unele tipare de autorizare necesită mai mult decât un singur element markdown. Aceste componente păstrează sursa MDX lizibilă, permițând în același timp paginii redate să grupeze exemple, controale sau comparații înrudite într-un singur bloc.
+
+### File pentru cod (Code Tabs)
+
+Blocurile de cod înrudite care descriu o singură schimbare în mai multe fișiere aparțin împreună, nu stivuite unul după altul.
+
+<CodeWithTabs>
+
+````mdx !!tabs tabs.mdx
+<CodeWithTabs>
+
+```ts !!tabs component.tsx
+export function Example() {
+  return <p>Example</p>;
+}
+```
+
+```ts !!tabs component.css.ts
+export const exampleStyle = style({
+  display: 'block',
+});
+```
+
+</CodeWithTabs>
+````
+
+```ts !!tabs component.tsx
+export function Example() {
+  return <p>Example</p>;
+}
+```
+
+```ts !!tabs component.css.ts
+export const exampleStyle = style({
+  display: 'block',
+});
+```
+
+</CodeWithTabs>
+
+
+### Comenzi pentru managerul de pachete
+
+Adnotarea `!package` descrie o comandă neutră față de managerul de pachete și redă formele corespunzătoare pentru Yarn, pnpm și npm ca file.
+
+**Instalarea pachetelor**
+
+```sh !package install typescript zod
+```
+
+````md
+ <!-- !no-line-numbers -->
+```sh !package install typescript zod
+```
+````
+
+Fiecare variantă adaugă aceleași două pachete în proiectul curent și transmite numele lor neschimbate. Doar comanda diferă: Yarn și pnpm disting adăugarea unei dependințe de instalarea proiectului, folosind deci `add`, în timp ce npm suprasolicită `install`.
+
+**Inițierea unui proiect cu un pachet folosit o singură dată**
+
+```sh !package exec create-vite my-app --template react-ts
+```
+
+````md
+ <!-- !no-line-numbers -->
+```sh !package exec create-vite my-app --template react-ts
+```
+````
+
+Aici binarul și pachetul au același nume, deci nu trebuie declarat niciun pachet. Numele proiectului și argumentele șablonului sunt identice peste tot, și doar executorul se schimbă: `yarn dlx`, `pnpm dlx` și `npx`.
+
+**Rularea unui binar dintr-un pachet numit**
+
+```sh !package exec --package typescript tsc --watch
+```
+
+````md
+ <!-- !no-line-numbers -->
+```sh !package exec --package typescript tsc --watch
+```
+````
+
+Când binarul nu corespunde pachetului care îl furnizează, pachetul trebuie numit explicit. Executorii diferă la fel ca mai sus, la fel și opțiunea: Yarn o scrie `-p`, în timp ce pnpm și npm folosesc ambele `--package`.
+
+# !summary
+
+Implementarea curentă a acestui site personal, inclusiv conținutul său bazat pe MDX și pagina de referință pentru tipografie.
