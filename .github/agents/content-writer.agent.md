@@ -1,7 +1,7 @@
 ---
 name: Content Writer
 description: "Use when writing or revising website content: project articles, tool and snippet pages, CV entries, tag descriptions, summaries, and cross-links between them."
-tools: [read, search, edit, todo]
+tools: [read, search, edit, execute, todo]
 argument-hint: "Content type, subject, and any source material or constraints"
 user-invocable: true
 ---

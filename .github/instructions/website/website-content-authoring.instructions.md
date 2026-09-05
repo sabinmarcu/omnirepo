@@ -36,6 +36,7 @@ Applies to authored content in [apps/website/content](../../../apps/website/cont
 - When writing installation or prerequisite sections, assume the reader is not a developer and does not already have Node.js or Yarn installed. Name those prerequisites explicitly before repository commands. For install or exec commands that fit the package-manager annotation, use `` ```sh !package ... `` instead of hard-coding a Yarn command; keep raw shell fences only for commands the annotation cannot represent accurately.
 - Wrap sibling code blocks in `<CodeWithTabs>` and mark each one with `` ```<lang> !!tabs <Label> `` to render them as one tabbed block. `CodeWithTabs` is registered globally, so it needs no import.
 - Images colocate with their MDX and use plain markdown: `![alt](./shot.png)`. Local paths become optimized static imports; remote URLs pass through unchanged. Always write meaningful `alt`.
+- Chat image attachments are visible for reference but cannot be copied into the workspace directly. Ask whether the user wants them used as article assets. If they do, ask for the images' filesystem paths and recommend putting related images in one source folder. Copy them into an article-specific folder under `assets/` beside the MDX, rename each to a meaningful filename that contains the project name, and reference the local files from the MDX.
 - Avoid `fill`-style images and animated GIFs through the optimizer; prefer sized images or `<video>` for motion.
 
 ## Common Metadata

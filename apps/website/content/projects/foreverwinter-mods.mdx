@@ -5,46 +5,194 @@ export const status = 'active'
 export const repo = 'https://github.com/sabinmarcu/foreverwinter-mods-cli'
 export const tags = ['project:kind:cli', 'project:status:active', 'lang:typescript', 'tool:node-js', 'tool:react', 'tool:ink', 'tool:7z']
 export const createdAt = '03.09.2026'
-export const modifiedAt = '03.09.2026'
+export const modifiedAt = '05.09.2026'
 
 An interactive CLI for installing, enabling, and disabling mod triplets for The Forever Winter.
 
-Mods for The Forever Winter are not individual files. A playable mod is a matching `.pak`, `.ucas`, and `.utoc` triplet, and a manual file copy can leave a partial installation behind. Forever Winter Mods makes that contract explicit: it discovers a game install, reads compatible archives, and operates on complete triplets only.
+Mods for The Forever Winter are not individual files. A playable mod is a matching `.pak`, `.ucas`, and `.utoc` triplet. Copying individual files by hand can leave a partial installation that the game cannot use. Forever Winter Mods makes that contract explicit: it discovers a game install, reads compatible archives, and operates on complete triplets only.
 
 The project is published as [`@sabinmarcu/foreverwinter`](https://www.npmjs.com/package/@sabinmarcu/foreverwinter).
 
-## A cautious installer
+## How it works
 
-The installer accepts `.zip`, `.7z`, and `.7zip` archives. It installs a single complete triplet immediately, while archives with several mods open an interactive selector. Existing installations are compared with the archive timestamp and labelled as new, update, older, or installed before anything is written.
+Run `fw-mods` with no command to open a terminal list of the complete mod triplets in the selected mods directory. Each entry can be enabled or disabled as one operation, so its three required files always stay in the same state.
 
-Archives that contain unexpected files are deliberately left alone. Instead of guessing how a mod should be installed, the tool asks the player to review its supplied instructions.
+Use `fw-mods install <archive>` to inspect a `.zip`, `.7z`, or `.7zip` archive. A single new triplet installs immediately. Archives that contain several triplets, or a mod that is already present, open a selector first. Before installing, the CLI compares the archive timestamps with the installed triplet and labels each entry as `new`, `update`, `older`, or `installed`.
 
-## Discovery
+The CLI does not extract an archive with unexpected payloads. Documentation files are permitted, but other file types cause it to stop and ask the player to read the archive's installation instructions. It also does not delete installed mods. That is a deliberate boundary: the tool manages complete triplets and refuses to guess how an unfamiliar archive or unrelated file should be handled.
 
-The CLI searches common Steam library locations on Windows and Linux before asking for a path. When automatic discovery is not appropriate, the target mods directory can be given directly:
+## Terminology
+
+**Mod triplet**
+
+A set of three files with the same basename: `.pak`, `.ucas`, and `.utoc`. For example, `Example_P.pak`, `Example_P.ucas`, and `Example_P.utoc` make one triplet. The CLI only lists, toggles, or installs a mod when all three matching files are present.
+
+**Enabled and disabled**
+
+An enabled triplet keeps its normal filenames. A disabled triplet appends `.disabled` after each extension, such as `Example_P.pak.disabled`. The payload stays in the same directory; only the names change.
+
+**Mods directory**
+
+The directory under the game's `Paks` directory that contains mod triplets. The game installation normally uses `Windows/ForeverWinter/Content/Paks` beneath its Steam directory. The CLI accepts any existing directory when `--path` is supplied.
+
+**Archive**
+
+A `.zip`, `.7z`, or `.7zip` file containing one or more mod triplets. Archive folders are allowed, but each mod is identified by its own complete, same-named triplet.
+
+## Automatic mods-directory detection
+
+At startup, the CLI first checks a supplied `--path`. It resolves that path to a real directory; a missing path or a file is rejected. Without `--path`, it searches common Steam installation locations on Windows and Linux.
+
+On Windows, it checks `C:\Program Files (x86)\Steam` and `C:\Program Files\Steam`. On Linux, it checks `~/.steam/steam`, `~/.local/share/Steam`, and the Flatpak Steam location at `~/.var/app/com.valvesoftware.Steam/.local/share/Steam`. For each existing Steam library, it looks for both `The Forever Winter` and `Forever Winter` below `steamapps/common`, then checks the game's `Windows/ForeverWinter/Content/Paks` directory.
+
+Within an existing `Paks` directory, every subdirectory whose name contains `mods` is a candidate. Candidates are ordered by name: `~mods` is preferred, then `mods`, then names ending in `mods`, and finally every other matching directory in alphabetical order. The first candidate is used.
+
+This is intentionally a directory-name heuristic, not a Steam library parser. It does not read Steam configuration or scan arbitrary disks. If it cannot find a suitable directory, it prompts for the full path. You can also bypass detection explicitly:
 
 ```sh
 yarn dlx @sabinmarcu/foreverwinter --path "/path/to/~mods"
 ```
 
-This keeps the common case short without hiding the filesystem location that the command will affect.
+# !!file Prerequisites
 
-## Managing mods
+## !slug prerequisites
 
-Enabled mods are complete `.pak`, `.ucas`, and `.utoc` triplets sharing one basename. Disabling a mod appends `.disabled` to each file, preserving the installed payload and making the change reversible.
+# Prerequisites and installation
 
-The interactive list presents installed triplets as units, so a player cannot accidentally toggle only part of a mod.
+Forever Winter Mods requires Node.js 20 or newer and a local installation of The Forever Winter. The CLI runs in a terminal and needs read and write access to the target mods directory.
 
-## Installing archives
+## Run without installing
 
-Install an archive by passing it after the `install` command:
+The package can be downloaded and run for one command with Yarn:
 
 ```sh
-yarn dlx @sabinmarcu/foreverwinter install --path "/path/to/~mods" "/path/to/mod.7z"
+yarn dlx @sabinmarcu/foreverwinter
 ```
 
-For multi-mod archives, the terminal selector supports keyboard navigation and selecting individual eligible entries. Already-installed matches remain visible but cannot be selected again.
+This opens the mod manager after the CLI finds a mods directory or you provide one. To use a directory that automatic detection cannot find, pass its full path:
 
-### !summary
+```sh
+yarn dlx @sabinmarcu/foreverwinter --path "/path/to/~mods"
+```
 
-An interactive CLI for installing, enabling, and disabling mod triplets for The Forever Winter.
+The supplied path must already exist and be a directory. The CLI does not create a missing mods directory.
+
+## Install the command locally
+
+To make `fw-mods` available as a project command, add the package to a Node.js project:
+
+```sh
+yarn add --dev @sabinmarcu/foreverwinter
+```
+
+Then run it through Yarn:
+
+```sh
+yarn fw-mods
+```
+
+Use `--path` whenever the game is installed outside the locations searched by automatic detection.
+
+# !!file Managing mods
+
+## !slug manager
+
+# Using the mod manager
+
+Start the manager with no command:
+
+```sh
+yarn dlx @sabinmarcu/foreverwinter
+```
+
+The list contains only complete triplets. An entry with `[+]` is enabled; an entry with `[-]` is disabled. Files that do not form a complete `.pak`, `.ucas`, and `.utoc` set do not appear, and the manager does not repair or remove them.
+
+![The fw-mods manager lists fourteen complete mod triplets and shows enabled and disabled states.](./assets/foreverwinter-mods/foreverwinter-mods-manager.png)
+
+## Enable and disable
+
+Move with the Up and Down arrow keys or `j` and `k`. Press Space on the selected entry to toggle it.
+
+Disabling renames all three files by appending `.disabled`. Enabling removes that suffix from all three files. The mod data remains in the selected mods directory in either state, so toggling is reversible.
+
+Use `g` or Home to select the first entry, `G` or End to select the last entry, and `q` or Ctrl+C to quit. The manager requires an interactive terminal; it exits when standard input or output is not a TTY.
+
+# !!file Installing and removing mods
+
+## !slug installing-and-removing
+
+# Installing and removing mods
+
+## Install an archive
+
+Pass the archive after the `install` command. The `--path` option can appear before or after `install`.
+
+```sh
+yarn dlx @sabinmarcu/foreverwinter install "/path/to/mod.zip"
+```
+
+```sh
+yarn dlx @sabinmarcu/foreverwinter --path "/path/to/~mods" install "/path/to/mod.7z"
+```
+
+The archive must be a `.zip`, `.7z`, or `.7zip` file. The CLI finds complete triplets even when they are inside archive folders. A single, new triplet installs immediately. In other cases, it shows a selector. Use arrow keys or `j` and `k` to move, Space to select an eligible mod, `a` to select or clear all eligible mods, Enter to install, and `q` to quit.
+
+![The archive selector presents an older LootRebalance mod as selected for installation.](./assets/foreverwinter-mods/foreverwinter-mods-install-older.png)
+
+An existing mod is labelled `installed` when every archive timestamp matches the corresponding installed file. It remains visible but cannot be selected. A nonmatching installed mod is labelled `update` when at least one archive file is newer; otherwise it is labelled `older`.
+
+![The archive selector shows two installed mods that cannot be selected.](./assets/foreverwinter-mods/foreverwinter-mods-install-installed.png)
+
+During an install, each destination file is first extracted to a temporary file. Existing complete triplets are backed up, and the installation is rolled back if a later write fails. The archive's file timestamps are preserved on the installed files.
+
+## Archives the CLI will not install
+
+Documentation files such as `README`, `INSTALL`, `LICENSE`, `.txt`, `.md`, `.nfo`, and `.rtf` are allowed alongside triplets. Any other file type stops the installation, including incomplete triplets and duplicate mod names. The CLI lists the archive files and leaves them untouched so you can follow the author's instructions manually.
+
+## Remove a mod
+
+There is no `remove` or `uninstall` command. The CLI does not delete mod files.
+
+To remove a mod, close the game and delete its complete triplet from the mods directory: the matching `.pak`, `.ucas`, and `.utoc` files. For a disabled mod, delete the corresponding `.pak.disabled`, `.ucas.disabled`, and `.utoc.disabled` files. Do not delete only one member of a triplet; the manager ignores incomplete sets and cannot restore the missing files.
+
+# !!file Command API
+
+## !slug api
+
+# Command API
+
+The published package provides the `fw-mods` executable. With Yarn, it can be run without a global installation through `yarn dlx @sabinmarcu/foreverwinter`.
+
+## `fw-mods`
+
+```sh
+fw-mods [--path <mods-directory>]
+```
+
+Opens the interactive mod manager. With no `--path`, it attempts automatic detection and prompts for a directory if no candidate is found.
+
+## `fw-mods install`
+
+```sh
+fw-mods install [--path <mods-directory>] <archive>
+```
+
+Inspects and installs complete triplets from `<archive>`. The archive argument is required. `--path` can be placed before or after `install`.
+
+## `--path <mods-directory>`
+
+Selects an existing directory instead of relying on automatic detection. It may be supplied once for either command. A missing value, a second `--path`, or a path that is not a directory is an error.
+
+## Errors and unsupported input
+
+Only `install` is accepted as an explicit command. An unrecognized command or option produces an error. Passing `install` without exactly one archive produces this usage message:
+
+```text
+Usage: fw-mods install [--path <mods-directory>] <archive>
+```
+
+The archive path must exist, refer to a file, and use a supported extension. A supplied mods path must resolve to a directory. Archive contents that do not meet the complete-triplet rules are not installed.
+
+# !summary
+
+An interactive CLI for discovering, installing, enabling, and disabling complete mod triplets for The Forever Winter. It stops on unfamiliar archive payloads and leaves mod deletion to the player.
