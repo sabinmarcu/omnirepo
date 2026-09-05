@@ -18,6 +18,23 @@ import {
   codeTabsTriggerStyle,
 } from './CodeTabs.css';
 
+const noopAnnotationPattern = /^(\s*(?:\/\/|#|<!--)\s*)!noop\s+/gm;
+const noopAnnotationPlaceholder = '__CODEHIKE_NOOP__';
+
+function escapeNoopAnnotations(rawCode: RawCode): RawCode {
+  return {
+    ...rawCode,
+    value: rawCode.value.replaceAll(
+      noopAnnotationPattern,
+      `$1${noopAnnotationPlaceholder}`,
+    ),
+  };
+}
+
+function restoreNoopAnnotationText(text: string) {
+  return text.replaceAll(noopAnnotationPlaceholder, '!');
+}
+
 export namespace Code {
   export type Props = (
     & Omit<ComponentProps<typeof Pre>, 'code' | 'handlers'>
@@ -37,20 +54,32 @@ export const Code = withStyles(async function Code({
   const rawCode = code ?? codeblock;
   const filename = rawCode.meta.trim();
   const highlighted = await highlight(
-    rawCode,
+    escapeNoopAnnotations(rawCode),
     'github-from-css',
   );
+  const restoredHighlighted = {
+    ...highlighted,
+    code: restoreNoopAnnotationText(highlighted.code),
+    value: restoreNoopAnnotationText(highlighted.value),
+    tokens: highlighted.tokens.map((token) => {
+      if (typeof token === 'string') return token;
+
+      const restoredToken = [...token] as typeof token;
+      restoredToken[0] = restoreNoopAnnotationText(restoredToken[0]);
+      return restoredToken;
+    }),
+  };
   const pre = (
     <Pre
       {...rest}
       className={className}
-      code={highlighted}
+      code={restoredHighlighted}
       handlers={[
         ...blockAnnotations,
         ...inlineAnnotations,
       ]
         .filter(({ languages }) => (
-          !languages || languages.includes(highlighted.lang)
+          !languages || languages.includes(restoredHighlighted.lang)
         ))
         .map((handler) => (
           handler.enabledByDefault?.(highlighted.lang)
