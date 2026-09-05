@@ -28,4 +28,4 @@ workspace:
 toolchain:
   default: node
   node:
-    version: "23"
+    version: "24"
