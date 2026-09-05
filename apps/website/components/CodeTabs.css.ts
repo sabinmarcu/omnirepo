@@ -10,23 +10,18 @@ export const codeTabsStyle = style({
   gap: theme.grid.s,
 });
 
+export const codeToolbarStyle = style({
+  display: 'flex',
+  alignItems: 'center',
+  maxInlineSize: '100%',
+});
+
 export const codeTabsListStyle = style({
   display: 'inline-flex',
   alignSelf: 'flex-start',
   maxInlineSize: '100%',
   flexWrap: 'wrap',
-
-  borderInlineStart: `2px solid ${outlineColor}`,
-  borderInlineEnd: `2px solid ${outlineColor}`,
-  borderBlockStart: `2px solid ${outlineColor}`,
-  borderBlockEnd: `2px solid ${outlineColor}`,
-
-  borderStartStartRadius: '2px',
-  borderStartEndRadius: '2px',
-  borderEndEndRadius: '2px',
-  borderEndStartRadius: '2px',
-
-  overflow: 'hidden',
+  gap: theme.grid.s,
 });
 
 export const codeTabsTriggerStyle = recipe({
@@ -36,21 +31,17 @@ export const codeTabsTriggerStyle = recipe({
     font: 'inherit',
     fontSize: '0.8rem',
     color: 'inherit',
-    borderInlineStart: 'none',
-    borderInlineEnd: `2px solid ${outlineColor}`,
-    borderBlockStart: 'none',
-    borderBlockEnd: 'none',
+    borderInlineStart: `1px solid ${outlineColor}`,
+    borderInlineEnd: `1px solid ${outlineColor}`,
+    borderBlockStart: `1px solid ${outlineColor}`,
+    borderBlockEnd: `1px solid ${outlineColor}`,
+    borderRadius: '2px',
 
     paddingBlock: theme.grid.xs,
     paddingInline: theme.grid.s,
 
     transition: 'background 0.2s ease, opacity 0.2s ease',
 
-    selectors: {
-      '&:last-child': {
-        borderInlineEnd: 'none',
-      },
-    },
   },
 
   variants: {

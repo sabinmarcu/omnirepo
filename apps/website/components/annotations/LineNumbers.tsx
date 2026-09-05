@@ -19,6 +19,8 @@ const shellLanguages = new Set([
   'zsh',
 ]);
 
+export const noLineNumbersAnnotation = 'no-line-numbers';
+
 export const lineNumbers: CodeAnnotationHandler = {
   name: 'line-numbers',
   onlyIfAnnotated: true,

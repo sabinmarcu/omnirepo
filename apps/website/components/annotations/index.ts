@@ -1,8 +1,14 @@
 import { diff } from './Diff';
 import { fold } from './Fold';
-import { lineNumbers } from './LineNumbers';
+import {
+  lineNumbers,
+  noLineNumbersAnnotation,
+} from './LineNumbers';
 import { mark } from './Mark';
-import { shellPrompt } from './ShellPrompt';
+import {
+  noShellPromptAnnotation,
+  shellPrompt,
+} from './ShellPrompt';
 import type { CodeAnnotationHandler } from './types';
 import { wordWrap } from './WordWrap';
 
@@ -17,5 +23,10 @@ export const blockAnnotations = [
 export const inlineAnnotations = [
   fold,
 ] as const satisfies readonly CodeAnnotationHandler[];
+
+export {
+  noLineNumbersAnnotation,
+  noShellPromptAnnotation,
+};
 
 export type { CodeAnnotationHandler } from './types';

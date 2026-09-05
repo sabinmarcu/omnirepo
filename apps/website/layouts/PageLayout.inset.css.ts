@@ -23,7 +23,17 @@ export const pageLayoutInsetStyles = recipe({
   },
 });
 
-globalStyle(`${pageLayoutInsetStyles.classNames.base} > [data-container]`, {
+const className = pageLayoutInsetStyles.classNames.base;
+
+globalStyle(`${className} + ${className}`, {
+  marginBlockStart: 0,
+  paddingBlockStart: 0,
+});
+globalStyle(`${className}:has( + ${className})`, {
+  marginBlockEnd: 0,
+});
+
+globalStyle(`${className} > [data-container]`, {
   marginBlockStart: '0',
   marginBlockEnd: '0',
   gridColumn: gridLines.content,

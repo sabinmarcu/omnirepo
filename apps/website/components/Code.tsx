@@ -5,18 +5,30 @@ import {
 } from 'codehike/code';
 import type { ComponentProps } from 'react';
 import { withStyles } from '@/hocs/withStyles';
+import { CopyButton } from './CopyButton';
 import {
   blockAnnotations,
   inlineAnnotations,
+  noLineNumbersAnnotation,
+  noShellPromptAnnotation,
 } from './annotations';
+import { lineNumbers } from './annotations/LineNumbers';
 import {
   codeStyles,
 } from './Code.css';
 import {
+  codeContentStyle,
+  codeLanguageStyle,
+  codeOverlayItemStyle,
+  codeOverlayRailStyle,
+} from './CodeOverlay.css';
+import {
+  codeToolbarStyle,
   codeTabsListStyle,
   codeTabsStyle,
   codeTabsTriggerStyle,
 } from './CodeTabs.css';
+import { cls } from '@/utils/cls';
 
 const noopAnnotationPattern = /^(\s*(?:\/\/|#|<!--)\s*)!noop\s+/gm;
 const noopAnnotationPlaceholder = '__CODEHIKE_NOOP__';
@@ -57,6 +69,33 @@ export const Code = withStyles(async function Code({
     escapeNoopAnnotations(rawCode),
     'github-from-css',
   );
+  const hasNoLineNumbersAnnotation = highlighted.annotations.some(
+    ({ name }) => name === noLineNumbersAnnotation,
+  );
+  const hasLineNumbersAnnotation = highlighted.annotations.some(
+    ({ name }) => name === 'line-numbers',
+  );
+  const hasNoShellPromptAnnotation = highlighted.annotations.some(
+    ({ name }) => name === noShellPromptAnnotation,
+  );
+  const hasShellPromptAnnotation = highlighted.annotations.some(
+    ({ name }) => name === 'shell-prompt',
+  );
+  const hasCopyAnnotation = highlighted.annotations.some(
+    ({ name }) => name === 'copy',
+  );
+  const hasNoLanguageAnnotation = highlighted.annotations.some(
+    ({ name }) => name === 'no-language',
+  );
+  const hasLanguageAnnotation = highlighted.annotations.some(
+    ({ name }) => name === 'language',
+  );
+  const disableLineNumbers = hasNoLineNumbersAnnotation
+    && !hasLineNumbersAnnotation;
+  const disableShellPrompt = hasNoShellPromptAnnotation
+    && !hasShellPromptAnnotation;
+  const showCopy = hasCopyAnnotation;
+  const showLanguage = hasLanguageAnnotation || !hasNoLanguageAnnotation;
   const restoredHighlighted = {
     ...highlighted,
     code: restoreNoopAnnotationText(highlighted.code),
@@ -81,6 +120,12 @@ export const Code = withStyles(async function Code({
         .filter(({ languages }) => (
           !languages || languages.includes(restoredHighlighted.lang)
         ))
+        .filter(({ name }) => (
+          name !== lineNumbers.name || !disableLineNumbers
+        ))
+        .filter(({ name }) => (
+          name !== 'shell-prompt' || !disableShellPrompt
+        ))
         .map((handler) => (
           handler.enabledByDefault?.(highlighted.lang)
             ? {
@@ -92,16 +137,28 @@ export const Code = withStyles(async function Code({
     />
   );
 
-  if (!filename) return pre;
-
   return (
     <div className={codeTabsStyle}>
-      <div className={codeTabsListStyle}>
-        <div className={codeTabsTriggerStyle({ active: true })}>
-          {filename}
+      {filename && (
+        <div className={codeToolbarStyle}>
+          <div className={codeTabsListStyle}>
+            <div className={codeTabsTriggerStyle({ active: true })}>
+              {filename}
+            </div>
+          </div>
         </div>
+      )}
+      <div className={codeContentStyle}>
+        {pre}
+        {(showLanguage || showCopy) && (
+          <div className={codeOverlayRailStyle}>
+            {showLanguage && (
+              <span className={cls(codeLanguageStyle, codeOverlayItemStyle)}>{rawCode.lang}</span>
+            )}
+            {showCopy && <CopyButton text={highlighted.code} />}
+          </div>
+        )}
       </div>
-      {pre}
     </div>
   );
 }, codeStyles);
