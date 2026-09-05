@@ -28,7 +28,14 @@ export function CodeWithTabs({
         initialSyncedLabel={initialSyncedLabel}
         tabs={tabs.map((tab) => ({
           label: tab.meta || tab.lang,
-          content: <Code codeblock={tab} />,
+          content: (
+            <Code
+              codeblock={{
+                ...tab,
+                meta: '',
+              }}
+            />
+          ),
         }))}
       />
     </PageLayout.Inset>
