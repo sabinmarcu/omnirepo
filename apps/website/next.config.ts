@@ -47,7 +47,7 @@ const nextConfig: NextConfig = {
       '../../node_modules/@hackernoon/pixel-icon-library/**/*',
     ],
   },
-  // cacheComponents: true,
+  supportsImmutableAssets: false,
   experimental: {
     externalDir: true,
     typedEnv: true,
