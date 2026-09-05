@@ -1,11 +1,14 @@
-import { theme } from '@sabinmarcu/theme';
+import {
+  themes,
+  theme,
+} from '@sabinmarcu/website-theme';
 import { style } from '@vanilla-extract/css';
 import { merge as deepMerge } from 'ts-deepmerge';
 import { mobileMedia } from '@/utils/responsive';
 
 export const codeStyles = style(deepMerge(
   {
-    background: theme.colors.background.surface,
+    background: themes.neutral.colors.background.surface,
 
     fontSize: '1rem',
 

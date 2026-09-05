@@ -7,6 +7,7 @@ export const setupTheme = createThemeFamily(
   'articles',
   'ramblings',
   'snippets',
+  'neutral',
 );
 
 export const {
@@ -74,6 +75,14 @@ export const themeColors = {
     background: {
       light: 'oklch(72% 0.0586 42.13)',
       dark: 'oklch(20.32% 0.0305 41.79)',
+    },
+  },
+  neutral: {
+    primary: 'oklch(0.22 0 0)',
+    secondary: 'oklch(0.98 0 0)',
+    background: {
+      light: 'oklch(72% 0 0)',
+      dark: 'oklch(17% 0 0)',
     },
   },
 } satisfies Parameters<typeof setupTheme>[0];
