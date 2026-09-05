@@ -34,6 +34,7 @@ export const contentMetadataSchema = metadataSchema.extend({
 });
 
 type DatedContent = {
+  createdAt: PromiseLike<string>,
   modifiedAt: PromiseLike<string>,
   title: PromiseLike<string>,
 };
@@ -61,6 +62,7 @@ export function formatContentDate(value: string, locale: string): string {
 export async function sortByModifiedAt<T extends DatedContent>(resources: T[]): Promise<T[]> {
   const datedResources = await Promise.all(resources.map(async (resource) => ({
     resource,
+    createdAt: await resource.createdAt,
     modifiedAt: await resource.modifiedAt,
     title: await resource.title,
   })));
@@ -68,6 +70,7 @@ export async function sortByModifiedAt<T extends DatedContent>(resources: T[]): 
   return datedResources
     .toSorted((left, right) => (
       compareModifiedAt(left.modifiedAt, right.modifiedAt)
+      || compareModifiedAt(left.createdAt, right.createdAt)
       || left.title.localeCompare(right.title)
     ))
     .map(({ resource }) => resource);

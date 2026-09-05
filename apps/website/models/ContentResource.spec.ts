@@ -32,23 +32,32 @@ describe('contentMetadataSchema', () => {
     })).toThrow();
   });
 
-  it('sorts content by latest modification with title as a stable tie-breaker', async () => {
+  it('sorts content by latest modification, creation date, then title', async () => {
     const resources = await sortByModifiedAt([
       {
+        createdAt: Promise.resolve('02.09.2026'),
         modifiedAt: Promise.resolve('02.09.2026'),
         title: Promise.resolve('Zulu'),
       },
       {
+        createdAt: Promise.resolve('03.09.2026'),
         modifiedAt: Promise.resolve('04.09.2026'),
         title: Promise.resolve('Bravo'),
       },
       {
+        createdAt: Promise.resolve('04.09.2026'),
         modifiedAt: Promise.resolve('04.09.2026'),
         title: Promise.resolve('Alpha'),
+      },
+      {
+        createdAt: Promise.resolve('04.09.2026'),
+        modifiedAt: Promise.resolve('04.09.2026'),
+        title: Promise.resolve('Able'),
       },
     ]);
 
     await expect(Promise.all(resources.map(async ({ title }) => title))).resolves.toEqual([
+      'Able',
       'Alpha',
       'Bravo',
       'Zulu',
