@@ -5,7 +5,6 @@ import { redirect404 } from '@/utils/routes.ssr';
 import { canonicalMetadata } from '@/i18n/metadata';
 import { ShowcaseLayout } from '@/layouts/ShowcaseLayout';
 import { ToolResource } from '@/models/ToolResource';
-import { RelatedContent } from '@/components/RelatedContent';
 import { isLocale } from '@/i18n/locales';
 
 export async function generateMetadata(props: PageProps<'/[locale]/tools/[slug]'>): Promise<Metadata> {
@@ -43,11 +42,9 @@ export default async function ToolPage(
   }
   const showcase = await tool.showcase;
   const ShowcasePage = await showcase.Component;
-  const id = await tool.id;
   return (
     <ShowcaseLayout>
       <ShowcasePage />
-      <RelatedContent locale={locale} entryIds={[`tool:${id}`]} />
     </ShowcaseLayout>
   );
 }

@@ -5,7 +5,6 @@ import { redirect404 } from '@/utils/routes.ssr';
 import { canonicalMetadata } from '@/i18n/metadata';
 import { ShowcaseLayout } from '@/layouts/ShowcaseLayout';
 import { SnippetResource } from '@/models/SnippetResource';
-import { RelatedContent } from '@/components/RelatedContent';
 import { isLocale } from '@/i18n/locales';
 
 export async function generateMetadata({ params }: PageProps<'/[locale]/snippets/[slug]'>): Promise<Metadata> {
@@ -43,12 +42,10 @@ export default async function SnippetPage(
   }
   const showcase = await snippet.showcase;
   const ShowcasePage = await showcase.Component;
-  const id = await snippet.id;
 
   return (
     <ShowcaseLayout>
       <ShowcasePage />
-      <RelatedContent locale={locale} entryIds={[`snippet:${id}`]} />
     </ShowcaseLayout>
   );
 }

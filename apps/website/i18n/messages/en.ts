@@ -114,9 +114,6 @@ const messages = {
     continue: 'Continue in {locale}',
     dismiss: 'Dismiss',
   },
-  relatedContent: {
-    title: 'Related content',
-  },
   projects: {
     createdAndLastUpdated: 'Created at: {createdAt}, last updated at: {modifiedAt}',
     lastUpdated: 'Last updated: {date}',

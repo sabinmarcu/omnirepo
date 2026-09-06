@@ -116,9 +116,6 @@ const messages = {
     continue: 'Continuă în {locale}',
     dismiss: 'Închide',
   },
-  relatedContent: {
-    title: 'Conținut asociat',
-  },
   projects: {
     createdAndLastUpdated: 'Creat: {createdAt}, ultima actualizare: {modifiedAt}',
     lastUpdated: 'Ultima actualizare: {date}',
