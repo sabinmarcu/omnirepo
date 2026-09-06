@@ -6,6 +6,7 @@ import { redirect404 } from '@/utils/routes.ssr';
 import { canonicalMetadata } from '@/i18n/metadata';
 import { TranslationFallbackNotice } from '@/i18n/TranslationFallbackNotice';
 import { Code } from '@/components/Code';
+import { SourceComment } from '@/components/SourceComment';
 import { Typography } from '@/components/primitives/Typography';
 import { PageLayout } from '@/layouts/PageLayout';
 import { SnippetResource } from '@/models/SnippetResource';
@@ -87,7 +88,7 @@ export default async function SnippetPageSubpage(
                 ? (<Typography as="h2">{title}</Typography>)
                 : null}
               {comment
-                ? (<p dangerouslySetInnerHTML={{ __html: comment }} />)
+                ? <SourceComment comment={comment} />
                 : null}
               <PageLayout.Inset>
                 <Code code={content} />

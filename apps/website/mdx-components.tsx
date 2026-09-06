@@ -48,7 +48,7 @@ function MdxImage({
   );
 }
 
-const components: MDXComponents = {
+export const mdxComponents: MDXComponents = {
   a: (props: any) => (<ThemedLink {...(props as any)} />),
   h1: (props: any) => (<Typography as="h1" {...props} />),
   h2: (props: any) => (<Typography as="h2" {...props} />),
@@ -67,5 +67,5 @@ const components: MDXComponents = {
 };
 
 export function useMDXComponents(): MDXComponents {
-  return components;
+  return mdxComponents;
 }
