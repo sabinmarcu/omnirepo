@@ -133,12 +133,14 @@ Location: `content/personal/cv/`.
 
 ## Linking Projects And CV
 
-- When a CV project has a full project article, add `#### !canonical <project-slug>` to the CV entry.
+- Every project article must have a corresponding backlink entry in the CV (`content/personal/cv/workplace/`).
+- When authoring a project or adding its CV backlink, always ask the user which workplace category file (for example `opensource.mdx` or `personal.mdx`) the backlink entry should be placed in.
+- Achieved by creating a `### !!project <Title>` entry in the chosen CV workplace file and adding `#### !canonical <project-slug>` to it along with a brief summary, dates, tag, and skills.
 - Effects of that single annotation:
   - The CV entry shows a **Full write-up** link to the project page.
   - The CV title links to the project's `repo`.
   - Search collapses both into one result, with the other location shown as an `Also in:` badge.
-- Do not duplicate long prose between the CV entry and the project article. Keep the CV entry short and let the article carry the detail.
+- Do not duplicate long prose between the CV entry and the project article. Keep the CV entry short (a brief summary sentence) and let the article carry the detail.
 
 ## Translations
 
