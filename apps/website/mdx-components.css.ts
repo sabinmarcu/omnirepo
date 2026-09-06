@@ -9,3 +9,10 @@ export const mdxImage = style({
   maxInlineSize: '100%',
   borderRadius: '2px',
 });
+
+export const mdxInlineCode = style({
+  display: 'inline',
+  overflowWrap: 'anywhere',
+  boxDecorationBreak: 'clone',
+  WebkitBoxDecorationBreak: 'clone',
+});

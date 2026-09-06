@@ -12,7 +12,10 @@ import { CodehikeCode } from './components/CodehikeCode';
 import { CodehikeInlineCode } from './components/CodehikeInlineCode';
 import { CodeWithTabs } from './components/CodeWithTabs';
 import { PageLayout } from './layouts/PageLayout';
-import { mdxImage } from './mdx-components.css';
+import {
+  mdxImage,
+  mdxInlineCode,
+} from './mdx-components.css';
 
 function getOnlyChildOfType<Props>(children: ReactNode, type: ComponentType<Props>) {
   const childArray = Children.toArray(children).filter((child) => (
@@ -60,6 +63,9 @@ export const mdxComponents: MDXComponents = {
     children,
     ...props
   }: any) => getOnlyChildOfType(children, MdxImage) ?? (<Typography as="p" {...props}>{children}</Typography>),
+  code: ({ className, ...props }: any) => (
+    <code className={[mdxInlineCode, className].filter(Boolean).join(' ')} {...props} />
+  ),
   img: MdxImage,
   CodehikeCode,
   CodehikeInlineCode,
