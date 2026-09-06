@@ -9,7 +9,9 @@ export const getRootNavigation = (translate: (key: string) => string) => normali
   },
   {
     ...categoriesMap.personal,
-    text: translate('personal'),
+    id: 'personal',
+    text: translate('cv'),
+    href: '/personal/cv',
   },
   {
     ...categoriesMap.articles,

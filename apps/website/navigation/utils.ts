@@ -27,6 +27,7 @@ export type NavigationItem = Simplify<(
 
 export type NavigationItemInput = Simplify<(
   & NavigationItemMetadata
+  & Partial<NavigationItemId>
   & Partial<NavigationItemHref>
 )>;
 
@@ -34,7 +35,9 @@ export function normalizeNavigationList(
   list: NavigationItemInput[],
 ): NavigationItem[] {
   const normalizedList: NavigationItem[] = [];
-  for (const { href, ...rest } of list) {
+  for (const {
+    href, id, ...rest
+  } of list) {
     const hrefOrWip: NavigationItemHref | NavigationItemWIP = (
       href
       && !isRouteWIP(href)
@@ -43,7 +46,7 @@ export function normalizeNavigationList(
       : { wip: true };
     const normalizedItem = {
       ...rest,
-      id: href || rest.text,
+      id: id ?? href ?? rest.text,
       ...hrefOrWip,
     } satisfies NavigationItem;
 

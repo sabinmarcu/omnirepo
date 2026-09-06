@@ -4,6 +4,7 @@ const messages = {
   navigation: {
     home: 'Acasă',
     personal: 'Personal',
+    cv: 'CV',
     articles: 'Articole',
     ramblings: 'Gânduri',
     projects: 'Proiecte',
@@ -12,7 +13,7 @@ const messages = {
   },
   home: {
     about: 'Despre mine',
-    cv: 'CV-ul meu',
+    cv: 'CV',
     stack: 'Tehnologiile mele',
     activeProjects: 'Proiecte active',
     articles: 'Articole',

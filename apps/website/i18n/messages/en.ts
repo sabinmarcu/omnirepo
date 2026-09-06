@@ -2,6 +2,7 @@ const messages = {
   navigation: {
     home: 'Home',
     personal: 'Personal',
+    cv: 'CV',
     articles: 'Articles',
     ramblings: 'Ramblings',
     projects: 'Projects',
@@ -10,7 +11,7 @@ const messages = {
   },
   home: {
     about: 'About me',
-    cv: 'My CV',
+    cv: 'CV',
     stack: 'My tech stack',
     activeProjects: 'Active projects',
     articles: 'Articles',
