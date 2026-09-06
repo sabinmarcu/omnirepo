@@ -167,3 +167,8 @@ globalStyle(`${compactCvResultScopeSelector} ${resultListStyle} > li:first-child
   paddingBlockStart: 0,
   borderBlockStartWidth: 0,
 });
+
+globalStyle(`${compactCvResultScopeSelector} ${experienceItemGrids.rawSelector('content')} > :is(h2,h4):first-child`, {
+  marginBlockStart: 0,
+  borderBlockStart: 'none',
+});
