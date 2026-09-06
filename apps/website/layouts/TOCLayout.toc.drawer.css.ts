@@ -73,6 +73,14 @@ whenTier('drawer', tocDrawerTriggerStyles, {
   display: 'inline-flex',
 });
 
+globalStyle(`${tocDrawerTriggerStyles}${tocDrawerTriggerStyles}`, {
+  ...mobileMedia({
+    gridColumn: gridLines.full,
+    justifySelf: 'start',
+    marginInlineStart: navigationSpacing,
+  }),
+});
+
 // Top layer means the drawer needs no z-index of its own.
 // `allow-discrete` on display/overlay keeps the panel rendered while it slides back out.
 whenTier('drawer', tocLayoutTOCStyles, {

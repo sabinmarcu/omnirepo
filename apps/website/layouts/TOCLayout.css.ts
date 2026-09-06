@@ -30,12 +30,20 @@ import {
 
 export const tocTriggerInline = createVar();
 export const tocTriggerBlock = createVar();
+const tocDrawerGutter = createVar();
 
 /** Matches the navbar's own section border. */
 export const tocTriggerBorderSize = '2px';
 
 /** The trigger sizes its content box, so the gutter track has to allow for the border too. */
 const withBorder = (size: string) => `calc(${size} + ${tocTriggerBorderSize} * 2)`;
+const rail = `${tocMinInlineSize}px`;
+
+/** Matches the content column's inline padding, so the trigger shares its inset. */
+export const tocTriggerMargin = pageLayoutInlinePadding;
+
+// The content column's own inline padding supplies the separation on the trailing side.
+const gutter = `calc(${tocTriggerMargin} * 2 + ${withBorder(tocTriggerInline)})`;
 
 /**
  * Owns the rail/content geometry so neither PageLayout nor RootPageLayout has to
@@ -56,6 +64,7 @@ export const tocLayoutStyles = style({
     [tocGap]: theme.grid.l,
     [tocTriggerInline]: `${tocTriggerInlineSize}px`,
     [tocTriggerBlock]: `${tocTriggerInlineSize}px`,
+    [tocDrawerGutter]: gutter,
   },
 
   // Mobile matches the navbar button's box, so the two read as one control row.
@@ -66,14 +75,6 @@ export const tocLayoutStyles = style({
     },
   }),
 });
-
-const rail = `${tocMinInlineSize}px`;
-
-/** Matches the content column's inline padding, so the trigger shares its inset. */
-export const tocTriggerMargin = pageLayoutInlinePadding;
-
-// The content column's own inline padding supplies the separation on the trailing side.
-const gutter = `calc(${tocTriggerMargin} * 2 + ${withBorder(tocTriggerInline)})`;
 
 // A trailing rail-sized track mirrors the real rail, so the content stays viewport-centred.
 // `safe` keeps the rail from clipping when the scrollbar makes the wrapper narrower
@@ -115,7 +116,7 @@ whenTier('folded', tocLayoutStyles, {
 whenTier('drawer', tocLayoutStyles, {
   gridTemplateColumns: [
     `[${gridLines.fullStart}]`,
-    gutter,
+    tocDrawerGutter,
     `[${gridLines.wideStart}]`,
     'minmax(0, 2fr)',
     `[${gridLines.contentStart}]`,
@@ -126,6 +127,14 @@ whenTier('drawer', tocLayoutStyles, {
     pageLayoutInlinePadding,
     `[${gridLines.fullEnd}]`,
   ].join(' '),
+});
+
+globalStyle(tocLayoutStyles, {
+  ...mobileMedia({
+    vars: {
+      [tocDrawerGutter]: pageLayoutInlinePadding,
+    },
+  }),
 });
 
 // Content precedes the rail in the DOM, so every tier places it explicitly.
