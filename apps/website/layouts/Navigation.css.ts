@@ -14,10 +14,7 @@ import {
   navigationAnimation,
   navigationAnimationPercent,
 } from './Navigation.animation.css';
-import {
-  rootPageLayoutStyles,
-  rootScrollTimeline,
-} from './RootPageLayout.css';
+import { rootScrollTimeline } from './RootPageLayout.css';
 
 /** Anchor exposed so out-of-flow siblings (the TOC) can position against the navbar's real box. */
 export const navigationAnchorName = '--navigation';
@@ -253,11 +250,6 @@ globalStyle(`body:has(${navigationSelector}${animatedNavigationSelector})`, {
   vars: {
     [navigationBlockOffset]: `calc(${blendSize(navigationMinBlockSize)} * ${navigationRows})`,
   },
-});
-
-// The navbar overlays content, so the scroller must reserve room when jumping to anchors.
-globalStyle(rootPageLayoutStyles, {
-  scrollPaddingBlockStart: `calc(${navigationBlockOffset} + ${theme.grid.m})`,
 });
 
 globalStyle(`body:has(${navigationSelector})`, {

@@ -16,8 +16,8 @@ import {
   useRouter,
 } from '@/i18n/navigation';
 import { ThemedLink } from '@/components/primitives/ThemedLink';
-import { useSearchIndex } from './useSearchIndex';
 import { searchDocumentThemeFamilies } from '@/constants/searchDocumentThemeFamilies';
+import { useSearchIndex } from './useSearchIndex';
 import {
   searchEntrypointFieldStyle,
   searchEntrypointIconStyle,
@@ -127,6 +127,7 @@ export function SearchEntrypointClient({
                   className={searchEntrypointResultStyle}
                   href={document.location}
                   locale={document.locale}
+                  onPointerDown={(event) => event.preventDefault()}
                   onClick={() => setFocused(false)}
                 >
                   <span className={searchEntrypointResultTitleStyle}>
@@ -153,6 +154,7 @@ export function SearchEntrypointClient({
                               className={searchEntrypointResultLabelStyle}
                               href={secondary.location}
                               locale={secondary.locale}
+                              onPointerDown={(event) => event.preventDefault()}
                               onClick={() => setFocused(false)}
                               data-theme-family={searchDocumentThemeFamilies[secondary.type]}
                             >
