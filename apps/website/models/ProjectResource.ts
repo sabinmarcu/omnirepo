@@ -49,6 +49,9 @@ export type ProjectPage = {
 const annotationPattern = /^!{1,2}[a-zA-Z][\w-]*(\s|$)/;
 const filePattern = /^!!file\s+/;
 
+// A subpage's own title is the `!!file` heading, so its content headings start one level down.
+const subpageEntryDepth = 2;
+
 function flattenToc(toc: z.infer<typeof tocSchema>): TOCElement[] {
   return toc.flatMap(({
     value, depth, attributes, children,
@@ -153,7 +156,7 @@ export class ProjectResource extends ContentResource<
           toc: tocElementsToTree(partitions[index + 1] ?? []),
           entryDepth: section.entrydepth
             ? Number(section.entrydepth.title)
-            : metadata.entryDepth,
+            : metadata.entryDepth ?? subpageEntryDepth,
           maxDepth: section.maxdepth
             ? Number(section.maxdepth.title)
             : metadata.maxDepth,

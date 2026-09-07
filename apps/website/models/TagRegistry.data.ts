@@ -79,6 +79,18 @@ export const tagRegistryData = {
   'topics:frontend': {
     label: 'Frontend',
   },
+  'topics:ai': {
+    label: 'AI',
+  },
+  'topics:ai:agents': {
+    label: 'AI Agents',
+  },
+  'topics:ai:skills': {
+    label: 'AI Skills',
+  },
+  'tool:copilot': {
+    label: 'GitHub Copilot',
+  },
   'topics:styling': {
     label: 'Styling',
   },

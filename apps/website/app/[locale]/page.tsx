@@ -5,6 +5,7 @@ import { getHomepageNavigation } from '@/navigation/home';
 import { canonicalMetadata } from '@/i18n/metadata';
 import { Navigation } from '@/layouts/Navigation';
 import { SearchEntrypoint } from '@/components/search/SearchEntrypoint';
+import { navigationViewTransitionName } from '@/utils/viewTransition';
 import { LandingCard } from '../components/LandingCard';
 import { LandingCardList } from '../components/LandingCardList';
 import { LandingLogo } from '../components/LandingLogo';
@@ -42,7 +43,7 @@ export default async function Home() {
           }) => (
             <ViewTransition
               key={id}
-              name={`navigation-${id}`}
+              name={navigationViewTransitionName(id)}
             >
               <LandingCard
                 {...props as any}

@@ -23,6 +23,9 @@ const remarkMdxTocPlugin = fileURLToPath(
 const remarkPackageCommandsPlugin = fileURLToPath(
   new URL('mdx-plugins/remarkPackageCommands.mjs', import.meta.url),
 );
+const remarkMermaidPlugin = fileURLToPath(
+  new URL('mdx-plugins/remarkMermaid.mjs', import.meta.url),
+);
 const recmaCodeHikePlugin = fileURLToPath(
   new URL('mdx-plugins/recmaCodeHike.mjs', import.meta.url),
 );
@@ -65,12 +68,14 @@ const withMdx = createMdx({
   extension: /\.(md|mdx)$/,
   options: {
     remarkPlugins: [
+      'remark-gfm',
       ['remark-heading-id', {
         defaults: true,
         uniqueDefaults: true,
       }],
       [remarkMdxTocPlugin, { name: 'toc' }],
       remarkPackageCommandsPlugin,
+      remarkMermaidPlugin,
       [remarkCodeHikePlugin, chConfig],
       'remark-mdx-images',
     ],

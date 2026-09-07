@@ -1,6 +1,7 @@
 import { ViewTransition } from 'react';
 import type { NavigationItem } from '@/navigation/utils';
 import { ClientClickProxy } from '@/components/ClientClickProxy';
+import { navigationViewTransitionName } from '@/utils/viewTransition';
 import { NavigationLink } from './Navigation.link';
 import { mobileNavigationTriggerSelector } from './Navigation.mobile.constants';
 
@@ -30,7 +31,7 @@ export function NavigationList({
           ...rest
         }) => (
           <ViewTransition
-            name={`navigation-${id}`}
+            name={navigationViewTransitionName(id)}
             key={id}
           >
             <NavigationLink

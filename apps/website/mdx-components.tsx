@@ -11,10 +11,13 @@ import { Typography } from './components/primitives/Typography';
 import { CodehikeCode } from './components/CodehikeCode';
 import { CodehikeInlineCode } from './components/CodehikeInlineCode';
 import { CodeWithTabs } from './components/CodeWithTabs';
+import { Mermaid } from './components/Mermaid';
 import { PageLayout } from './layouts/PageLayout';
 import {
   mdxImage,
   mdxInlineCode,
+  mdxTable,
+  mdxTableWrapper,
 } from './mdx-components.css';
 
 function getOnlyChildOfType<Props>(children: ReactNode, type: ComponentType<Props>) {
@@ -66,10 +69,16 @@ export const mdxComponents: MDXComponents = {
   code: ({ className, ...props }: any) => (
     <code className={[mdxInlineCode, className].filter(Boolean).join(' ')} {...props} />
   ),
+  table: ({ className, ...props }: any) => (
+    <div className={mdxTableWrapper}>
+      <table className={[mdxTable, className].filter(Boolean).join(' ')} {...props} />
+    </div>
+  ),
   img: MdxImage,
   CodehikeCode,
   CodehikeInlineCode,
   CodeWithTabs,
+  Mermaid,
 };
 
 export function useMDXComponents(): MDXComponents {
