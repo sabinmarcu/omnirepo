@@ -2,7 +2,7 @@ export const experiments = {
   scanlines: {
     title: 'CRT Scanlines',
     description: 'Draw CRT Scanlines on top of everything',
-    default: false,
+    default: true,
   },
   animatedNavigation: {
     title: 'Animated Navigation',
