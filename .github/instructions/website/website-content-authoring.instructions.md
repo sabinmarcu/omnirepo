@@ -35,6 +35,8 @@ Applies to authored content in [apps/website/content](../../../apps/website/cont
 - Use an empty `` ```sh !package <command> `` fence for package-manager-neutral `install` and `exec` commands. It renders Yarn, pnpm, and npm variants as tabs; `exec --package <package> <command>` handles binaries supplied by a differently named package.
 - When writing installation or prerequisite sections, assume the reader is not a developer and does not already have Node.js or Yarn installed. Name those prerequisites explicitly before repository commands. For install or exec commands that fit the package-manager annotation, use `` ```sh !package ... `` instead of hard-coding a Yarn command; keep raw shell fences only for commands the annotation cannot represent accurately.
 - Wrap sibling code blocks in `<CodeWithTabs>` and mark each one with `` ```<lang> !!tabs <Label> `` to render them as one tabbed block. `CodeWithTabs` is registered globally, so it needs no import.
+- Mermaid diagrams are allowed and actively encouraged where they help clarify architecture, resolution graphs, CLI workflows, or state transitions. Use `` ```mermaid `` fenced code blocks. A mermaid fence is claimed before CodeHike runs, so code annotations do not apply inside one and the diagram renders without code-block chrome.
+- Tables use markdown pipe syntax and render with theme styling. Cells hold inline content only; a table needing paragraphs, lists, or code blocks should be headed sections instead. A wide table scrolls sideways and header cells do not wrap, so keep column headings short.
 - Images colocate with their MDX and use plain markdown: `![alt](./shot.png)`. Local paths become optimized static imports; remote URLs pass through unchanged. Always write meaningful `alt`.
 - Chat image attachments are visible for reference but cannot be copied into the workspace directly. Ask whether the user wants them used as article assets. If they do, ask for the images' filesystem paths and recommend putting related images in one source folder. Copy them into an article-specific folder under `assets/` beside the MDX, rename each to a meaningful filename that contains the project name, and reference the local files from the MDX.
 - Avoid `fill`-style images and animated GIFs through the optimizer; prefer sized images or `<video>` for motion.
@@ -52,9 +54,9 @@ export const modifiedAt = '04.09.2026'
 ```
 
 - `tags` is an array of canonical, lower-case tag IDs. Use semantic namespaces such as `lang:typescript`, `tool:react`, `topics:frontend`, `project:kind:cli`, and `project:status:active`.
-- `createdAt` and `modifiedAt` use `DD.MM.YYYY` calendar dates. They refer strictly to the markdown document as a website entry: when that content entry was created and last updated. They do not describe the real-world start date or activity timeline of the project, tool, or snippet. Keep locale variants aligned with their source file.
+- `createdAt` and `modifiedAt` use `DD.MM.YYYY` calendar dates. They refer strictly to the markdown document as a website entry: when that content entry was created and last updated. They do not describe the real-world start date or activity timeline of the project, tool, or snippet. Changing a piece of content in any way (including adding diagrams, text tweaks, or editing translations) MUST trigger an update of `modifiedAt` to the current date (`DD.MM.YYYY`) across the file and its locale variants. Keep locale variants aligned with their source file.
 - `!!skill` annotations are reserved for CV content. Do not use them in projects, tools, or snippets.
-- Projects may export optional positive integers `entryDepth` and `maxDepth` to limit the heading range shown in their table of contents. A `## !entrydepth <positive integer>` or `## !maxdepth <positive integer>` annotation inside a `# !!file` block overrides the corresponding value for its subpage.
+- Projects may export optional positive integers `entryDepth` and `maxDepth` to limit the heading range shown in their table of contents. Subpages default to an `entryDepth` of `2`, because a subpage's own `#` title would otherwise appear in its own table of contents. A `## !entrydepth <positive integer>` or `## !maxdepth <positive integer>` annotation inside a `# !!file` block overrides the corresponding value for its subpage.
 
 ## Tags
 
@@ -135,6 +137,8 @@ Location: `content/personal/cv/`.
 
 - Every project article must have a corresponding backlink entry in the CV (`content/personal/cv/workplace/`).
 - When authoring a project or adding its CV backlink, always ask the user which workplace category file (for example `opensource.mdx` or `personal.mdx`) the backlink entry should be placed in.
+- Infer the starting year (`!from`) from the repository's first commit date (`git log --reverse --format='%cs'`) when a repository path or remote is available.
+- Update tags and skills when new topics or tools are requested. CV skills and project tags do not need to match 1:1; use skill-scoped references (`!!skill AI`, `!!skill AI Agent`, `!!skill AI Skill`) in CV entries, and semantic namespaces (`topics:ai`, `topics:ai:agents`, `topics:ai:skills`, `tool:copilot`) in project tags.
 - Achieved by creating a `### !!project <Title>` entry in the chosen CV workplace file and adding `#### !canonical <project-slug>` to it along with a brief summary, dates, tag, and skills.
 - Effects of that single annotation:
   - The CV entry shows a **Full write-up** link to the project page.

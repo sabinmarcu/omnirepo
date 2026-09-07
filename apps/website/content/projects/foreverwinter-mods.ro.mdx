@@ -5,7 +5,7 @@ export const status = 'active'
 export const repo = 'https://github.com/sabinmarcu/foreverwinter-mods-cli'
 export const tags = ['project:kind:cli', 'project:status:active', 'lang:typescript', 'tool:node-js', 'tool:react', 'tool:ink', 'tool:7z']
 export const createdAt = '03.09.2026'
-export const modifiedAt = '05.09.2026'
+export const modifiedAt = '07.09.2026'
 
 Un CLI interactiv pentru instalarea, activarea și dezactivarea tripletelor de moduri pentru The Forever Winter.
 
@@ -18,6 +18,23 @@ Proiectul este publicat ca [`@sabinmarcu/foreverwinter`](https://www.npmjs.com/p
 Rulează `fw-mods` fără nicio comandă pentru a deschide o listă în terminal cu tripletele de moduri complete din directorul de moduri selectat. Fiecare intrare poate fi activată sau dezactivată printr-o singură operație, astfel încât cele trei fișiere necesare rămân mereu în aceeași stare.
 
 Folosește `fw-mods install <archive>` pentru a inspecta o arhivă `.zip`, `.7z` sau `.7zip`. Un singur triplet nou se instalează imediat. Arhivele care conțin mai multe triplete, sau un mod deja prezent, deschid mai întâi un selector. Înainte de instalare, CLI-ul compară marcajele temporale ale arhivei cu tripletul instalat și etichetează fiecare intrare drept `new`, `update`, `older` sau `installed`.
+
+```mermaid
+stateDiagram-v2
+    [*] --> SteamDiscovery: Auto-detectare la pornire / --path
+    SteamDiscovery --> ArchiveInspect: fw-mods install archive
+    
+    state ArchiveInspect {
+        [*] --> New: Triplet nou
+        [*] --> Update: Marcaj mai recent
+        [*] --> Older: Marcaj mai vechi
+        [*] --> Installed: Triplet identic
+    }
+    
+    ArchiveInspect --> Enabled: Instalare triplet (.pak, .ucas, .utoc)
+    Enabled --> Disabled: Comutare în CLI (adaugă .disabled)
+    Disabled --> Enabled: Comutare în CLI (restabilește extensiile)
+```
 
 CLI-ul nu extrage o arhivă cu conținut neașteptat. Fișierele de documentație sunt permise, dar alte tipuri de fișiere îl fac să se oprească și să ceară jucătorului să citească instrucțiunile de instalare ale arhivei. De asemenea, nu șterge modurile instalate. Aceasta este o limită deliberată: unealta gestionează triplete complete și refuză să ghicească cum ar trebui tratată o arhivă necunoscută sau un fișier fără legătură.
 

@@ -5,7 +5,7 @@ export const status = 'active'
 export const repo = 'https://github.com/sabinmarcu/omnirepo'
 export const tags = ['project:kind:website', 'project:status:active', 'tool:next-js', 'tool:react', 'tool:mdx', 'tool:codehike', 'topics:typography']
 export const createdAt = '02.09.2026'
-export const modifiedAt = '05.09.2026'
+export const modifiedAt = '07.09.2026'
 
 Acesta este site-ul pe care îl citești acum. Este construit ca o aplicație Next.js și React în acest monorepo, cu fișiere MDX care oferă conținutul publicat pentru proiecte, unelte și fragmente de cod.
 
@@ -15,7 +15,7 @@ Aplicația păstrează rutele, layout-urile, componentele, modelele și codul pe
 
 ## Pagini de referință
 
-Unele detalii sunt mai ușor de întreținut ca pagini de referință scurte decât în interiorul unei prezentări generale. Pagina de tipografie înregistrează ierarhia de titluri folosită pe site, în timp ce pagina de adnotări adună blocurile de autorizare folosite atât de oameni, cât și de agenți.
+Unele detalii sunt mai ușor de întreținut ca pagini de referință scurte decât în interiorul unei prezentări generale. Pagina de tipografie înregistrează ierarhia de titluri folosită pe site, pagina de adnotări adună blocurile de autorizare folosite atât de oameni, cât și de agenți, iar pagina de tabele și diagrame acoperă cele două forme de markdown care nu sunt nici text, nici cod.
 
 # !!file Typography
 
@@ -337,6 +337,99 @@ Aici binarul și pachetul au același nume, deci nu trebuie declarat niciun pach
 ````
 
 Când binarul nu corespunde pachetului care îl furnizează, pachetul trebuie numit explicit. Executorii diferă la fel ca mai sus, la fel și opțiunea: Yarn o scrie `-p`, în timp ce pnpm și npm folosesc ambele `--package`.
+
+# !!file Tables & Diagrams
+
+## !slug tables-and-diagrams
+
+# Tabele și diagrame
+
+Nu orice parte a unui articol este text sau cod. O comparație între trei opțiuni cere un tabel, iar o ordine de rezolvare sau un traseu de cerere cere o diagramă. Ambele se scriu ca markdown obișnuit și niciuna nu trece prin pipeline-ul pentru cod.
+
+## Tabele
+
+Tabelele folosesc sintaxa cu bare verticale: un rând de antet, un rând delimitator, apoi câte un rând per înregistrare. Barele exterioare sunt opționale, iar coloanele nu trebuie aliniate în sursă.
+
+````md
+| Adnotare | Se aplică la | Efect |
+| --- | --- | --- |
+| `!mark` | O linie | Evidențiază linia |
+| `!diff +` | O linie | Marchează linia ca inserată |
+| `!word-wrap` | Blocul | Încadrează liniile lungi pe loc |
+````
+
+| Adnotare | Se aplică la | Efect |
+| --- | --- | --- |
+| `!mark` | O linie | Evidențiază linia |
+| `!diff +` | O linie | Marchează linia ca inserată |
+| `!word-wrap` | Blocul | Încadrează liniile lungi pe loc |
+
+Markdown-ul inline funcționează în interiorul celulelor, așa că o celulă poate conține cod, accentuare sau un link. O celulă nu poate conține un bloc: fără paragrafe, liste sau blocuri de cod delimitate. Un tabel care are nevoie de ele este de obicei, de fapt, un set de secțiuni cu titluri.
+
+### Alinierea coloanelor
+
+Două puncte în rândul delimitator stabilesc alinierea pentru fiecare coloană. `:---` aliniază la început, `:---:` centrează, iar `---:` aliniază la sfârșit. O coloană fără două puncte este aliniată la început.
+
+````md
+| Manager de pachete | Install | Exec |
+| :--- | :---: | ---: |
+| Yarn | `add` | `dlx` |
+| pnpm | `add` | `dlx` |
+| npm | `install` | `npx` |
+````
+
+| Manager de pachete | Install | Exec |
+| :--- | :---: | ---: |
+| Yarn | `add` | `dlx` |
+| pnpm | `add` | `dlx` |
+| npm | `install` | `npx` |
+
+### Lățime
+
+Un tabel mai lat decât coloana articolului se derulează pe orizontală, în loc să își strivească celulele, iar celulele de antet nu se încadrează pe mai multe rânduri. Prin urmare, titlurile scurte de coloană și celulele scurte se citesc mai bine decât un tabel care trebuie derulat ca să fie înțeles.
+
+## Diagrame
+
+Un bloc delimitat marcat cu `mermaid` este redat ca diagramă. Conținutul este sursă Mermaid, care acoperă, printre altele, diagrame de flux, diagrame de secvență, diagrame de stare, diagrame de clase și diagrame entitate-relație.
+
+````md
+```mermaid
+flowchart LR
+  mdx[Fișier MDX] --> remark[Plugin-uri remark]
+  remark --> codehike[CodeHike]
+  codehike --> page[Pagina redată]
+```
+````
+
+```mermaid
+flowchart LR
+  mdx[Fișier MDX] --> remark[Plugin-uri remark]
+  remark --> codehike[CodeHike]
+  codehike --> page[Pagina redată]
+```
+
+Merită să apelezi la o diagramă atunci când subiectul are o formă: o arhitectură, un graf de dependențe, un flux de lucru sau un set de tranziții de stare. O diagramă care repetă o listă de două elemente este zgomot.
+
+### Cum le tratează site-ul
+
+Un bloc `mermaid` este preluat înainte ca CodeHike să îl vadă. Adnotările de cod precum `!mark` și `!diff` nu au, prin urmare, niciun sens în interiorul lui, iar o diagramă nu poartă niciunul dintre elementele vizuale ale blocurilor de cod: fără etichetă de limbaj, fără numere de linie și fără buton de copiere.
+
+Culorile vin din tema site-ului, nu din paletele proprii ale Mermaid, așa că o diagramă preia familia de temă a secțiunii în care se află și urmează modul luminos și cel întunecat împreună cu restul paginii. Stilurile de noduri și de muchii scrise în diagrama însăși au în continuare prioritate, ceea ce este chiar rostul scrierii lor.
+
+Desenarea se face în browser, iar biblioteca este descărcată doar pentru paginile care conțin o diagramă. Dacă sursa nu poate fi interpretată, pagina o afișează ca text în loc să eșueze.
+
+### Un al doilea exemplu
+
+```mermaid
+sequenceDiagram
+  participant Cititor
+  participant Ruta
+  participant Continut
+  Cititor->>Ruta: Cere o pagină de proiect
+  Ruta->>Continut: Citește MDX-ul și metadatele
+  Continut-->>Ruta: Text, cuprins, subpagini
+  Ruta-->>Cititor: Pagina redată
+```
 
 # !summary
 

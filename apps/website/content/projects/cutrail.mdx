@@ -5,7 +5,7 @@ export const status = 'active'
 export const repo = 'https://github.com/sabinmarcu/cutrail'
 export const tags = ['project:kind:desktop-application', 'project:status:active', 'lang:typescript', 'tool:electron', 'tool:react', 'tool:vite', 'tool:ffmpeg']
 export const createdAt = '04.07.2026'
-export const modifiedAt = '05.09.2026'
+export const modifiedAt = '07.09.2026'
 
 Cutrail exists to extract clips from a longer video quickly, without turning a short task into a video-editing project. Open a source, mark the parts worth keeping, and export them as separate files. It is a desktop utility for clipping, not a general-purpose editor.
 
@@ -68,6 +68,18 @@ When no tracks are active, the clip is exported without audio. The option to hid
 ## Export
 
 An export writes each configured range to the selected output directory. Cutrail passes the range, trim mode, and active-audio selection to FFmpeg, then stores metadata with the output so it can be recognised later in the Library. The output is a clip file, not an editable Cutrail project.
+
+```mermaid
+graph LR
+    Source["Source Video"] --> Library["Cutrail Library\n(Fingerprint & Metadata)"]
+    Library --> Editor["Independent Editor Window"]
+    Editor --> Tracks["Audio Track Selection\n(Mix or Mute Streams)"]
+    Editor --> Trimming{"Trim Accuracy"}
+    Trimming -->|Quick| Fast["Fast Trimming\n(Keyframe Boundary)"]
+    Trimming -->|Accurate| Precise["Accurate Trimming\n(Exact Boundary Frame)"]
+    Fast & Precise & Tracks --> FFmpeg["FFmpeg External Process"]
+    FFmpeg --> Output["Output Clip + Linked Metadata"]
+```
 
 Cutrail associates `.mp4`, `.mkv`, `.webm`, `.mov`, and `.avi` files with the desktop application. Opening one of those supported files from the operating system creates an editor window directly.
 

@@ -5,7 +5,7 @@ export const status = 'active'
 export const repo = 'https://github.com/sabinmarcu/foreverwinter-mods-cli'
 export const tags = ['project:kind:cli', 'project:status:active', 'lang:typescript', 'tool:node-js', 'tool:react', 'tool:ink', 'tool:7z']
 export const createdAt = '03.09.2026'
-export const modifiedAt = '05.09.2026'
+export const modifiedAt = '07.09.2026'
 
 An interactive CLI for installing, enabling, and disabling mod triplets for The Forever Winter.
 
@@ -18,6 +18,23 @@ The project is published as [`@sabinmarcu/foreverwinter`](https://www.npmjs.com/
 Run `fw-mods` with no command to open a terminal list of the complete mod triplets in the selected mods directory. Each entry can be enabled or disabled as one operation, so its three required files always stay in the same state.
 
 Use `fw-mods install <archive>` to inspect a `.zip`, `.7z`, or `.7zip` archive. A single new triplet installs immediately. Archives that contain several triplets, or a mod that is already present, open a selector first. Before installing, the CLI compares the archive timestamps with the installed triplet and labels each entry as `new`, `update`, `older`, or `installed`.
+
+```mermaid
+stateDiagram-v2
+    [*] --> SteamDiscovery: Startup Auto-Detection / --path
+    SteamDiscovery --> ArchiveInspect: fw-mods install archive
+    
+    state ArchiveInspect {
+        [*] --> New: New Triplet
+        [*] --> Update: Newer Timestamp
+        [*] --> Older: Older Timestamp
+        [*] --> Installed: Identical Triplet
+    }
+    
+    ArchiveInspect --> Enabled: Install Triplet (.pak, .ucas, .utoc)
+    Enabled --> Disabled: Toggle in CLI (appends .disabled)
+    Disabled --> Enabled: Toggle in CLI (restores extensions)
+```
 
 The CLI does not extract an archive with unexpected payloads. Documentation files are permitted, but other file types cause it to stop and ask the player to read the archive's installation instructions. It also does not delete installed mods. That is a deliberate boundary: the tool manages complete triplets and refuses to guess how an unfamiliar archive or unrelated file should be handled.
 

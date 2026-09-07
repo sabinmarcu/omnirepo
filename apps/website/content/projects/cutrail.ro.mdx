@@ -5,7 +5,7 @@ export const status = 'active'
 export const repo = 'https://github.com/sabinmarcu/cutrail'
 export const tags = ['project:kind:desktop-application', 'project:status:active', 'lang:typescript', 'tool:electron', 'tool:react', 'tool:vite', 'tool:ffmpeg']
 export const createdAt = '04.07.2026'
-export const modifiedAt = '05.09.2026'
+export const modifiedAt = '07.09.2026'
 
 Cutrail există pentru a extrage rapid clipuri dintr-un videoclip mai lung, fără a transforma o sarcină scurtă într-un proiect de editare video. Deschide o sursă, marchează părțile care merită păstrate și exportă-le ca fișiere separate. Este o unealtă desktop pentru decupare, nu un editor cu scop general.
 
@@ -68,6 +68,18 @@ Când nicio pistă nu este activă, clipul este exportat fără sunet. Opțiunea
 ## Export
 
 Un export scrie fiecare interval configurat în directorul de ieșire selectat. Cutrail transmite intervalul, modul de decupare și selecția audio activă către FFmpeg, apoi stochează metadate alături de rezultat, astfel încât să poată fi recunoscut ulterior în Bibliotecă. Rezultatul este un fișier de tip clip, nu un proiect Cutrail editabil.
+
+```mermaid
+graph LR
+    Source["Videoclip sursă"] --> Library["Biblioteca Cutrail\n(Amprentă & metadate)"]
+    Library --> Editor["Fereastră independentă de editor"]
+    Editor --> Tracks["Selecție piste audio\n(Mixați sau dezactivare)"]
+    Editor --> Trimming{"Acuratețe decupare"}
+    Trimming -->|Rapidă| Fast["Decupare rapidă\n(Cadrul cheie)"]
+    Trimming -->|Precisă| Precise["Decupare precisă\n(Cadrul exact)"]
+    Fast & Precise & Tracks --> FFmpeg["Proces extern FFmpeg"]
+    FFmpeg --> Output["Clip generat + Metadate asociate"]
+```
 
 Cutrail asociază fișierele `.mp4`, `.mkv`, `.webm`, `.mov` și `.avi` cu aplicația desktop. Deschiderea unuia dintre aceste fișiere suportate din sistemul de operare creează direct o fereastră de editor.
 

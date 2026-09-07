@@ -5,7 +5,7 @@ export const status = 'active'
 export const repo = 'https://github.com/sabinmarcu/omnirepo'
 export const tags = ['project:kind:website', 'project:status:active', 'tool:next-js', 'tool:react', 'tool:mdx', 'tool:codehike', 'topics:typography']
 export const createdAt = '02.09.2026'
-export const modifiedAt = '05.09.2026'
+export const modifiedAt = '07.09.2026'
 
 This is the website you are reading. It is built as a Next.js and React application in this monorepo, with MDX files providing the published project, tool, and snippet content.
 
@@ -15,7 +15,7 @@ The application keeps routes, layouts, components, models, and theme code togeth
 
 ## Reference pages
 
-Some details are easier to maintain as small reference pages than inside an overview. The typography page records the heading hierarchy used by the site, while the annotations page collects the authoring blocks used by both humans and agents.
+Some details are easier to maintain as small reference pages than inside an overview. The typography page records the heading hierarchy used by the site, the annotations page collects the authoring blocks used by both humans and agents, and the tables and diagrams page covers the two markdown forms that are neither prose nor code.
 
 # !!file Typography
 
@@ -337,6 +337,99 @@ Here the binary and the package share a name, so no package needs to be declared
 ````
 
 When the binary does not match the package that supplies it, the package has to be named explicitly. The runners differ as above, and so does the flag: Yarn spells it `-p`, while pnpm and npm both use `--package`.
+
+# !!file Tables & Diagrams
+
+## !slug tables-and-diagrams
+
+# Tables and diagrams
+
+Not every part of an article is prose or code. A comparison between three options wants a table, and a resolution order or a request path wants a diagram. Both are written as ordinary markdown, and neither is routed through the code pipeline.
+
+## Tables
+
+Tables use pipe syntax: a header row, a delimiter row, then one row per record. The outer pipes are optional, and the columns do not have to line up in the source.
+
+````md
+| Annotation | Applies to | Effect |
+| --- | --- | --- |
+| `!mark` | One line | Highlights the line |
+| `!diff +` | One line | Marks the line as inserted |
+| `!word-wrap` | The block | Wraps long lines in place |
+````
+
+| Annotation | Applies to | Effect |
+| --- | --- | --- |
+| `!mark` | One line | Highlights the line |
+| `!diff +` | One line | Marks the line as inserted |
+| `!word-wrap` | The block | Wraps long lines in place |
+
+Inline markdown works inside cells, so a cell can carry code, emphasis, or a link. A cell cannot carry a block: no paragraphs, lists, or fenced code. A table that needs those is usually a set of headed sections instead.
+
+### Column alignment
+
+Colons in the delimiter row set alignment per column. `:---` aligns to the start, `:---:` centres, and `---:` aligns to the end. A column with no colons is start-aligned.
+
+````md
+| Package manager | Install | Exec |
+| :--- | :---: | ---: |
+| Yarn | `add` | `dlx` |
+| pnpm | `add` | `dlx` |
+| npm | `install` | `npx` |
+````
+
+| Package manager | Install | Exec |
+| :--- | :---: | ---: |
+| Yarn | `add` | `dlx` |
+| pnpm | `add` | `dlx` |
+| npm | `install` | `npx` |
+
+### Width
+
+A table wider than the article column scrolls sideways rather than crushing its cells, and header cells do not wrap. Short column headings and short cells therefore read better than a table that has to be scrolled to be understood.
+
+## Diagrams
+
+A fenced block tagged `mermaid` is rendered as a diagram. The body is Mermaid source, which covers flowcharts, sequence diagrams, state diagrams, class diagrams, and entity relationship diagrams among others.
+
+````md
+```mermaid
+flowchart LR
+  mdx[MDX file] --> remark[remark plugins]
+  remark --> codehike[CodeHike]
+  codehike --> page[Rendered page]
+```
+````
+
+```mermaid
+flowchart LR
+  mdx[MDX file] --> remark[remark plugins]
+  remark --> codehike[CodeHike]
+  codehike --> page[Rendered page]
+```
+
+Diagrams are worth reaching for when the subject is a shape: an architecture, a dependency graph, a workflow, or a set of state transitions. A diagram that restates a two-item list is noise.
+
+### How the site treats them
+
+A `mermaid` fence is claimed before CodeHike sees it. Code annotations such as `!mark` and `!diff` therefore have no meaning inside one, and a diagram carries none of the code-block chrome: no language label, no line numbers, and no copy button.
+
+Colours come from the site theme rather than from Mermaid's own palettes, so a diagram takes on the theme family of the section it sits in and follows light and dark along with the rest of the page. Node and edge styles written into the diagram itself still win, which is the point of writing them.
+
+The drawing happens in the browser, and the library is fetched only for pages that contain a diagram. If the source does not parse, the page prints it as text rather than failing.
+
+### A second example
+
+```mermaid
+sequenceDiagram
+  participant Reader
+  participant Route
+  participant Content
+  Reader->>Route: Request a project page
+  Route->>Content: Read MDX and metadata
+  Content-->>Route: Prose, table of contents, subpages
+  Route-->>Reader: Rendered page
+```
 
 # !summary
 
