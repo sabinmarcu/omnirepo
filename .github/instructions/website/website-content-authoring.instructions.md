@@ -144,7 +144,7 @@ Location: `content/personal/cv/`.
   - The CV entry shows a **Full write-up** link to the project page.
   - The CV title links to the project's `repo`.
   - Search collapses both into one result, with the other location shown as an `Also in:` badge.
-- Do not duplicate long prose between the CV entry and the project article. Keep the CV entry short (a brief summary sentence) and let the article carry the detail.
+- For entries with a canonical link, you may include a few bullet points describing what the project is and its key features, taking inspiration from the project article. Avoid duplicating long prose; keep it concise and impactful.
 
 ## Translations
 
