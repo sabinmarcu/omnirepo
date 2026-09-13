@@ -127,6 +127,7 @@ const messages = {
     createdAndLastUpdated: 'Created at: {createdAt}, last updated at: {modifiedAt}',
     lastUpdated: 'Last updated: {date}',
     workedOnAt: 'Worked on this at my CV',
+    githubRelease: 'GitHub Releases',
   },
   search: {
     title: 'Search',

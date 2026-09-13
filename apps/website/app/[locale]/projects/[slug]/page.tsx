@@ -13,6 +13,7 @@ import { formatContentDate } from '@/models/ContentResource';
 import { redirect404 } from '@/utils/routes.ssr';
 import {
   projectDatesStyle,
+  projectResourceLinksStyle,
   projectResourceLinkStyle,
 } from './page.css';
 
@@ -45,10 +46,24 @@ export default async function ProjectPage({ params }: PageProps<'/[locale]/proje
   if (!project) return redirect404();
   const page = await project.getPage(await project.slug);
   if (!page) return redirect404();
-  const [translate, createdAt, modifiedAt] = await Promise.all([
+  const [
+    translate,
+    createdAt,
+    modifiedAt,
+    repo,
+    links,
+    releases,
+    aur,
+    npm,
+  ] = await Promise.all([
     getTranslations('projects'),
     project.createdAt,
     project.modifiedAt,
+    project.repo,
+    project.links,
+    project.releases,
+    project.aur,
+    project.npm,
   ]);
   return (
     <TOCLayout
@@ -65,10 +80,46 @@ export default async function ProjectPage({ params }: PageProps<'/[locale]/proje
         })}
       </p>
       <PageLayout.Inset>
-        <ThemedLink className={projectResourceLinkStyle} href={await project.repo}>
-          <Icon icon="github" />
-          GitHub
-        </ThemedLink>
+        <div className={projectResourceLinksStyle}>
+          <ThemedLink className={projectResourceLinkStyle} href={repo}>
+            <Icon icon="github" />
+            GitHub
+          </ThemedLink>
+          {links
+            ? Object.entries(links).map(([name, url]) => (
+              <ThemedLink key={name} className={projectResourceLinkStyle} href={url}>
+                {name}
+              </ThemedLink>
+            ))
+            : null}
+        </div>
+        {releases || aur || npm
+          ? (
+            <div className={projectResourceLinksStyle}>
+              {npm
+                ? (
+                  <ThemedLink className={projectResourceLinkStyle} href={`https://www.npmjs.com/package/${npm}`}>
+                    {`NPM: ${npm}`}
+                  </ThemedLink>
+                )
+                : null}
+              {releases
+                ? (
+                  <ThemedLink className={projectResourceLinkStyle} href={`${repo}/releases`}>
+                    {translate('githubRelease')}
+                  </ThemedLink>
+                )
+                : null}
+              {aur
+                ? aur.map((aurPackage) => (
+                  <ThemedLink className={projectResourceLinkStyle} href={`https://aur.archlinux.org/packages/${aurPackage}`}>
+                    {`AUR: ${aurPackage}`}
+                  </ThemedLink>
+                ))
+                : null}
+            </div>
+          )
+          : null}
       </PageLayout.Inset>
       {page.content}
     </TOCLayout>

@@ -38,6 +38,10 @@ const projectMetadataSchema = contentMetadataSchema.extend({
   status: projectStatusSchema,
   deprecatedFor: z.string().optional(),
   repo: z.url(),
+  links: z.record(z.string(), z.url()).optional(),
+  releases: z.boolean().optional(),
+  npm: z.string().optional(),
+  aur: z.array(z.string()).optional(),
   entryDepth: z.number().int().positive().optional(),
   maxDepth: z.number().int().positive().optional(),
 });
@@ -117,6 +121,22 @@ export class ProjectResource extends ContentResource<
 
   repo = lazy(
     async () => (await this.metadata).repo,
+  );
+
+  links = lazy(
+    async () => (await this.metadata).links,
+  );
+
+  npm = lazy(
+    async () => (await this.metadata).npm,
+  );
+
+  releases = lazy(
+    async () => (await this.metadata).releases,
+  );
+
+  aur = lazy(
+    async () => (await this.metadata).aur,
   );
 
   summary = lazy(
