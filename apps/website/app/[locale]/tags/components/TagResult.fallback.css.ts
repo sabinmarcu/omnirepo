@@ -1,5 +1,7 @@
 import { theme } from '@sabinmarcu/website-theme';
-import { style } from '@vanilla-extract/css';
+import {
+  style,
+} from '@vanilla-extract/css';
 
 export const resultStyle = style({
   display: 'grid',

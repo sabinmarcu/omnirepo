@@ -17,6 +17,10 @@ import {
 import { lazy } from './lazy';
 import type { tocSchema } from './schemas';
 
+export const projectStatusSchema = z.enum(['active', 'archived', 'deprecated', 'planned', 'wip']);
+
+export type ProjectStatus = z.infer<typeof projectStatusSchema>;
+
 const projectFileSchema = codehikeBlockAnnotationSchema().and(z.object({
   slug: codehikeBlockAnnotationSchema().optional(),
   entrydepth: codehikeBlockAnnotationSchema(z.coerce.number().int().positive()).optional(),
@@ -31,7 +35,8 @@ export const projectContentSchema = z.object({
 
 const projectMetadataSchema = contentMetadataSchema.extend({
   kind: z.string(),
-  status: z.string(),
+  status: projectStatusSchema,
+  deprecatedFor: z.string().optional(),
   repo: z.url(),
   entryDepth: z.number().int().positive().optional(),
   maxDepth: z.number().int().positive().optional(),
@@ -104,6 +109,10 @@ export class ProjectResource extends ContentResource<
 
   status = lazy(
     async () => (await this.metadata).status,
+  );
+
+  deprecatedFor = lazy(
+    async () => (await this.metadata).deprecatedFor,
   );
 
   repo = lazy(

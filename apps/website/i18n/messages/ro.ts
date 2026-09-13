@@ -72,6 +72,14 @@ const messages = {
   },
   status: {
     underConstruction: 'În construcție',
+    deprecatedFor: 'Deprecat in favoarea: {title}',
+    status: {
+      active: 'Activ',
+      archived: 'Arhivat',
+      deprecated: 'Deprecat',
+      planned: 'Planificat',
+      wip: 'În construcție',
+    },
   },
   tableOfContents: {
     label: 'Cuprins',

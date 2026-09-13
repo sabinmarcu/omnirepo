@@ -1,9 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 import { Card } from '@/components/Card';
-import { Icon } from '@/components/Icon';
 import { TagPill } from '@/components/TagPill';
 import { ThemedLink } from '@/components/primitives/ThemedLink';
-import { withTooltip } from '@/components/Tooltip.hoc';
 import { formatContentDate } from '@/models/ContentResource';
 import { tagLabel } from '@/models/TagRegistry';
 import { extendPathname } from '@/utils/routes';
@@ -12,12 +10,13 @@ import {
   projectCardHeaderStyle,
   projectCardKindStyle,
   projectCardMetaStyle,
-  projectCardRepoStyle,
-  projectCardTagsStyle,
-  projectCardStatusStyle,
+  projectCardSectionStyle,
   projectCardTitleStyle,
   projectCardUpdatedStyle,
+  projectCardTagsListStyle,
+  projectCardStyle,
 } from './ProjectCard.css';
+import { StatusPill } from '@/components/StatusPill';
 
 export namespace ProjectCard {
   export type Props = {
@@ -27,27 +26,11 @@ export namespace ProjectCard {
   };
 }
 
-const ProjectCardStatus = withTooltip(function ProjectCardStatus({
-  tooltip,
-}: { tooltip?: string }) {
-  return (
-    <span aria-label={tooltip} className={projectCardStatusStyle}>
-      <Icon icon="check-circle" />
-    </span>
-  );
-}, undefined, { position: 'left' });
-
-function ProjectCardRepo({ href }: { href: string }) {
-  return (
-    <ThemedLink aria-label="GitHub" className={projectCardRepoStyle} href={href as any}>
-      <Icon icon="github" />
-    </ThemedLink>
-  );
-}
-
 export async function ProjectCard(
   {
-    locale, pathname, resource,
+    locale,
+    pathname,
+    resource,
   }: ProjectCard.Props,
 ) {
   const [
@@ -58,8 +41,8 @@ export async function ProjectCard(
     status,
     tags,
     summary,
-    repo,
     modifiedAt,
+    deprecatedFor,
   ] = await Promise.all([
     getTranslations('projects'),
     resource.slug,
@@ -68,13 +51,13 @@ export async function ProjectCard(
     resource.status,
     resource.tags,
     resource.summary,
-    resource.repo,
     resource.modifiedAt,
+    resource.deprecatedFor,
   ]);
   const href = extendPathname(pathname, slug) as any;
 
   return (
-    <Card>
+    <Card className={projectCardStyle({ status })}>
       <div
         className={projectCardHeaderStyle}
         {...{ [ThemedLink.undecoratedDataAttribute]: true }}
@@ -82,16 +65,20 @@ export async function ProjectCard(
         <Card.Title className={projectCardTitleStyle}>
           <ThemedLink href={href}>{title}</ThemedLink>
           <span className={projectCardKindStyle}>{kind}</span>
+        </Card.Title>
+        <div className={projectCardSectionStyle}>
           <p className={projectCardUpdatedStyle}>
             {translate('lastUpdated', { date: formatContentDate(modifiedAt, locale) })}
           </p>
-        </Card.Title>
-        <ProjectCardStatus tooltip={status} />
-        <ProjectCardRepo href={repo} />
+        </div>
+        <div className={projectCardSectionStyle}>
+          <StatusPill status={status} />
+          {deprecatedFor && <StatusPill status="deprecated" deprecatedFor={deprecatedFor} />}
+        </div>
       </div>
       {summary ? <div className={projectCardMetaStyle}>{summary}</div> : null}
-      <div className={projectCardTagsStyle}>
-        {tags.map((tag) => (
+      <div className={projectCardTagsListStyle}>
+        {tags.filter((tag) => !tag.startsWith('project:status:')).map((tag) => (
           <TagPill
             key={tag}
             id={tag}

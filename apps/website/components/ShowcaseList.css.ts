@@ -12,7 +12,7 @@ const spacing = createVar();
 export const showcaseListStyle = style({
   display: 'grid',
   gridColumn: gridLines.full,
-  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(500px, 1fr))',
   gap: spacing,
   paddingBlockStart: `calc(${spacing} * 2)`,
   paddingInlineStart: spacing,
@@ -29,4 +29,10 @@ export const showcaseListStyle = style({
 
 globalStyle(showcaseListStyle, {
   display: 'grid-lanes',
+});
+
+globalStyle(`${showcaseListStyle} > *`, {
+  ...mobileMedia({
+    maxInlineSize: '50cqw',
+  }, true),
 });

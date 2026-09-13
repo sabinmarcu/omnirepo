@@ -70,6 +70,14 @@ const messages = {
   },
   status: {
     underConstruction: 'Under construction',
+    deprecatedFor: 'Deprecated for: {title}',
+    status: {
+      active: 'Active',
+      archived: 'Archived',
+      deprecated: 'Deprecated',
+      planned: 'Planned',
+      wip: 'Work in Progress',
+    },
   },
   tableOfContents: {
     label: 'Table of contents',

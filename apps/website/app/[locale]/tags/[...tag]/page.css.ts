@@ -88,13 +88,13 @@ globalStyle(compactCvExperienceItemSelector, {
     gridTemplateColumns: 'minmax(14rem, 1fr) minmax(0, 2fr)',
     columnGap: theme.grid.xl,
     rowGap: theme.grid.s,
-  }, true),
-});
 
-globalStyle(compactCvExperienceItemSelector, {
-  ...mobileMedia({
-    display: 'grid-lanes',
-    columns: 2,
+    '@supports': {
+      '(display: grid-lanes)': {
+        display: 'grid-lanes',
+        columns: 2,
+      },
+    },
   }, true),
 });
 
