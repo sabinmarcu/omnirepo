@@ -1,10 +1,12 @@
 import { getTranslations } from 'next-intl/server';
+import { ThemedLink } from '@/components/primitives/ThemedLink';
+import type { ContentLocation } from '@/models/ContentIndex';
+import type { Locale } from '@/i18n/locales';
+import { ProjectResource } from '@/models/ProjectResource';
 import {
-  experienceItemCanonicalLinkStyle,
   experienceItemLinksStyle,
   experienceItemStyles,
 } from './Experience.item.css';
-import { ThemedLink } from '@/components/primitives/ThemedLink';
 import { ExperienceItemDuration } from './Experience.item.duration';
 import { grids } from './Experience.item.grid';
 import { ExperienceItemLocation } from './Experience.item.location';
@@ -14,9 +16,6 @@ import type {
   ExperienceItemData,
   ExperienceItemMetadata,
 } from './Experience.item.types';
-import type { ContentLocation } from '@/models/ContentIndex';
-import type { Locale } from '@/i18n/locales';
-import { ProjectResource } from '@/models/ProjectResource';
 
 export namespace ExperienceItem {
   export type Props = (
