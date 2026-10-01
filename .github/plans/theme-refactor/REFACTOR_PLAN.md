@@ -1,5 +1,7 @@
 # Theme architecture refactor plan
 
+This document records the agreed architecture and invariants. Execution order, implementation targets, and acceptance gates are in the [phased implementation plan](IMPLEMENTATION_PLAN.md).
+
 ## Goals and invariants
 
 - Split the current `@sabinmarcu/theme` implementation into a reusable theme core, a reusable family layer, and the concrete `@sabinmarcu/theme` implementation. Keep `@sabinmarcu/website-theme` as website-owned composition. Reuse and repair `@sabinmarcu/stylesheet` as the sole variable-token renderer; add optional devtools as a consumer, not a dependency of those theme layers.
