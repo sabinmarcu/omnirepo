@@ -97,6 +97,7 @@ One or two sentences describing the project.
 
 - Optional subpages come from trailing `# !!file <Title>` blocks, each capturing the content beneath it. Add `## !slug <segment>` immediately inside the block to control the URL segment. Content before the first `!!file` belongs to the main page; there is no way to return to it afterwards.
 - The main project overview does not start with an H1 because the route renders the metadata `title` as the page H1. Subpage content is rendered as authored, so after `# !!file` and its `## !slug` annotation, start the visible subpage content with `#`.
+- For project interface subpages with published entrypoints, present ways to access the tool before repository development steps; put instructions for loading user data immediately after access, ahead of detailed controls. When a web page offers a hosted app and a CLI-hosted build, link the hosted app first, show the chosen CLI invocation, and refer to the CLI page for prerequisites without assuming package installation.
 - A project with no `!!file` blocks renders as a single page with no secondary navigation. That is a supported, common case.
 
 ## Tools
@@ -136,7 +137,7 @@ Location: `content/personal/cv/`.
 ## Linking Projects And CV
 
 - Every project article must have a corresponding backlink entry in the CV (`content/personal/cv/workplace/`).
-- When authoring a project or adding its CV backlink, always ask the user which workplace category file (for example `opensource.mdx` or `personal.mdx`) the backlink entry should be placed in.
+- When authoring a project or adding its CV backlink, use a workplace category the user specifies, including by reference to comparable entries. If no clear category is given or established by comparable entries, ask which workplace category file (for example `opensource.mdx` or `personal.mdx`) should hold it.
 - Infer the starting year (`!from`) from the repository's first commit date (`git log --reverse --format='%cs'`) when a repository path or remote is available.
 - Update tags and skills when new topics or tools are requested. CV skills and project tags do not need to match 1:1; use skill-scoped references (`!!skill AI`, `!!skill AI Agent`, `!!skill AI Skill`) in CV entries, and semantic namespaces (`topics:ai`, `topics:ai:agents`, `topics:ai:skills`, `tool:copilot`) in project tags.
 - Achieved by creating a `### !!project <Title>` entry in the chosen CV workplace file and adding `#### !canonical <project-slug>` to it along with a brief summary, dates, tag, and skills.
