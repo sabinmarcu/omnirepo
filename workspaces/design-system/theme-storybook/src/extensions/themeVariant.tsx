@@ -2,7 +2,7 @@ import {
   rootNode,
   themeVariants,
   themeDataAttribute,
-} from '@sabinmarcu/theme/constants';
+} from '@sabinmarcu/theme';
 import {
   splitToolbar,
 } from '@sabinmarcu/storybook-addon-split-toolbars';

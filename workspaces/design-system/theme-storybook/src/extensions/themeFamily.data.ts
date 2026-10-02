@@ -1,7 +1,4 @@
-import { setupTheme as websiteThemes } from '@sabinmarcu/website-theme';
-import { themes } from '../config/themes.js';
-
-const compileFamilies = <Families extends string>(input: Families[]) => (
+const compileFamilies = <Families extends string>(input: readonly Families[]) => (
   input.map((family) => ({
     value: family,
     title: `${family[0].toUpperCase()}${family.slice(1)} Theme`,
@@ -11,25 +8,20 @@ const compileFamilies = <Families extends string>(input: Families[]) => (
   }[]
 );
 
-const playgroundSelectionList = compileFamilies(themes.families);
-
-const websiteSelectionList = compileFamilies(
-  websiteThemes.families
-    .filter(
-      (it) => !themes.families.includes(it as any),
-    ) as unknown as Exclude<
-    typeof websiteThemes.families[number],
-    typeof themes.families[number]
-    >[],
-);
-
 export const themeMapping = {
   playground: {
     title: 'Playground',
-    list: playgroundSelectionList,
+    list: compileFamilies(['base', 'red', 'blue', 'green']),
   },
   website: {
     title: 'Website',
-    list: websiteSelectionList,
+    list: compileFamilies([
+      'personal',
+      'projects',
+      'articles',
+      'ramblings',
+      'snippets',
+      'neutral',
+    ]),
   },
 } as const;

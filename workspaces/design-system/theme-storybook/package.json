@@ -40,7 +40,10 @@
   },
   "devDependencies": {
     "@sabinmarcu/utils-test": "workspace:*",
-    "@storybook/types": "^8.6.11"
+    "@storybook/react": "^8.6.11",
+    "@storybook/react-vite": "^8.6.11",
+    "@storybook/types": "^8.6.11",
+    "@types/react": "^19.2.14"
   },
   "tscmono": {
     "preset": "lib",
@@ -74,8 +77,11 @@
     "@sabinmarcu/storybook-addon-split-toolbars": "workspace:*",
     "@sabinmarcu/storybook-addon-theme-overrider": "workspace:*",
     "@sabinmarcu/theme": "workspace:*",
+    "@sabinmarcu/theme-core": "workspace:*",
+    "@sabinmarcu/theme-family": "workspace:*",
     "@sabinmarcu/types": "workspace:*",
-    "@sabinmarcu/website-theme": "workspace:*",
+    "@vanilla-extract/css": "^1.21.2",
+    "@vanilla-extract/dynamic": "^2.1.5",
     "deepmerge-ts": "^7.1.5"
   }
 }

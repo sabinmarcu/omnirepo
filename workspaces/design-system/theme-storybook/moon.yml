@@ -8,7 +8,11 @@ project:
 language: typescript
 type: library
 dependsOn:
+  - "@sabinmarcu/storybook-addon-mirror-preview"
   - "@sabinmarcu/storybook-addon-split-toolbars"
+  - "@sabinmarcu/storybook-addon-theme-overrider"
   - "@sabinmarcu/theme"
+  - "@sabinmarcu/theme-core"
+  - "@sabinmarcu/theme-family"
   - "@sabinmarcu/types"
   - "@sabinmarcu/utils-test"

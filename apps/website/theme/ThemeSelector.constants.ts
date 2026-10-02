@@ -1,4 +1,4 @@
-import { themeVariants } from '@sabinmarcu/theme/constants';
+import { themeVariants } from '@sabinmarcu/theme';
 
 export const themeSelections = [...themeVariants, 'system'] as const;
 export const themeSelectionOrder = ['light', 'system', 'dark'] as const;

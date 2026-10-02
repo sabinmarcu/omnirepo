@@ -8,7 +8,7 @@ import type { Globals } from '@storybook/types';
 import {
   rootNode,
   themeFamilyDataAttribute,
-} from '@sabinmarcu/theme/constants';
+} from '@sabinmarcu/theme';
 import {
   addons,
   types,
@@ -16,7 +16,6 @@ import {
 } from '@storybook/manager-api';
 import { splitToolbar } from '@sabinmarcu/storybook-addon-split-toolbars';
 import type { Extension } from '../types.js';
-import { THEME_SELECTOR_GLOBAL_ID } from './themeVariant.js';
 import { themeMapping } from './themeFamily.data.js';
 
 export const THEME_FAMILY_GLOBAL_ID = 'themeFamily';
@@ -74,7 +73,7 @@ const themeFamilySelectorManager: Extension['manager'] = () => {
   addons.register(THEME_FAMILY_ADDON_ID, () => {
     addons.add(THEME_FAMILY_TOOL_ID, {
       type: types.TOOL,
-      title: 'Theme Variant Selector',
+      title: 'Theme Family Selector',
       render: ThemeFamilySelectorManager,
     });
   });
@@ -83,7 +82,7 @@ const themeFamilySelectorManager: Extension['manager'] = () => {
 const themeFamilySelectorToolbar: Extension['preview'] = {
   globalTypes: {
     [THEME_FAMILY_GLOBAL_ID]: splitToolbar({
-      id: THEME_SELECTOR_GLOBAL_ID,
+      id: THEME_FAMILY_GLOBAL_ID,
       splitToolbar: {
         icon: 'chromatic',
         dynamicTitle: true,

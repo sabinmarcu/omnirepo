@@ -109,7 +109,7 @@ async function ensureFieldConsistency({ Yarn }) {
     }
 
     if (matches.length > 0) {
-      const [[, match]] = matches.sort(([a], [b]) => b.length - a.length);
+      const [[, match]] = matches.toSorted(([a], [b]) => b.length - a.length);
       if (Array.isArray(match)) {
         for (const [index, value] of Object.entries(match)) {
           workspace.set(`${FIELD_TSCMONO_PRESETS_KEY}[${index}]`, value);
@@ -119,16 +119,29 @@ async function ensureFieldConsistency({ Yarn }) {
       }
     }
 
-    if (FIELD_IGNORE_LIST.has(`${workspace.ident}`)) {
+    if (FIELD_IGNORE_LIST.has(workspace.ident)) {
       continue;
     }
 
-    const fields = TREAT_AS_CJS.includes(`${workspace.ident}`)
+    const fields = TREAT_AS_CJS.includes(workspace.ident)
       ? CJS_FIELD_UPDATE_MAP
       : FIELD_UPDATE_MAP;
 
     for (const [field, value] of Object.entries(fields)) {
+      if (workspace.ident === '@sabinmarcu/theme' && field.startsWith('exports.')) {
+        continue;
+      }
       workspace.set(field, value);
+    }
+    if (workspace.ident === '@sabinmarcu/theme') {
+      workspace.set('exports', {
+        '.': {
+          types: './dist/index.d.ts',
+          import: './dist/index.js',
+          default: './dist/index.js',
+        },
+        './package.json': './package.json',
+      });
     }
   }
 }
@@ -140,7 +153,7 @@ async function ensureFieldConsistency({ Yarn }) {
  */
 async function ensureRequiredDependencies({ Yarn }) {
   for (const workspace of Yarn.workspaces()) {
-    if (REQUIRED_WORKSPACE_IGNORE_LIST.has(`${workspace.ident}`)) {
+    if (REQUIRED_WORKSPACE_IGNORE_LIST.has(workspace.ident)) {
       continue;
     }
 
@@ -162,9 +175,7 @@ async function ensureRequiredDependencies({ Yarn }) {
   }
 }
 
-// eslint-disable-next-line unicorn/name-replacements
 async function ensureDocsDependencies({ Yarn }) {
-  // eslint-disable-next-line unicorn/name-replacements
   const docsWorkspace = Yarn.workspace({ ident: DOCS_WORKSPACE_NAME });
   for (const workspace of Yarn.workspaces()) {
     if (DOCS_WORKSPACE_EXCLUDES.includes(workspace.ident)) {
@@ -184,8 +195,8 @@ async function ensureStorybookDependencies({ Yarn }) {
     if (workspace.ident === storybookWorkspace.ident) {
       continue;
     }
-    if (!STORYBOOK_WORKSPACE_PATHS.some(
-      (workspacePath) => workspace.cwd.includes(workspacePath),
+    if (STORYBOOK_WORKSPACE_PATHS.every(
+      (workspacePath) => !workspace.cwd.includes(workspacePath),
     )) {
       continue;
     }
@@ -201,7 +212,7 @@ async function ensureStorybookDependencies({ Yarn }) {
  *
  * @param {Context} context
  */
-async function ensureHomepageAndRepository({ Yarn }) {
+async function ensureHomepageAndRepo({ Yarn }) {
   const rootWorkspace = Yarn.workspace({ ident: 'root' });
   const { homepage, repository } = rootWorkspace?.manifest ?? {};
   for (const workspace of Yarn.workspaces()) {
@@ -224,11 +235,11 @@ async function ensureHomepageAndRepository({ Yarn }) {
  */
 async function ensureTypeModule({ Yarn }) {
   for (const workspace of Yarn.workspaces()) {
-    if (FIELD_IGNORE_LIST.has(`${workspace.ident}`)) {
+    if (FIELD_IGNORE_LIST.has(workspace.ident)) {
       continue;
     }
 
-    const type = TREAT_AS_CJS.includes(`${workspace.ident}`)
+    const type = TREAT_AS_CJS.includes(workspace.ident)
       ? 'commonjs'
       : 'module';
     workspace.set('type', type);
@@ -263,7 +274,7 @@ async function constraints(context) {
   await ensureRequiredDependencies(context);
   await ensureDocsDependencies(context);
   await ensureStorybookDependencies(context);
-  await ensureHomepageAndRepository(context);
+  await ensureHomepageAndRepo(context);
   await ensureTypeModule(context);
   await ensureEnvVariable(context);
 }

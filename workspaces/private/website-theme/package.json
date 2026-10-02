@@ -42,11 +42,7 @@
     "@sabinmarcu/utils-test": "workspace:*"
   },
   "tscmono": {
-    "preset": "lib",
-    "presets": [
-      "lib",
-      "storybookLib"
-    ]
+    "preset": "lib"
   },
   "typeVersions": {
     "*": {
@@ -62,6 +58,8 @@
   },
   "homepage": "https:/sabinmarcu.dev/api/website-theme",
   "dependencies": {
-    "@sabinmarcu/theme": "workspace:*"
+    "@sabinmarcu/theme": "workspace:*",
+    "@sabinmarcu/theme-core": "workspace:*",
+    "@sabinmarcu/theme-family": "workspace:*"
   }
 }

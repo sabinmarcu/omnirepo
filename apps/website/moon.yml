@@ -8,6 +8,10 @@ project:
   owner: Sabin Marcu
 language: typescript
 type: application
+dependsOn:
+  - "@sabinmarcu/stylesheet"
+  - "@sabinmarcu/theme"
+  - "@sabinmarcu/website-theme"
 tasks:
   start:
     command: yarn dev

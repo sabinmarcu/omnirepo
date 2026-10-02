@@ -11,15 +11,18 @@ import { config } from './config.js';
 import { theme } from './contract.js';
 import { defaultOptions } from './defaults.js';
 
-const Stylesheet = createStylesheet({ debugId: 'theme-overrider' });
+const Stylesheet = createStylesheet({
+  id: 'theme-overrider',
+  debugId: 'theme-overrider',
+});
 export const ThemeOverrider = memo(({ children }: PropsWithChildren<{}>) => {
   useEffect(
     () => {
-      Stylesheet.legacyRender();
+      const stylesheet = Stylesheet.mount(document);
       const localConfig = config.config;
       const updateOptions = deepMerge(defaultOptions, localConfig) as any;
       const variables = assignInlineVars(theme as any, updateOptions as any);
-      Stylesheet.update([
+      stylesheet.update([
         {
           selector: ':root',
           rules: variables,

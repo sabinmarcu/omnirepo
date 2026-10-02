@@ -8046,6 +8046,8 @@ __metadata:
     "@sabinmarcu/storybook-addon-theme-overrider": "workspace:*"
     "@sabinmarcu/stylesheet": "workspace:*"
     "@sabinmarcu/theme": "workspace:*"
+    "@sabinmarcu/theme-core": "workspace:*"
+    "@sabinmarcu/theme-family": "workspace:*"
     "@sabinmarcu/theme-storybook": "workspace:*"
     "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/use-duplicate-ref": "workspace:*"
@@ -8058,7 +8060,6 @@ __metadata:
     "@sabinmarcu/utils-repo": "workspace:*"
     "@sabinmarcu/utils-string": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
-    "@sabinmarcu/website-theme": "workspace:*"
     clsx: "npm:^1.2.1"
     docusaurus-plugin-typedoc-api: "npm:^4.2.1"
     eslint-plugin-logical-properties: "workspace:*"
@@ -8326,6 +8327,8 @@ __metadata:
     "@sabinmarcu/storybook-addon-theme-overrider": "workspace:*"
     "@sabinmarcu/stylesheet": "workspace:*"
     "@sabinmarcu/theme": "workspace:*"
+    "@sabinmarcu/theme-core": "workspace:*"
+    "@sabinmarcu/theme-family": "workspace:*"
     "@sabinmarcu/theme-storybook": "workspace:*"
     "@sabinmarcu/types": "workspace:*"
     "@storybook/blocks": "*"
@@ -8341,6 +8344,9 @@ __metadata:
     "@sabinmarcu/utils-test": "workspace:*"
   peerDependencies:
     react: "*"
+  peerDependenciesMeta:
+    react:
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -8384,6 +8390,29 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@sabinmarcu/theme-core@workspace:*, @sabinmarcu/theme-core@workspace:workspaces/libs/theme-core":
+  version: 0.0.0-use.local
+  resolution: "@sabinmarcu/theme-core@workspace:workspaces/libs/theme-core"
+  dependencies:
+    "@sabinmarcu/stylesheet": "workspace:*"
+    "@sabinmarcu/types": "workspace:*"
+    "@sabinmarcu/utils-test": "workspace:*"
+    "@vanilla-extract/css": "npm:^1.21.2"
+    "@vanilla-extract/dynamic": "npm:^2.1.5"
+  languageName: unknown
+  linkType: soft
+
+"@sabinmarcu/theme-family@workspace:*, @sabinmarcu/theme-family@workspace:workspaces/libs/theme-family":
+  version: 0.0.0-use.local
+  resolution: "@sabinmarcu/theme-family@workspace:workspaces/libs/theme-family"
+  dependencies:
+    "@sabinmarcu/theme-core": "workspace:*"
+    "@sabinmarcu/types": "workspace:*"
+    "@sabinmarcu/utils-test": "workspace:*"
+    "@vanilla-extract/css": "npm:^1.21.2"
+  languageName: unknown
+  linkType: soft
+
 "@sabinmarcu/theme-storybook@workspace:*, @sabinmarcu/theme-storybook@workspace:workspaces/design-system/theme-storybook":
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/theme-storybook@workspace:workspaces/design-system/theme-storybook"
@@ -8392,10 +8421,16 @@ __metadata:
     "@sabinmarcu/storybook-addon-split-toolbars": "workspace:*"
     "@sabinmarcu/storybook-addon-theme-overrider": "workspace:*"
     "@sabinmarcu/theme": "workspace:*"
+    "@sabinmarcu/theme-core": "workspace:*"
+    "@sabinmarcu/theme-family": "workspace:*"
     "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
-    "@sabinmarcu/website-theme": "workspace:*"
+    "@storybook/react": "npm:^8.6.11"
+    "@storybook/react-vite": "npm:^8.6.11"
     "@storybook/types": "npm:^8.6.11"
+    "@types/react": "npm:^19.2.14"
+    "@vanilla-extract/css": "npm:^1.21.2"
+    "@vanilla-extract/dynamic": "npm:^2.1.5"
     deepmerge-ts: "npm:^7.1.5"
   peerDependencies:
     "@storybook/manager-api": "*"
@@ -8410,17 +8445,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sabinmarcu/theme@workspace:workspaces/design-system/theme"
   dependencies:
-    "@sabinmarcu/stylesheet": "workspace:*"
+    "@sabinmarcu/theme-core": "workspace:*"
     "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
-    colorjs.io: "npm:^0.5.2"
-  peerDependencies:
-    "@mui/icons-material": "*"
-    "@mui/material": "*"
-    "@storybook/react": "*"
-    "@vanilla-extract/css": "*"
-    "@vanilla-extract/dynamic": "*"
-    react: "*"
+    "@vanilla-extract/css": "npm:^1.21.2"
+    "@vanilla-extract/dynamic": "npm:^2.1.5"
   languageName: unknown
   linkType: soft
 
@@ -8569,6 +8598,8 @@ __metadata:
   resolution: "@sabinmarcu/website-theme@workspace:workspaces/private/website-theme"
   dependencies:
     "@sabinmarcu/theme": "workspace:*"
+    "@sabinmarcu/theme-core": "workspace:*"
+    "@sabinmarcu/theme-family": "workspace:*"
     "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
   languageName: unknown
@@ -8585,6 +8616,7 @@ __metadata:
     "@mdx-js/react": "npm:^3.1.1"
     "@next/mdx": "npm:^16.3.4"
     "@sabinmarcu/moving-mesh-background": "workspace:*"
+    "@sabinmarcu/stylesheet": "workspace:*"
     "@sabinmarcu/theme": "workspace:*"
     "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-string": "workspace:*"
@@ -13721,13 +13753,6 @@ __metadata:
   version: 2.0.20
   resolution: "colorette@npm:2.0.20"
   checksum: 10c0/e94116ff33b0ff56f3b83b9ace895e5bf87c2a7a47b3401b8c3f3226e050d5ef76cf4072fb3325f9dc24d1698f9b730baf4e05eeaf861d74a1883073f4c98a40
-  languageName: node
-  linkType: hard
-
-"colorjs.io@npm:^0.5.2":
-  version: 0.5.2
-  resolution: "colorjs.io@npm:0.5.2"
-  checksum: 10c0/2e6ea43629e325e721b92429239de3a6f42fb6d88ba6e4c2aeff0288c196d876f2f7ee82aea95bd40072d5cdc8cb87f042f4d94c134dcabf0e34a717e4caacb9
   languageName: node
   linkType: hard
 

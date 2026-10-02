@@ -17,6 +17,7 @@ export const updaterRender = () => {
   const updateOptions = deepMerge(defaultOptions, localConfig) as any;
   const variables = assignInlineVars(theme as any, updateOptions as any);
   const Stylesheet = createStylesheet({
+    id: 'theme-overrider',
     debugId: 'theme-overrider',
     rules: [
       {

@@ -59,6 +59,11 @@
   "peerDependencies": {
     "react": "*"
   },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
   "repository": {
     "url": "git+https://github.com/sabinmarcu/omnirepo.git",
     "type": "git",

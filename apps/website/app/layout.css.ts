@@ -71,7 +71,7 @@ for (const family of families) {
     {
       vars: assignVars(
         theme.colors.background,
-        themes[family].colors.background as any,
+        themes[family].colors.background,
       ),
     },
   );

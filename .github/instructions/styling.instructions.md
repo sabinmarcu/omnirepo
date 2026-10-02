@@ -17,27 +17,27 @@ applyTo: "{apps,workspaces}/**/*.{css,scss,ts,tsx}"
 
 - Use `@sabinmarcu/theme` for shared applications, libraries, components, and design-system packages.
 - `@sabinmarcu/website-theme` is exclusive to `apps/website`; never add it to another app or workspace package.
-- Use `theme` contract tokens before literals for colors, spacing, and breakpoints. Do not create an untyped CSS variable when an existing token can represent the value.
+- Use `theme` contract tokens before literals for colors, spacing, and breakpoints. Website breakpoint configuration belongs to `@sabinmarcu/website-theme`; the shared concrete theme contains color/grid references. Do not create an untyped CSS variable when an existing token can represent the value.
 - The website theme uses `data-theme-family` for section families and `data-theme-variant` for `light`, `dark`, and `system`. Preserve those selectors and their runtime wiring.
 
 ## Vanilla Extract Authoring
 
 - Use `recipe` and `RecipeVariants` for component variants; use `style` for a local class; reserve `globalStyle` for structural or cross-node selectors.
 - Keep theme family and color-variant behavior in data-attribute selectors rather than scattered hardcoded values.
-- Ensure generated theme CSS remains imported by the relevant application entry point; token references otherwise resolve to undefined CSS custom properties.
+- Ensure the application harness emits the owned theme stylesheet before consumers paint; token references otherwise resolve to undefined CSS custom properties. Definition imports do not emit CSS.
 - When a pseudo-element needs themed custom properties, declare the variables and responsive overrides on its parent rule so the pseudo-element inherits them.
 - Do not nest `@media` rules that assign `vars` inside a pseudo-element or selector object. Vanilla Extract's Turbopack compiler can emit invalid virtual CSS for that pattern. Put the `vars` and `@media` block on the owning style rule instead.
 
 ## Website Styling
 
 - The website uses Vanilla Extract, `@sabinmarcu/theme`, and `@sabinmarcu/website-theme`; retain this path for pages, layouts, components, and MDX presentation.
-- The theme setup and selector wiring must remain intact: `apps/website/theme/theme.css.ts` emits token values, and the localized root layout sets the variant attribute.
+- The localized root layout creates a request-local `createWebsiteTheme()` setup, supplies `themeValues`, and emits its owned stylesheet in `<head>` before paint. Keep variant cookie/attribute selection intact; `.css.ts` definition imports must not initialize values.
 - Use `withTheme` or the established theme selectors when a component needs a specific website family.
 - Keep the build-time MDX TOC pipeline; do not replace it with runtime DOM scanning.
 
 ## Storybook Styling
 
-- Keep `@sabinmarcu/theme-storybook` responsible for applying theme runtime values to Storybook.
+- Keep `@sabinmarcu/theme-storybook` responsible for applying theme values through the mounted `themeRuntime` root owner; live source edits use that handle rather than a second setup owner.
 - Keep `theme-overrider` configuration token-driven and preserve `mirror-preview` entries that mirror the theme stylesheet into Storybook manager UI.
 
 ## Next.js Turbopack And Vanilla Extract

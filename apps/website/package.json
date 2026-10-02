@@ -15,6 +15,7 @@
     "@mdx-js/react": "^3.1.1",
     "@next/mdx": "^16.3.4",
     "@sabinmarcu/moving-mesh-background": "workspace:*",
+    "@sabinmarcu/stylesheet": "workspace:*",
     "@sabinmarcu/theme": "workspace:*",
     "@sabinmarcu/utils-string": "workspace:*",
     "@sabinmarcu/website-theme": "workspace:*",

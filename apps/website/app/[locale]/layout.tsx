@@ -2,7 +2,13 @@ import type { Metadata } from 'next';
 import { headers } from 'next/headers';
 import '../globals.css';
 import { NextIntlClientProvider } from 'next-intl';
-import { variantSelector } from '@sabinmarcu/website-theme';
+import { Stylesheet } from '@sabinmarcu/stylesheet/react';
+import { themeResetCSS } from '@sabinmarcu/theme';
+import {
+  createWebsiteTheme,
+  themeValues,
+  variantSelector,
+} from '@sabinmarcu/website-theme';
 import { notFound } from 'next/navigation';
 import {
   Experiments,
@@ -94,12 +100,20 @@ export default withExperiment('scanlines')(
     if (!isLocale(locale)) {
       notFound();
     }
+    const websiteTheme = createWebsiteTheme();
+    websiteTheme(themeValues);
+    const selection = await getThemeVariant();
     return (
       <html
         lang={locale}
-        {...{ [variantSelector]: await getThemeVariant() }}
+        {...{ [variantSelector]: selection === 'system' ? undefined : selection }}
       >
         <head>
+          <style
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{ __html: themeResetCSS }}
+          />
+          <Stylesheet stylesheet={websiteTheme.stylesheet} />
           <script
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{ __html: devicePixelRatioScript }}
