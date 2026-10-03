@@ -157,6 +157,7 @@ export function createDevtoolsView(
   const document = root.ownerDocument;
   const window = createInspectorWindow(root, {
     nonce: options.nonce,
+    presentation: options.presentation,
     close: options.close,
     refresh: options.refresh,
   });

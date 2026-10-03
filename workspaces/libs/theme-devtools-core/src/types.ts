@@ -2,6 +2,7 @@ import type {
   InspectedTheme,
   InspectionChange,
   ManifestSource,
+  ThemeInspection,
   ThemeManifest,
 } from '@sabinmarcu/theme-core';
 import type {
@@ -9,16 +10,35 @@ import type {
   UIThemePatch,
 } from './ui-theme.js';
 
-export type ThemeDevtoolsOptions = {
-  readonly manifests?: readonly ThemeManifest[];
-  /** Defaults to the mount container's owner document; UI placement is not inspection scope. */
-  readonly inspectionDocument?: Document;
+/** `window`: modeless in-page popover. `embedded`: fills its container (e.g. a devtools pane). */
+export type ThemeDevtoolsPresentation = 'window' | 'embedded';
+
+type ThemeDevtoolsCommonOptions = {
   readonly nonce?: string;
   readonly shadowMode?: ShadowRootMode;
   readonly ui?: UIThemeInput;
-  /** Called after the modeless inspector is closed; application sources are untouched. */
+  /** Defaults to `window`. */
+  readonly presentation?: ThemeDevtoolsPresentation;
+  /** Called after the modeless window closes; application sources are untouched. Window only. */
   readonly onClose?: () => void;
 };
+
+type LocalInspectionOptions = {
+  readonly manifests?: readonly ThemeManifest[];
+  /** Defaults to the mount container's owner document; UI placement is not inspection scope. */
+  readonly inspectionDocument?: Document;
+  readonly inspection?: undefined;
+};
+
+type SuppliedInspectionOptions = {
+  /** Caller-owned inspection (for example a remote mirror); `destroy()` never disposes it. */
+  readonly inspection: ThemeInspection;
+  readonly manifests?: undefined;
+  readonly inspectionDocument?: undefined;
+};
+
+export type ThemeDevtoolsOptions = ThemeDevtoolsCommonOptions
+  & (LocalInspectionOptions | SuppliedInspectionOptions);
 
 export type ThemeInputExport = {
   readonly id: string;
@@ -65,6 +85,7 @@ export type DevtoolsView = {
 
 export type DevtoolsViewOptions = {
   readonly nonce?: string;
+  readonly presentation: ThemeDevtoolsPresentation;
   refresh(): void;
   close(): void;
 };

@@ -1,0 +1,53 @@
+html,
+body {
+  block-size: 100%;
+  margin: 0;
+}
+
+html {
+  color-scheme: light;
+  background: #fff;
+  color: #1f1f1f;
+}
+
+html[data-theme='dark'] {
+  color-scheme: dark;
+  background: #202124;
+  color: #e8eaed;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font: 12px system-ui, sans-serif;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  padding: 4px 8px;
+  border-block-end: 1px solid color-mix(in srgb, currentcolor 15%, transparent);
+}
+
+#status {
+  flex: 1;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#status[data-error] {
+  color: #d93025;
+}
+
+html[data-theme='dark'] #status[data-error] {
+  color: #f28b82;
+}
+
+#inspector {
+  flex: 1;
+  min-block-size: 0;
+}

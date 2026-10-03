@@ -1,0 +1,48 @@
+{
+  "name": "@sabinmarcu/theme-devtools-extension",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "tsc -b && vite build && vite build --config vite.content.config.ts"
+  },
+  "dependencies": {
+    "@sabinmarcu/theme-devtools-core": "workspace:*"
+  },
+  "devDependencies": {
+    "@sabinmarcu/types": "workspace:*",
+    "@sabinmarcu/utils-test": "workspace:*",
+    "@types/chrome": "^0.3.4",
+    "typescript": "6.0.2",
+    "vite": "^5.3.4"
+  },
+  "tscmono": {
+    "preset": "viteApp"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./src/*": {
+      "import": "./src/*",
+      "default": "./src/*"
+    },
+    "./*": {
+      "import": "./dist/*.js",
+      "default": "./dist/*.js",
+      "types": "./dist/*.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "typeVersions": {
+    "*": {
+      "*": [
+        "./dist/*"
+      ]
+    }
+  }
+}

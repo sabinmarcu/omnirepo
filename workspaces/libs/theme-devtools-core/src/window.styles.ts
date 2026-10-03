@@ -1,6 +1,6 @@
 import { uiTheme } from './ui-theme.js';
 
-export const windowStyles = `
+const floatingHost = `
 :host {
   box-sizing: border-box !important;
   position: fixed !important;
@@ -31,6 +31,34 @@ export const windowStyles = `
 }
 :host::backdrop { background: transparent; pointer-events: none; }
 :host([data-dragging]) { cursor: grabbing !important; }
+.window-header { cursor: grab; touch-action: none; user-select: none; }
+.inspector-window { background: linear-gradient(145deg, rgb(255 255 255 / .18), transparent 52%); }
+@media (max-width: 560px) {
+  :host { border-radius: 16px !important; }
+}
+`;
+
+const embeddedHost = `
+:host {
+  box-sizing: border-box !important;
+  display: block !important;
+  position: relative !important;
+  inline-size: 100% !important;
+  block-size: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  overflow: hidden !important;
+  background: ${uiTheme.colors.background.page} !important;
+  color: ${uiTheme.colors.background.text} !important;
+  font-family: ${uiTheme.typography.family} !important;
+  font-size: ${uiTheme.typography.size} !important;
+  line-height: ${uiTheme.typography.lineHeight} !important;
+}
+.window-header { padding-block: 8px 6px; }
+`;
+
+const windowBody = `
 *, *::before, *::after { box-sizing: border-box; }
 [hidden] { display: none !important; }
 .inspector-window {
@@ -39,7 +67,6 @@ export const windowStyles = `
   inline-size: 100%;
   block-size: 100%;
   min-block-size: 0;
-  background: linear-gradient(145deg, rgb(255 255 255 / .18), transparent 52%);
 }
 .window-header {
   display: flex;
@@ -48,9 +75,6 @@ export const windowStyles = `
   flex: none;
   padding: 12px 14px 10px 16px;
   border-block-end: 1px solid color-mix(in srgb, ${uiTheme.colors.background.text} 9%, transparent);
-  cursor: grab;
-  touch-action: none;
-  user-select: none;
 }
 .window-grip { opacity: .35; font-size: 20px; line-height: 1; }
 .window-title { flex: 1; margin: 0; font-size: 14px; font-weight: 650; letter-spacing: -.015em; }
@@ -83,8 +107,10 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   outline: 2px solid ${uiTheme.colors.primary.base}; outline-offset: 2px;
 }
 @media (max-width: 560px) {
-  :host { border-radius: 16px !important; }
   .window-header { padding: 10px 12px; }
   .window-content { padding-inline: 10px; }
 }
 `;
+
+export const floatingWindowStyles = `${windowBody}${floatingHost}`;
+export const embeddedWindowStyles = `${windowBody}${embeddedHost}`;

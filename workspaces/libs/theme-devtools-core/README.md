@@ -34,10 +34,14 @@ const devtools = createThemeDevtools(container, {
   nonce,               // CSP nonce for UI/value style elements
   shadowMode: 'open',  // ShadowRootMode; defaults to 'open'
   ui,                  // initial UIThemeInput; omitted fields resolve private defaults
+  presentation: 'window', // 'window' (default popover) or 'embedded' (fills the container)
   onClose() {
     // Invoked after the popover is hidden; application sources remain untouched.
   },
 });
+
+// Alternatively, inspect through a caller-owned ThemeInspection (see "Remote inspection").
+createThemeDevtools(container, { inspection, presentation: 'embedded' });
 
 const host = devtools.host;                   // mounted HTMLElement
 const exports = devtools.exportInputs();      // readonly [{ id, inputs }]
@@ -52,6 +56,10 @@ devtools.destroy();                           // remove private UI and listeners
 `setManifests` is authoritative replacement, not a merge. `undefined` selects DOM discovery again; `[]` intentionally shows no targets. `refresh()` revalidates the current catalog, rediscovering DOM metadata only in discovery mode; it never unions an explicit list with embedded data. Invalid replacement leaves the previous valid catalog in place. `exportInputs()` reads current source declarations at call time and returns complete, setup-compatible exports keyed by manifest ID. There is no UI-value or applied-input cache.
 
 The close button and Escape hide the manual popover and call `onClose`; they do **not** destroy the controller. Keep it and call `devtools.host.showPopover()` to reopen the existing native host, or call `destroy()` from `onClose` as above to release its UI, listeners, private sheets, and host. Escape inside a dirty input first discards only that uncommitted draft. Neither closing nor destruction removes or resets an applied application source.
+
+`presentation: 'embedded'` renders the same inspector as a block that fills its container: no popover, dragging, close button, or Escape-to-close; the header keeps the refresh action and `onClose` is never called. Use it for dedicated surfaces such as a browser DevTools pane.
+
+`inspection` replaces `manifests`/`inspectionDocument` (combining them throws). The controller reads, patches, refreshes, and subscribes through it but never disposes it; the caller owns its lifecycle and must dispose it after `destroy()`.
 
 ## What the inspector displays and edits
 
@@ -104,6 +112,35 @@ For server-delivered discovery, use core’s existing `embedThemeManifests([appl
 
 Only version-2 manifests are accepted. Every `outputs` record with `role: 'derived'` includes a `sources` list of transitive **editable source allocation names**; those names are structural dependencies, not UI values. Inspection accepts declared, owned sources from one light-DOM allocation root and its owned light-DOM sheet. It does not inspect sheets inside open/closed shadow roots, arbitrary descendants, private UI allocations, or inherited declarations. Family sources use private names internally but remain declared application inspection targets. The original owned application stylesheet is authoritative: edits commit there through the inspection backend. The inspector adds no inline override layer.
 
+## Remote inspection
+
+The inspector can run in a different realm from the inspected page (for example a browser-extension DevTools panel) through a small JSON message protocol over any `RemoteTransport` (`send(message)` plus `subscribe(listener)`):
+
+```ts
+import {
+  createInspectionAgent,
+  createRemoteInspection,
+  createThemeDevtools,
+} from '@sabinmarcu/theme-devtools-core';
+
+// Page side: needs DOM access only (an isolated-world content script works).
+const agent = createInspectionAgent(document, pageTransport); // optional { manifests }
+agent.select(element);  // report targets whose allocation root contains `element`
+agent.dispose();
+
+// Inspector side: a synchronous ThemeInspection mirror.
+const inspection = createRemoteInspection(inspectorTransport, {
+  scope: 'all',               // or 'selection': only targets containing the agent's selection
+  onError: (message) => {},   // catalog failures and rejected patches arrive asynchronously
+});
+const devtools = createThemeDevtools(container, { inspection, presentation: 'embedded' });
+// Later: devtools.destroy(); inspection.dispose();
+```
+
+The agent owns one headless `createThemeInspection` (discovery by default) and pushes the catalog with complete values, then per-change source/output deltas. The mirror serves reads synchronously, validates patches with the same manifest codecs (`createManifestPatchDecoder` from theme-core), and applies them optimistically until the agent acknowledges them; a rejected patch is reported through `onError` and resynchronized from the page. Messages carry `protocol: 'sabinmarcu-theme-devtools'` and `version: 1`; anything else on the channel is ignored. The agent never touches the application's JavaScript realm and the mirror never renders UI, so neither needs the other's custom elements.
+
+`apps/theme-devtools-extension` uses this protocol for its Chrome DevTools panel and Elements sidebar.
+
 ## Isolation, CSP, realms, and reloads
 
 The UI has its own `devtools-theme` source/formula allocations on the outer host through a private `:host` sheet. Nested shadow editors inherit those tokens, with independent spacing/font defaults rather than application values or root-font-relative `rem` units. Immutable handwritten structural CSS is embedded in TypeScript and shared only within its owner document. With no nonce, constructable sheets are used when supported; a supplied nonce selects actual nonce-bearing style elements. Mutable private allocation sheets remain per instance. Pass `nonce` when the page's policy requires it; unavailable/CSP-rejected sheets throw and failed mounts clean up rather than showing a pretend unstyled editor.
@@ -114,5 +151,5 @@ Custom elements are registered in the container document’s realm, after that r
 
 The application theme's native CSS feature floor is described by theme-core, including modern color and typed-property behavior. The inspector itself uses custom elements, Shadow DOM, manual popovers, pointer capture, backdrop blur/saturation, and structural-sheet fallback. Native color picker alpha/P3 support and appearance vary by browser; raw CSS input preserves authored expressions until a deliberate edit. Native shipping Safari on macOS/iOS remains unverified, and final latest-code cross-engine release acceptance is still pending. Current Chromium/manual evidence is not a release or Safari compatibility claim.
 
-Chrome extension/transport, shadow inspection, persistence, undo/history, reset-to-initial values, and a separate devtools override layer are not implemented. App edits persist only while the app's current allocation lifecycle preserves its sheet; a new page/server setup can materialize configured values again.
+Shadow inspection, persistence, undo/history, reset-to-initial values, and a separate devtools override layer are not implemented. App edits persist only while the app's current allocation lifecycle preserves its sheet; a new page/server setup can materialize configured values again.
 

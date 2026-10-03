@@ -33,6 +33,7 @@ export { readThemeSources } from './live.js';
 export {
   createThemeManifest,
   embedThemeManifests,
+  serializeThemeManifests,
   validateThemeManifest,
 } from './manifest.js';
 export type {
@@ -43,6 +44,7 @@ export type {
   ThemeManifest,
 } from './manifest.js';
 export {
+  createManifestPatchDecoder,
   createThemeInspection,
 } from './inspection.js';
 export type {

@@ -4,6 +4,7 @@ import '../globals.css';
 import { NextIntlClientProvider } from 'next-intl';
 import { Stylesheet } from '@sabinmarcu/stylesheet/react';
 import { themeResetCSS } from '@sabinmarcu/theme';
+import { serializeThemeManifests } from '@sabinmarcu/theme-core';
 import {
   createWebsiteTheme,
   themeValues,
@@ -119,6 +120,17 @@ export default withExperiment('scanlines')(
             dangerouslySetInnerHTML={{ __html: themeResetCSS }}
           />
           <Stylesheet stylesheet={websiteTheme.stylesheet} />
+          {/* Inert discovery metadata for the theme devtools browser extension. */}
+          {manifests
+            ? (
+              <script
+                type="application/json"
+                data-theme-manifests=""
+                // eslint-disable-next-line react/no-danger
+                dangerouslySetInnerHTML={{ __html: serializeThemeManifests(manifests) }}
+              />
+            )
+            : null}
           <script
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{ __html: devicePixelRatioScript }}

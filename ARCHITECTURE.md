@@ -75,7 +75,7 @@ Root orchestration tasks live in root `moon.yml`:
 ### 2.4 App Framework Tooling
 
 - Next.js apps: `apps/website`, `apps/timer40k`
-- Vite apps: `apps/droprate`, `apps/team-rotation`
+- Vite apps: `apps/droprate`, `apps/team-rotation`, `apps/theme-devtools-extension` (Chrome MV3 extension; pages + classic content-script builds)
 - Docusaurus docs: `apps/docs`
 - Storybook app shell: `apps/storybook`
 
@@ -101,6 +101,7 @@ Applications are listed separately as requested.
 - `apps/droprate` (`@sabinmarcu/droprate`): private Vite + React + Jotai + MUI application
 - `apps/storybook` (`@sabinmarcu/storybook`): Storybook workspace host for component/addon ecosystems
 - `apps/team-rotation` (`@sabinmarcu/team-rotation`): private Vite + React scheduling app
+- `apps/theme-devtools-extension` (`@sabinmarcu/theme-devtools-extension`): private Chrome DevTools extension (unpacked) for live theme source editing
 - `apps/timer40k` (`@sabinmarcu/timer40k`): private Next.js app
 - `apps/website` (`@sabinmarcu/website`): private Next.js site and content platform
 

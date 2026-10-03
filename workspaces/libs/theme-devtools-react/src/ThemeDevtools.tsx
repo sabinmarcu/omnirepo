@@ -18,10 +18,13 @@ import {
 
 export type ThemeDevtoolsHandle = ThemeDevtoolsController;
 
+/** The React host always owns a document inspection; supplied inspections stay native-only. */
+type LocalThemeDevtoolsOptions = Extract<ThemeDevtoolsOptions, { readonly inspection?: undefined }>;
+
 export type ThemeDevtoolsProps = Omit<
   ComponentPropsWithoutRef<'div'>,
-  'children' | 'onChange' | 'onError' | keyof ThemeDevtoolsOptions
-> & ThemeDevtoolsOptions & {
+  'children' | 'onChange' | 'onError' | keyof LocalThemeDevtoolsOptions
+> & LocalThemeDevtoolsOptions & {
   readonly onReady?: (controller: ThemeDevtoolsHandle | null) => void;
   readonly onChange?: (inputs: readonly ThemeInputExport[]) => void;
   readonly onError?: (error: unknown) => void;
@@ -39,6 +42,7 @@ export const ThemeDevtools = forwardRef<ThemeDevtoolsHandle | null, ThemeDevtool
     inspectionDocument,
     nonce,
     shadowMode,
+    presentation,
     ui,
     onReady,
     onChange,
@@ -118,6 +122,7 @@ export const ThemeDevtools = forwardRef<ThemeDevtoolsHandle | null, ThemeDevtool
           inspectionDocument,
           nonce,
           shadowMode,
+          presentation,
           ui: inputs.ui,
           onClose: () => callbacksReference.current.onClose?.(),
         });
@@ -142,7 +147,7 @@ export const ThemeDevtools = forwardRef<ThemeDevtoolsHandle | null, ThemeDevtool
           reportReady(null);
         }
       };
-    }, [inspectionDocument, nonce, reportError, reportReady, retry, shadowMode]);
+    }, [inspectionDocument, nonce, presentation, reportError, reportReady, retry, shadowMode]);
 
     useEffect(() => {
       const instance = controllerReference.current;

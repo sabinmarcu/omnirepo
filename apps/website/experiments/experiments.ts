@@ -16,7 +16,7 @@ export const experiments = {
   },
   themeDevtools: {
     title: 'Theme Devtools',
-    description: 'Edit the website theme sources',
+    description: 'Edit the website theme sources (in-page or via the theme devtools extension)',
     default: false,
   },
 } as const;

@@ -121,7 +121,7 @@ unsubscribe();
 inspection.dispose(); // App allocations/metadata/edits are left intact.
 ```
 
-`embedThemeManifests` returns an inert `<script type="application/json" data-theme-manifests>` block with HTML-breakout characters escaped. Programmatic delivery does not emit HTML automatically. Definitions, normal rendering, and updates never require manifests or a window registry; importing these helpers remains DOM-free.
+`embedThemeManifests` returns an inert `<script type="application/json" data-theme-manifests>` block with HTML-breakout characters escaped. `serializeThemeManifests(manifests)` returns only that escaped JSON body, for frameworks that render the `<script>` element themselves (for example React's `dangerouslySetInnerHTML`). Programmatic delivery does not emit HTML automatically. Definitions, normal rendering, and updates never require manifests or a window registry; importing these helpers remains DOM-free.
 
 Codec/editor kinds are declared, never inferred from a CSS value: standard `numberCodec`, `stringCodec`, and `colorCodec`; `numberUnitCodec(unit)` retains numeric input while explicitly serializing its CSS unit; `jsonCodec` handles a complete JSON-value replacement through a quoted CSS JSON representation. JSON objects/arrays are not recursive partial updates. Standard codec identity survives descriptor ownership. Arbitrary custom codecs still render normally, but manifest projection rejects unsupported semantics even if a custom object advertises a standard representation. Colors remain authored CSS/native-gamut expressions, not converted to hex.
 
@@ -134,6 +134,8 @@ Reads/exports decode the authoritative sheet; patches reuse `encodeThemePatch` a
 Granular reads use `target.readSource(name)` or `target.readSources(names)`, preserving declared codec types without reconstructing the full input tree. `readOutputs(names?)` optionally reads only the requested public derived allocations; the names are validated and static/derived values remain read-only. Full `read()`/`export()` returns complete current setup-compatible inputs and batches declaration reads.
 
 Source/catalog subscriptions receive `InspectionChange`: `{ targetId, sources, outputs }` for a known source commit, with allocation names identifying changed sources and transitively affected outputs. `undefined` means catalog replacement, a structural/mapping change, or an unknown out-of-band sheet text replacement and requires conservative invalidation. Ownership and complete declarations are validated initially and after unknown sheet replacement; known commits revalidate targeted declarations without rescanning every input. No applied-value cache is introduced.
+
+`createManifestPatchDecoder(manifest)` is the DOM-free counterpart of `target.patch()` encoding: it validates a source patch against manifest metadata and returns the canonical decoded value of every source allocation it would write, keyed by allocation name. Remote inspectors use it to validate and mirror edits before a page-side agent commits them.
 
 The optional inspection API is headless. Use the dedicated [native devtools guide](/api/theme-devtools-core) or [React devtools guide](/api/theme-devtools-react) for UI integration; neither changes application source ownership or turns derived outputs into inputs. Native Safari/macOS/iOS and latest-code cross-engine release acceptance remain open.
 

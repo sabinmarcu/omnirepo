@@ -519,12 +519,9 @@ export function createThemeManifest(
   return validateThemeManifest(input);
 }
 
-/** Serialize explicit manifests without making discovery or browser APIs mandatory. */
-export function embedThemeManifests(
-  manifests: readonly ThemeManifest[],
-  options: { readonly nonce?: string } = {},
-): string {
-  const json = JSON.stringify(manifests.map(validateThemeManifest))
+/** Validated manifest JSON escaped for the body of an inline `<script type="application/json">`. */
+export function serializeThemeManifests(manifests: readonly ThemeManifest[]): string {
+  return JSON.stringify(manifests.map(validateThemeManifest))
     .replaceAll(/[<>&\u{2028}\u{2029}]/gu, (character) => ({
       '<': '\\u003c',
       '>': '\\u003e',
@@ -532,6 +529,14 @@ export function embedThemeManifests(
       '\u{2028}': '\\u2028',
       '\u{2029}': '\\u2029',
     })[character]!);
+}
+
+/** Serialize explicit manifests without making discovery or browser APIs mandatory. */
+export function embedThemeManifests(
+  manifests: readonly ThemeManifest[],
+  options: { readonly nonce?: string } = {},
+): string {
+  const json = serializeThemeManifests(manifests);
   const nonce = options.nonce === undefined
     ? ''
     : ` nonce="${options.nonce.replaceAll(/[&"'<>]/g, (character) => ({
