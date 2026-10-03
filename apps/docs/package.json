@@ -43,6 +43,10 @@
     "@sabinmarcu/storybook-addon-theme-overrider": "workspace:*",
     "@sabinmarcu/stylesheet": "workspace:*",
     "@sabinmarcu/theme": "workspace:*",
+    "@sabinmarcu/theme-core": "workspace:*",
+    "@sabinmarcu/theme-devtools-core": "workspace:*",
+    "@sabinmarcu/theme-devtools-react": "workspace:*",
+    "@sabinmarcu/theme-family": "workspace:*",
     "@sabinmarcu/theme-storybook": "workspace:*",
     "@sabinmarcu/types": "workspace:*",
     "@sabinmarcu/use-duplicate-ref": "workspace:*",
@@ -55,7 +59,6 @@
     "@sabinmarcu/utils-repo": "workspace:*",
     "@sabinmarcu/utils-string": "workspace:*",
     "@sabinmarcu/utils-test": "workspace:*",
-    "@sabinmarcu/website-theme": "workspace:*",
     "eslint-plugin-logical-properties": "workspace:*",
     "typescript": "6.0.2"
   },

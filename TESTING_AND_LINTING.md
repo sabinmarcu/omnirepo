@@ -153,6 +153,16 @@ Important: `inferTasksFromScripts: false` in [.moon/toolchain.yml](.moon/toolcha
   - passes the resulting workspace directories to `defineWorkspace(...)`
 - Local per-package `vitest.config.mjs` files typically just `mergeConfig(configShared)` and exist so each workspace participates as an explicit Vitest project.
 
+### Explicit Theme Compiler Checks
+
+- `yarn moon run theme-core:typecheck` compiles the full generated `tsconfig.json` with `--noEmit`, after the core and stylesheet builds.
+- Its incremental cache is `dist/.typecheck.tsbuildinfo`, separate from the library build cache. It includes `*.type.spec.ts` and the real Vanilla Extract consumer fixture under `src/__fixtures__`; both are excluded from the production build and normal Vitest execution.
+- The check validates positive exact types and `@ts-expect-error` consumer boundaries, not comment snapshots. `theme-core:test` depends on it, and the test-type task has `runInCI: true`, so Moon CI executes it directly as well.
+- `yarn moon run theme-family:typecheck` uses the same full-config/no-emit and isolated-cache convention after family/core builds. Its positive/negative fixtures check descriptor scope partitions, member/default input requirements, variants, namespaces, and real Vanilla Extract public/member views. `theme-family:test` depends on it, and its task also has `runInCI: true`.
+- `yarn moon run theme-devtools-core:typecheck` checks the framework-free controller/options/private-source contract with the same full-config, isolated-cache convention after core/stylesheet builds. `theme-devtools-core:test` depends on it and CI includes the task. Web Components rendering/lifecycle/realm/CSP behavior is additionally exercised through the actual plain-ESM browser surface, not mocked DOM forwarding.
+- `yarn moon run theme-devtools-react:typecheck` compiles the React host/props/ref/callback and private-source positive/negative fixtures through the full config after React/core builds, with the same isolated incremental cache. Its task is CI-wired and required by `theme-devtools-react:test`; runtime forwarding mocks are not a substitute for native UI/lifecycle evidence. This documents the configured task, not a check executed by a documentation update.
+
+
 ### ESLint Configuration Details
 
 - Root config uses ESLint 9 flat config in [eslint.config.js](eslint.config.js).

@@ -48,7 +48,10 @@ export const themeSelectorOptionStyle = style({
 });
 
 for (const selection of themeSelectionOrder) {
-  globalStyle(`[${variantSelector}=${selection}] ${themeSelectorOptionStyle}[${selectionDataAttribute}=${selection}]`, {
+  const selected = selection === 'system'
+    ? `:root:not([${variantSelector}])`
+    : `[${variantSelector}=${selection}]`;
+  globalStyle(`${selected} ${themeSelectorOptionStyle}[${selectionDataAttribute}=${selection}]`, {
     background: theme.colors.primary.base,
   });
 }

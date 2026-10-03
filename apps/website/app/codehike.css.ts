@@ -71,7 +71,7 @@ for (const [variant, vars] of Object.entries(variables)) {
   globalStyle(`[${variantSelector}=${variant}]`, {
     vars,
   });
-  globalStyle(`[${variantSelector}=system]`, {
+  globalStyle(`:root:not([${variantSelector}])`, {
     '@media': {
       [`(prefers-color-scheme: ${variant})`]: {
         vars,

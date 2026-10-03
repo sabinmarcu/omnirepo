@@ -1,10 +1,9 @@
-import { Icon } from '@/components/Icon';
 import { getTranslations } from 'next-intl/server';
+import { Icon } from '@/components/Icon';
 import { withTooltip } from '@/components/Tooltip.hoc';
 import {
   themeSelectionIcons,
   themeSelectionOrder,
-  themeSelectionsMap,
 } from './ThemeSelector.constants';
 import { getThemeVariant } from './ThemeSelector.core';
 import { ThemeSelectorRuntime } from './ThemeSelector.runtime';

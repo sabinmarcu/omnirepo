@@ -1,26 +1,19 @@
-import { theme } from '@sabinmarcu/theme';
+import { theme } from '@sabinmarcu/website-theme';
 import type { StyleRule } from '@vanilla-extract/css';
 
-type GTMediaTypes = keyof typeof theme.breakpoint & `gt-${string}`;
-export type MediaPrefixType = Exclude<
-  keyof typeof theme.breakpoint extends `${infer Prefix}-${string}`
-    ? Prefix
-    : unknown,
-  'between'
->;
-
-export type MediaType = GTMediaTypes extends `gt-${infer Media}`
-  ? Media
-  : unknown;
+type Breakpoints = typeof theme.breakpoint;
+export type MediaPrefixType = Exclude<keyof Breakpoints, 'between'>;
+export type MediaType = keyof Breakpoints['lt'];
+export type BetweenMediaType = keyof Breakpoints['between'];
 
 const getMediaWithOrientation = (
   mediaPortrait: MediaType,
   mediaLandscape: MediaType,
   prefix: MediaPrefixType,
 ) => [
-  [theme.breakpoint[`${prefix}-${mediaPortrait}`], '(orientation: portrait)'],
-  [theme.breakpoint[`${prefix}-${mediaLandscape}`], '(orientation: landscape)'],
-].map((it) => `(${it.join(' and ')})`).join(' or ');
+  `(${theme.breakpoint[prefix][mediaPortrait]} and (orientation: portrait))`,
+  `(${theme.breakpoint[prefix][mediaLandscape]} and (orientation: landscape))`,
+].join(' or ');
 
 const getMediaWithGtLtOrientation = (
   mediaPortrait: MediaType,
@@ -46,7 +39,20 @@ export const mobileMedia = <T extends StyleRule>(styles: T, min = false) => ({
   },
 } as const);
 
-export const media = (
+export function media<Prefix extends MediaPrefixType>(
   mediaType: MediaType,
-  prefixType: MediaPrefixType,
-) => theme.breakpoint[`${prefixType}-${mediaType}`];
+  prefixType: Prefix,
+): Breakpoints[Prefix][MediaType];
+export function media(
+  mediaType: BetweenMediaType,
+  prefixType: 'between',
+): Breakpoints['between'][BetweenMediaType];
+export function media(
+  mediaType: MediaType | BetweenMediaType,
+  prefixType: keyof Breakpoints,
+) {
+  if (prefixType === 'between') {
+    return theme.breakpoint.between[mediaType as BetweenMediaType];
+  }
+  return theme.breakpoint[prefixType][mediaType as MediaType];
+}

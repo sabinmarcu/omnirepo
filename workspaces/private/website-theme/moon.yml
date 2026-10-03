@@ -13,5 +13,21 @@ workspace:
       - publish
 dependsOn:
   - "@sabinmarcu/theme"
+  - "@sabinmarcu/theme-core"
+  - "@sabinmarcu/theme-family"
   - "@sabinmarcu/types"
   - "@sabinmarcu/utils-test"
+tasks:
+  typecheck:
+    command: tsc --project tsconfig.json --noEmit --incremental --tsBuildInfoFile dist/.typecheck.tsbuildinfo
+    type: test
+    deps:
+      - "~:build"
+    inputs:
+      - "@globs(sources)"
+      - tsconfig.json
+    options:
+      runInCI: true
+  test:
+    deps:
+      - "~:typecheck"

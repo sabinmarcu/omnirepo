@@ -26,7 +26,8 @@ const apply = (event: MouseEvent) => {
   }
 
   const root = document.documentElement;
-  root.setAttribute(variantSelector, nextSelection);
+  if (nextSelection === 'system') root.toggleAttribute(variantSelector, false);
+  else root.setAttribute(variantSelector, nextSelection);
   // eslint-disable-next-line unicorn/no-document-cookie
   document.cookie = `${cookieName}=${nextSelection};path=/;max-age=31536000;samesite=lax`;
 

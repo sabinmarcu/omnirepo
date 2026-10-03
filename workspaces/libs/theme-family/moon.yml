@@ -1,0 +1,28 @@
+project:
+  name: theme-family
+  description: Descriptor-derived independent theme families
+  channel: "#ui"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: library
+dependsOn:
+  - "@sabinmarcu/theme-core"
+  - "@sabinmarcu/types"
+  - "@sabinmarcu/utils-test"
+tasks:
+  typecheck:
+    command: tsc --project tsconfig.json --noEmit --incremental --tsBuildInfoFile dist/.typecheck.tsbuildinfo
+    type: test
+    deps:
+      - "~:build"
+      - "theme-core:build"
+    inputs:
+      - "@globs(sources)"
+      - tsconfig.json
+    options:
+      runInCI: true
+  test:
+    deps:
+      - "~:typecheck"

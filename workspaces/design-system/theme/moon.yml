@@ -1,6 +1,6 @@
 project:
   name: theme
-  description: Personal Vanilla Extract theme config
+  description: Framework-free concrete theme schema and public tokens
   channel: "#ui"
   maintainers:
     - Sabin Marcu
@@ -8,6 +8,20 @@ project:
 language: typescript
 type: library
 dependsOn:
-  - "@sabinmarcu/stylesheet"
+  - "@sabinmarcu/theme-core"
   - "@sabinmarcu/types"
   - "@sabinmarcu/utils-test"
+tasks:
+  typecheck:
+    command: tsc --project tsconfig.json --noEmit --incremental --tsBuildInfoFile dist/.typecheck.tsbuildinfo
+    type: test
+    deps:
+      - "~:build"
+    inputs:
+      - "@globs(sources)"
+      - tsconfig.json
+    options:
+      runInCI: true
+  test:
+    deps:
+      - "~:typecheck"

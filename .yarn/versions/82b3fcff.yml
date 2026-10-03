@@ -1,0 +1,9 @@
+releases:
+  "@sabinmarcu/storybook-addon-theme-overrider": minor
+  "@sabinmarcu/stylesheet": minor
+  "@sabinmarcu/theme": major
+  "@sabinmarcu/theme-core": major
+  "@sabinmarcu/theme-devtools-core": major
+  "@sabinmarcu/theme-devtools-react": major
+  "@sabinmarcu/theme-family": major
+  "@sabinmarcu/theme-storybook": minor

@@ -41,6 +41,10 @@ dependsOn:
   - "@sabinmarcu/storybook-addon-theme-overrider"
   - "@sabinmarcu/stylesheet"
   - "@sabinmarcu/theme"
+  - "@sabinmarcu/theme-core"
+  - "@sabinmarcu/theme-devtools-core"
+  - "@sabinmarcu/theme-devtools-react"
+  - "@sabinmarcu/theme-family"
   - "@sabinmarcu/theme-storybook"
   - eslint-plugin-logical-properties
 toolchain:

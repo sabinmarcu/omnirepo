@@ -42,6 +42,7 @@ export const createStyle = (debugId = 'theme-overrider-styles') => {
       }));
 
     const Stylesheet = createStylesheet({
+      id: debugId,
       debugId,
       rules: stylesheetRules,
     });

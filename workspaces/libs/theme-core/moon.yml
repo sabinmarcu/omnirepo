@@ -1,0 +1,28 @@
+project:
+  name: theme-core
+  description: Immutable theme descriptors and namespaced contracts
+  channel: "#ui"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: library
+dependsOn:
+  - "@sabinmarcu/stylesheet"
+  - "@sabinmarcu/types"
+  - "@sabinmarcu/utils-test"
+tasks:
+  typecheck:
+    command: tsc --project tsconfig.json --noEmit --incremental --tsBuildInfoFile dist/.typecheck.tsbuildinfo
+    type: test
+    deps:
+      - "~:build"
+      - "stylesheet:build"
+    inputs:
+      - "@globs(sources)"
+      - tsconfig.json
+    options:
+      runInCI: true
+  test:
+    deps:
+      - "~:typecheck"

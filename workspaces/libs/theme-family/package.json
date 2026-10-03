@@ -1,0 +1,52 @@
+{
+  "name": "@sabinmarcu/theme-family",
+  "version": "0.1.0",
+  "packageManager": "yarn@4.5.1",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "tscmono": {
+    "preset": "lib"
+  },
+  "dependencies": {
+    "@sabinmarcu/theme-core": "workspace:*"
+  },
+  "devDependencies": {
+    "@sabinmarcu/types": "workspace:*",
+    "@sabinmarcu/utils-test": "workspace:*",
+    "@vanilla-extract/css": "^1.21.2"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./src/*": {
+      "import": "./src/*",
+      "default": "./src/*"
+    },
+    "./*": {
+      "import": "./dist/*.js",
+      "default": "./dist/*.js",
+      "types": "./dist/*.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "typeVersions": {
+    "*": {
+      "*": [
+        "./dist/*"
+      ]
+    }
+  },
+  "repository": {
+    "url": "git+https://github.com/sabinmarcu/omnirepo.git",
+    "directory": "workspaces/libs/theme-family",
+    "type": "git"
+  },
+  "homepage": "https:/sabinmarcu.dev/api/theme-family"
+}

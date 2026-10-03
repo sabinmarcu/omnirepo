@@ -2,13 +2,21 @@ import type { Metadata } from 'next';
 import { headers } from 'next/headers';
 import '../globals.css';
 import { NextIntlClientProvider } from 'next-intl';
-import { variantSelector } from '@sabinmarcu/website-theme';
+import { Stylesheet } from '@sabinmarcu/stylesheet/react';
+import { themeResetCSS } from '@sabinmarcu/theme';
+import {
+  createWebsiteTheme,
+  themeValues,
+  variantSelector,
+} from '@sabinmarcu/website-theme';
 import { notFound } from 'next/navigation';
 import {
+  experimentEnabled,
   Experiments,
 } from '@/experiments';
-import { getThemeVariant } from '@/theme';
 import { withExperiment } from '@/experiments/components/withExperiment';
+import { getThemeVariant } from '@/theme';
+import { WebsiteThemeDevtools } from '@/theme/ThemeDevtools';
 import { isLocale } from '@/i18n/locales';
 import {
   isConfiguredLocaleDomain,
@@ -94,12 +102,23 @@ export default withExperiment('scanlines')(
     if (!isLocale(locale)) {
       notFound();
     }
+    const websiteTheme = createWebsiteTheme();
+    websiteTheme(themeValues);
+    const themeDevtools = await experimentEnabled('themeDevtools');
+    const manifestJson = themeDevtools ? JSON.stringify(websiteTheme.manifest()) : undefined;
+    const manifests = manifestJson === undefined ? undefined : [JSON.parse(manifestJson)];
+    const selection = await getThemeVariant();
     return (
       <html
         lang={locale}
-        {...{ [variantSelector]: await getThemeVariant() }}
+        {...{ [variantSelector]: selection === 'system' ? undefined : selection }}
       >
         <head>
+          <style
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{ __html: themeResetCSS }}
+          />
+          <Stylesheet stylesheet={websiteTheme.stylesheet} />
           <script
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{ __html: devicePixelRatioScript }}
@@ -109,6 +128,7 @@ export default withExperiment('scanlines')(
           <body className={rootBackgroundStyle}>
             {children}
             <Experiments />
+            {manifests ? <WebsiteThemeDevtools manifests={manifests} /> : null}
             {scanlines ? <div className={scanLinesStyle} /> : null}
           </body>
         </NextIntlClientProvider>

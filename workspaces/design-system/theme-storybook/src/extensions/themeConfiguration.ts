@@ -1,6 +1,9 @@
 import themeOverride from '@sabinmarcu/storybook-addon-theme-overrider';
 import mirrorPreview from '@sabinmarcu/storybook-addon-mirror-preview';
-import { theme } from '@sabinmarcu/theme/theme';
+import {
+  theme,
+  themeResetCSS,
+} from '@sabinmarcu/theme';
 import type { StorybookConfig } from '@storybook/react-vite';
 import type { Extension } from '../types.js';
 
@@ -19,12 +22,14 @@ mirrorPreview.config = [
   },
 ];
 
+const resetStyle = `<style data-stylesheet="themeReset">${themeResetCSS}</style>`;
+
 const previewHead: StorybookConfig['previewHead'] = (
-  (head: string | undefined) => themeOverride.preview(head ?? '')
+  (head: string | undefined) => themeOverride.preview(`${resetStyle}${head ?? ''}`)
 );
 const managerHead: StorybookConfig['managerHead'] = (
   (head) => (
-    mirrorPreview.manager(themeOverride.manager(head ?? ''))
+    mirrorPreview.manager(themeOverride.manager(`${resetStyle}${head ?? ''}`))
   )
 );
 export const themeConfigExtension = {

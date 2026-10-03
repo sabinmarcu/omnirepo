@@ -14,6 +14,11 @@ export const experiments = {
     description: 'Suggest an available browser-language version',
     default: false,
   },
+  themeDevtools: {
+    title: 'Theme Devtools',
+    description: 'Edit the website theme sources',
+    default: false,
+  },
 } as const;
 
 export type Experiments = keyof typeof experiments;

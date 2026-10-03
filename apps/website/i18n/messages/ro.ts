@@ -101,6 +101,10 @@ const messages = {
       title: 'Banner de sugestie pentru limbă',
       description: 'Sugerează o versiune disponibilă în limba browserului',
     },
+    themeDevtools: {
+      title: 'Unelte de dezvoltare pentru teme',
+      description: 'Editează sursele temei site-ului',
+    },
   },
   cv: {
     skills: 'Abilități',
@@ -178,6 +182,11 @@ const messages = {
     system: 'Determinată de sistem',
     light: 'Luminoasă',
     dark: 'Întunecată',
+  },
+  themeDevtools: {
+    title: 'Unelte de dezvoltare pentru teme',
+    open: 'Deschide uneltele de dezvoltare pentru teme',
+    close: 'Închide uneltele de dezvoltare pentru teme',
   },
 } as const satisfies typeof en;
 

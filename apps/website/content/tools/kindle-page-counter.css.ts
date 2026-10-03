@@ -1,4 +1,4 @@
-import { theme } from '@sabinmarcu/theme';
+import { theme } from '@sabinmarcu/website-theme';
 import {
   createVar,
   globalStyle,
@@ -34,7 +34,7 @@ export const wrapperStyles = style({
     [spacing]: theme.grid.m,
   },
   '@container': {
-    [theme.breakpoint['lt-mobile']]: {
+    [theme.breakpoint.lt.mobile]: {
       inlineSize: '100cqw',
       blockSize: '100cqw',
     },

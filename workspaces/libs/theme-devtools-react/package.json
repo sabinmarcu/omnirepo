@@ -1,0 +1,59 @@
+{
+  "name": "@sabinmarcu/theme-devtools-react",
+  "version": "0.1.0",
+  "packageManager": "yarn@4.5.1",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "tscmono": {
+    "preset": "lib",
+    "presets": [
+      "lib",
+      "react"
+    ]
+  },
+  "dependencies": {
+    "@sabinmarcu/theme-devtools-core": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "*"
+  },
+  "devDependencies": {
+    "@sabinmarcu/types": "workspace:*",
+    "@sabinmarcu/utils-test": "workspace:*",
+    "@types/react": "^19.2.14"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./src/*": {
+      "import": "./src/*",
+      "default": "./src/*"
+    },
+    "./*": {
+      "import": "./dist/*.js",
+      "default": "./dist/*.js",
+      "types": "./dist/*.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "typeVersions": {
+    "*": {
+      "*": [
+        "./dist/*"
+      ]
+    }
+  },
+  "repository": {
+    "url": "git+https://github.com/sabinmarcu/omnirepo.git",
+    "directory": "workspaces/libs/theme-devtools-react",
+    "type": "git"
+  },
+  "homepage": "https:/sabinmarcu.dev/api/theme-devtools-react"
+}
