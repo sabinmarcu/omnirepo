@@ -1,14 +1,17 @@
 import type { ZodType } from 'zod';
 import {
+  defaultLocale,
+} from '@/i18n/domains';
+import {
   tocSchema,
   metadataSchema,
 } from './schemas';
-import {
-  defaultLocale,
-} from '@/i18n/domains';
 import { GenericMdxResource } from './GenericMdxResource';
 import { Resource } from './Resource';
-import { lazy } from './lazy';
+import {
+  lazy,
+  type Lazy,
+} from './lazy';
 
 const mdxMetadataSchema = metadataSchema.extend({
   toc: tocSchema,
@@ -53,7 +56,7 @@ export class MdxResource<
 
   public metadataSchema: MetadataSchema = mdxMetadataSchema as unknown as MetadataSchema;
 
-  variants = lazy<MdxResource[]>(
+  variants: Lazy<MdxResource[]> = lazy(
     async () => (this.constructor as typeof MdxResource).getVariants(await this.id),
   );
 
