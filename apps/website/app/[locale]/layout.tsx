@@ -11,10 +11,12 @@ import {
 } from '@sabinmarcu/website-theme';
 import { notFound } from 'next/navigation';
 import {
+  experimentEnabled,
   Experiments,
 } from '@/experiments';
-import { getThemeVariant } from '@/theme';
 import { withExperiment } from '@/experiments/components/withExperiment';
+import { getThemeVariant } from '@/theme';
+import { WebsiteThemeDevtools } from '@/theme/ThemeDevtools';
 import { isLocale } from '@/i18n/locales';
 import {
   isConfiguredLocaleDomain,
@@ -102,6 +104,9 @@ export default withExperiment('scanlines')(
     }
     const websiteTheme = createWebsiteTheme();
     websiteTheme(themeValues);
+    const themeDevtools = await experimentEnabled('themeDevtools');
+    const manifestJson = themeDevtools ? JSON.stringify(websiteTheme.manifest()) : undefined;
+    const manifests = manifestJson === undefined ? undefined : [JSON.parse(manifestJson)];
     const selection = await getThemeVariant();
     return (
       <html
@@ -123,6 +128,7 @@ export default withExperiment('scanlines')(
           <body className={rootBackgroundStyle}>
             {children}
             <Experiments />
+            {manifests ? <WebsiteThemeDevtools manifests={manifests} /> : null}
             {scanlines ? <div className={scanLinesStyle} /> : null}
           </body>
         </NextIntlClientProvider>

@@ -99,6 +99,10 @@ const messages = {
       title: 'Language suggestion banner',
       description: 'Suggest an available browser-language version',
     },
+    themeDevtools: {
+      title: 'Theme devtools',
+      description: 'Edit the website theme sources',
+    },
   },
   cv: {
     skills: 'Skills',
@@ -176,6 +180,11 @@ const messages = {
     system: 'System Determined',
     light: 'Light',
     dark: 'Dark',
+  },
+  themeDevtools: {
+    title: 'Theme devtools',
+    open: 'Open theme devtools',
+    close: 'Close theme devtools',
   },
 };
 

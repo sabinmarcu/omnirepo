@@ -11,6 +11,7 @@ type: application
 dependsOn:
   - "@sabinmarcu/stylesheet"
   - "@sabinmarcu/theme"
+  - "@sabinmarcu/theme-devtools-react"
   - "@sabinmarcu/website-theme"
 tasks:
   start:

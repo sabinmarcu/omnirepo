@@ -28,7 +28,7 @@ const patchReturn = setup.update({
   fib: 24,
 });
 const live = setup.read();
-const manifestVersion: 1 = setup.manifest().version;
+const manifestVersion: 2 = setup.manifest().version;
 const exactBase: 'var(--theme-colors-primary-base)' = initial.colors.primary.base;
 const exactExtension: 'var(--theme-colors-background-page)' = patchReturn.colors.background.page;
 const numericLiveInput: number = live.grid;

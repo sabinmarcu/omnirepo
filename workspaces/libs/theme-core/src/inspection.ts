@@ -2,7 +2,10 @@ import {
   createStylesheet,
   stylesheetCommitEvent,
 } from '@sabinmarcu/stylesheet';
-import type { BrowserStylesheet } from '@sabinmarcu/stylesheet';
+import type {
+  BrowserStylesheet,
+  StylesheetChange,
+} from '@sabinmarcu/stylesheet';
 import { encodeThemePatch } from './inputs.js';
 import { readThemeSources } from './live.js';
 import {
@@ -11,15 +14,26 @@ import {
 } from './manifest.js';
 import type { ThemeManifest } from './manifest.js';
 
+/** Undefined means unknown sheet replacement or catalog/selection invalidation. */
+export type InspectionChange = {
+  readonly targetId: string;
+  readonly sources: readonly string[];
+  readonly outputs: readonly string[];
+} | undefined;
+
 export type InspectedTheme = {
   readonly manifest: ThemeManifest;
   read(): Readonly<Record<string, unknown>>;
+  readSource(name: string): unknown;
+  readSources(names: readonly string[]): Readonly<Record<string, unknown>>;
   /** Complete current source inputs, suitable for replay through the original setup. */
   export(): Readonly<Record<string, unknown>>;
   patch(input: Readonly<Record<string, unknown>>): void;
   /** Public outputs are informational, never accepted by patch. */
-  readOutputs(): readonly { readonly path: readonly string[]; readonly value: unknown }[];
-  subscribe(listener: () => void): () => void;
+  readOutputs(names?: readonly string[]): readonly {
+    readonly path: readonly string[]; readonly value: unknown;
+  }[];
+  subscribe(listener: (change: InspectionChange) => void): () => void;
 };
 
 export type ThemeInspection = {
@@ -28,7 +42,7 @@ export type ThemeInspection = {
   setManifests(manifests?: readonly unknown[]): void;
   /** Explicit refresh; discovers again only while no programmatic catalog is supplied. */
   refresh(): void;
-  subscribe(listener: () => void): () => void;
+  subscribe(listener: (change: InspectionChange) => void): () => void;
   dispose(): void;
 };
 
@@ -64,31 +78,43 @@ const inspect = (document: Document, manifest: ThemeManifest) => {
   const stylesheet: BrowserStylesheet = createStylesheet({ id: manifest.root.sheetId })
     .mount(document);
   const theme = themeFromManifest(manifest);
+  const sources = new Map<string, typeof theme.sources[number]>(
+    theme.sources.map((source) => [source.name, source]),
+  );
+  const derived = manifest.outputs.filter((output) => output.role === 'derived');
+  const allocationNames = [...sources.keys(), ...derived.map((output) => output.name)];
   let active = true;
-  const listeners = new Set<() => void>();
+  let validatedSheet: CSSStyleSheet | undefined;
+  const listeners = new Set<(change: InspectionChange) => void>();
   let stop: (() => void) | undefined;
+  const validateAllocations = () => {
+    const declarations = stylesheet.readMany(
+      manifest.root.selector,
+      allocationNames,
+      manifest.root.layer,
+    );
+    for (const name of allocationNames) {
+      if (declarations[name] === undefined) throw new Error(`Missing declared theme allocation: ${name}`);
+    }
+    validatedSheet = allocation.element.sheet!;
+  };
   const ensure = () => {
     if (!active) throw new Error(`Disposed theme inspection target: ${manifest.id}`);
     const current = resolve(document, manifest);
     if (current.root !== allocation.root || current.element !== allocation.element) {
       throw new Error(`Replaced theme inspection allocation: ${manifest.id}; refresh the catalog`);
     }
-    // Inspect allocations, not computed/inherited guesses or another rule's values.
-    for (const source of manifest.sources) {
-      if (stylesheet.read(manifest.root.selector, source.name, manifest.root.layer) === undefined) {
-        throw new Error(`Missing declared theme source: ${source.name}`);
-      }
-    }
-    for (const output of manifest.outputs) {
-      if (output.role === 'derived'
-        && stylesheet.read(
-          manifest.root.selector,
-          output.name,
-          manifest.root.layer,
-        ) === undefined) {
-        throw new Error(`Missing declared theme output: ${output.name}`);
-      }
-    }
+    if (validatedSheet !== allocation.element.sheet) validateAllocations();
+  };
+  const readSources = (names: readonly string[]): Readonly<Record<string, unknown>> => {
+    ensure();
+    for (const name of names) if (!sources.has(name)) throw new Error(`Undeclared theme source: ${name}`);
+    const declarations = stylesheet.readMany(manifest.root.selector, names, manifest.root.layer);
+    return Object.fromEntries(names.map((name) => {
+      const value = declarations[name];
+      if (value === undefined) throw new Error(`Missing declared theme source: ${name}`);
+      return [name, sources.get(name)!.descriptor.codec.decode(value)];
+    }));
   };
   const read = (): Readonly<Record<string, unknown>> => {
     ensure();
@@ -103,25 +129,56 @@ const inspect = (document: Document, manifest: ThemeManifest) => {
     }
     return inputs;
   };
-  const notify = () => { for (const listener of listeners) listener(); };
+  const notify = (change?: InspectionChange) => {
+    for (const listener of listeners) listener(change);
+  };
   const target: InspectedTheme = {
     manifest,
     read,
+    readSource(name) { return readSources([name])[name]; },
+    readSources,
     export: read,
     patch(input) {
-      read();
+      ensure();
       const declarations = encodeThemePatch(theme, input);
-      if (Object.keys(declarations).length === 0) return;
+      const names = Object.keys(declarations);
+      if (names.length === 0) return;
+      // Never recreate a removed source while applying a partial patch.
+      const current = stylesheet.readMany(manifest.root.selector, names, manifest.root.layer);
+      for (const name of names) {
+        if (current[name] === undefined) throw new Error(`Missing declared theme source: ${name}`);
+      }
       stylesheet.update([{
         selector: manifest.root.selector,
         layer: manifest.root.layer,
         rules: declarations,
       }]);
     },
-    readOutputs() {
+    readOutputs(names) {
       ensure();
+      const requested = names === undefined ? undefined : new Set(names);
+      if (requested) {
+        for (const name of requested) {
+          if (derived.every((output) => output.name !== name)) {
+            throw new Error(`Undeclared theme output: ${name}`);
+          }
+        }
+      }
+      const selected = requested === undefined
+        ? manifest.outputs
+        : derived.filter((output) => requested.has(output.name));
+      if (selected.length === 0) return [];
+      const outputNames = selected.flatMap((output) => (output.role === 'derived' ? [output.name] : []));
+      const declarations = stylesheet.readMany(
+        manifest.root.selector,
+        outputNames,
+        manifest.root.layer,
+      );
+      for (const name of outputNames) {
+        if (declarations[name] === undefined) throw new Error(`Missing declared theme output: ${name}`);
+      }
       const computed = document.defaultView!.getComputedStyle(allocation.root);
-      return manifest.outputs.map((output) => ({
+      return selected.map((output) => ({
         path: output.path,
         value: output.role === 'static' ? output.value : computed.getPropertyValue(output.name).trim(),
       }));
@@ -130,16 +187,45 @@ const inspect = (document: Document, manifest: ThemeManifest) => {
       ensure();
       listeners.add(listener);
       if (!stop) {
-        const observer = new document.defaultView!.MutationObserver(() => { notify(); });
+        const observer = new document.defaultView!.MutationObserver(() => {
+          validatedSheet = undefined;
+          notify();
+        });
         observer.observe(allocation.element, {
           childList: true,
           characterData: true,
           subtree: true,
         });
-        const committed = () => {
-          // A backend commit already reports the same text replacement synchronously.
+        const committed = (event: Event) => {
           observer.takeRecords();
-          notify();
+          const { detail } = (event as CustomEvent<StylesheetChange>);
+          if (!detail?.rules) {
+            validatedSheet = undefined;
+            notify();
+            return;
+          }
+          // Known backend commits replace text but leave untouched declarations intact.
+          validatedSheet = allocation.element.sheet ?? undefined;
+          const changed = new Set(detail.rules.filter((rule) => (
+            rule.selector === manifest.root.selector && rule.layer === manifest.root.layer
+          )).flatMap((rule) => rule.properties));
+          const sourceNames = [...changed].filter((name) => sources.has(name));
+          if ([...changed].some((name) => derived.some((output) => output.name === name)
+            || name === 'color-scheme')) {
+            notify();
+          } else if (sourceNames.length > 0) {
+            const affected = new Set(sourceNames);
+            notify(Object.freeze({
+              targetId: manifest.id,
+              sources: Object.freeze(sourceNames),
+              outputs: Object.freeze(derived.filter((output) => (
+                output.sources.some((name) => affected.has(name))
+              )).map((output) => output.name)),
+            }));
+          } else if (detail.rules.some((rule) => rule.properties.includes('color-scheme')
+            || rule.properties.some((name) => name.startsWith(`--${manifest.prefix}-`)))) {
+            notify();
+          }
         };
         allocation.element.addEventListener(stylesheetCommitEvent, committed);
         stop = () => {
@@ -191,9 +277,11 @@ export function createThemeInspection(
   let supplied: readonly ThemeManifest[] | undefined;
   let current: ReturnType<typeof inspect>[] = [];
   let subscriptions: (() => void)[] = [];
-  const listeners = new Set<() => void>();
+  const listeners = new Set<(change: InspectionChange) => void>();
   const ensure = () => { if (!active) throw new Error('Disposed theme inspection catalog'); };
-  const notify = () => { for (const listener of listeners) listener(); };
+  const notify = (change?: InspectionChange) => {
+    for (const listener of listeners) listener(change);
+  };
   const watch = () => {
     for (const unsubscribe of subscriptions) unsubscribe();
     subscriptions = listeners.size === 0
@@ -233,7 +321,7 @@ export function createThemeInspection(
     get targets() { ensure(); return Object.freeze(current.map(({ target }) => target)); },
     setManifests: replace,
     refresh() { replace(supplied); },
-    subscribe(listener: () => void) {
+    subscribe(listener: (change: InspectionChange) => void) {
       ensure();
       listeners.add(listener);
       watch();

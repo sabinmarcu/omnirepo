@@ -39,6 +39,8 @@ export type ManifestDerivedOutput = {
   readonly name: string;
   readonly path: readonly string[];
   readonly scope: AssignmentScope;
+  /** Transitive editable source allocation dependencies in source allocation order. */
+  readonly sources: readonly string[];
 };
 
 export type ManifestStaticOutput = {
@@ -50,7 +52,7 @@ export type ManifestStaticOutput = {
 export type ManifestOutput = ManifestDerivedOutput | ManifestStaticOutput;
 
 export type ThemeManifest = {
-  readonly version: 1;
+  readonly version: 2;
   readonly id: string;
   readonly kind: 'direct' | 'family';
   readonly prefix: string;
@@ -239,7 +241,7 @@ const cloneSource = (
 const cloneOutput = (value: unknown, allocationPrefix: string): ManifestOutput => {
   if (!isRecord(value) || typeof value.role !== 'string') return fail('output is malformed');
   if (value.role === 'derived') {
-    if (!sameKeys(value, ['role', 'name', 'path', 'scope']) || typeof value.name !== 'string'
+    if (!sameKeys(value, ['role', 'name', 'path', 'scope', 'sources']) || typeof value.name !== 'string'
       || (value.scope !== 'shared' && value.scope !== 'contextual')) return fail('derived output is malformed');
     const { scope } = value;
     const path = clonePath(value.path, 'derived output path');
@@ -247,11 +249,17 @@ const cloneOutput = (value: unknown, allocationPrefix: string): ManifestOutput =
       || value.name.startsWith(`--${allocationPrefix}-private-`)) {
       return fail('derived output enters a private namespace');
     }
+    if (!isDataArray(value.sources) || value.sources.some((source) => typeof source !== 'string')) {
+      return fail('derived output sources are malformed');
+    }
+    const sources = Object.freeze([...value.sources] as string[]);
+    if (new Set(sources).size !== sources.length) fail('derived output sources are duplicate');
     return Object.freeze({
       role: 'derived',
       name: value.name,
       path,
       scope,
+      sources,
     });
   }
   if (value.role === 'static') {
@@ -285,7 +293,7 @@ export function validateThemeManifest(value: unknown): ThemeManifest {
     ['version', 'id', 'kind', 'prefix', 'allocationPrefix', 'root', 'sources', 'outputs', 'groups'],
     ['families'],
   )) return fail('shape is malformed');
-  if (value.version !== 1 || typeof value.id !== 'string' || value.id === ''
+  if (value.version !== 2 || typeof value.id !== 'string' || value.id === ''
     || value.id.startsWith('devtools-theme') || (value.kind !== 'direct' && value.kind !== 'family')
     || !prefix(value.prefix) || !prefix(value.allocationPrefix)) return fail('identity is malformed');
   if (!isRecord(value.root) || !sameKeys(value.root, ['sheetId', 'selector'], ['layer'])
@@ -363,9 +371,14 @@ export function validateThemeManifest(value: unknown): ThemeManifest {
       outputNames.add(entry.name);
     }
   }
+  for (const entry of outputs) {
+    if (entry.role === 'derived' && entry.sources.some((source) => !sourceNames.has(source))) {
+      fail('derived output source is not an editable source');
+    }
+  }
   const groups = cloneGroups(value.groups);
   return Object.freeze({
-    version: 1,
+    version: 2,
     id: value.id,
     kind: value.kind,
     prefix: value.prefix,
@@ -423,8 +436,43 @@ export function createThemeManifest(
   options: ManifestOptions,
 ): ThemeManifest {
   const kind = options.kind ?? 'direct';
+  const sourceByName = new Map<string, typeof theme.sources[number]>(
+    theme.sources.map((source) => [source.name, source]),
+  );
+  const tokenByName = new Map<string, typeof theme.tokens[number]>(
+    theme.tokens.map((token) => [token.name, token]),
+  );
+  if (sourceByName.size !== theme.sources.length || tokenByName.size !== theme.tokens.length
+    || theme.sources.some((source) => tokenByName.has(source.name))) {
+    throw new Error('Cannot manifest duplicate theme allocation');
+  }
+  const visiting = new Set<string>();
+  const resolved = new Map<string, ReadonlySet<string>>();
+  const resolveTokenSources = (name: string): ReadonlySet<string> => {
+    const cached = resolved.get(name);
+    if (cached) return cached;
+    const token = tokenByName.get(name);
+    if (!token) throw new Error(`Cannot manifest unknown theme dependency: ${name}`);
+    if (visiting.has(name)) throw new Error(`Cannot manifest cyclic theme dependency: ${name}`);
+    visiting.add(name);
+    const dependencies = new Set<string>();
+    for (const dependency of token.dependencies) {
+      if (sourceByName.has(dependency)) dependencies.add(dependency);
+      else for (const source of resolveTokenSources(dependency)) dependencies.add(source);
+    }
+    visiting.delete(name);
+    const frozen = new Set(dependencies);
+    resolved.set(name, frozen);
+    return frozen;
+  };
+  for (const token of theme.tokens) resolveTokenSources(token.name);
+  const outputSources = (name: string) => {
+    const dependencies = resolveTokenSources(name);
+    return theme.sources.filter((source) => dependencies.has(source.name))
+      .map((source) => source.name);
+  };
   const input = {
-    version: 1 as const,
+    version: 2 as const,
     id: options.id ?? options.sheetId,
     kind,
     prefix: options.prefix ?? theme.prefix,
@@ -453,6 +501,7 @@ export function createThemeManifest(
         name: entry.name,
         path: [...entry.path],
         scope: entry.scope,
+        sources: outputSources(entry.name),
       })),
       ...(() => {
         const entries: ManifestStaticOutput[] = [];

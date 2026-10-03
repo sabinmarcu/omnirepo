@@ -1,0 +1,30 @@
+project:
+  name: theme-devtools-core
+  description: Framework-free Web Components source theme editors
+  channel: "#ui"
+  maintainers:
+    - Sabin Marcu
+  owner: Sabin Marcu
+language: typescript
+type: library
+dependsOn:
+  - "@sabinmarcu/stylesheet"
+  - "@sabinmarcu/theme-core"
+  - "@sabinmarcu/types"
+  - "@sabinmarcu/utils-test"
+tasks:
+  typecheck:
+    command: tsc --project tsconfig.json --noEmit --incremental --tsBuildInfoFile dist/.typecheck.tsbuildinfo
+    type: test
+    deps:
+      - "~:build"
+      - "theme-core:build"
+      - "stylesheet:build"
+    inputs:
+      - "@globs(sources)"
+      - tsconfig.json
+    options:
+      runInCI: true
+  test:
+    deps:
+      - "~:typecheck"

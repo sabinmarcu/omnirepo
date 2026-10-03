@@ -12,7 +12,7 @@ import type {
 const theme = defineTheme({ grid: gridGenerator() });
 const setup = createThemeSetup(theme, { id: 'typed-inspection' });
 const metadata: ThemeManifest = setup.manifest();
-const exactVersion: 1 = metadata.version;
+const exactVersion: 2 = metadata.version;
 const inspection: ThemeInspection = createThemeInspection(document, [metadata]);
 inspection.setManifests([]);
 inspection.setManifests(undefined);

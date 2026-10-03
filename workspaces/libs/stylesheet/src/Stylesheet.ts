@@ -1,6 +1,7 @@
 import type {
   BrowserStylesheet,
   Stylesheet,
+  StylesheetChange,
   StylesheetDeclaration,
   StylesheetOptions,
   StylesheetRuleSet,
@@ -86,13 +87,59 @@ const mergeRules = (
   return result;
 };
 
+const commitChange = (
+  patches: readonly StylesheetRuleSet[],
+  canonicalSelector: (selector: string) => string = (selector) => selector,
+): StylesheetChange => {
+  const rules: Array<{
+    selector: string;
+    layer?: string;
+    properties: string[];
+    propertySet: Set<string>;
+  }> = [];
+  const selectors = new Map<string, Map<string | undefined, typeof rules[number]>>();
+  for (const patch of patches.filter((entry) => Object.keys(entry.rules ?? {}).length > 0)) {
+    const properties = Object.keys(patch.rules ?? {});
+    const selector = canonicalSelector(patch.selector);
+    let layers = selectors.get(selector);
+    if (!layers) {
+      layers = new Map();
+      selectors.set(selector, layers);
+    }
+    let rule = layers.get(patch.layer);
+    if (!rule) {
+      rule = {
+        selector,
+        ...(patch.layer === undefined ? {} : { layer: patch.layer }),
+        properties: [],
+        propertySet: new Set(),
+      };
+      layers.set(patch.layer, rule);
+      rules.push(rule);
+    }
+    for (const property of properties) {
+      if (!rule.propertySet.has(property)) {
+        rule.propertySet.add(property);
+        rule.properties.push(property);
+      }
+    }
+  }
+  return Object.freeze({
+    rules: Object.freeze(rules.map((rule) => Object.freeze({
+      selector: rule.selector,
+      ...(rule.layer === undefined ? {} : { layer: rule.layer }),
+      properties: Object.freeze(rule.properties),
+    }))),
+  });
+};
+
 const serializeSheet = (sheet: CSSStyleSheet) => escapeStyleText(
   Array.from(sheet.cssRules, (rule) => rule.cssText).join('\n'),
 );
 
 const styleRule = (rule: CSSRule): rule is CSSStyleRule => 'selectorText' in rule && 'style' in rule;
 const layerRule = (rule: CSSRule): rule is CSSLayerBlockRule => (
-  'name' in rule && 'cssRules' in rule && rule.cssText.startsWith('@layer ')
+  Reflect.apply(Object.prototype.toString, rule, []) === '[object CSSLayerBlockRule]'
 );
 
 const containers = (
@@ -142,30 +189,35 @@ export function createStylesheet(options: StylesheetOptions): Stylesheet {
 
   const state = (
     getCSS: () => string,
-    read: StylesheetState['read'],
+    readMany: StylesheetState['readMany'],
     commit: StylesheetState['update'],
     getNonce: () => string | undefined,
     getDebugId: () => string = () => debugId,
-    notifyCommit?: (stylesheet: StylesheetState) => void,
+    changes: (patches: readonly StylesheetRuleSet[]) => StylesheetChange = commitChange,
+    notifyCommit?: (stylesheet: StylesheetState, change: StylesheetChange) => void,
     subscribeToCommit?: (
       stylesheet: StylesheetState,
-      listener: (stylesheet: StylesheetState) => void,
+      listener: (stylesheet: StylesheetState, change: StylesheetChange) => void,
     ) => () => void,
   ): StylesheetState => {
-    let listeners: Set<(stylesheet: StylesheetState) => void> | undefined;
+    let listeners: Set<(stylesheet: StylesheetState, change: StylesheetChange) => void> | undefined;
     const owner: StylesheetState = {
       id,
       get debugId() { return getDebugId(); },
       get nonce() { return getNonce(); },
       get css() { return getCSS(); },
       get raw() { return owner.snapshot().html; },
-      read,
+      read(selector, property, layer) {
+        return readMany(selector, [property], layer)[property];
+      },
+      readMany,
       update(patches) {
         if (patches.length === 0) return;
         validate(patches);
+        const change = changes(patches);
         commit(patches);
-        if (notifyCommit) notifyCommit(owner);
-        else if (listeners) for (const listener of listeners) listener(owner);
+        if (notifyCommit) notifyCommit(owner, change);
+        else if (listeners) for (const listener of listeners) listener(owner, change);
       },
       snapshot(currentNonce = getNonce()) {
         const css = getCSS();
@@ -187,11 +239,18 @@ export function createStylesheet(options: StylesheetOptions): Stylesheet {
   };
   const server = state(
     () => serializeRules(serverRules),
-    (selector, property, layer) => {
-      const value = serverRules.find(
-        (rule) => rule.selector === selector && rule.layer === layer,
-      )?.rules[property];
-      return value === undefined || value === null ? undefined : declaration(value).value;
+    (selector, properties, layer) => {
+      const rule = serverRules.find(
+        (candidate) => candidate.selector === selector && candidate.layer === layer,
+      );
+      const values: Record<string, string | undefined> = Object.create(null);
+      for (const property of properties) {
+        const value = rule?.rules[property];
+        values[property] = value === undefined || value === null
+          ? undefined
+          : declaration(value).value;
+      }
+      return values;
     },
     (patches) => { serverRules = mergeRules(serverRules, patches); },
     () => nonce,
@@ -234,19 +293,28 @@ export function createStylesheet(options: StylesheetOptions): Stylesheet {
       }
       const realm = ownerDocument.defaultView;
       if (!realm) throw new Error('Stylesheet attachment requires an active document realm');
+      const selectorCache = new Map<string, string>();
       const canonicalSelector = (selector: string) => {
+        const cachedSelector = selectorCache.get(selector);
+        if (cachedSelector !== undefined) return cachedSelector;
         const probe = new realm.CSSStyleSheet();
         probe.insertRule(`${selector} {}`);
         const rule = probe.cssRules[0]!;
         if (!styleRule(rule)) throw new Error('Expected a CSS style rule');
-        return rule.selectorText;
+        const canonical = rule.selectorText;
+        if (selectorCache.size >= 128) selectorCache.delete(selectorCache.keys().next().value!);
+        selectorCache.set(selector, canonical);
+        return canonical;
       };
       const browserState = state(
         () => serializeSheet(currentSheet()),
-        (selector, property, layer) => {
-          const value = findRule(currentSheet(), canonicalSelector(selector), layer)
-            ?.style.getPropertyValue(property);
-          return value || undefined;
+        (selector, properties, layer) => {
+          const rule = findRule(currentSheet(), canonicalSelector(selector), layer);
+          const values: Record<string, string | undefined> = Object.create(null);
+          for (const property of properties) {
+            values[property] = rule?.style.getPropertyValue(property) || undefined;
+          }
+          return values;
         },
         (patches) => {
           // Patch live CSSOM synchronously; a failed batch restores the previous sheet.
@@ -284,11 +352,19 @@ export function createStylesheet(options: StylesheetOptions): Stylesheet {
         },
         () => ownedElement.nonce || undefined,
         () => ownedElement.dataset.stylesheet ?? debugId,
-        () => {
-          ownedElement.dispatchEvent(new realm.Event(stylesheetCommitEvent));
+        (patches) => commitChange(patches, canonicalSelector),
+        (owner, change) => {
+          const event = new realm.CustomEvent<StylesheetChange>(stylesheetCommitEvent, {
+            detail: change,
+          });
+          ownedElement.dispatchEvent(event);
         },
         (owner, listener) => {
-          const onCommit = () => { listener(owner); };
+          const onCommit = (event: Event) => {
+            if (event instanceof realm.CustomEvent) {
+              listener(owner, event.detail as StylesheetChange);
+            }
+          };
           ownedElement.addEventListener(stylesheetCommitEvent, onCommit);
           return () => { ownedElement.removeEventListener(stylesheetCommitEvent, onCommit); };
         },

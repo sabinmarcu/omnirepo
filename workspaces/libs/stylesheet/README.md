@@ -29,6 +29,10 @@ Declaration names are CSS names (kebab-case or custom properties). Strings/numbe
 
 Browser subscriptions attach to the owned style element. Independently adopted handles and duplicated modules receive the same realm-correct `stylesheet:commit` event (exported as `stylesheetCommitEvent`) after a successful commit; each callback receives its own current handle. Unsubscription removes the element listener. Failed or empty batches emit no event. Server subscriptions remain local and request-isolated. This lets app and optional inspection consumers share one update path without a global runtime registry.
 
+`readMany(selector, properties, layer?)` resolves ownership and the exact selector/layer rule once, returning current declarations for all requested properties (missing declarations are `undefined`). Layer-kind detection uses native rule identity, never `cssText` serialization. Selector canonicalization caches grammar only; CSSOM/value handles are not retained across text replacement.
+
+Subscriptions receive `(current, change)`. `StylesheetChange.rules` contains immutable, deduplicated selector/layer/property-key records for the committed batch, including removed declarations; it contains no values. Browser `stylesheet:commit` is an owner-realm `CustomEvent` carrying the same detail. Writes still patch the original owned stylesheet, synchronize its current text, and retain existing rollback/mirroring behavior—no inline override layer is involved.
+
 Nonces are carried into new browser nodes and SSR output. Adoption preserves the existing node's nonce and observable label. HTML attributes are escaped and style end-tag openers are CSS-escaped to prevent raw-text breakout without changing range-query operators. Inputs are authored CSS, not a sanitizer for untrusted CSS programs; source codecs must validate application inputs before constructing declarations. A CSP-blocked/unavailable stylesheet throws; a newly created unavailable node is removed, while an existing adopted node is left intact.
 
 Optional React SSR:
@@ -39,7 +43,7 @@ import { Stylesheet } from '@sabinmarcu/stylesheet/react';
 <Stylesheet stylesheet={stylesheet} nonce={requestNonce} />;
 ```
 
-## Breaking migration
+## Migration
 
 - `createStylesheet` requires `id`; use `debugId` only as an optional observable label.
 - Replace `legacyRender(root)` with `mount(root)` and retain/use its returned handle for browser updates.

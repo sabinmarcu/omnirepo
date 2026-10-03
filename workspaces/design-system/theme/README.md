@@ -17,4 +17,13 @@ The root export also provides selector constants, ordered layer names, `themeLay
 
 Breakpoints are intrinsic static definitions from theme-core. Website configuration is an extension in `@sabinmarcu/website-theme`, not a mutable input or part of this concrete color/grid contract.
 
-Native colors require `light-dark()`, `contrast-color()`, relative OKLCH colors, `color-mix()`, CSS `if(style(...))`, and typed custom properties. No JavaScript or legacy-browser fallback is provided. Native Safari acceptance remains unverified; see the [implementation evidence](../../../.github/plans/theme-refactor/IMPLEMENTATION_PLAN.md).
+## Package guides
+
+Use the [core guide](../../libs/theme-core/README.md) for direct setup/codecs/inspection and the [family guide](../../libs/theme-family/README.md) for independent member values.
+
+Devtools are optional consumers: the [native inspector](../../libs/theme-devtools-core/README.md) owns the shared modeless window, and the [React binding](../../libs/theme-devtools-react/README.md) only hosts that core. The concrete theme does not acquire a devtools dependency.
+
+
+## Browser and release boundary
+
+Native colors require `light-dark()`, `contrast-color()`, relative OKLCH colors, `color-mix()`, CSS `if(style(...))`, and typed custom properties. No JavaScript or legacy-browser fallback is provided. Native Safari support remains unverified.

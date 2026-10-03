@@ -41,8 +41,13 @@ export function readThemeSources(
     }),
   );
   const result = schemaGroups(theme.definition.schema);
+  const declarations = stylesheet.readMany(
+    selector,
+    theme.sources.map((source) => source.name),
+    layer,
+  );
   for (const source of theme.sources) {
-    const css = stylesheet.read(selector, source.name, layer);
+    const css = declarations[source.name];
     if (css === undefined) throw new Error(`Missing source allocation: ${source.name}`);
     const value = source.descriptor.codec.decode(css);
     const path = source.variant ? [...source.path, source.variant] : source.path;

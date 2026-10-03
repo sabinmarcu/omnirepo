@@ -50,8 +50,6 @@ Public names follow `--prefix-<schema/output path>`. Private inputs and expressi
 - `encodeThemePatch(theme, patch)`: produces declarations only for supplied source paths. Scalar variant shorthand writes both variants; omissions emit nothing. No mutable values cache is maintained.
 - `claimThemeAllocations(theme, root, owner)` / `releaseThemeAllocations(root, owner)`: explicit root/owner object identities. Claims are atomic, reject other owners, and allow independent roots to reuse prefixes. Rendering integration is separate from definition.
 
-Existing applications remain on their current theme until the atomic concrete-theme cutover; this package introduces no forwarding/compatibility exports.
-
 ## Direct server and browser rendering
 
 ```ts
@@ -91,11 +89,11 @@ The native feature floor includes `light-dark()`, `contrast-color()`, relative O
 
 ## Pure extension
 
-`extendTheme(base, additions)` merges distinct descriptor paths, including additions inside existing groups, while retaining the base prefix, untouched reference subobjects, and existing compiled/bound allocation objects. Only additions are compiled/bound. Descriptor overlap and flattened allocation-name collisions throw; there is no prefix override or replacement API. Static additions are usable before rendering, and variable additions participate in the same setup/read/update type projection. Render the extended contract once to let base and extended consumer styles coexist; allocating a separate base harness on the same root would conflict with its shared names.
+`extendTheme(base, additions)` merges distinct descriptor paths, including additions inside existing groups, while retaining the base prefix, untouched reference subobjects, and existing compiled/bound allocation objects. Only additions are compiled/bound. Descriptor overlap and flattened allocation-name collisions throw; there is no prefix override or replacement API. Create the extended theme before initializing its setup: an already initialized sheet is not retrofitted. Static additions are immediately available on the contract; variable additions participate in the same setup/read/update type projection when the extended theme is rendered. Render the extended contract once to let base and extended consumer styles coexist; allocating a separate base harness on the same root would conflict with its shared names.
 
 Generic compiled graph composition uses `rebaseThemeDefinition(definition, path)`: schema/input/output paths and symbolic declaration dependencies move together without executing generators or rewriting CSS strings. Renderer `rules(selector)` adds structural rules to the initial allocation commit, and `ownedNames` reserves their public alias names on the same allocation root. Adoption requires those aliases to exist; constructor defaults do not repair or reset an incomplete adopted sheet.
 
-Independent family composition lives in `@sabinmarcu/theme-family`, depending on core only. Core never imports family/concrete configuration. Concrete theme, website, and Storybook consumers use the new definitions and renderer after the atomic Phase 5 cutover; native Safari acceptance remains deferred and unverified.
+Independent family composition lives in `@sabinmarcu/theme-family`, depending on core only. Core never imports family or concrete configuration.
 
 
 ## Static breakpoint queries
@@ -104,7 +102,7 @@ Ordered `[name, pixelThreshold]` tuples retain literal names and values. `lt`/`g
 
 ## Optional source manifests and inspection
 
-`setup.manifest()` projects version-1 `ThemeManifest` metadata without reading or storing source values. It can be called before initial setup. `createThemeManifest(theme, { sheetId, selector?, layer?, id? })` projects the same schema for an explicitly owned application sheet. Records contain immutable namespace/root/sheet identities, source input paths and scope/variant/codec metadata, public read-only derived allocations, and construction-time static outputs. Defaults, current source values, formulas, and executable codecs are not embedded.
+`setup.manifest()` projects version-2 `ThemeManifest` metadata without reading or storing source values. It can be called before initial setup. `createThemeManifest(theme, { sheetId, selector?, layer?, id? })` projects the same schema for an explicitly owned application sheet. Records contain immutable namespace/root/sheet identities, source input paths and scope/variant/codec metadata, public read-only derived allocations, and construction-time static outputs. Each derived output's `sources` list contains its transitive editable-source dependencies, including paths through private intermediate formulas. Defaults, current source values, formulas, and executable codecs are not embedded. Version 1 is rejected; regenerate stored/embedded catalogs through the current producer rather than supplying legacy manifests.
 
 ```ts
 import { createThemeInspection, embedThemeManifests } from '@sabinmarcu/theme-core';
@@ -129,14 +127,13 @@ Codec/editor kinds are declared, never inferred from a CSS value: standard `numb
 
 `createThemeInspection(document)` discovers only designated light-DOM JSON blocks. `[]` explicitly grants no targets; invalid supplied or discovered data throws without falling back to unrelated metadata. `setManifests(next)` atomically replaces visibility and invalidates old target handles, preserving app values. `setManifests(undefined)` returns to DOM discovery. `refresh()` rereads DOM catalogs only in discovery mode; explicit catalogs remain authoritative. Catalog changes are manual-refresh, not an implicit DOM observer or union. Failed replacement retains the preceding valid catalog.
 
-Each declared selector must resolve one light-DOM allocation element, and its owned style ID must resolve one active light-DOM sheet. Sources must exist directly in the declared selector/layer, not be inherited from another rule. Duplicate IDs, missing/replaced roots/sheets, shadow roots/sheets, `:host`, reserved `devtools-theme` namespaces, and roots/sheets under `data-theme-inspection="private"` are rejected. Metadata cannot authorize arbitrary descendants or static/derived/private output patches. Public outputs are available through `readOutputs()` as current computed custom-property strings or static metadata, never as editable inputs.
+Each declared selector must resolve one light-DOM allocation element, and its owned style ID must resolve one active light-DOM sheet. Sources must exist directly in the declared selector/layer, not be inherited from another rule. Duplicate IDs, missing/replaced roots/sheets, shadow roots/sheets, `:host`, reserved `devtools-theme` namespaces, and roots/sheets under `data-theme-inspection="private"` are rejected. Metadata cannot authorize arbitrary descendants or static/derived/private output patches. Public outputs are available through `readOutputs()` as static metadata or the computed CSS custom-property text. Computed custom-property text is not necessarily an evaluated CSS property color.
 
 Reads/exports decode the authoritative sheet; patches reuse `encodeThemePatch` and the shared stylesheet backend. Omitted paths/variants remain current; scalar variant shorthand writes both variants. Source subscriptions share post-commit notifications with application handles and additionally observe direct owned-node text replacement. Catalog `subscribe` reports source commits and successful catalog replacements. Disposal removes only inspection listeners/observers; it never resets or removes application CSS. Arbitrary direct CSSOM mutations outside the backend do not emit commit events.
 
-Native Safari acceptance remains deferred; Chromium evidence does not establish cross-engine release support. The Web Components and React editor surfaces are subsequent phases, not part of this headless API.
+Granular reads use `target.readSource(name)` or `target.readSources(names)`, preserving declared codec types without reconstructing the full input tree. `readOutputs(names?)` optionally reads only the requested public derived allocations; the names are validated and static/derived values remain read-only. Full `read()`/`export()` returns complete current setup-compatible inputs and batches declaration reads.
 
-## Checks
+Source/catalog subscriptions receive `InspectionChange`: `{ targetId, sources, outputs }` for a known source commit, with allocation names identifying changed sources and transitively affected outputs. `undefined` means catalog replacement, a structural/mapping change, or an unknown out-of-band sheet text replacement and requires conservative invalidation. Ownership and complete declarations are validated initially and after unknown sheet replacement; known commits revalidate targeted declarations without rescanning every input. No applied-value cache is introduced.
 
-`yarn moon run theme-core:build theme-core:typecheck theme-core:lint theme-core:test`.
+The optional inspection API is headless. Use the dedicated [native devtools guide](../theme-devtools-core/README.md) or [React devtools guide](../theme-devtools-react/README.md) for UI integration; neither changes application source ownership or turns derived outputs into inputs. Native Safari/macOS/iOS and latest-code cross-engine release acceptance remain open.
 
-`typecheck` compiles the full project, including negative/positive `*.type.spec.ts` and real Vanilla Extract consumer fixtures, with an isolated incremental cache. It is CI-wired and required by `test`; normal build/Vitest alone do not check those files.

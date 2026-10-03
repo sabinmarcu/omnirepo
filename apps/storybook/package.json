@@ -33,6 +33,8 @@
     "@sabinmarcu/stylesheet": "workspace:*",
     "@sabinmarcu/theme": "workspace:*",
     "@sabinmarcu/theme-core": "workspace:*",
+    "@sabinmarcu/theme-devtools-core": "workspace:*",
+    "@sabinmarcu/theme-devtools-react": "workspace:*",
     "@sabinmarcu/theme-family": "workspace:*",
     "@sabinmarcu/theme-storybook": "workspace:*",
     "@sabinmarcu/types": "workspace:*",

@@ -65,12 +65,13 @@ Setup, updates, picks, SSR serialization, browser adoption, document realms, sha
 - `stylesheet` / `selector`: the current owned sheet and allocation selector for this harness.
 - `bindings`: immutable JSON-safe source records with `name`, complete `inputPath` (including variant leaf when applicable), intrinsic `scope`, contextual `member`, `variant`, and `generatorPath`. Paths follow `shared.*` and `families.<member>.*`. They contain no current/default values or executable codecs; derived/static outputs are absent.
 - `FamilyInput`, `FamilyPatch`, `ResolvedFamilyInput`, and `ScopeSchema`: descriptor-derived scope and source projections; no blanket recursive partial promises.
-- `manifest()`: versioned JSON-safe root/sheet, source codec/editor, family/variant, and public read-only output metadata. It projects the actual private allocation graph plus the original public namespace/static configuration; no current/default source values are stored.
+- `manifest()`: version-2 JSON-safe root/sheet, source codec/editor, family/variant, and public read-only output metadata. It projects the actual private allocation graph plus the original public namespace/static configuration; no current/default source values are stored.
 
-`family.manifest()` feeds `embedThemeManifests` or `createThemeInspection` from theme-core. Both delivery paths share validation and light-DOM-only access; neither authorizes private UI or shadow inspection. Inspection exports complete `{ shared, families }` inputs, including empty source containers and inactive members. Source patches preserve omitted current members/variants and never borrow `base` values. Catalog replacement/disposal leaves app allocations and edits intact. Core and concrete theme code never import this package; family projection owns rebased naming and member metadata. Website/Storybook callers use this composition after the atomic Phase 5 cutover.
+`family.manifest()` feeds `embedThemeManifests` or `createThemeInspection` from theme-core. Both delivery paths share validation and light-DOM-only access; neither authorizes private UI or shadow inspection. Inspection exports complete `{ shared, families }` inputs, including empty source containers and inactive members. Source patches preserve omitted current members/variants and never borrow `base` values. Catalog replacement/disposal leaves app allocations and edits intact. Core and concrete theme code never import this package; family projection owns rebased naming and member metadata.
 
-## Checks and browser gate
+For optional editor integration, use the [native devtools guide](../theme-devtools-core/README.md) or [React devtools guide](../theme-devtools-react/README.md); the editor receives only the declared manifest access boundary.
 
-`yarn moon run theme-core:build theme-family:build theme-family:typecheck theme-family:lint theme-family:test`.
+## Release boundary
 
-The full compiler task includes positive/negative source/namespace assertions and a real Vanilla Extract consumer fixture, with a separate incremental cache and CI/test dependency wiring. Chromium browser smoke covers independent source edits, complete root/scoped mappings, inactive reads, shared effects, scoped variants, and private-host isolation. Native Safari/macOS/iOS acceptance remains unavailable locally and deferred; it is still required for cross-engine release acceptance. Chromium evidence is not a Safari support claim.
+Native Safari/macOS/iOS and latest-code cross-engine release acceptance remain open. This package does not imply support beyond the browser features required by its core and stylesheet dependencies.
+

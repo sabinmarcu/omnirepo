@@ -9,5 +9,6 @@ export type {
   StylesheetOptions,
   StylesheetRuleSet,
   StylesheetSnapshot,
+  StylesheetChange,
   StylesheetState,
 } from './types.js';

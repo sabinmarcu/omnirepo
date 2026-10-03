@@ -13,6 +13,7 @@ dependsOn:
   - "@sabinmarcu/storybook-addon-theme-overrider"
   - "@sabinmarcu/theme"
   - "@sabinmarcu/theme-core"
+  - "@sabinmarcu/theme-devtools-react"
   - "@sabinmarcu/theme-family"
   - "@sabinmarcu/types"
   - "@sabinmarcu/utils-test"

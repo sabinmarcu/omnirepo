@@ -47,6 +47,7 @@ export {
 } from './inspection.js';
 export type {
   InspectedTheme,
+  InspectionChange,
   ThemeInspection,
 } from './inspection.js';
 export { createThemeSetup } from './renderer.js';

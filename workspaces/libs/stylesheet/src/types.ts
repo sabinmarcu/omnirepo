@@ -23,6 +23,14 @@ export type StylesheetSnapshot = {
   readonly html: string;
 };
 
+export type StylesheetChange = {
+  readonly rules: readonly {
+    readonly selector: string;
+    readonly layer?: string;
+    readonly properties: readonly string[];
+  }[];
+};
+
 export type StylesheetState = {
   readonly id: string;
   readonly css: string;
@@ -30,10 +38,15 @@ export type StylesheetState = {
   readonly debugId: string;
   readonly nonce: string | undefined;
   read(selector: string, property: string, layer?: string): string | undefined;
+  readMany(
+    selector: string,
+    properties: readonly string[],
+    layer?: string,
+  ): Readonly<Record<string, string | undefined>>;
   update(rules: readonly StylesheetRuleSet[]): void;
   snapshot(nonce?: string): StylesheetSnapshot;
   /** Called once after a commit; read current state from the supplied owner. */
-  subscribe(listener: (stylesheet: StylesheetState) => void): () => void;
+  subscribe(listener: (stylesheet: StylesheetState, change: StylesheetChange) => void): () => void;
 };
 
 export type BrowserStylesheet = StylesheetState & {

@@ -78,6 +78,7 @@
     "@sabinmarcu/storybook-addon-theme-overrider": "workspace:*",
     "@sabinmarcu/theme": "workspace:*",
     "@sabinmarcu/theme-core": "workspace:*",
+    "@sabinmarcu/theme-devtools-react": "workspace:*",
     "@sabinmarcu/theme-family": "workspace:*",
     "@sabinmarcu/types": "workspace:*",
     "@vanilla-extract/css": "^1.21.2",

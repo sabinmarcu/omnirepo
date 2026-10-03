@@ -118,4 +118,35 @@ describe('family manifest live source semantics', () => {
         },
       });
   });
+
+  it('keeps shared and member output dependencies scoped to their bound source allocations', () => {
+    const family = createThemeFamily(define(), {
+      id: 'dependencies',
+      families: ['night'],
+    });
+    const outputs = family.manifest().outputs.filter((entry) => entry.role === 'derived');
+    expect(Object.fromEntries(outputs.map((entry) => [entry.path.join('.'), {
+      scope: entry.scope,
+      sources: entry.sources,
+    }]))).toEqual({
+      'shared.spacing.m': {
+        scope: 'shared',
+        sources: ['--theme-family-dependencies-shared-source-spacing'],
+      },
+      'families.base.tint.base': {
+        scope: 'contextual',
+        sources: [
+          '--theme-family-dependencies-families-base-source-tint-light',
+          '--theme-family-dependencies-families-base-source-tint-dark',
+        ],
+      },
+      'families.night.tint.base': {
+        scope: 'contextual',
+        sources: [
+          '--theme-family-dependencies-families-night-source-tint-light',
+          '--theme-family-dependencies-families-night-source-tint-dark',
+        ],
+      },
+    });
+  });
 });

@@ -17,6 +17,7 @@
     "@sabinmarcu/moving-mesh-background": "workspace:*",
     "@sabinmarcu/stylesheet": "workspace:*",
     "@sabinmarcu/theme": "workspace:*",
+    "@sabinmarcu/theme-devtools-react": "workspace:*",
     "@sabinmarcu/utils-string": "workspace:*",
     "@sabinmarcu/website-theme": "workspace:*",
     "@tscircuit/routematch": "^1.0.1",

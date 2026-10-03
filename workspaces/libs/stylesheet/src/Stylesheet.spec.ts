@@ -51,6 +51,30 @@ describe('createStylesheet server state', () => {
     );
   });
 
+  it('reads requested declarations from one selector and layer including missing values', () => {
+    const stylesheet = createStylesheet({
+      id: 'batch-read',
+      rules: [{
+        selector: '.shared',
+        rules: { color: 'red' },
+      }, {
+        selector: '.shared',
+        layer: 'utilities',
+        rules: {
+          color: 'green',
+          padding: '1rem',
+        },
+      }],
+    });
+
+    const declarations = stylesheet.readMany('.shared', ['color', 'margin', 'padding'], 'utilities');
+
+    expect(declarations.color).toBe('green');
+    expect(declarations.margin).toBeUndefined();
+    expect(declarations.padding).toBe('1rem');
+    expect(Object.keys(declarations)).toEqual(['color', 'margin', 'padding']);
+  });
+
   it('preserves selectors, layers, and omitted declarations across repeated patches without mutating the caller array', () => {
     const stylesheet = createStylesheet({
       id: 'patches',
@@ -232,19 +256,24 @@ describe('createStylesheet server state', () => {
     expect(html.endsWith('</style>')).toBe(true);
   });
 
-  it('notifies once after committed updates with current reads and supports unsubscribe', () => {
+  it('notifies once after a commit with immutable declaration keys and supports unsubscribe', () => {
     const stylesheet = createStylesheet({
       id: 'subscription',
       rules: [{
         selector: '.value',
-        rules: { color: 'red' },
+        rules: {
+          color: 'red',
+          margin: '1rem',
+        },
       }],
     });
     let notifications = 0;
     let observedColor: string | undefined;
-    const unsubscribe = stylesheet.subscribe((current) => {
+    let observedChange: Parameters<Parameters<typeof stylesheet.subscribe>[0]>[1] | undefined;
+    const unsubscribe = stylesheet.subscribe((current, change) => {
       notifications += 1;
       observedColor = current.read('.value', 'color');
+      observedChange = change;
     });
 
     stylesheet.update([]);
@@ -252,16 +281,43 @@ describe('createStylesheet server state', () => {
 
     stylesheet.update([{
       selector: '.value',
-      rules: { color: 'green' },
+      rules: {
+        color: 'green',
+        margin: null,
+      },
+    }, {
+      selector: '.value',
+      rules: {
+        padding: '2rem',
+        color: 'blue',
+      },
+    }, {
+      selector: '.value',
+      layer: 'utilities',
+      rules: { color: 'black' },
     }]);
 
     expect(notifications).toBe(1);
-    expect(observedColor).toBe('green');
+    expect(observedColor).toBe('blue');
+    const change = observedChange!;
+    expect(change).toEqual({
+      rules: [{
+        selector: '.value',
+        properties: ['color', 'margin', 'padding'],
+      }, {
+        selector: '.value',
+        layer: 'utilities',
+        properties: ['color'],
+      }],
+    });
+    expect(Object.isFrozen(change)).toBe(true);
+    expect(Object.isFrozen(change.rules)).toBe(true);
+    expect(Object.isFrozen(change.rules[0]!.properties)).toBe(true);
 
     unsubscribe();
     stylesheet.update([{
       selector: '.value',
-      rules: { color: 'blue' },
+      rules: { color: 'purple' },
     }]);
 
     expect(notifications).toBe(1);

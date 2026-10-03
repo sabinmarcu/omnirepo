@@ -327,6 +327,106 @@ describe('theme manifests', () => {
     expect(() => encodeThemePatch(reconstructed, { queries: { compact: '(width < 20rem)' } })).toThrow();
   });
 
+  it('projects transitive editable dependencies without evaluating generators', () => {
+    const theme = defineTheme({
+      channel: variableGenerator({
+        scope: 'shared',
+        sources: {
+          primary: source(stringCodec),
+          mode: variantSource(stringCodec),
+        },
+        build: (sources, { privateToken }) => ({
+          tokens: {
+            direct: css`${sources.primary}`,
+            light: css`${sources.mode.light}`,
+            dark: css`${privateToken('dark-marker')}`,
+            constant: css`var(--external-color)`,
+          },
+          privateTokens: {
+            'dark-marker': css`${sources.mode.dark}`,
+          },
+        }),
+      }),
+    }, { prefix: 'dependency' });
+    const manifest = createThemeManifest(theme, { sheetId: 'dependency-sheet' });
+    const derived = manifest.outputs.filter((entry) => entry.role === 'derived');
+    expect(derived).toEqual([
+      {
+        role: 'derived',
+        name: '--dependency-channel-direct',
+        path: ['channel', 'direct'],
+        scope: 'shared',
+        sources: ['--dependency-source-channel-primary'],
+      },
+      {
+        role: 'derived',
+        name: '--dependency-channel-light',
+        path: ['channel', 'light'],
+        scope: 'shared',
+        sources: ['--dependency-source-channel-mode-light'],
+      },
+      {
+        role: 'derived',
+        name: '--dependency-channel-dark',
+        path: ['channel', 'dark'],
+        scope: 'shared',
+        sources: ['--dependency-source-channel-mode-dark'],
+      },
+      {
+        role: 'derived',
+        name: '--dependency-channel-constant',
+        path: ['channel', 'constant'],
+        scope: 'shared',
+        sources: [],
+      },
+    ]);
+    const first = derived[0]!;
+    expect(() => validateThemeManifest({
+      ...manifest,
+      version: 1,
+    })).toThrow('identity');
+    expect(() => validateThemeManifest({
+      ...manifest,
+      outputs: [{
+        ...first,
+        sources: [first.sources[0]!, first.sources[0]!],
+      }],
+    })).toThrow('sources are duplicate');
+    expect(() => validateThemeManifest({
+      ...manifest,
+      outputs: [{
+        ...first,
+        sources: ['--dependency-source-missing'],
+      }],
+    })).toThrow('not an editable source');
+    expect(() => validateThemeManifest({
+      ...manifest,
+      outputs: [{
+        ...first,
+        sources: [first.name],
+      }],
+    })).toThrow('not an editable source');
+    const firstToken = theme.tokens[0]!;
+    const malformed = {
+      ...theme,
+      tokens: [{
+        ...firstToken,
+        dependencies: ['--dependency-missing'],
+      }],
+    } as typeof theme;
+    expect(() => createThemeManifest(malformed, { sheetId: 'dependency-sheet' }))
+      .toThrow('unknown theme dependency');
+    const cyclic = {
+      ...theme,
+      tokens: [{
+        ...firstToken,
+        dependencies: [firstToken.name],
+      }],
+    } as typeof theme;
+    expect(() => createThemeManifest(cyclic, { sheetId: 'dependency-sheet' }))
+      .toThrow('cyclic theme dependency');
+  });
+
   it('supports explicit unit and JSON replacement codecs without trusting arbitrary codecs', () => {
     expect(numberUnitCodec('rem').decode('1.25rem')).toBe(1.25);
     const value = {
