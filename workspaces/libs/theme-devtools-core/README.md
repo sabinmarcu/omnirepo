@@ -4,7 +4,7 @@ A framework-free, browser-only modeless inspector for the live source allocation
 
 Module imports and private theme definition are DOM-free; call `createThemeDevtools` only after a real connected browser container exists. No custom-element class is created or registered at import time.
 
-See [`@sabinmarcu/theme-core`](../theme-core/README.md) for manifests and inspection semantics and [`@sabinmarcu/theme-family`](../theme-family/README.md) for family manifests.
+See [`@sabinmarcu/theme-core`](/api/theme-core) for manifests and inspection semantics and [`@sabinmarcu/theme-family`](/api/theme-family) for family manifests.
 
 ```ts
 import { createThemeDevtools } from '@sabinmarcu/theme-devtools-core';

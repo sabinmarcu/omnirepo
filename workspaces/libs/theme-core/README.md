@@ -135,5 +135,5 @@ Granular reads use `target.readSource(name)` or `target.readSources(names)`, pre
 
 Source/catalog subscriptions receive `InspectionChange`: `{ targetId, sources, outputs }` for a known source commit, with allocation names identifying changed sources and transitively affected outputs. `undefined` means catalog replacement, a structural/mapping change, or an unknown out-of-band sheet text replacement and requires conservative invalidation. Ownership and complete declarations are validated initially and after unknown sheet replacement; known commits revalidate targeted declarations without rescanning every input. No applied-value cache is introduced.
 
-The optional inspection API is headless. Use the dedicated [native devtools guide](../theme-devtools-core/README.md) or [React devtools guide](../theme-devtools-react/README.md) for UI integration; neither changes application source ownership or turns derived outputs into inputs. Native Safari/macOS/iOS and latest-code cross-engine release acceptance remain open.
+The optional inspection API is headless. Use the dedicated [native devtools guide](/api/theme-devtools-core) or [React devtools guide](/api/theme-devtools-react) for UI integration; neither changes application source ownership or turns derived outputs into inputs. Native Safari/macOS/iOS and latest-code cross-engine release acceptance remain open.
 

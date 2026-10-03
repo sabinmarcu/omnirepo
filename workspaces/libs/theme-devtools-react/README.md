@@ -2,7 +2,7 @@
 
 React client wrapper for the native `@sabinmarcu/theme-devtools-core` inspector. It renders one host `<div>` and delegates all inspector UI, source editing, manifests, and lifecycle ownership to the native controller. It does not duplicate a source renderer or create an application theme runtime.
 
-Read the [native API guide](../theme-devtools-core/README.md) for inspector behavior, [`@sabinmarcu/theme-core`](../theme-core/README.md) for manifest production, and [`@sabinmarcu/theme-family`](../theme-family/README.md) for family manifests.
+Read the [native API guide](/api/theme-devtools-core) for inspector behavior, [`@sabinmarcu/theme-core`](/api/theme-core) for manifest production, and [`@sabinmarcu/theme-family`](/api/theme-family) for family manifests.
 
 `react` is a peer dependency. The core package is a normal dependency; no MUI, Vanilla Extract, or bundler integration is required beyond the consuming application’s React and package-resolution setup.
 

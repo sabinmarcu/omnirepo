@@ -19,9 +19,9 @@ Breakpoints are intrinsic static definitions from theme-core. Website configurat
 
 ## Package guides
 
-Use the [core guide](../../libs/theme-core/README.md) for direct setup/codecs/inspection and the [family guide](../../libs/theme-family/README.md) for independent member values.
+Use the [core guide](/api/theme-core) for direct setup/codecs/inspection and the [family guide](/api/theme-family) for independent member values.
 
-Devtools are optional consumers: the [native inspector](../../libs/theme-devtools-core/README.md) owns the shared modeless window, and the [React binding](../../libs/theme-devtools-react/README.md) only hosts that core. The concrete theme does not acquire a devtools dependency.
+Devtools are optional consumers: the [native inspector](/api/theme-devtools-core) owns the shared modeless window, and the [React binding](/api/theme-devtools-react) only hosts that core. The concrete theme does not acquire a devtools dependency.
 
 
 ## Browser and release boundary

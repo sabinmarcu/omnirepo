@@ -69,7 +69,7 @@ Setup, updates, picks, SSR serialization, browser adoption, document realms, sha
 
 `family.manifest()` feeds `embedThemeManifests` or `createThemeInspection` from theme-core. Both delivery paths share validation and light-DOM-only access; neither authorizes private UI or shadow inspection. Inspection exports complete `{ shared, families }` inputs, including empty source containers and inactive members. Source patches preserve omitted current members/variants and never borrow `base` values. Catalog replacement/disposal leaves app allocations and edits intact. Core and concrete theme code never import this package; family projection owns rebased naming and member metadata.
 
-For optional editor integration, use the [native devtools guide](../theme-devtools-core/README.md) or [React devtools guide](../theme-devtools-react/README.md); the editor receives only the declared manifest access boundary.
+For optional editor integration, use the [native devtools guide](/api/theme-devtools-core) or [React devtools guide](/api/theme-devtools-react); the editor receives only the declared manifest access boundary.
 
 ## Release boundary
 
