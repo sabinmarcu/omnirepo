@@ -6,6 +6,10 @@ import type {
   ThemeManifest,
 } from '@sabinmarcu/theme-core';
 import type {
+  DevtoolsMemory,
+  ThemeDevtoolsPersistence,
+} from './persistence.js';
+import type {
   UIThemeInput,
   UIThemePatch,
 } from './ui-theme.js';
@@ -19,6 +23,11 @@ type ThemeDevtoolsCommonOptions = {
   readonly ui?: UIThemeInput;
   /** Defaults to `window`. */
   readonly presentation?: ThemeDevtoolsPresentation;
+  /**
+   * Where the inspector remembers its color format (across sessions) and expanded branches
+   * (per session). Defaults to the UI document's `localStorage` / `sessionStorage`.
+   */
+  readonly persistence?: ThemeDevtoolsPersistence;
   /** Called after the modeless window closes; application sources are untouched. Window only. */
   readonly onClose?: () => void;
 };
@@ -86,6 +95,7 @@ export type DevtoolsView = {
 export type DevtoolsViewOptions = {
   readonly nonce?: string;
   readonly presentation: ThemeDevtoolsPresentation;
+  readonly memory: DevtoolsMemory;
   refresh(): void;
   close(): void;
 };

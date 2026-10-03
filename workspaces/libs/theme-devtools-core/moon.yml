@@ -10,6 +10,7 @@ type: library
 dependsOn:
   - "@sabinmarcu/stylesheet"
   - "@sabinmarcu/theme-core"
+  - "@sabinmarcu/theme-family"
   - "@sabinmarcu/types"
   - "@sabinmarcu/utils-test"
 tasks:

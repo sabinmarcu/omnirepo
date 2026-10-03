@@ -62,6 +62,8 @@ export type ThemeDevtoolsProps = {
   inspectionDocument?: Document;
   nonce?: string;
   shadowMode?: ShadowRootMode;
+  presentation?: 'window' | 'embedded';
+  persistence?: ThemeDevtoolsPersistence;
   ui?: UIThemeInput;
   onClose?: () => void;
 
@@ -79,7 +81,7 @@ export type ThemeInputExport = {
 
 The forwarded ref receives the real native controller, not a wrapper. Its API is `host`, `setManifests`, `refresh`, `exportInputs`, `updateUI`, `subscribe`, and `destroy`; see the native guide for exact semantics. It is `null` before a successful mount and after cleanup.
 
-The structural mount options are `inspectionDocument`, `nonce`, and `shadowMode`. Changing one destroys the existing native instance and mounts a new one. `manifests` is a prop-only update: when its reference changes, the existing controller receives `setManifests(manifests)`. `ui` is also a prop-only patch: a new defined value calls `updateUI(ui)` on the existing controller. Passing `undefined` after an initial UI input does not reset the private UI theme.
+The structural mount options are `inspectionDocument`, `nonce`, `shadowMode`, and `presentation`. Changing one destroys the existing native instance and mounts a new one. `persistence` (where the inspector remembers its color format and expanded branches) is read when an instance mounts; changing it alone does not remount. `manifests` is a prop-only update: when its reference changes, the existing controller receives `setManifests(manifests)`. `ui` is also a prop-only patch: a new defined value calls `updateUI(ui)` on the existing controller. Passing `undefined` after an initial UI input does not reset the private UI theme.
 
 Keep `manifests` and `ui` references stable (`useMemo` or stable caller-owned values) unless their intended catalog/UI patch changed. Fresh equivalent catalog arrays still request binding replacement, so source callbacks should not create a new list on every render. Do not treat copied export/display state as authoritative: the application's owned stylesheet remains the source of truth, and exports are live reads. Presentation-only export state is optional.
 

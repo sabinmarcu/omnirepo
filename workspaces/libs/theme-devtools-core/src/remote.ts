@@ -17,6 +17,7 @@ import {
 } from './remote-protocol.js';
 import type {
   RemoteRequest,
+  RemoteSelection,
   RemoteTargetValues,
   RemoteTransport,
 } from './remote-protocol.js';
@@ -25,7 +26,10 @@ import type {
 export type RemoteInspection = ThemeInspection;
 
 export type RemoteInspectionOptions = {
-  /** `selection` exposes only targets whose root contains the agent's selected element. */
+  /**
+   * `selection` exposes only targets whose root contains the agent's selected element; family
+   * targets are projected onto the members that apply to it (see `RemoteSelection.members`).
+   */
   readonly scope?: 'all' | 'selection';
   /** Asynchronous agent failures: catalog errors and rejected patches. */
   readonly onError?: (message: string) => void;
@@ -54,8 +58,33 @@ const withValue = (tree: Tree, path: readonly string[], value: unknown): Tree =>
   });
 };
 
+/**
+ * View projection of a family manifest onto `members`: their contextual sources, outputs, and
+ * groups plus every shared/static entry. Reads and patches still use the complete manifest.
+ */
+const projectFamilyManifest = (
+  manifest: ThemeManifest,
+  members: readonly string[],
+): ThemeManifest => {
+  const kept = new Set(members);
+  const applies = (path: readonly string[]) => (
+    path[0] !== 'families' || path[1] === undefined || kept.has(path[1])
+  );
+  return freeze({
+    ...manifest,
+    families: (manifest.families ?? []).filter((member) => kept.has(member)),
+    sources: manifest.sources.filter(
+      (source) => source.member === undefined || kept.has(source.member),
+    ),
+    outputs: manifest.outputs.filter((output) => output.role === 'static' || applies(output.path)),
+    groups: manifest.groups.filter(applies),
+  });
+};
+
 type MirroredTarget = {
   readonly target: InspectedTheme;
+  /** Stable per member set, so repeated identical selections keep target identity. */
+  scoped(members: readonly string[]): InspectedTheme;
   update(values: RemoteTargetValues): void;
   notify(change: InspectionChange): void;
 };
@@ -72,7 +101,7 @@ export function createRemoteInspection(
 ): RemoteInspection {
   let active = true;
   let mirrored: MirroredTarget[] = [];
-  let selection: ReadonlySet<string> | null = null;
+  let selection: ReadonlyMap<string, RemoteSelection> | null = null;
   let visible: readonly InspectedTheme[] = Object.freeze([]);
   let nextPatch = 0;
   /** Patch id → acknowledgement that releases its optimistic source values. */
@@ -87,12 +116,23 @@ export function createRemoteInspection(
   };
   const recompute = (): boolean => {
     const next = options.scope === 'selection'
-      ? mirrored.filter(({ target }) => selection?.has(target.manifest.id) ?? false)
-      : mirrored;
+      ? mirrored.flatMap((record) => {
+        const selected = selection?.get(record.target.manifest.id);
+        if (!selected) return [];
+        return [selected.members && record.target.manifest.kind === 'family'
+          ? record.scoped(selected.members)
+          : record.target];
+      })
+      : mirrored.map(({ target }) => target);
     const changed = next.length !== visible.length
-      || next.some(({ target }, index) => target !== visible[index]);
-    if (changed) visible = Object.freeze(next.map(({ target }) => target));
+      || next.some((target, index) => target !== visible[index]);
+    if (changed) visible = Object.freeze(next);
     return changed;
+  };
+  const select = (entries: readonly RemoteSelection[] | null) => {
+    selection = entries === null
+      ? null
+      : new Map(entries.map((entry) => [entry.targetId, entry]));
   };
 
   const mirror = (manifest: ThemeManifest): MirroredTarget => {
@@ -191,8 +231,21 @@ export function createRemoteInspection(
         return () => { targetListeners.delete(listener); };
       },
     });
+    const projections = new Map<string, InspectedTheme>();
     return {
       target,
+      scoped(members) {
+        const key = members.join('\u{0}');
+        let projected = projections.get(key);
+        if (!projected) {
+          projected = Object.freeze({
+            ...target,
+            manifest: projectFamilyManifest(manifest, members),
+          });
+          projections.set(key, projected);
+        }
+        return projected;
+      },
       update(values) {
         if (values.error !== undefined) {
           error = values.error;
@@ -227,7 +280,7 @@ export function createRemoteInspection(
         for (const values of message.values) {
           mirrored.find(({ target }) => target.manifest.id === values.targetId)?.update(values);
         }
-        selection = message.selection === null ? null : new Set(message.selection);
+        select(message.selection);
         recompute();
         if (message.error !== undefined) reportError(message.error);
         notify();
@@ -257,7 +310,7 @@ export function createRemoteInspection(
         break;
       }
       case 'selection': {
-        selection = message.targetIds === null ? null : new Set(message.targetIds);
+        select(message.selection);
         if (recompute()) notify();
         break;
       }

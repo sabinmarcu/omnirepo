@@ -1,5 +1,7 @@
 import type { SourceRepresentation } from '@sabinmarcu/theme-core';
 import { copyText } from './clipboard.js';
+import { createCopyButton } from './copy-button.js';
+import type { CopyButton } from './copy-button.js';
 import {
   formatSourceInput,
   parseSourceInput,
@@ -64,6 +66,8 @@ export function createSourceEditorClass(
 
     #liveValue: HTMLOutputElement;
 
+    #copyAction: CopyButton;
+
     #copyButton: HTMLButtonElement;
 
     #copyStatus: HTMLDivElement;
@@ -89,10 +93,12 @@ export function createSourceEditorClass(
       this.#liveValue = createElement(document, 'output');
       this.#liveValue.className = 'live-value';
       this.#liveValue.id = 'source-editor-live-value';
-      this.#copyButton = createElement(document, 'button');
-      this.#copyButton.className = 'copy-button';
-      this.#copyButton.type = 'button';
-      this.#copyButton.textContent = 'Copy';
+      this.#copyAction = createCopyButton(document, {
+        label: 'Copy',
+        className: 'copy-button',
+        failedText: 'Failed',
+      });
+      this.#copyButton = this.#copyAction.element;
       this.#copyButton.addEventListener('pointerdown', this.#copyPointerDown);
       this.#copyButton.addEventListener('click', this.#copy);
       this.#copyStatus = createElement(document, 'div');
@@ -288,6 +294,7 @@ export function createSourceEditorClass(
         this.#copyFeedbackTimer = undefined;
       }
       Reflect.deleteProperty(this.dataset, 'copyError');
+      this.#copyAction.reset();
       this.#copyStatus.textContent = '';
     }
 
@@ -295,6 +302,7 @@ export function createSourceEditorClass(
       this.#clearCopyFeedback();
       if (error) this.dataset.copyError = '';
       this.#copyStatus.textContent = message;
+      this.#copyAction.show(error ? 'failed' : 'copied');
       this.#copyFeedbackTimer = realm.setTimeout(() => {
         if (this.#disposed) return;
         this.#copyFeedbackTimer = undefined;

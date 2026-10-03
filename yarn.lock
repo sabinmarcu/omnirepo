@@ -8412,6 +8412,7 @@ __metadata:
   dependencies:
     "@sabinmarcu/stylesheet": "workspace:*"
     "@sabinmarcu/theme-core": "workspace:*"
+    "@sabinmarcu/theme-family": "workspace:*"
     "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
   languageName: unknown

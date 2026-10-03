@@ -1,5 +1,6 @@
-import { createInspectionAgent } from '@sabinmarcu/theme-devtools-core';
-import type { InspectionAgent } from '@sabinmarcu/theme-devtools-core';
+// The agent entry point keeps the inspector UI (styles, custom elements) out of this bundle.
+import { createInspectionAgent } from '@sabinmarcu/theme-devtools-core/agent';
+import type { InspectionAgent } from '@sabinmarcu/theme-devtools-core/agent';
 import { portName } from './constants.js';
 
 // Static and on-demand (`scripting.executeScript`) injection share this isolated world.

@@ -17,9 +17,14 @@ export type {
   RemoteEvent,
   RemoteMessage,
   RemoteRequest,
+  RemoteSelection,
   RemoteTargetValues,
   RemoteTransport,
 } from './remote-protocol.js';
+export type {
+  DevtoolsStorage,
+  ThemeDevtoolsPersistence,
+} from './persistence.js';
 export type {
   ThemeDevtools,
   ThemeDevtoolsOptions,

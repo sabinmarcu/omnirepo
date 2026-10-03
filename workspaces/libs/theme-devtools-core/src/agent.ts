@@ -4,6 +4,7 @@ import type {
   InspectionChange,
   ThemeInspection,
 } from '@sabinmarcu/theme-core';
+import { appliedFamilyMembers } from './family-scope.js';
 import {
   envelope,
   messageOf,
@@ -12,6 +13,7 @@ import {
 import type {
   RemoteEvent,
   RemoteRequest,
+  RemoteSelection,
   RemoteTargetValues,
   RemoteTransport,
 } from './remote-protocol.js';
@@ -22,7 +24,10 @@ export type InspectionAgentOptions = {
 };
 
 export type InspectionAgent = {
-  /** Report which targets' allocation roots contain `element`; `null` clears the selection. */
+  /**
+   * Report which targets' allocation roots contain `element` and, for family targets, which
+   * members apply to it; `null` clears the selection.
+   */
   select(element: Element | null): void;
   /** Stop answering requests; application sources are untouched. Idempotent. */
   dispose(): void;
@@ -72,27 +77,49 @@ export function createInspectionAgent(
   let catalogError: string | undefined;
   let announced: readonly InspectedTheme[] = [];
   let selected: Element | null = null;
+  let sentSelection = 'null';
+  let scopeObserver: MutationObserver | undefined;
   let stopWatching: (() => void) | undefined;
 
   const send = (event: RemoteEvent) => {
     if (active) transport.send(envelope(event));
   };
-  const selection = (): readonly string[] | null => {
+  const selection = (): readonly RemoteSelection[] | null => {
     const element = selected;
     if (!element || !inspection) return null;
-    return inspection.targets.flatMap(({ manifest }) => {
+    return inspection.targets.flatMap(({ manifest }): RemoteSelection[] => {
       const roots = document.querySelectorAll(manifest.root.selector);
-      return roots.length === 1 && roots[0]!.contains(element) ? [manifest.id] : [];
+      if (roots.length !== 1 || !roots[0]!.contains(element)) return [];
+      return [manifest.kind === 'family'
+        ? {
+          targetId: manifest.id,
+          members: appliedFamilyMembers(manifest, element),
+        }
+        : { targetId: manifest.id }];
+    });
+  };
+  /** Resend the selection only when its resolved targets/members changed. */
+  const reselect = () => {
+    if (!active) return;
+    const next = selection();
+    const key = JSON.stringify(next);
+    if (key === sentSelection) return;
+    sentSelection = key;
+    send({
+      type: 'selection',
+      selection: next,
     });
   };
   const announce = () => {
     const targets = inspection?.targets ?? [];
+    const current = selection();
     announced = targets;
+    sentSelection = JSON.stringify(current);
     send({
       type: 'catalog',
       manifests: targets.map((target) => target.manifest),
       values: targets.map((target) => valuesFor(target)),
-      selection: selection(),
+      selection: current,
       ...(catalogError === undefined ? {} : { error: catalogError }),
     });
   };
@@ -113,12 +140,14 @@ export function createInspectionAgent(
           change,
         });
       }
-      return;
+    } else {
+      send({
+        type: 'values',
+        values: targets.map((target) => valuesFor(target)),
+      });
     }
-    send({
-      type: 'values',
-      values: targets.map((target) => valuesFor(target)),
-    });
+    // Value-based family resolution can change when members stop (or start) sharing values.
+    reselect();
   };
   const release = () => {
     stopWatching?.();
@@ -211,14 +240,24 @@ export function createInspectionAgent(
     select(element: Element | null) {
       if (!active) return;
       selected = element;
-      send({
-        type: 'selection',
-        targetIds: selection(),
-      });
+      if (element && !scopeObserver && document.defaultView) {
+        scopeObserver = new document.defaultView.MutationObserver(reselect);
+        scopeObserver.observe(document.documentElement, {
+          subtree: true,
+          attributes: true,
+          attributeFilter: ['data-theme-family'],
+        });
+      } else if (!element) {
+        scopeObserver?.disconnect();
+        scopeObserver = undefined;
+      }
+      reselect();
     },
     dispose() {
       if (!active) return;
       active = false;
+      scopeObserver?.disconnect();
+      scopeObserver = undefined;
       unsubscribe();
       release();
     },

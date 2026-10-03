@@ -3,7 +3,7 @@
 Chrome DevTools extension (Manifest V3) for editing live `@sabinmarcu/theme-core` source values on any page that embeds theme manifests. It adds:
 
 - a **Theme** panel listing every discovered theme target, and
-- a **Theme** sidebar pane in the Elements panel listing only targets whose allocation root contains the selected element (`$0`).
+- a **Theme** sidebar pane in the Elements panel scoped to the selected element (`$0`): only themes whose allocation root contains it, and for family themes only the family member applied to it (e.g. `projects` inside `[data-theme-family="projects"]`). Its status line names the applied themes/families.
 
 Both render the native inspector from [`@sabinmarcu/theme-devtools-core`](../../workspaces/libs/theme-devtools-core/README.md) in `embedded` presentation over a remote inspection. Edits commit to the application's own stylesheet; nothing is persisted and a reload restores the server-rendered values.
 
@@ -51,6 +51,7 @@ Permissions: `scripting` and `<all_urls>` host access so the content script can 
 ## Limitations
 
 - Top frame only; themes inside iframes are not inspected.
-- The sidebar filters by allocation-root containment only. It does not yet resolve which family member or light/dark variant applies to the selected element ([#46](https://github.com/sabinmarcu/omnirepo/issues/46)).
+- The sidebar resolves the applied family member but not the active light/dark variant; both variants of variant sources are shown.
+- Family members applied only by cross-origin stylesheets are detected by value; when such members share identical values with others, the sidebar may resolve the nearest same-origin mapping instead.
 - DevTools sessions without an inspected tab (for example remote-debugging clients) cannot connect.
 - Not published to the Chrome Web Store.

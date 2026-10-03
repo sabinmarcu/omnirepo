@@ -43,6 +43,7 @@ export const ThemeDevtools = forwardRef<ThemeDevtoolsHandle | null, ThemeDevtool
     nonce,
     shadowMode,
     presentation,
+    persistence,
     ui,
     onReady,
     onChange,
@@ -63,6 +64,7 @@ export const ThemeDevtools = forwardRef<ThemeDevtoolsHandle | null, ThemeDevtool
     const latestInputsReference = useRef({
       manifests,
       ui,
+      persistence,
     });
     const [controller, setController] = useState<ThemeDevtoolsHandle | null>(null);
     const [error, setError] = useState<{ readonly cause: unknown } | null>(null);
@@ -98,8 +100,9 @@ export const ThemeDevtools = forwardRef<ThemeDevtoolsHandle | null, ThemeDevtool
       latestInputsReference.current = {
         manifests,
         ui,
+        persistence,
       };
-    }, [manifests, ui]);
+    }, [manifests, ui, persistence]);
 
     useImperativeHandle<ThemeDevtoolsHandle | null, ThemeDevtoolsHandle | null>(
       forwardedReference,
@@ -123,6 +126,8 @@ export const ThemeDevtools = forwardRef<ThemeDevtoolsHandle | null, ThemeDevtool
           nonce,
           shadowMode,
           presentation,
+          // Read at mount: storage targets are not swapped on a live inspector.
+          persistence: inputs.persistence,
           ui: inputs.ui,
           onClose: () => callbacksReference.current.onClose?.(),
         });

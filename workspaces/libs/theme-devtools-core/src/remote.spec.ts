@@ -11,12 +11,14 @@ import {
   paletteGenerator,
   staticGenerator,
 } from '@sabinmarcu/theme-core';
+import { createThemeFamily } from '@sabinmarcu/theme-family';
 import { createRemoteInspection } from './remote.js';
 import type { RemoteInspectionOptions } from './remote.js';
 import { envelope } from './remote-protocol.js';
 import type {
   RemoteEvent,
   RemoteMessage,
+  RemoteSelection,
   RemoteTargetValues,
 } from './remote-protocol.js';
 
@@ -83,7 +85,7 @@ const connect = (options?: RemoteInspectionOptions) => {
     },
   }, options);
   const emit = (event: RemoteEvent) => deliver?.(envelope(event));
-  const announce = (selection: readonly string[] | null = null) => emit({
+  const announce = (selection: readonly RemoteSelection[] | null = null) => emit({
     type: 'catalog',
     manifests: [structuredClone(manifest)],
     values: [values()],
@@ -267,22 +269,104 @@ describe('createRemoteInspection', () => {
 
     emit({
       type: 'selection',
-      targetIds: ['remote'],
+      selection: [{ targetId: 'remote' }],
     });
     expect(inspection.targets.map(({ manifest: { id } }) => id)).toEqual(['remote']);
     const notifications = listener.mock.calls.length;
 
     emit({
       type: 'selection',
-      targetIds: ['remote'],
+      selection: [{ targetId: 'remote' }],
     });
     expect(listener).toHaveBeenCalledTimes(notifications);
 
     emit({
       type: 'selection',
-      targetIds: [],
+      selection: [],
     });
     expect(inspection.targets).toEqual([]);
     expect(listener).toHaveBeenCalledTimes(notifications + 1);
+  });
+
+  it('projects selection-scoped family targets onto the members applied to the element', () => {
+    const family = createThemeFamily(defineTheme({
+      spacing: gridGenerator({
+        default: 8,
+        unit: 'px',
+        pairs: 1,
+      }),
+      tint: paletteGenerator({
+        default: {
+          light: '#005fcc',
+          dark: '#80bfff',
+        },
+      }),
+    }), {
+      id: 'demo',
+      families: ['night', 'ocean'],
+    }).manifest();
+    const sent: RemoteMessage[] = [];
+    let deliver: ((message: unknown) => void) | undefined;
+    const inspection = createRemoteInspection({
+      send: (message) => { sent.push(message); },
+      subscribe: (listener) => {
+        deliver = listener;
+        return () => { deliver = undefined; };
+      },
+    }, { scope: 'selection' });
+    const emit = (event: RemoteEvent) => deliver?.(envelope(event));
+    const nightTint = '--theme-family-demo-families-night-source-tint-light';
+    emit({
+      type: 'catalog',
+      manifests: [family],
+      values: [{
+        targetId: 'demo',
+        inputs: {},
+        sources: Object.fromEntries(family.sources.map((source) => [
+          source.name,
+          source.codec.kind === 'number' ? 8 : '#000000',
+        ])),
+        outputs: {},
+      }],
+      selection: [{
+        targetId: 'demo',
+        members: ['night'],
+      }],
+    });
+
+    const [night] = inspection.targets;
+    expect(night!.manifest.families).toEqual(['night']);
+    expect(new Set(night!.manifest.sources.map(({ member }) => member)))
+      .toEqual(new Set([undefined, 'night']));
+    expect(night!.manifest.outputs.every((output) => output.role === 'static'
+      || output.path[0] !== 'families' || output.path[1] === 'night')).toBe(true);
+    expect(night!.manifest.groups).not.toContainEqual(['families', 'ocean']);
+
+    // The projection only narrows the view; edits and reads use the complete target.
+    night!.patch({ families: { night: { tint: { light: '#ffffff' } } } });
+    expect(night!.readSource(nightTint)).toBe('#ffffff');
+    expect(sent.at(-1)).toMatchObject({
+      type: 'patch',
+      targetId: 'demo',
+    });
+
+    emit({
+      type: 'selection',
+      selection: [{
+        targetId: 'demo',
+        members: ['night'],
+      }],
+    });
+    expect(inspection.targets[0]).toBe(night);
+
+    emit({
+      type: 'selection',
+      selection: [{
+        targetId: 'demo',
+        members: ['base', 'ocean'],
+      }],
+    });
+    expect(inspection.targets[0]!.manifest.families).toEqual(['base', 'ocean']);
+    expect(inspection.targets[0]!.readSource(nightTint)).toBe('#ffffff');
   });
 });

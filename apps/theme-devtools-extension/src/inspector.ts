@@ -39,6 +39,14 @@ const ui: UIThemeInput | undefined = dark
         light: '#8ab4f8',
         dark: '#8ab4f8',
       },
+      success: {
+        light: '#81c995',
+        dark: '#81c995',
+      },
+      danger: {
+        light: '#f28b82',
+        dark: '#f28b82',
+      },
     },
   }
   : undefined;
@@ -113,9 +121,7 @@ function connect(injected = false): void {
       const receive = (message: unknown) => {
         if (!current.received) {
           current.received = true;
-          setStatus(scope === 'selection'
-            ? 'Themes whose root contains the selected element'
-            : 'Connected');
+          setStatus(scope === 'selection' ? 'Waiting for the selected element…' : 'Connected');
           pushSelection();
         }
         listener(message);
@@ -130,6 +136,17 @@ function connect(injected = false): void {
   });
   current.inspection = inspection;
   session = current;
+  if (scope === 'selection') {
+    // Summarize which themes, and which family members of them, apply to `$0`.
+    inspection.subscribe(() => {
+      const applied = inspection.targets.map(({ manifest }) => (manifest.kind === 'family'
+        ? `${manifest.id}: ${(manifest.families ?? []).join(' / ')}`
+        : manifest.id));
+      setStatus(applied.length > 0
+        ? `Applied to the selected element — ${applied.join(' · ')}`
+        : 'No inspected theme applies to the selected element');
+    });
+  }
   port.onDisconnect.addListener(async () => {
     if (session !== current) return;
     // Reading lastError marks an expected "Receiving end does not exist" as handled.

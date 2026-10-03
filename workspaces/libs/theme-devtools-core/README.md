@@ -35,6 +35,7 @@ const devtools = createThemeDevtools(container, {
   shadowMode: 'open',  // ShadowRootMode; defaults to 'open'
   ui,                  // initial UIThemeInput; omitted fields resolve private defaults
   presentation: 'window', // 'window' (default popover) or 'embedded' (fills the container)
+  persistence,         // { preferences?, session? } storages; defaults to localStorage/sessionStorage
   onClose() {
     // Invoked after the popover is hidden; application sources remain untouched.
   },
@@ -65,7 +66,7 @@ The close button and Escape hide the manual popover and call `onClose`; they do 
 
 The inspector is a non-modal `popover="manual"` dialog with a translucent, blurred glass surface. Drag its header (not a control) to position it; its position is clamped to the visual viewport on dragging, resize, and viewport scroll. It opens near the viewport’s upper-right edge. The header provides refresh and close actions.
 
-When several targets are inspectable, a target selector chooses one. Family manifests render a **Shared and static** tree plus one tab for each declared member, including `base`; direct manifests render one **Theme contract** tree. Every disclosure branch starts collapsed and retains user expansion/selection. Editable sources always precede read-only values within their category, including a category's own source and Light/Dark controls. Hidden family panes and collapsed branches defer live reads; known source notifications update only changed editors and transitively affected visible derived rows. Unknown structural/text-replacement notifications conservatively mark relevant rows dirty. Focused or dirty drafts are not overwritten, but their separate committed live values continue updating.
+When several targets are inspectable, a target selector chooses one. Family manifests render a **Shared and static** tree plus one tab for each declared member, including `base`; direct manifests render one **Theme contract** tree. Every disclosure branch starts collapsed unless it was expanded earlier in the session (see [Inspector memory](#inspector-memory)), and retains user expansion/selection. Editable sources always precede read-only values within their category, including a category's own source and Light/Dark controls. Hidden family panes and collapsed branches defer live reads; known source notifications update only changed editors and transitively affected visible derived rows. Unknown structural/text-replacement notifications conservatively mark relevant rows dirty. Focused or dirty drafts are not overwritten, but their separate committed live values continue updating.
 
 Source controls commit only valid decoded values:
 
@@ -79,13 +80,24 @@ Every editable field displays its input, an always-visible read-only **committed
 
 The toolbar's **Color format** preference applies to every color source across all inspected targets and family tabs. Choose **Hex** (the default), **OKLCH**, **HSL**, or **RGB**. Both picker edits and literal CSS-field commits write the selected format into the application's owned stylesheet, so the CSS input, committed live value, raw JSON, copied values/JSON, and `exportInputs()` agree. Changing the preference alone does not rewrite existing sources or dirty drafts. Authored expressions (`var()`, `light-dark()`, `color-mix()`, relative colors, and context-dependent colors) stay intact when edited through CSS; choosing a picker color deliberately replaces them.
 
-Formatting uses the mount document's native CSS color conversion and preserves alpha. OKLCH retains wide-gamut colors; Hex, HSL, and RGB clip to sRGB, and Hex quantizes channels/alpha to eight bits. The preference belongs to the inspector instance, survives target/family changes and refresh, and resets to Hex after destruction/remount; it is not stored across page loads.
+Formatting uses the mount document's native CSS color conversion and preserves alpha. OKLCH retains wide-gamut colors; Hex, HSL, and RGB clip to sRGB, and Hex quantizes channels/alpha to eight bits. The preference survives target/family changes and refresh and is remembered across sessions (see [Inspector memory](#inspector-memory)); it defaults to Hex.
+
+### Inspector memory
+
+The inspector remembers two kinds of UI state in the UI document's Web Storage (the private UI's own origin, e.g. `chrome-extension://…` inside the browser extension):
+
+- **Color format** — `localStorage` (`sabinmarcu-theme-devtools:color-format`), so it persists across sessions and remounts.
+- **Expanded branches** — `sessionStorage` (`sabinmarcu-theme-devtools:expanded`), keyed by target ID, tree scope, and branch path. Family member tabs share one scope because their trees have the same shape: opening `colors › primary` in one family keeps it open in the others, across remounts, and across element selections in a selection-scoped inspector. Inspectors sharing a session store (a DevTools panel and Elements sidebar) merge their entries instead of overwriting each other; each reads the stored state when it renders.
+
+Pass `persistence: { preferences, session }` with any `getItem`/`setItem` storage to redirect either kind, or `null` to keep it only for the inspector's lifetime. Unavailable or full storage degrades to in-memory state without errors.
 
 Each family tree has floating top-right **Copy family JSON** and **Raw** buttons. They export that member's complete live input subtree (`exportInputs()[target].inputs.families[member]`), without shared inputs or other family members. The editor toolbar's **Copy setup JSON** and **Raw** buttons export the selected target's complete setup, including shared inputs and all families. These replace the bottom JSON disclosure. Raw opens a read-only, selectable JSON overlay over the relevant family tree or editor content, refreshed from live sources while open. Close or Escape dismisses only the overlay and restores focus; covered controls are temporarily inert, not removed. JSON is generated on copy/open and relevant live notifications, not retained as initialization state.
 
 Family copy/raw buttons overlay the tree's top-right corner; they do not occupy a separate heading row or full-width toolbar background.
 
 Clipboard actions use the owner document's Clipboard API, with a native copy-command fallback. If neither is available, an error is shown; JSON copy failures open the raw overlay for manual copying. These are current source inputs, not an editor-owned initialization state. Do not initialize your application in the inspector.
+
+Every copy button (per field, **Copy setup JSON**, and **Copy family JSON**) also flashes its outcome in place: a green **✓ Copied** with a short pop, or a red **✕ Copy failed** (**✕ Failed** on field buttons) with a short shake, then returns to its label (about 1.6 s / 2.6 s). The feedback shares the label's grid cell, so it never shifts layout; it is decorative (`aria-hidden`) and the existing status text remains the announced outcome. Colors come from the UI theme's `colors.success` and `colors.danger` palettes (adjustable through `ui`/`updateUI`), and `prefers-reduced-motion: reduce` disables the motion while keeping the colors.
 
 ## Supplying manifests and discovery
 
@@ -125,19 +137,25 @@ import {
 
 // Page side: needs DOM access only (an isolated-world content script works).
 const agent = createInspectionAgent(document, pageTransport); // optional { manifests }
-agent.select(element);  // report targets whose allocation root contains `element`
+agent.select(element);  // report targets containing `element` and the family members applied to it
 agent.dispose();
 
 // Inspector side: a synchronous ThemeInspection mirror.
 const inspection = createRemoteInspection(inspectorTransport, {
-  scope: 'all',               // or 'selection': only targets containing the agent's selection
+  scope: 'all',               // or 'selection': only targets (and family members) applied to the selection
   onError: (message) => {},   // catalog failures and rejected patches arrive asynchronously
 });
 const devtools = createThemeDevtools(container, { inspection, presentation: 'embedded' });
 // Later: devtools.destroy(); inspection.dispose();
 ```
 
-The agent owns one headless `createThemeInspection` (discovery by default) and pushes the catalog with complete values, then per-change source/output deltas. The mirror serves reads synchronously, validates patches with the same manifest codecs (`createManifestPatchDecoder` from theme-core), and applies them optimistically until the agent acknowledges them; a rejected patch is reported through `onError` and resynchronized from the page. Messages carry `protocol: 'sabinmarcu-theme-devtools'` and `version: 1`; anything else on the channel is ignored. The agent never touches the application's JavaScript realm and the mirror never renders UI, so neither needs the other's custom elements.
+The agent owns one headless `createThemeInspection` (discovery by default) and pushes the catalog with complete values, then per-change source/output deltas. The mirror serves reads synchronously, validates patches with the same manifest codecs (`createManifestPatchDecoder` from theme-core), and applies them optimistically until the agent acknowledges them; a rejected patch is reported through `onError` and resynchronized from the page. Messages carry `protocol: 'sabinmarcu-theme-devtools'` and `version: 2`; anything else on the channel is ignored. The agent never touches the application's JavaScript realm and the mirror never renders UI, so neither needs the other's custom elements.
+
+### Element-scoped selection
+
+`agent.select(element)` reports every target whose allocation root contains `element` and, for family targets, the members whose contextual mappings apply to it. Public tokens are always the root theme; a member is applied by mapping declarations (`--theme-x: var(--…-families-<member>-x)`) from the root default, `pick(member, selector?)`, `data-theme-family` scopes, or application CSS. The agent compares the element's computed public tokens with each member's private outputs, which is exact whenever members' values differ. When members share values, it falls back to the nearest `data-theme-family` scope and then the last mapping rule (any same-origin stylesheet) matching the element or an ancestor. Selection is recomputed after value changes and `data-theme-family` attribute changes and resent only when it differs.
+
+With `scope: 'selection'`, family targets are exposed with a manifest projected onto the applied members (their sources, outputs, and groups plus shared/static entries), so the inspector renders only those family tabs. Reads, exports, and patches still use the complete target.
 
 `apps/theme-devtools-extension` uses this protocol for its Chrome DevTools panel and Elements sidebar.
 
@@ -151,5 +169,5 @@ Custom elements are registered in the container document’s realm, after that r
 
 The application theme's native CSS feature floor is described by theme-core, including modern color and typed-property behavior. The inspector itself uses custom elements, Shadow DOM, manual popovers, pointer capture, backdrop blur/saturation, and structural-sheet fallback. Native color picker alpha/P3 support and appearance vary by browser; raw CSS input preserves authored expressions until a deliberate edit. Native shipping Safari on macOS/iOS remains unverified, and final latest-code cross-engine release acceptance is still pending. Current Chromium/manual evidence is not a release or Safari compatibility claim.
 
-Shadow inspection, persistence, undo/history, reset-to-initial values, and a separate devtools override layer are not implemented. App edits persist only while the app's current allocation lifecycle preserves its sheet; a new page/server setup can materialize configured values again.
+Shadow inspection, persisted application edits, undo/history, reset-to-initial values, and a separate devtools override layer are not implemented. App edits persist only while the app's current allocation lifecycle preserves its sheet; a new page/server setup can materialize configured values again.
 

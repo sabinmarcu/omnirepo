@@ -4,7 +4,14 @@ import type {
 } from '@sabinmarcu/theme-core';
 
 export const remoteProtocol = 'sabinmarcu-theme-devtools';
-export const remoteProtocolVersion = 1;
+export const remoteProtocolVersion = 2;
+
+/** A target whose allocation root contains the agent's selected element. */
+export type RemoteSelection = {
+  readonly targetId: string;
+  /** Family targets only: the members whose mappings apply to the selected element. */
+  readonly members?: readonly string[];
+};
 
 /** Current values of one inspected target; `error` replaces every value when unreadable. */
 export type RemoteTargetValues = {
@@ -37,7 +44,7 @@ export type RemoteEvent =
     readonly type: 'catalog';
     readonly manifests: readonly ThemeManifest[];
     readonly values: readonly RemoteTargetValues[];
-    readonly selection: readonly string[] | null;
+    readonly selection: readonly RemoteSelection[] | null;
     readonly error?: string;
   }
   | {
@@ -48,7 +55,7 @@ export type RemoteEvent =
   }
   | { readonly type: 'result'; readonly id: number; readonly error?: string }
   | { readonly type: 'error'; readonly message: string }
-  | { readonly type: 'selection'; readonly targetIds: readonly string[] | null };
+  | { readonly type: 'selection'; readonly selection: readonly RemoteSelection[] | null };
 
 export type RemoteMessage = (RemoteRequest | RemoteEvent) & {
   readonly protocol: typeof remoteProtocol;

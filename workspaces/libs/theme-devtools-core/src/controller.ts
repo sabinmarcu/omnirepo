@@ -4,6 +4,7 @@ import {
   hostTag,
   registerDevtoolsElements,
 } from './elements.js';
+import { createDevtoolsMemory } from './persistence.js';
 import { mountUITheme } from './ui-theme.js';
 import { createDevtoolsView } from './view.js';
 import type {
@@ -80,6 +81,7 @@ export function createThemeDevtools(
     view = createDevtoolsView(root, {
       nonce: options.nonce,
       presentation: options.presentation ?? 'window',
+      memory: createDevtoolsMemory(realm, options.persistence),
       refresh,
       close() { options.onClose?.(); },
     });
