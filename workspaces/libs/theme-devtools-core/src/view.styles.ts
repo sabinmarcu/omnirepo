@@ -51,6 +51,17 @@ h2 { font-size: calc(${uiTheme.typography.size} * 0.93); font-weight: 700; }
   padding-block-end: calc(${uiTheme.spacing.m} / 2);
   border-block-end: 1px solid color-mix(in srgb, ${uiTheme.colors.background.raised} 70%, transparent);
 }
+.color-format-label { display: flex; align-items: center; gap: calc(${uiTheme.spacing.m} / 2); }
+.json-tools { display: flex; align-items: center; justify-content: flex-end; gap: calc(${uiTheme.spacing.m} / 2); }
+.setup-tools { margin-inline-start: auto; }
+.json-surface { position: relative; min-block-size: calc(${uiTheme.spacing.m} * 24); }
+.family-tools {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  z-index: 1;
+}
+
 
 .tab, .tool-button, .target-select {
   min-block-size: calc(${uiTheme.spacing.m} * 3.5);
@@ -71,7 +82,7 @@ h2 { font-size: calc(${uiTheme.typography.size} * 0.93); font-weight: 700; }
 }
 
 .tab:focus-visible, .tool-button:focus-visible, .target-select:focus-visible,
-summary:focus-visible, .export:focus-visible {
+summary:focus-visible {
   outline: 2px solid ${uiTheme.colors.primary.base};
   outline-offset: 2px;
 }
@@ -139,23 +150,6 @@ sabinmarcu-theme-source-editor { min-inline-size: 0; }
   white-space: pre-wrap;
 }
 
-.export-details {
-  border-block-start: 1px solid color-mix(in srgb, ${uiTheme.colors.background.raised} 70%, transparent);
-  padding-block-start: calc(${uiTheme.spacing.m} * 0.75);
-}
-.export-details > summary { cursor: pointer; color: ${uiTheme.colors.primary.muted}; }
-.export {
-  inline-size: 100%;
-  min-block-size: calc(${uiTheme.spacing.m} * 9);
-  margin-block-start: calc(${uiTheme.spacing.m} * 0.75);
-  padding: calc(${uiTheme.spacing.m} / 2);
-  border: 1px solid color-mix(in srgb, ${uiTheme.colors.background.raised} 85%, transparent);
-  border-radius: calc(${uiTheme.spacing.m} / 2);
-  background: color-mix(in srgb, ${uiTheme.colors.background.surface} 35%, transparent);
-  color: inherit;
-  font: inherit;
-  resize: vertical;
-}
 
 @media (max-width: 440px) {
   .tree-row, .tree-value, .readonly-row { grid-template-columns: 1fr; gap: calc(${uiTheme.spacing.m} / 3); }

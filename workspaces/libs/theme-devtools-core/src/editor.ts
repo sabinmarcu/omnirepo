@@ -1,4 +1,5 @@
 import type { SourceRepresentation } from '@sabinmarcu/theme-core';
+import { copyText } from './clipboard.js';
 import {
   formatSourceInput,
   parseSourceInput,
@@ -29,7 +30,7 @@ export function createSourceEditorClass(
   const BaseElement = realm.HTMLElement;
 
   return class ThemeSourceEditor extends BaseElement {
-    static readonly themeDevtoolsVersion = '2';
+    static readonly themeDevtoolsVersion = '4';
 
     #options: SourceEditorOptions | undefined;
 
@@ -38,6 +39,10 @@ export function createSourceEditorClass(
     #picker: HTMLInputElement | undefined;
 
     #styleDispose: (() => void) | undefined;
+
+    #copyFeedbackTimer: number | undefined;
+
+    #copyRequest = 0;
 
     #dirty = false;
 
@@ -55,6 +60,14 @@ export function createSourceEditorClass(
 
     #fieldRow: HTMLDivElement;
 
+    #inputRow: HTMLDivElement;
+
+    #liveValue: HTMLOutputElement;
+
+    #copyButton: HTMLButtonElement;
+
+    #copyStatus: HTMLDivElement;
+
     #unit: HTMLSpanElement;
 
     #error: HTMLDivElement;
@@ -71,6 +84,22 @@ export function createSourceEditorClass(
       this.#meta.className = 'meta';
       this.#fieldRow = createElement(document, 'div');
       this.#fieldRow.className = 'field-row';
+      this.#inputRow = createElement(document, 'div');
+      this.#inputRow.className = 'input-row';
+      this.#liveValue = createElement(document, 'output');
+      this.#liveValue.className = 'live-value';
+      this.#liveValue.id = 'source-editor-live-value';
+      this.#copyButton = createElement(document, 'button');
+      this.#copyButton.className = 'copy-button';
+      this.#copyButton.type = 'button';
+      this.#copyButton.textContent = 'Copy';
+      this.#copyButton.addEventListener('pointerdown', this.#copyPointerDown);
+      this.#copyButton.addEventListener('click', this.#copy);
+      this.#copyStatus = createElement(document, 'div');
+      this.#copyStatus.className = 'copy-status';
+      this.#copyStatus.setAttribute('role', 'status');
+      this.#copyStatus.setAttribute('aria-live', 'polite');
+      this.#copyStatus.setAttribute('aria-atomic', 'true');
       this.#unit = createElement(document, 'span');
       this.#unit.className = 'unit';
       this.#unit.hidden = true;
@@ -80,39 +109,48 @@ export function createSourceEditorClass(
       this.#error.setAttribute('role', 'alert');
       this.#error.setAttribute('aria-atomic', 'true');
       this.#error.hidden = true;
-      this.#root.append(this.#label, this.#meta, this.#fieldRow, this.#error);
+      this.#root.append(this.#label, this.#meta, this.#fieldRow, this.#copyStatus, this.#error);
       this.#shadow.append(this.#root);
     }
 
     configure(options: SourceEditorOptions, initialValue: unknown): void {
       if (this.#disposed) throw new Error('Cannot configure a disposed source editor');
       this.#options = options;
+      this.#copyRequest += 1;
       this.dataset.sourceName = options.source.name;
       this.dataset.inputPath = JSON.stringify(options.source.inputPath);
       this.#styleDispose?.();
       this.#styleDispose = attachStyles(this.#shadow, 'editor', editorStyles, options.nonce);
       this.#label.textContent = options.label;
       this.#setControl(options.source.codec, initialValue);
-      this.#dirty = false;
-      Reflect.deleteProperty(this.dataset, 'dirty');
+      this.#clearDirty();
+      this.#clearCopyFeedback();
       this.#setError();
       this.#writeValue(initialValue);
     }
 
-    sync(value: unknown): void {
-      if (!this.#options || this.#disposed || this.#dirty || this.#root.matches(':focus-within')) return;
+    sync(committed: unknown): void {
+      if (!this.#options || this.#disposed) return;
+      const text = this.#formatValue(committed);
+      if (text === undefined) return;
+      this.#writeLiveValue(text);
+      if (this.#dirty || this.#root.matches(':focus-within')) return;
       if (this.#options.source.codec.kind === 'json'
-        && this.#booleanControl !== (typeof value === 'boolean')) {
-        this.#setControl(this.#options.source.codec, value);
+        && this.#booleanControl !== (typeof committed === 'boolean')) {
+        this.#setControl(this.#options.source.codec, committed);
       }
       this.#setError();
-      this.#writeValue(value);
+      this.#writeControlValue(committed, text);
     }
 
     dispose(): void {
       if (this.#disposed) return;
       this.#disposed = true;
+      this.#copyRequest += 1;
+      this.#clearCopyFeedback();
       this.#removeControlListeners();
+      this.#copyButton.removeEventListener('pointerdown', this.#copyPointerDown);
+      this.#copyButton.removeEventListener('click', this.#copy);
       this.#styleDispose?.();
       this.#styleDispose = undefined;
       this.#options = undefined;
@@ -154,6 +192,8 @@ export function createSourceEditorClass(
       this.#picker = undefined;
       this.#label.htmlFor = control.id;
       this.#meta.textContent = describeCodec(codec, this.#booleanControl);
+      this.#liveValue.setAttribute('aria-label', `${accessibleLabel} committed live source value`);
+      this.#copyButton.setAttribute('aria-label', `Copy ${accessibleLabel} committed source value`);
       this.#unit.hidden = codec.kind !== 'number' || !codec.unit;
       this.#unit.textContent = codec.kind === 'number' ? codec.unit ?? '' : '';
 
@@ -167,17 +207,11 @@ export function createSourceEditorClass(
         picker.addEventListener('input', this.#pickColor);
         picker.addEventListener('change', this.#pickColor);
         this.#picker = picker;
-
-        const disclosure = createElement(document, 'details');
-        disclosure.className = 'css-disclosure';
-        const summary = createElement(document, 'summary');
-        summary.textContent = 'CSS';
-        summary.setAttribute('aria-label', `${accessibleLabel} CSS value`);
-        disclosure.append(summary, control);
-        this.#fieldRow.replaceChildren(picker, disclosure, this.#unit);
+        this.#inputRow.replaceChildren(picker, control, this.#unit);
       } else {
-        this.#fieldRow.replaceChildren(control, this.#unit);
+        this.#inputRow.replaceChildren(control, this.#unit);
       }
+      this.#fieldRow.replaceChildren(this.#inputRow, this.#liveValue, this.#copyButton);
     }
 
     #removeControlListeners(): void {
@@ -189,29 +223,45 @@ export function createSourceEditorClass(
       this.#picker?.removeEventListener('change', this.#pickColor);
     }
 
-    #writeValue(value: unknown): boolean {
-      if (!this.#options || !this.#control) return false;
+    #formatValue(value: unknown): string | undefined {
+      if (!this.#options) return undefined;
       try {
-        const text = formatSourceInput(value, this.#options.source.codec);
-        if (this.#booleanControl && this.#control instanceof realm.HTMLInputElement) {
-          if (this.#control.checked !== (value === true)) this.#control.checked = value === true;
-        } else if (this.#control.value !== text) this.#control.value = text;
-        if (this.#options.source.codec.kind === 'color' && this.#picker) {
-          const symbolic = /\b(?:var|env|light-dark)\s*\(/i.test(text);
-          if (!symbolic && realm.CSS.supports('color', text)) {
-            if (this.#picker.value !== text) this.#picker.value = text;
-            if (this.#picker.title !== text) this.#picker.title = text;
-            Reflect.deleteProperty(this.dataset, 'colorUnsupported');
-          } else {
-            this.dataset.colorUnsupported = '';
-            this.#picker.title = 'Choose a color to replace this CSS expression, or edit its CSS value';
-          }
-        }
-        return true;
+        return formatSourceInput(value, this.#options.source.codec);
       } catch (error) {
         this.#setError(error instanceof Error ? error.message : 'Unable to display the current value');
-        return false;
+        return undefined;
       }
+    }
+
+    #writeLiveValue(text: string): void {
+      if (this.#liveValue.textContent !== text) this.#liveValue.textContent = text;
+    }
+
+    #writeControlValue(value: unknown, text: string): void {
+      if (!this.#options || !this.#control) return;
+      if (this.#booleanControl && this.#control instanceof realm.HTMLInputElement) {
+        if (this.#control.checked !== (value === true)) this.#control.checked = value === true;
+      } else if (this.#control.value !== text) {
+        this.#control.value = text;
+      }
+      if (this.#options.source.codec.kind !== 'color' || !this.#picker) return;
+      const symbolic = /\b(?:var|env|light-dark)\s*\(/i.test(text);
+      if (!symbolic && realm.CSS.supports('color', text)) {
+        if (this.#picker.value !== text) this.#picker.value = text;
+        if (this.#picker.title !== text) this.#picker.title = text;
+        Reflect.deleteProperty(this.dataset, 'colorUnsupported');
+        return;
+      }
+      this.dataset.colorUnsupported = '';
+      this.#picker.title = 'Choose a color to replace this CSS expression, or edit its CSS value';
+    }
+
+    #writeValue(value: unknown): boolean {
+      const text = this.#formatValue(value);
+      if (text === undefined) return false;
+      this.#writeLiveValue(text);
+      this.#writeControlValue(value, text);
+      return true;
     }
 
     #draft(): string {
@@ -232,6 +282,58 @@ export function createSourceEditorClass(
       Reflect.deleteProperty(this.dataset, 'dirty');
     }
 
+    #clearCopyFeedback(): void {
+      if (this.#copyFeedbackTimer !== undefined) {
+        realm.clearTimeout(this.#copyFeedbackTimer);
+        this.#copyFeedbackTimer = undefined;
+      }
+      Reflect.deleteProperty(this.dataset, 'copyError');
+      this.#copyStatus.textContent = '';
+    }
+
+    #setCopyFeedback(message: string, error = false): void {
+      this.#clearCopyFeedback();
+      if (error) this.dataset.copyError = '';
+      this.#copyStatus.textContent = message;
+      this.#copyFeedbackTimer = realm.setTimeout(() => {
+        if (this.#disposed) return;
+        this.#copyFeedbackTimer = undefined;
+        this.#clearCopyFeedback();
+      }, 4000);
+    }
+
+    #copyPointerDown = (event: Event): void => {
+      if (!this.#disposed) event.preventDefault();
+    };
+
+    #copy = async (): Promise<void> => {
+      if (!this.#options || this.#disposed) return;
+      const options = this.#options;
+      let text: string;
+      try {
+        text = formatSourceInput(options.read(), options.source.codec);
+      } catch (error) {
+        this.#setCopyFeedback(
+          error instanceof Error ? error.message : 'Unable to read the committed source value',
+          true,
+        );
+        return;
+      }
+      this.#copyRequest += 1;
+      const request = this.#copyRequest;
+      try {
+        await copyText(this.#shadow, text, options.nonce);
+        if (request !== this.#copyRequest || this.#disposed) return;
+        this.#setCopyFeedback('Copied committed source value.');
+      } catch (error) {
+        if (request !== this.#copyRequest || this.#disposed) return;
+        this.#setCopyFeedback(
+          error instanceof Error ? error.message : 'Unable to copy the committed source value',
+          true,
+        );
+      }
+    };
+
     #input = (): void => {
       if (!this.#options || !this.#control) return;
       this.#setDirty();
@@ -244,11 +346,14 @@ export function createSourceEditorClass(
     };
 
     #change = (): void => {
+      // Native clipboard fallback focus is not a user-requested source commit.
+      if (this.#shadow.querySelector('.clipboard-copy')) return;
       if (this.#booleanControl) this.#setDirty();
       this.#commitDraft();
     };
 
     #blur = (): void => {
+      if (this.#shadow.querySelector('.clipboard-copy')) return;
       if (this.#dirty) this.#commitDraft();
       else if (this.#options) this.#writeValue(this.#options.read());
     };
@@ -269,7 +374,7 @@ export function createSourceEditorClass(
     #pickColor = (): void => {
       if (!this.#options || !this.#picker) return;
       try {
-        const pickerValue = this.#picker.value;
+        const pickerValue = this.#options.formatColor(this.#picker.value);
         if (this.#options.read() === pickerValue) return;
         this.#options.commit(pickerValue);
         const canonical = this.#options.read();
@@ -285,7 +390,9 @@ export function createSourceEditorClass(
       if (!this.#options || !this.#control || !this.#dirty) return false;
       try {
         const value = parseSourceInput(this.#draft(), this.#options.source.codec);
-        this.#options.commit(value);
+        this.#options.commit(this.#options.source.codec.kind === 'color'
+          ? this.#options.formatColor(value as string)
+          : value);
         const canonical = this.#options.read();
         this.#clearDirty();
         this.#setError();

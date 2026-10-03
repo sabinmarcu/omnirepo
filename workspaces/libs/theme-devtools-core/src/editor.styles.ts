@@ -16,7 +16,7 @@ export const editorStyles = `
 .editor {
   display: grid;
   grid-template-columns: minmax(4em, 0.8fr) auto minmax(7em, 1.6fr);
-  align-items: center;
+  align-items: start;
   gap: calc(${uiTheme.spacing.m} / 2);
   min-inline-size: 0;
   padding-block: calc(${uiTheme.spacing.m} / 4);
@@ -39,6 +39,14 @@ export const editorStyles = `
 }
 
 .field-row {
+  display: grid;
+  grid-template-columns: minmax(7em, 1fr) minmax(7em, 1fr) auto;
+  align-items: start;
+  gap: calc(${uiTheme.spacing.m} / 2);
+  min-inline-size: 0;
+}
+
+.input-row {
   display: flex;
   align-items: center;
   gap: calc(${uiTheme.spacing.m} / 2);
@@ -46,6 +54,7 @@ export const editorStyles = `
 }
 
 .control {
+  flex: 1 1 auto;
   min-inline-size: 0;
   inline-size: 100%;
   padding: calc(${uiTheme.spacing.m} / 3) calc(${uiTheme.spacing.m} / 2);
@@ -57,6 +66,7 @@ export const editorStyles = `
 }
 
 input[type='checkbox'].control {
+  flex: 0 0 auto;
   inline-size: 1em;
   block-size: 1em;
   margin: 0;
@@ -79,42 +89,60 @@ textarea.control {
   cursor: pointer;
 }
 
-.css-disclosure {
-  flex: 1 1 auto;
+.live-value {
+  display: block;
   min-inline-size: 0;
-}
-
-.css-disclosure > summary {
+  min-block-size: calc(1lh + calc(${uiTheme.spacing.m} / 2));
+  max-block-size: calc(${uiTheme.spacing.m} * 10);
+  overflow: auto;
+  padding: calc(${uiTheme.spacing.m} / 3) calc(${uiTheme.spacing.m} / 2);
+  border: 1px solid color-mix(in srgb, ${uiTheme.colors.background.raised} 72%, transparent);
+  border-radius: calc(${uiTheme.spacing.m} / 3);
+  background: color-mix(in srgb, ${uiTheme.colors.background.surface} 34%, transparent);
   color: ${uiTheme.colors.primary.muted};
-  cursor: pointer;
-  font-size: calc(${uiTheme.typography.size} * 0.82);
-  user-select: none;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
 }
 
-.css-disclosure[open] > summary { margin-block-end: calc(${uiTheme.spacing.m} / 3); }
+.copy-button {
+  min-block-size: calc(1lh + calc(${uiTheme.spacing.m} / 2));
+  padding: calc(${uiTheme.spacing.m} / 3) calc(${uiTheme.spacing.m} / 2);
+  border: 1px solid color-mix(in srgb, ${uiTheme.colors.background.raised} 72%, transparent);
+  border-radius: calc(${uiTheme.spacing.m} / 3);
+  background: color-mix(in srgb, ${uiTheme.colors.background.surface} 56%, transparent);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+}
 
-.control:focus-visible, .picker:focus-visible, .css-disclosure > summary:focus-visible {
+.control:focus-visible, .picker:focus-visible, .copy-button:focus-visible {
   outline: 2px solid ${uiTheme.colors.primary.base};
   outline-offset: 2px;
 }
 
-.error {
+.copy-status, .error {
   grid-column: 1 / -1;
-  color: ${uiTheme.colors.primary.emphasis};
+  min-block-size: 1lh;
   font-size: calc(${uiTheme.typography.size} * 0.82);
   overflow-wrap: anywhere;
 }
+
+.copy-status { color: ${uiTheme.colors.primary.muted}; }
+.copy-status:empty { display: none; }
+.error, :host([data-copy-error]) .copy-status { color: ${uiTheme.colors.primary.emphasis}; }
 
 :host([data-error]) .control, :host([data-error]) .picker {
   border-color: ${uiTheme.colors.primary.emphasis};
 }
 
-:host([data-color-unsupported]) .css-disclosure > summary::after {
-  content: ' (picker limited)';
+:host([data-color-unsupported]) .picker {
+  border-color: ${uiTheme.colors.primary.emphasis};
 }
 
 @media (max-width: 420px) {
   .editor { grid-template-columns: minmax(0, 1fr) auto; }
-  .field-row, .error { grid-column: 1 / -1; }
+  .field-row, .copy-status, .error { grid-column: 1 / -1; }
+  .field-row { grid-template-columns: minmax(0, 1fr) auto; }
+  .input-row, .live-value { grid-column: 1 / -1; }
 }
 `;

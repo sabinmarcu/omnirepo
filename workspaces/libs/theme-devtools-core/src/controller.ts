@@ -74,23 +74,6 @@ export function createThemeDevtools(
       nonce: options.nonce,
       refresh,
       close() { options.onClose?.(); },
-      async copy(target, textarea) {
-        ensure();
-        const text = JSON.stringify(target.export(), null, 2);
-        const output = textarea;
-        output.value = text;
-        if (realm.navigator.clipboard?.writeText) {
-          await realm.navigator.clipboard.writeText(text);
-        } else {
-          const details = textarea.closest('details');
-          if (details) details.open = true;
-          textarea.focus();
-          textarea.select();
-          if (!document.execCommand('copy')) {
-            throw new Error('Clipboard unavailable; select the live inputs to copy them');
-          }
-        }
-      },
     });
     let bound = inspection.targets;
     view.setTargets(bound);

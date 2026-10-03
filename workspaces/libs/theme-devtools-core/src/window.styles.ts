@@ -74,6 +74,7 @@ export const windowStyles = `
 .window-close:hover { background: rgb(239 68 68 / .12); color: #b42318; }
 .window-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 8px 16px; }
 .window-tools:empty { display: none; }
+.window-surface { position: relative; display: flex; flex: 1; min-block-size: 0; min-inline-size: 0; }
 .window-content { flex: 1; min-block-size: 0; overflow: auto; padding: 0 14px 14px; scrollbar-width: thin; }
 .window-failure { margin: 8px 0; padding: 8px 10px; color: #b42318; font-size: 12px; }
 button, input, select, textarea { font: inherit; }

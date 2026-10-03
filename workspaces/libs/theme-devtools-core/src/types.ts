@@ -46,6 +46,7 @@ export type SourceEditorOptions = {
   readonly accessibleLabel?: string;
   readonly nonce?: string;
   read(): unknown;
+  formatColor(value: string): string;
   commit(value: unknown): void;
 };
 
@@ -66,5 +67,4 @@ export type DevtoolsViewOptions = {
   readonly nonce?: string;
   refresh(): void;
   close(): void;
-  copy(target: InspectedTheme, textarea: HTMLTextAreaElement): Promise<void>;
 };

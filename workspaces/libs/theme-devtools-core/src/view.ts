@@ -4,10 +4,19 @@ import type {
   ManifestOutput,
   ManifestSource,
 } from '@sabinmarcu/theme-core';
+import { copyText } from './clipboard.js';
+import {
+  createColorFormatter,
+  type ColorFormat,
+} from './colors.js';
 import {
   readInputPath,
   sourcePatch,
 } from './inputs.js';
+import {
+  createJSONOverlay,
+  type JSONOverlay,
+} from './json-overlay.js';
 import { attachStyles } from './styles.js';
 import type {
   DevtoolsView,
@@ -70,12 +79,14 @@ type TreeNode = {
   readonly children: Map<string, TreeNode>;
   editor?: EditorRecord;
   readonlyLeaf?: ReadonlyRecord;
+  editable: boolean;
 };
 
 type FamilyPane = {
   readonly member?: string;
   readonly tab?: HTMLButtonElement;
   readonly element: HTMLElement;
+  overlay?: JSONOverlay;
 };
 
 type TargetPanel = {
@@ -84,19 +95,20 @@ type TargetPanel = {
   readonly element: HTMLElement;
   readonly editors: readonly EditorRecord[];
   readonly readonlys: readonly ReadonlyRecord[];
-  readonly exportDetails: HTMLDetailsElement;
-  readonly exportArea: HTMLTextAreaElement;
   readonly status: HTMLElement;
-  readonly exportListener: () => void;
   readonly panes: readonly FamilyPane[];
   readonly dirtySources: Set<string>;
   readonly dirtyOutputs: Set<string>;
 };
 
-const newNode = (): TreeNode => ({ children: new Map() });
+const newNode = (): TreeNode => ({
+  children: new Map(),
+  editable: false,
+});
 
-const nodeAt = (root: TreeNode, path: readonly string[]): TreeNode => {
+const nodeAt = (root: TreeNode, path: readonly string[], editable = false): TreeNode => {
   let node = root;
+  if (editable) node.editable = true;
   for (const segment of path) {
     let child = node.children.get(segment);
     if (!child) {
@@ -104,6 +116,7 @@ const nodeAt = (root: TreeNode, path: readonly string[]): TreeNode => {
       node.children.set(segment, child);
     }
     node = child;
+    if (editable) node.editable = true;
   }
   return node;
 };
@@ -176,9 +189,33 @@ export function createDevtoolsView(
   const copyButton = createElement(document, 'button');
   copyButton.type = 'button';
   copyButton.className = 'tool-button';
-  copyButton.textContent = 'Copy inputs';
+  copyButton.textContent = 'Copy setup JSON';
   copyButton.hidden = true;
-  window.tools.append(targetSelect, copyButton);
+  const rawButton = createElement(document, 'button');
+  rawButton.type = 'button';
+  rawButton.className = 'tool-button';
+  rawButton.textContent = 'Raw';
+  rawButton.setAttribute('aria-label', 'Show raw setup JSON');
+  rawButton.hidden = true;
+  const setupTools = createElement(document, 'div');
+  setupTools.className = 'json-tools setup-tools';
+  setupTools.append(copyButton, rawButton);
+  const colorFormatLabel = createElement(document, 'label');
+  colorFormatLabel.className = 'color-format-label';
+  colorFormatLabel.textContent = 'Color format';
+  const colorFormatSelect = createElement(document, 'select');
+  colorFormatSelect.className = 'target-select';
+  colorFormatSelect.setAttribute('aria-label', 'Color format');
+  colorFormatSelect.title = 'Output format for all color edits';
+  for (const [value, label] of [['hex', 'Hex'], ['oklch', 'OKLCH'], ['hsl', 'HSL'], ['rgb', 'RGB']]) {
+    const option = createElement(document, 'option');
+    option.value = value!;
+    option.textContent = label!;
+    colorFormatSelect.append(option);
+  }
+  colorFormatLabel.append(colorFormatSelect);
+  const formatColor = createColorFormatter(document);
+  window.tools.append(targetSelect, colorFormatLabel, setupTools);
 
   const setMessage = (error?: string): void => {
     message.textContent = error ?? '';
@@ -191,6 +228,20 @@ export function createDevtoolsView(
     if (error) output.dataset.error = '';
     else Reflect.deleteProperty(output.dataset, 'error');
   };
+
+  const selectedPanel = (): TargetPanel | undefined => panels.find((panelForTarget) => (
+    panelForTarget.id === selectedTargetId
+  ));
+  const setupOverlay = createJSONOverlay(window.surface, {
+    label: 'Setup JSON',
+    nonce: options.nonce,
+    read() {
+      const selected = selectedPanel();
+      if (!selected) throw new Error('No inspected theme is selected');
+      return selected.target.export();
+    },
+    onError: (error) => setMessage(error),
+  });
 
   function flushVisible(): void {
     if (disposed) return;
@@ -238,8 +289,11 @@ export function createDevtoolsView(
     list.className = 'tree';
 
     const orderedChildren: [string, TreeNode][] = [];
-    for (const entry of tree.children) if (!entry[1].editor) orderedChildren.push(entry);
     for (const entry of tree.children) if (entry[1].editor) orderedChildren.push(entry);
+    for (const entry of tree.children) {
+      if (!entry[1].editor && entry[1].editable) orderedChildren.push(entry);
+    }
+    for (const entry of tree.children) if (!entry[1].editable) orderedChildren.push(entry);
     for (const [name, node] of orderedChildren) {
       const branchPath = [...path, name];
       const isBranch = node.children.size > 0;
@@ -250,7 +304,7 @@ export function createDevtoolsView(
         const details = createElement(document, 'details');
         details.className = 'branch';
         const key = expansionKey(targetId, scope, branchPath);
-        details.open = expanded.get(key) ?? path.length === 0;
+        details.open = expanded.get(key) ?? false;
         const summary = createElement(document, 'summary');
         summary.textContent = name;
         summary.setAttribute('aria-label', `${details.open ? 'Collapse' : 'Expand'} ${branchPath.join('.')}`);
@@ -261,6 +315,13 @@ export function createDevtoolsView(
         });
         details.append(summary);
 
+        if (node.editor) {
+          const valueRow = createElement(document, 'div');
+          valueRow.className = 'tree-value';
+          valueRow.append(node.editor.editor);
+          details.append(valueRow);
+        }
+        details.append(renderTree(node, targetId, scope, branchPath));
         if (node.readonlyLeaf) {
           const readonlyRow = createElement(document, 'div');
           readonlyRow.className = 'readonly-row';
@@ -270,15 +331,9 @@ export function createDevtoolsView(
           readonlyRow.append(keyLabel, node.readonlyLeaf.value);
           details.append(readonlyRow);
         }
-        details.append(renderTree(node, targetId, scope, branchPath));
-        if (node.editor) {
-          const valueRow = createElement(document, 'div');
-          valueRow.className = 'tree-value';
-          valueRow.append(node.editor.editor);
-          details.append(valueRow);
-        }
         item.append(details);
       } else {
+        if (node.editor) item.append(node.editor.editor);
         if (node.readonlyLeaf) {
           const row = createElement(document, 'div');
           row.className = 'tree-row';
@@ -288,7 +343,6 @@ export function createDevtoolsView(
           row.append(keyLabel, node.readonlyLeaf.value);
           item.append(row);
         }
-        if (node.editor) item.append(node.editor.editor);
       }
       list.append(item);
     }
@@ -368,10 +422,33 @@ export function createDevtoolsView(
     for (const pane of activePanel.panes) {
       const active = pane === fallback;
       pane.element.hidden = !active;
+      if (!active) pane.overlay?.close();
       pane.tab!.setAttribute('aria-selected', String(active));
       pane.tab!.tabIndex = active ? 0 : -1;
     }
     flushVisible();
+  };
+
+  const copyFamilyInputs = async (
+    target: InspectedTheme,
+    pane: FamilyPane,
+    trigger: HTMLElement,
+    status: HTMLElement,
+  ): Promise<void> => {
+    const output = status;
+    try {
+      const inputs = readInputPath(target.export(), ['families', pane.member!]);
+      await copyText(root, JSON.stringify(inputs, null, 2), options.nonce);
+      if (!disposed && pane.element.isConnected) {
+        output.textContent = `Copied ${pane.member} family JSON.`;
+        Reflect.deleteProperty(output.dataset, 'error');
+      }
+    } catch (error) {
+      if (disposed || !pane.element.isConnected) return;
+      pane.overlay?.open(trigger);
+      output.textContent = error instanceof Error ? error.message : 'Unable to copy family JSON';
+      output.dataset.error = '';
+    }
   };
 
   const createTargetPanel = (target: InspectedTheme): TargetPanel => {
@@ -398,7 +475,7 @@ export function createDevtoolsView(
     }
     const addSource = (source: ManifestSource): void => {
       const displayPath = sourceDisplayPath(target, source);
-      const node = nodeAt(sharedTree, displayPath);
+      const node = nodeAt(sharedTree, displayPath, true);
       const label = node.children.size > 0 ? 'value' : leafLabel(source, displayPath);
       node.editor = createEditor(target, source, displayPath, label, editors);
     };
@@ -444,12 +521,26 @@ export function createDevtoolsView(
         tab.id = `theme-tab-${target.manifest.id}-${member}`;
         tab.textContent = member;
         const pane = createElement(document, 'section');
-        pane.className = 'family-pane';
+        pane.className = 'family-pane json-surface';
         pane.setAttribute('role', 'tabpanel');
         pane.setAttribute('aria-labelledby', tab.id);
         pane.hidden = true;
         tab.setAttribute('aria-controls', `${tab.id}-panel`);
         pane.id = `${tab.id}-panel`;
+        const familyTools = createElement(document, 'div');
+        familyTools.className = 'json-tools family-tools';
+        const copyFamily = createElement(document, 'button');
+        copyFamily.type = 'button';
+        copyFamily.className = 'tool-button';
+        copyFamily.textContent = 'Copy family JSON';
+        copyFamily.setAttribute('aria-label', `Copy ${member} family JSON`);
+        const rawFamily = createElement(document, 'button');
+        rawFamily.type = 'button';
+        rawFamily.className = 'tool-button';
+        rawFamily.textContent = 'Raw';
+        rawFamily.setAttribute('aria-label', `Show raw ${member} family JSON`);
+        familyTools.append(copyFamily, rawFamily);
+        pane.append(familyTools);
         const tree = newNode();
 
         for (const output of target.manifest.outputs) {
@@ -459,7 +550,7 @@ export function createDevtoolsView(
           (candidate) => sourceBelongsToMember(candidate, member),
         )) {
           const displayPath = sourceDisplayPath(target, source);
-          const node = nodeAt(tree, displayPath);
+          const node = nodeAt(tree, displayPath, true);
           const label = node.children.size > 0 ? 'value' : leafLabel(source, displayPath);
           node.editor = createEditor(target, source, displayPath, label, editors);
         }
@@ -470,12 +561,16 @@ export function createDevtoolsView(
           empty.textContent = `No sources or contract values for ${member}.`;
           pane.append(empty);
         }
-        const paneRecord = {
+        const paneRecord: FamilyPane = {
           member,
           tab,
           element: pane,
         };
         panes.push(paneRecord);
+        copyFamily.addEventListener('click', () => (
+          copyFamilyInputs(target, paneRecord, rawFamily, status)
+        ));
+        rawFamily.addEventListener('click', () => paneRecord.overlay?.open(rawFamily));
         tab.addEventListener('click', () => {
           selectedFamilies.set(target.manifest.id, member);
           updateFamilyPanels();
@@ -508,38 +603,15 @@ export function createDevtoolsView(
     } else {
       familySection.hidden = true;
     }
-    const exportDetails = createElement(document, 'details');
-    exportDetails.className = 'export-details';
-    const exportSummary = createElement(document, 'summary');
-    exportSummary.textContent = 'Live setup JSON';
-    const exportArea = createElement(document, 'textarea');
-    exportArea.className = 'export';
-    exportArea.readOnly = true;
-    exportArea.spellcheck = false;
-    exportArea.setAttribute('aria-label', `Setup JSON for ${target.manifest.id}`);
-    exportDetails.append(exportSummary, exportArea);
-    const exportListener = (): void => {
-      if (!exportDetails.open) return;
-      try {
-        exportArea.value = textValue(target.export());
-      } catch (error) {
-        status.textContent = error instanceof Error ? error.message : 'Unable to export inputs';
-        status.dataset.error = '';
-      }
-    };
-    exportDetails.addEventListener('toggle', exportListener);
 
-    element.append(metadata, sharedSection, familySection, exportDetails, status);
+    element.append(metadata, sharedSection, familySection, status);
     const targetPanel: TargetPanel = {
       target,
       id: target.manifest.id,
       element,
       editors,
       readonlys,
-      exportDetails,
-      exportArea,
       status,
-      exportListener,
       panes,
       dirtySources: new Set(),
       dirtyOutputs: new Set(readonlys.flatMap(
@@ -549,16 +621,18 @@ export function createDevtoolsView(
     return targetPanel;
   };
 
-  const selectedPanel = (): TargetPanel | undefined => panels.find((panelForTarget) => (
-    panelForTarget.id === selectedTargetId
-  ));
-
   const updateSelection = (): void => {
     const selected = selectedPanel();
     for (const panelForTarget of panels) {
       panelForTarget.element.hidden = panelForTarget !== selected;
+      if (panelForTarget !== selected) {
+        for (const pane of panelForTarget.panes) pane.overlay?.close();
+      }
     }
     copyButton.hidden = selected === undefined;
+    rawButton.hidden = selected === undefined;
+    if (selected) setupOverlay.sync();
+    else setupOverlay.close();
     updateFamilyPanels();
     flushVisible();
   };
@@ -570,20 +644,18 @@ export function createDevtoolsView(
     );
     for (const name of sources) activePanel.dirtySources.add(name);
     for (const name of outputs) activePanel.dirtyOutputs.add(name);
-    if (activePanel.exportDetails.open && !activePanel.element.hidden) {
-      try {
-        const value = textValue(activePanel.target.export());
-        const output = activePanel.exportArea;
-        if (output.value !== value) output.value = value;
-      } catch (error) {
-        setStatus(activePanel, error instanceof Error ? error.message : String(error), true);
+    if (!activePanel.element.hidden) {
+      for (const pane of activePanel.panes) {
+        if (!pane.element.hidden) pane.overlay?.sync();
       }
+      if (activePanel.id === selectedTargetId) setupOverlay.sync();
     }
   };
 
   const clearPanels = (): void => {
+    setupOverlay.close();
     for (const panelForTarget of panels) {
-      panelForTarget.exportDetails.removeEventListener('toggle', panelForTarget.exportListener);
+      for (const pane of panelForTarget.panes) pane.overlay?.dispose();
       for (const { editor } of panelForTarget.editors) editor.dispose();
       panelForTarget.element.remove();
     }
@@ -600,17 +672,17 @@ export function createDevtoolsView(
     const panelForTarget = selectedPanel();
     if (!panelForTarget) return;
     try {
-      panelForTarget.exportArea.value = textValue(panelForTarget.target.export());
-      await options.copy(panelForTarget.target, panelForTarget.exportArea);
+      await copyText(root, JSON.stringify(panelForTarget.target.export(), null, 2), options.nonce);
       if (!disposed) setStatus(panelForTarget, 'Copied.');
     } catch (error) {
-      if (disposed) return;
-      panelForTarget.exportArea.focus();
-      panelForTarget.exportArea.select();
-      setStatus(panelForTarget, error instanceof Error ? error.message : 'Copy unavailable; text selected.', true);
+      if (disposed || !panelForTarget.element.isConnected) return;
+      setupOverlay.open(rawButton);
+      setStatus(panelForTarget, error instanceof Error ? error.message : 'Unable to copy setup JSON', true);
     }
   };
   copyButton.addEventListener('click', copyListener);
+  const rawListener = (): void => setupOverlay.open(rawButton);
+  rawButton.addEventListener('click', rawListener);
 
   return {
     setTargets(nextTargets): void {
@@ -631,6 +703,7 @@ export function createDevtoolsView(
         selectedTargetId = undefined;
         targetSelect.hidden = true;
         copyButton.hidden = true;
+        rawButton.hidden = true;
         const empty = createElement(document, 'p');
         empty.className = 'empty';
         empty.textContent = 'No inspectable themes.';
@@ -640,6 +713,14 @@ export function createDevtoolsView(
       panels = targets.map(createTargetPanel);
       for (const panelForTarget of panels) {
         targetsElement.append(panelForTarget.element);
+        for (const pane of panelForTarget.panes) {
+          pane.overlay = createJSONOverlay(pane.element, {
+            label: `${pane.member} family JSON`,
+            nonce: options.nonce,
+            read: () => readInputPath(panelForTarget.target.export(), ['families', pane.member!]),
+            onError: (error) => setStatus(panelForTarget, error, true),
+          });
+        }
         let input: Readonly<Record<string, unknown>> | undefined;
         try { input = panelForTarget.target.read(); } catch (error) {
           setStatus(panelForTarget, error instanceof Error ? error.message : String(error), true);
@@ -651,6 +732,7 @@ export function createDevtoolsView(
             accessibleLabel: record.accessibleLabel,
             nonce: options.nonce,
             read: () => panelForTarget.target.readSource(record.source.name),
+            formatColor: (value) => formatColor(value, colorFormatSelect.value as ColorFormat),
             commit: (value) => {
               panelForTarget.target.patch(sourcePatch(record.source.inputPath, value));
             },
@@ -686,6 +768,8 @@ export function createDevtoolsView(
       disposed = true;
       targetSelect.removeEventListener('change', selectionListener);
       copyButton.removeEventListener('click', copyListener);
+      rawButton.removeEventListener('click', rawListener);
+      setupOverlay.dispose();
       clearPanels();
       styleDispose();
       window.dispose();

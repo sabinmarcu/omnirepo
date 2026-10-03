@@ -60,7 +60,10 @@ export function createInspectorWindow(root: ShadowRoot, options: InspectorWindow
   tools.className = 'window-tools';
   const content = document.createElement('div');
   content.className = 'window-content';
-  panel.append(header, tools, content);
+  const surface = document.createElement('div');
+  surface.className = 'window-surface';
+  surface.append(content);
+  panel.append(header, tools, surface);
   root.append(panel);
   const detachStyles = attachStyles(root, 'window', windowStyles, options.nonce);
 
@@ -170,6 +173,7 @@ export function createInspectorWindow(root: ShadowRoot, options: InspectorWindow
 
   return {
     content,
+    surface,
     tools,
     title,
     dispose() {

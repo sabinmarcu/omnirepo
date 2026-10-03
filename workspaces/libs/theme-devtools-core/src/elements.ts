@@ -3,7 +3,7 @@ import type { DevtoolsHostElement } from './types.js';
 
 export const hostTag = 'sabinmarcu-theme-devtools';
 export const editorTag = 'sabinmarcu-theme-source-editor';
-export const elementVersion = '2';
+export const elementVersion = '4';
 
 type VersionedConstructor = CustomElementConstructor & {
   readonly themeDevtoolsVersion?: unknown;

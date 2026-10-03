@@ -1,4 +1,4 @@
-type StyleKey = 'panel' | 'editor' | 'window';
+type StyleKey = 'panel' | 'editor' | 'window' | 'clipboard' | 'json-overlay';
 
 type SheetCache = Map<StyleKey, Map<string, CSSStyleSheet>>;
 type Attachment = { references: number };
