@@ -1,6 +1,6 @@
 {
   "name": "@sabinmarcu/theme-family",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "packageManager": "yarn@4.5.1",
   "type": "module",
   "publishConfig": {
