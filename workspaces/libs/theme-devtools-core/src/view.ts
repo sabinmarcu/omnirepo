@@ -5,6 +5,8 @@ import type {
   ManifestSource,
 } from '@sabinmarcu/theme-core';
 import { copyText } from './clipboard.js';
+import { createCopyButton } from './copy-button.js';
+import type { CopyButton } from './copy-button.js';
 import {
   createColorFormatter,
   type ColorFormat,
@@ -157,6 +159,7 @@ export function createDevtoolsView(
   const document = root.ownerDocument;
   const window = createInspectorWindow(root, {
     nonce: options.nonce,
+    presentation: options.presentation,
     close: options.close,
     refresh: options.refresh,
   });
@@ -179,17 +182,20 @@ export function createDevtoolsView(
   let panels: TargetPanel[] = [];
   let selectedTargetId: string | undefined;
   const selectedFamilies = new Map<string, string>();
-  const expanded = new Map<string, boolean>();
+  const { memory } = options;
+  /** Rendered branches per expansion key; family panes share keys and must agree. */
+  const branches = new Map<string, Set<HTMLDetailsElement>>();
   let disposed = false;
 
   const targetSelect = createElement(document, 'select');
   targetSelect.className = 'target-select';
   targetSelect.setAttribute('aria-label', 'Inspected theme');
   targetSelect.hidden = true;
-  const copyButton = createElement(document, 'button');
-  copyButton.type = 'button';
-  copyButton.className = 'tool-button';
-  copyButton.textContent = 'Copy setup JSON';
+  const setupCopy = createCopyButton(document, {
+    label: 'Copy setup JSON',
+    className: 'tool-button',
+  });
+  const copyButton = setupCopy.element;
   copyButton.hidden = true;
   const rawButton = createElement(document, 'button');
   rawButton.type = 'button';
@@ -213,7 +219,12 @@ export function createDevtoolsView(
     option.textContent = label!;
     colorFormatSelect.append(option);
   }
+  colorFormatSelect.value = memory.colorFormat() ?? 'hex';
   colorFormatLabel.append(colorFormatSelect);
+  const colorFormatListener = (): void => {
+    memory.setColorFormat(colorFormatSelect.value as ColorFormat);
+  };
+  colorFormatSelect.addEventListener('change', colorFormatListener);
   const formatColor = createColorFormatter(document);
   window.tools.append(targetSelect, colorFormatLabel, setupTools);
 
@@ -304,12 +315,18 @@ export function createDevtoolsView(
         const details = createElement(document, 'details');
         details.className = 'branch';
         const key = expansionKey(targetId, scope, branchPath);
-        details.open = expanded.get(key) ?? false;
+        details.open = memory.expanded(key) ?? false;
+        const siblings = branches.get(key) ?? new Set<HTMLDetailsElement>();
+        siblings.add(details);
+        branches.set(key, siblings);
         const summary = createElement(document, 'summary');
         summary.textContent = name;
         summary.setAttribute('aria-label', `${details.open ? 'Collapse' : 'Expand'} ${branchPath.join('.')}`);
         details.addEventListener('toggle', () => {
-          expanded.set(key, details.open);
+          memory.setExpanded(key, details.open);
+          for (const sibling of siblings) {
+            if (sibling.open !== details.open) sibling.open = details.open;
+          }
           summary.setAttribute('aria-label', `${details.open ? 'Collapse' : 'Expand'} ${branchPath.join('.')}`);
           if (details.open) flushVisible();
         });
@@ -432,6 +449,7 @@ export function createDevtoolsView(
   const copyFamilyInputs = async (
     target: InspectedTheme,
     pane: FamilyPane,
+    action: CopyButton,
     trigger: HTMLElement,
     status: HTMLElement,
   ): Promise<void> => {
@@ -442,9 +460,11 @@ export function createDevtoolsView(
       if (!disposed && pane.element.isConnected) {
         output.textContent = `Copied ${pane.member} family JSON.`;
         Reflect.deleteProperty(output.dataset, 'error');
+        action.show('copied');
       }
     } catch (error) {
       if (disposed || !pane.element.isConnected) return;
+      action.show('failed');
       pane.overlay?.open(trigger);
       output.textContent = error instanceof Error ? error.message : 'Unable to copy family JSON';
       output.dataset.error = '';
@@ -529,17 +549,17 @@ export function createDevtoolsView(
         pane.id = `${tab.id}-panel`;
         const familyTools = createElement(document, 'div');
         familyTools.className = 'json-tools family-tools';
-        const copyFamily = createElement(document, 'button');
-        copyFamily.type = 'button';
-        copyFamily.className = 'tool-button';
-        copyFamily.textContent = 'Copy family JSON';
-        copyFamily.setAttribute('aria-label', `Copy ${member} family JSON`);
+        const copyFamily = createCopyButton(document, {
+          label: 'Copy family JSON',
+          className: 'tool-button',
+          ariaLabel: `Copy ${member} family JSON`,
+        });
         const rawFamily = createElement(document, 'button');
         rawFamily.type = 'button';
         rawFamily.className = 'tool-button';
         rawFamily.textContent = 'Raw';
         rawFamily.setAttribute('aria-label', `Show raw ${member} family JSON`);
-        familyTools.append(copyFamily, rawFamily);
+        familyTools.append(copyFamily.element, rawFamily);
         pane.append(familyTools);
         const tree = newNode();
 
@@ -554,7 +574,9 @@ export function createDevtoolsView(
           const label = node.children.size > 0 ? 'value' : leafLabel(source, displayPath);
           node.editor = createEditor(target, source, displayPath, label, editors);
         }
-        if (tree.children.size > 0) pane.append(renderTree(tree, target.manifest.id, `family:${member}`));
+        // One expansion scope for every member: the trees share a shape, so opening a branch in
+        // one family keeps it open in the others (and across sidebar selections).
+        if (tree.children.size > 0) pane.append(renderTree(tree, target.manifest.id, 'family'));
         else {
           const empty = createElement(document, 'p');
           empty.className = 'empty';
@@ -567,8 +589,8 @@ export function createDevtoolsView(
           element: pane,
         };
         panes.push(paneRecord);
-        copyFamily.addEventListener('click', () => (
-          copyFamilyInputs(target, paneRecord, rawFamily, status)
+        copyFamily.element.addEventListener('click', () => (
+          copyFamilyInputs(target, paneRecord, copyFamily, rawFamily, status)
         ));
         rawFamily.addEventListener('click', () => paneRecord.overlay?.open(rawFamily));
         tab.addEventListener('click', () => {
@@ -660,6 +682,7 @@ export function createDevtoolsView(
       panelForTarget.element.remove();
     }
     panels = [];
+    branches.clear();
   };
 
   const selectionListener = (): void => {
@@ -673,9 +696,13 @@ export function createDevtoolsView(
     if (!panelForTarget) return;
     try {
       await copyText(root, JSON.stringify(panelForTarget.target.export(), null, 2), options.nonce);
-      if (!disposed) setStatus(panelForTarget, 'Copied.');
+      if (!disposed) {
+        setStatus(panelForTarget, 'Copied.');
+        setupCopy.show('copied');
+      }
     } catch (error) {
       if (disposed || !panelForTarget.element.isConnected) return;
+      setupCopy.show('failed');
       setupOverlay.open(rawButton);
       setStatus(panelForTarget, error instanceof Error ? error.message : 'Unable to copy setup JSON', true);
     }
@@ -767,7 +794,9 @@ export function createDevtoolsView(
       if (disposed) return;
       disposed = true;
       targetSelect.removeEventListener('change', selectionListener);
+      colorFormatSelect.removeEventListener('change', colorFormatListener);
       copyButton.removeEventListener('click', copyListener);
+      setupCopy.reset();
       rawButton.removeEventListener('click', rawListener);
       setupOverlay.dispose();
       clearPanels();

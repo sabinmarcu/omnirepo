@@ -265,6 +265,26 @@ const discover = (document: Document): unknown[] => {
   return manifests;
 };
 
+/**
+ * DOM-free mirror of `InspectedTheme.patch` encoding: validates a source patch against
+ * manifest metadata and returns the canonical decoded value of every source it writes.
+ */
+export function createManifestPatchDecoder(
+  manifest: ThemeManifest,
+): (input: Readonly<Record<string, unknown>>) => Readonly<Record<string, unknown>> {
+  const theme = themeFromManifest(manifest);
+  const sources = new Map<string, typeof theme.sources[number]>(
+    theme.sources.map((source) => [source.name, source]),
+  );
+  return (input) => Object.freeze(Object.fromEntries(
+    Object.entries(encodeThemePatch(theme, input)).map(([name, css]) => {
+      const source = sources.get(name);
+      if (!source) throw new Error(`Undeclared theme source: ${name}`);
+      return [name, source.descriptor.codec.decode(css)];
+    }),
+  ));
+}
+
 /** Headless optional access to declared application sheets; never initializes theme values. */
 export function createThemeInspection(
   document: Document,

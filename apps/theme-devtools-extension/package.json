@@ -1,22 +1,23 @@
 {
-  "name": "@sabinmarcu/theme-devtools-core",
-  "version": "0.1.0",
-  "packageManager": "yarn@4.5.1",
+  "name": "@sabinmarcu/theme-devtools-extension",
+  "private": true,
   "type": "module",
-  "publishConfig": {
-    "access": "public"
-  },
-  "tscmono": {
-    "preset": "lib"
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "tsc -b && vite build && vite build --config vite.content.config.ts"
   },
   "dependencies": {
-    "@sabinmarcu/stylesheet": "workspace:*",
-    "@sabinmarcu/theme-core": "workspace:*"
+    "@sabinmarcu/theme-devtools-core": "workspace:*"
   },
   "devDependencies": {
-    "@sabinmarcu/theme-family": "workspace:*",
     "@sabinmarcu/types": "workspace:*",
-    "@sabinmarcu/utils-test": "workspace:*"
+    "@sabinmarcu/utils-test": "workspace:*",
+    "@types/chrome": "^0.3.4",
+    "typescript": "6.0.2",
+    "vite": "^5.3.4"
+  },
+  "tscmono": {
+    "preset": "viteApp"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -43,11 +44,5 @@
         "./dist/*"
       ]
     }
-  },
-  "repository": {
-    "url": "git+https://github.com/sabinmarcu/omnirepo.git",
-    "directory": "workspaces/libs/theme-devtools-core",
-    "type": "git"
-  },
-  "homepage": "https:/sabinmarcu.dev/api/theme-devtools-core"
+  }
 }

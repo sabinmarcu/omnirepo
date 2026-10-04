@@ -8412,8 +8412,22 @@ __metadata:
   dependencies:
     "@sabinmarcu/stylesheet": "workspace:*"
     "@sabinmarcu/theme-core": "workspace:*"
+    "@sabinmarcu/theme-family": "workspace:*"
     "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-test": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@sabinmarcu/theme-devtools-extension@workspace:apps/theme-devtools-extension":
+  version: 0.0.0-use.local
+  resolution: "@sabinmarcu/theme-devtools-extension@workspace:apps/theme-devtools-extension"
+  dependencies:
+    "@sabinmarcu/theme-devtools-core": "workspace:*"
+    "@sabinmarcu/types": "workspace:*"
+    "@sabinmarcu/utils-test": "workspace:*"
+    "@types/chrome": "npm:^0.3.4"
+    typescript: "npm:6.0.2"
+    vite: "npm:^5.3.4"
   languageName: unknown
   linkType: soft
 
@@ -8647,6 +8661,7 @@ __metadata:
     "@sabinmarcu/moving-mesh-background": "workspace:*"
     "@sabinmarcu/stylesheet": "workspace:*"
     "@sabinmarcu/theme": "workspace:*"
+    "@sabinmarcu/theme-core": "workspace:*"
     "@sabinmarcu/theme-devtools-react": "workspace:*"
     "@sabinmarcu/types": "workspace:*"
     "@sabinmarcu/utils-string": "workspace:*"
@@ -9961,6 +9976,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/chrome@npm:^0.3.4":
+  version: 0.3.4
+  resolution: "@types/chrome@npm:0.3.4"
+  dependencies:
+    "@types/filesystem": "npm:*"
+    "@types/har-format": "npm:*"
+  checksum: 10c0/089d7fe43a6fcbed9c844a3599e5ab5ed1d8c2a492cb11f7f7c94e2fbdb8f0df5f56db5ef0b6aead0cf4fb8dbc727287ec9c56b8128e81458f5b5cea7bb540a0
+  languageName: node
+  linkType: hard
+
 "@types/confusing-browser-globals@npm:^1":
   version: 1.0.3
   resolution: "@types/confusing-browser-globals@npm:1.0.3"
@@ -10384,6 +10409,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/filesystem@npm:*":
+  version: 0.0.36
+  resolution: "@types/filesystem@npm:0.0.36"
+  dependencies:
+    "@types/filewriter": "npm:*"
+  checksum: 10c0/3ebec32f0494b0a2612187d148e9f253ff55672c53f566d9a1e6d891eb6e2372df93c252b594b2775bc53e6660c4c37fdb05dc1b26e72b60a31010da8e1f7317
+  languageName: node
+  linkType: hard
+
+"@types/filewriter@npm:*":
+  version: 0.0.33
+  resolution: "@types/filewriter@npm:0.0.33"
+  checksum: 10c0/363ef9a658a961ceae04f52934562e4ebdcdc3a2564dd8544f593d77113c16574938b6ba4fea0bee418c37bda0668c1e03dfedb6adf00d55853f51fb3a59247b
+  languageName: node
+  linkType: hard
+
 "@types/geojson@npm:*":
   version: 7946.0.16
   resolution: "@types/geojson@npm:7946.0.16"
@@ -10405,6 +10446,13 @@ __metadata:
   version: 0.0.12
   resolution: "@types/gtag.js@npm:0.0.12"
   checksum: 10c0/fee8f4c6e627301b89ab616c9e219bd53fa6ea1ffd1d0a8021e21363f0bdb2cf7eb1a5bcda0c6f1502186379bc7784ec29c932e21634f4e07f9e7a8c56887400
+  languageName: node
+  linkType: hard
+
+"@types/har-format@npm:*":
+  version: 1.2.16
+  resolution: "@types/har-format@npm:1.2.16"
+  checksum: 10c0/77e952bc219db0c1f0588cab3b95865bc343b922e8423a76fbbd6a757c40709a256933fa415eb8fefda6ea5897c8e3dd3191bb8a82b37c13d9232467d31ae485
   languageName: node
   linkType: hard
 

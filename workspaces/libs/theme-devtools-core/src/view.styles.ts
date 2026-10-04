@@ -1,3 +1,4 @@
+import { copyButtonStyles } from './copy-button.styles.js';
 import { uiTheme } from './ui-theme.js';
 
 export const viewStyles = `
@@ -154,4 +155,4 @@ sabinmarcu-theme-source-editor { min-inline-size: 0; }
 @media (max-width: 440px) {
   .tree-row, .tree-value, .readonly-row { grid-template-columns: 1fr; gap: calc(${uiTheme.spacing.m} / 3); }
 }
-`;
+${copyButtonStyles}`;

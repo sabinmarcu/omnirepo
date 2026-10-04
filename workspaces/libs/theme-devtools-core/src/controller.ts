@@ -4,6 +4,7 @@ import {
   hostTag,
   registerDevtoolsElements,
 } from './elements.js';
+import { createDevtoolsMemory } from './persistence.js';
 import { mountUITheme } from './ui-theme.js';
 import { createDevtoolsView } from './view.js';
 import type {
@@ -15,7 +16,7 @@ import type {
 
 const messageOf = (error: unknown) => (error instanceof Error ? error.message : String(error));
 
-/** UI ownership is local to the supplied container; inspection remains document-scoped. */
+/** UI ownership is local to the container; inspection is document-scoped or caller-owned. */
 export function createThemeDevtools(
   container: HTMLElement,
   options: ThemeDevtoolsOptions = {},
@@ -29,7 +30,14 @@ export function createThemeDevtools(
     && child.attributes.getNamedItem('data-theme-devtools-root')?.value === '1')) {
     throw new Error('A theme devtools instance already owns this container');
   }
-  const inspection = createThemeInspection(
+  if (options.inspection
+    && (options.manifests !== undefined || options.inspectionDocument !== undefined)) {
+    throw new Error(
+      'A supplied inspection cannot be combined with manifests or an inspection document',
+    );
+  }
+  const ownsInspection = !options.inspection;
+  const inspection = options.inspection ?? createThemeInspection(
     options.inspectionDocument ?? document,
     options.manifests,
   );
@@ -51,7 +59,7 @@ export function createThemeDevtools(
     }
   };
   const cleanup = () => {
-    inspection.dispose();
+    if (ownsInspection) inspection.dispose();
     unsubscribe?.();
     try {
       view?.dispose();
@@ -72,6 +80,8 @@ export function createThemeDevtools(
     });
     view = createDevtoolsView(root, {
       nonce: options.nonce,
+      presentation: options.presentation ?? 'window',
+      memory: createDevtoolsMemory(realm, options.persistence),
       refresh,
       close() { options.onClose?.(); },
     });

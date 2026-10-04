@@ -1,8 +1,13 @@
 import { attachStyles } from './styles.js';
-import { windowStyles } from './window.styles.js';
+import type { ThemeDevtoolsPresentation } from './types.js';
+import {
+  embeddedWindowStyles,
+  floatingWindowStyles,
+} from './window.styles.js';
 
 export type InspectorWindowOptions = {
   readonly nonce?: string;
+  readonly presentation: ThemeDevtoolsPresentation;
   close(): void;
   refresh(): void;
 };
@@ -13,6 +18,7 @@ export function createInspectorWindow(root: ShadowRoot, options: InspectorWindow
   const realm = document.defaultView;
   if (!realm) throw new Error('The inspector window requires an active owner document');
   const host = root.host as HTMLElement;
+  const floating = options.presentation === 'window';
   const previous = {
     popover: host.getAttribute('popover'),
     role: host.getAttribute('role'),
@@ -23,16 +29,18 @@ export function createInspectorWindow(root: ShadowRoot, options: InspectorWindow
     leftPriority: host.style.getPropertyPriority('--devtools-theme-window-position-x'),
     topPriority: host.style.getPropertyPriority('--devtools-theme-window-position-y'),
   };
-  host.setAttribute('popover', 'manual');
-  host.setAttribute('role', 'dialog');
+  if (floating) {
+    host.setAttribute('popover', 'manual');
+    host.setAttribute('role', 'dialog');
+    host.setAttribute('aria-modal', 'false');
+  } else host.setAttribute('role', 'region');
   host.setAttribute('aria-label', 'Theme inspector');
-  host.setAttribute('aria-modal', 'false');
 
   const panel = document.createElement('section');
   panel.className = 'inspector-window';
   const header = document.createElement('header');
   header.className = 'window-header';
-  header.title = 'Drag to move the theme inspector';
+  if (floating) header.title = 'Drag to move the theme inspector';
   const grip = document.createElement('span');
   grip.className = 'window-grip';
   grip.textContent = '⠿';
@@ -54,8 +62,9 @@ export function createInspectorWindow(root: ShadowRoot, options: InspectorWindow
   close.textContent = '×';
   close.title = 'Close theme inspector';
   close.setAttribute('aria-label', 'Close theme inspector');
-  actions.append(refresh, close);
-  header.append(grip, title, actions);
+  if (floating) actions.append(refresh, close);
+  else actions.append(refresh);
+  header.append(...(floating ? [grip] : []), title, actions);
   const tools = document.createElement('div');
   tools.className = 'window-tools';
   const content = document.createElement('div');
@@ -65,7 +74,12 @@ export function createInspectorWindow(root: ShadowRoot, options: InspectorWindow
   surface.append(content);
   panel.append(header, tools, surface);
   root.append(panel);
-  const detachStyles = attachStyles(root, 'window', windowStyles, options.nonce);
+  const detachStyles = attachStyles(
+    root,
+    'window',
+    floating ? floatingWindowStyles : embeddedWindowStyles,
+    options.nonce,
+  );
 
   let disposed = false;
   let position: { x: number; y: number } | undefined;
@@ -155,21 +169,23 @@ export function createInspectorWindow(root: ShadowRoot, options: InspectorWindow
       place(limits.maxX, Math.min(limits.maxY, limits.minY + 56));
     }
   };
-  header.addEventListener('pointerdown', startDrag);
-  header.addEventListener('pointermove', moveDrag);
-  header.addEventListener('pointerup', stopDrag);
-  header.addEventListener('pointercancel', stopDrag);
-  header.addEventListener('lostpointercapture', stopDrag);
-  close.addEventListener('click', closeWindow);
   refresh.addEventListener('click', refreshCatalog);
-  root.addEventListener('keydown', keydown as EventListener);
-  host.addEventListener('toggle', shown);
-  realm.addEventListener('resize', constrain);
-  realm.visualViewport?.addEventListener('resize', constrain);
-  realm.visualViewport?.addEventListener('scroll', constrain);
-  host.showPopover();
-  const initial = bounds();
-  place(initial.maxX, Math.min(initial.maxY, initial.minY + 56));
+  if (floating) {
+    header.addEventListener('pointerdown', startDrag);
+    header.addEventListener('pointermove', moveDrag);
+    header.addEventListener('pointerup', stopDrag);
+    header.addEventListener('pointercancel', stopDrag);
+    header.addEventListener('lostpointercapture', stopDrag);
+    close.addEventListener('click', closeWindow);
+    root.addEventListener('keydown', keydown as EventListener);
+    host.addEventListener('toggle', shown);
+    realm.addEventListener('resize', constrain);
+    realm.visualViewport?.addEventListener('resize', constrain);
+    realm.visualViewport?.addEventListener('scroll', constrain);
+    host.showPopover();
+    const initial = bounds();
+    place(initial.maxX, Math.min(initial.maxY, initial.minY + 56));
+  }
 
   return {
     content,
@@ -192,7 +208,7 @@ export function createInspectorWindow(root: ShadowRoot, options: InspectorWindow
       realm.removeEventListener('resize', constrain);
       realm.visualViewport?.removeEventListener('resize', constrain);
       realm.visualViewport?.removeEventListener('scroll', constrain);
-      if (host.matches(':popover-open')) host.hidePopover();
+      if (floating && host.matches(':popover-open')) host.hidePopover();
       for (const [attribute, value] of Object.entries({
         popover: previous.popover,
         role: previous.role,

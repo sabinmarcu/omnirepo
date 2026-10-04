@@ -1,3 +1,4 @@
+import { copyButtonStyles } from './copy-button.styles.js';
 import { uiTheme } from './ui-theme.js';
 
 export const editorStyles = `
@@ -145,4 +146,4 @@ textarea.control {
   .field-row { grid-template-columns: minmax(0, 1fr) auto; }
   .input-row, .live-value { grid-column: 1 / -1; }
 }
-`;
+${copyButtonStyles}`;

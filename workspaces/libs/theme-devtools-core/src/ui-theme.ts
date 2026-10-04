@@ -30,6 +30,20 @@ export const uiThemeDefinition = defineTheme({
         dark: '#80bfff',
       },
     }),
+    /** Positive action feedback (e.g. a completed copy). */
+    success: paletteGenerator({
+      default: {
+        light: '#1a7f37',
+        dark: '#3fb950',
+      },
+    }),
+    /** Failed action feedback (e.g. a rejected copy). */
+    danger: paletteGenerator({
+      default: {
+        light: '#cf222e',
+        dark: '#f85149',
+      },
+    }),
   },
   spacing: gridGenerator({
     default: 8,

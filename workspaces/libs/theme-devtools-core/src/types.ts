@@ -2,23 +2,52 @@ import type {
   InspectedTheme,
   InspectionChange,
   ManifestSource,
+  ThemeInspection,
   ThemeManifest,
 } from '@sabinmarcu/theme-core';
+import type {
+  DevtoolsMemory,
+  ThemeDevtoolsPersistence,
+} from './persistence.js';
 import type {
   UIThemeInput,
   UIThemePatch,
 } from './ui-theme.js';
 
-export type ThemeDevtoolsOptions = {
-  readonly manifests?: readonly ThemeManifest[];
-  /** Defaults to the mount container's owner document; UI placement is not inspection scope. */
-  readonly inspectionDocument?: Document;
+/** `window`: modeless in-page popover. `embedded`: fills its container (e.g. a devtools pane). */
+export type ThemeDevtoolsPresentation = 'window' | 'embedded';
+
+type ThemeDevtoolsCommonOptions = {
   readonly nonce?: string;
   readonly shadowMode?: ShadowRootMode;
   readonly ui?: UIThemeInput;
-  /** Called after the modeless inspector is closed; application sources are untouched. */
+  /** Defaults to `window`. */
+  readonly presentation?: ThemeDevtoolsPresentation;
+  /**
+   * Where the inspector remembers its color format (across sessions) and expanded branches
+   * (per session). Defaults to the UI document's `localStorage` / `sessionStorage`.
+   */
+  readonly persistence?: ThemeDevtoolsPersistence;
+  /** Called after the modeless window closes; application sources are untouched. Window only. */
   readonly onClose?: () => void;
 };
+
+type LocalInspectionOptions = {
+  readonly manifests?: readonly ThemeManifest[];
+  /** Defaults to the mount container's owner document; UI placement is not inspection scope. */
+  readonly inspectionDocument?: Document;
+  readonly inspection?: undefined;
+};
+
+type SuppliedInspectionOptions = {
+  /** Caller-owned inspection (for example a remote mirror); `destroy()` never disposes it. */
+  readonly inspection: ThemeInspection;
+  readonly manifests?: undefined;
+  readonly inspectionDocument?: undefined;
+};
+
+export type ThemeDevtoolsOptions = ThemeDevtoolsCommonOptions
+  & (LocalInspectionOptions | SuppliedInspectionOptions);
 
 export type ThemeInputExport = {
   readonly id: string;
@@ -65,6 +94,8 @@ export type DevtoolsView = {
 
 export type DevtoolsViewOptions = {
   readonly nonce?: string;
+  readonly presentation: ThemeDevtoolsPresentation;
+  readonly memory: DevtoolsMemory;
   refresh(): void;
   close(): void;
 };
