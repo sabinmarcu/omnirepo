@@ -26,4 +26,4 @@ Devtools are optional consumers: the [native inspector](/api/theme-devtools-core
 
 ## Browser and release boundary
 
-Native colors require `light-dark()`, `contrast-color()`, relative OKLCH colors, `color-mix()`, CSS `if(style(...))`, and typed custom properties. No JavaScript or legacy-browser fallback is provided. Native Safari support remains unverified.
+Native colors require `light-dark()`, `contrast-color()`, relative OKLab/OKLCH colors, `color-mix()`, `round()`, and typed custom properties. Adaptive backgrounds do not require CSS `if()` or style queries. Safari 26 is the minimum because of `contrast-color()`. No JavaScript or legacy-browser fallback is provided; Linux WebKit smoke coverage does not substitute for native macOS/iOS hardware acceptance.

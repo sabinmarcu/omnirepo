@@ -1,7 +1,6 @@
 import { colorCodec } from '../codecs.js';
 import {
   css,
-  propertyName,
   registered,
   variableGenerator,
   variantSource,
@@ -45,7 +44,22 @@ const adaptiveForegroundMix = (
   foregroundReference: Reference,
   amountForLightPolarity: number,
   amountForDarkPolarity: number,
-): Expression => css`if(style(${propertyName(foregroundReference)}: white): ${mixedTowardForeground(source, foregroundReference, amountForDarkPolarity)}; else: ${mixedTowardForeground(source, foregroundReference, amountForLightPolarity)})`;
+): Expression => {
+  // Pack source alpha into [0, .25] for black text or [.75, 1] for white text.
+  // round(alpha, 1) then recovers polarity without CSS if() or style queries.
+  const marker = css`oklab(from ${foregroundReference} round(l, 1) 0 0 / round(l, 1))`;
+  const packed = css`color-mix(in oklab, ${source} 25%, ${marker})`;
+  const polarity = 'round(alpha, 1)';
+  const weight = css`(${amountForLightPolarity / 100} + ${(amountForDarkPolarity - amountForLightPolarity) / 100} * ${polarity})`;
+  const sourceAlpha = css`(4 * (alpha - 0.75 * ${polarity}))`;
+  const outputAlpha = css`((1 - ${weight}) * ${sourceAlpha} + ${weight})`;
+  const chromaScale = css`((1 - ${weight}) * 4 * alpha / ${outputAlpha})`;
+
+  // Undo the packing's premultiplication, then apply the original text weight.
+  // OKLab and OKLCH mixes toward achromatic black/white are equivalent; using
+  // Cartesian channels keeps neutral colors neutral and preserves source alpha.
+  return css`oklab(from ${packed} calc(((1 - ${weight}) * 4 * (alpha * l - 0.75 * ${polarity}) + ${weight} * ${polarity}) / ${outputAlpha}) calc(a * ${chromaScale}) calc(b * ${chromaScale}) / calc(${outputAlpha}))`;
+};
 
 const oppositeForeground = (foregroundReference: Reference): Expression => (
   css`oklch(from ${foregroundReference} calc(1 - l) 0 none)`
