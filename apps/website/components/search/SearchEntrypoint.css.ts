@@ -85,6 +85,7 @@ globalStyle(`${searchEntrypointStyle}[data-focused="true"] ${searchEntrypointSho
 });
 
 export const searchEntrypointResultsStyle = style({
+  gridColumn: '1 / -1',
   position: 'absolute',
   insetBlockStart: `calc(100% + ${navigationSpacing})`,
   insetInline: 0,
@@ -104,58 +105,8 @@ export const searchEntrypointResultsStyle = style({
   listStyle: 'none',
 });
 
-export const searchEntrypointResultStyle = style({
-  display: 'flex',
-  minInlineSize: 0,
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  gap: navigationSpacing,
-  padding: navigationSpacing,
-  color: 'inherit',
-  textDecoration: 'none',
-  selectors: {
-    '&:hover, &:focus-visible': {
-      background: theme.colors.background.elevated,
-    },
-  },
-});
-
-export const searchEntrypointResultTitleStyle = style({
-  flex: 1,
-  minInlineSize: 0,
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-});
-
-export const searchEntrypointResultLabelStyle = style({
-  flex: 'none',
-  paddingBlock: `calc(${navigationSpacing} * 0.125)`,
-  paddingInline: `calc(${navigationSpacing} * 0.5)`,
-  borderInlineStart: `${navigationBorderSize} solid ${theme.colors.primary.muted}`,
-  borderInlineEnd: `${navigationBorderSize} solid ${theme.colors.primary.muted}`,
-  borderBlockStart: `${navigationBorderSize} solid ${theme.colors.primary.muted}`,
-  borderBlockEnd: `${navigationBorderSize} solid ${theme.colors.primary.muted}`,
-  borderRadius: navigationBorderRadius,
-  color: theme.colors.primary.muted,
-  fontSize: '0.75em',
-  lineHeight: 1,
-});
-
-export const searchEntrypointSecondaryResultsStyle = style({
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: navigationSpacing,
-  paddingInlineStart: theme.grid.xxl,
-  marginBlockEnd: navigationSpacing,
-  fontSize: '0.8em',
-});
-
-export const searchEntrypointSecondaryResultListStyle = style({
-  display: 'inline-flex',
-  gap: navigationSpacing,
-  padding: 0,
-  listStyle: 'none',
+globalStyle(`${searchEntrypointResultsStyle} > *`, {
+  maxInlineSize: '100%',
 });
 
 globalStyle(`${searchEntrypointIconStyle} svg`, {

@@ -51,6 +51,7 @@ function restoreNoopAnnotationText(text: string) {
 export namespace Code {
   export type Props = (
     & Omit<ComponentProps<typeof Pre>, 'code' | 'handlers'>
+    & { interactive?: boolean }
     & (
       | { code: RawCode, codeblock?: never }
       | { codeblock: RawCode, code?: never }
@@ -62,6 +63,7 @@ export const Code = withStyles(async function Code({
   code,
   codeblock,
   className,
+  interactive = true,
   ...rest
 }: Code.Props) {
   const rawCode = code ?? codeblock;
@@ -99,7 +101,7 @@ export const Code = withStyles(async function Code({
   const disableShellPrompt = hasNoShellPromptAnnotation
     && !hasShellPromptAnnotation;
   const isShell = shellPrompt.enabledByDefault?.(highlighted.lang) ?? false;
-  const showCopy = hasCopyAnnotation || (isShell && !hasNoCopyAnnotation);
+  const showCopy = interactive && (hasCopyAnnotation || (isShell && !hasNoCopyAnnotation));
   const showLanguage = hasLanguageAnnotation || !hasNoLanguageAnnotation;
   const restoredHighlighted = {
     ...highlighted,
@@ -122,6 +124,7 @@ export const Code = withStyles(async function Code({
         ...blockAnnotations,
         ...inlineAnnotations,
       ]
+        .filter(({ name }) => interactive || name !== 'fold')
         .filter(({ languages }) => (
           !languages || languages.includes(restoredHighlighted.lang)
         ))

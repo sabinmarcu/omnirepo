@@ -14,11 +14,14 @@ const withVanillaExtract = createVanillaExtractPlugin({
   },
 });
 const withNextIntl = createNextIntlPlugin();
+const remarkHeadingIdPlugin = fileURLToPath(
+  new URL('mdx-plugins/remarkHeadingId.js', import.meta.url),
+);
 const remarkCodeHikePlugin = fileURLToPath(
   new URL('mdx-plugins/remarkCodeHike.mjs', import.meta.url),
 );
 const remarkMdxTocPlugin = fileURLToPath(
-  new URL('mdx-plugins/remarkMdxToc.mjs', import.meta.url),
+  new URL('mdx-plugins/remarkMdxToc.js', import.meta.url),
 );
 const remarkPackageCommandsPlugin = fileURLToPath(
   new URL('mdx-plugins/remarkPackageCommands.mjs', import.meta.url),
@@ -72,10 +75,7 @@ const withMdx = createMdx({
   options: {
     remarkPlugins: [
       'remark-gfm',
-      ['remark-heading-id', {
-        defaults: true,
-        uniqueDefaults: true,
-      }],
+      remarkHeadingIdPlugin,
       [remarkMdxTocPlugin, { name: 'toc' }],
       remarkPackageCommandsPlugin,
       remarkMermaidPlugin,

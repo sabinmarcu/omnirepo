@@ -10,6 +10,7 @@ export const searchDocumentThemeFamilies: Record<SearchDocumentType, typeof fami
   publication: 'personal',
   skill: 'personal',
   snippet: 'snippets',
+  'slide-deck': 'slides',
   tag: 'base',
   tool: 'projects',
 };

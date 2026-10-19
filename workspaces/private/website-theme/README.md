@@ -23,6 +23,8 @@ Inputs have `{ shared, families }` shape. `shared.grid` is a unitless numeric so
 
 Family views and `data-theme-family` select root-allocated contextual values for descendants. `data-theme-variant="light"` or `"dark"` chooses the variant; system mode removes the variant attribute. Existing cookie selection remains application-owned.
 
+The `slides` family is an independent website palette with contextual red-family primary colors, warm backgrounds, and a restrained warm secondary. Its configured source values live in `themeValues.families.slides`. Listing, Read, Present, and Print select it through the existing family attribute; they do not create another theme owner. Slide diagrams consume these same CSS tokens, while CodeHike keeps the website's separate light/dark syntax palettes.
+
 Browser adoption uses `setup.mount(document)` and preserves existing source values. Live updates and exports use the mounted handle's `update` and `read`, with the owned stylesheet as the authoritative source.
 
 ## Optional website inspector
@@ -42,5 +44,3 @@ See the [native inspector guide](/api/theme-devtools-core) for catalog precedenc
 ## Browser support
 
 Native shipping Safari/macOS/iOS support remains unverified.
-
-

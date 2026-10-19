@@ -27,6 +27,7 @@
     "@vanilla-extract/dynamic": "^2.1.5",
     "@vanilla-extract/next-plugin": "^2.5.2",
     "@vanilla-extract/recipes": "^0.5.7",
+    "beautiful-mermaid": "^1.1.3",
     "codehike": "^1.1.0",
     "critters": "^0.0.25",
     "date-fns": "^4.1.0",
@@ -41,6 +42,7 @@
     "remark-heading-id": "^1.0.1",
     "remark-mdx-images": "^3.0.0",
     "remark-mdx-toc": "^0.3.1",
+    "reveal.js": "^6.0.2",
     "ts-reset": "^0.0.1",
     "zod": "^4.3.6"
   },
@@ -54,7 +56,8 @@
     "@types/remark-heading-id": "^1.0.0",
     "eslint": "^9.39.5",
     "eslint-config-next": "16.3.4",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.2",
+    "unified": "^11.0.4"
   },
   "tscmono": {
     "preset": "nextApp"

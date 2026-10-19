@@ -8677,6 +8677,7 @@ __metadata:
     "@vanilla-extract/dynamic": "npm:^2.1.5"
     "@vanilla-extract/next-plugin": "npm:^2.5.2"
     "@vanilla-extract/recipes": "npm:^0.5.7"
+    beautiful-mermaid: "npm:^1.1.3"
     codehike: "npm:^1.1.0"
     critters: "npm:^0.0.25"
     date-fns: "npm:^4.1.0"
@@ -8693,8 +8694,10 @@ __metadata:
     remark-heading-id: "npm:^1.0.1"
     remark-mdx-images: "npm:^3.0.0"
     remark-mdx-toc: "npm:^0.3.1"
+    reveal.js: "npm:^6.0.2"
     ts-reset: "npm:^0.0.1"
     typescript: "npm:^6.0.2"
+    unified: "npm:^11.0.4"
     zod: "npm:^4.3.6"
   languageName: unknown
   linkType: soft
@@ -12897,6 +12900,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"beautiful-mermaid@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "beautiful-mermaid@npm:1.1.3"
+  dependencies:
+    elkjs: "npm:^0.11.0"
+    entities: "npm:^7.0.1"
+  checksum: 10c0/fd2d4a38449257b7666c5f7888c51cb01a2f0d79cb1efb216d3391cb0895c944629eb48ea2fa2781d73fc841888e444af547b1d6a1735df8acf60e58ccc7e9fe
+  languageName: node
+  linkType: hard
+
 "better-opn@npm:^3.0.2":
   version: 3.0.2
   resolution: "better-opn@npm:3.0.2"
@@ -15871,6 +15884,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"elkjs@npm:^0.11.0":
+  version: 0.11.1
+  resolution: "elkjs@npm:0.11.1"
+  checksum: 10c0/e2216a7439c9dc65413e5f8d9e46bf829c32dacbfd869585bae8f8775b3cd5802d0ac9ccf0f45ad14decfa622244a092533263cc3a596e6d82e8247bf6bf84d7
+  languageName: node
+  linkType: hard
+
 "emoji-regex@npm:^8.0.0":
   version: 8.0.0
   resolution: "emoji-regex@npm:8.0.0"
@@ -15953,6 +15973,13 @@ __metadata:
   version: 4.5.0
   resolution: "entities@npm:4.5.0"
   checksum: 10c0/5b039739f7621f5d1ad996715e53d964035f75ad3b9a4d38c6b3804bb226e282ffeae2443624d8fdd9c47d8e926ae9ac009c54671243f0c3294c26af7cc85250
+  languageName: node
+  linkType: hard
+
+"entities@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "entities@npm:7.0.1"
+  checksum: 10c0/b4fb9937bb47ecb00aaaceb9db9cdd1cc0b0fb649c0e843d05cf5dbbd2e9d2df8f98721d8b1b286445689c72af7b54a7242fc2d63ef7c9739037a8c73363e7ca
   languageName: node
   linkType: hard
 
@@ -26736,6 +26763,13 @@ __metadata:
   version: 1.0.4
   resolution: "reusify@npm:1.0.4"
   checksum: 10c0/c19ef26e4e188f408922c46f7ff480d38e8dfc55d448310dfb518736b23ed2c4f547fb64a6ed5bdba92cd7e7ddc889d36ff78f794816d5e71498d645ef476107
+  languageName: node
+  linkType: hard
+
+"reveal.js@npm:^6.0.2":
+  version: 6.0.2
+  resolution: "reveal.js@npm:6.0.2"
+  checksum: 10c0/0e4d036c77597c359bbb3202fcd7581993675f5d1ddd249e16c3ba9c52c063aa690ddea60f5b78534ac67be7f73a2d9c4f168573c2a58e4b38dd34bac247b16d
   languageName: node
   linkType: hard
 

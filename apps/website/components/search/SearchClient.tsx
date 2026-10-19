@@ -5,21 +5,19 @@ import {
   useState,
 } from 'react';
 import { useTranslations } from 'next-intl';
-import { ThemedLink } from '@/components/primitives/ThemedLink';
-import { searchDocumentThemeFamilies } from '@/constants/searchDocumentThemeFamilies';
+import { projectListStyle } from '@/components/ProjectList.css';
+import { showcaseListStyle } from '@/components/ShowcaseList.css';
 import type {
   SearchDocumentType,
 } from '@/models/SearchDocument';
 import { useSearchIndex } from './useSearchIndex';
+import { SearchResultCard } from './SearchResultCard';
+import { cls } from '@/utils/cls';
 import {
   searchClientStyle,
   searchControlsStyle,
   searchInputStyle,
-  searchResultLinkStyle,
-  searchResultsStyle,
-  searchSecondaryResultListStyle,
-  searchSecondaryResultsStyle,
-  searchResultTypeStyle,
+  searchPageResultsStyle,
   searchSelectStyle,
   searchStatusStyle,
 } from './SearchClient.css';
@@ -35,6 +33,7 @@ const searchableTypes: SearchDocumentType[] = [
   'snippet',
   'tag',
   'tool',
+  'slide-deck',
 ];
 
 export namespace SearchClient {
@@ -97,47 +96,15 @@ export function SearchClient({
         </select>
       </div>
       {status ? <p className={searchStatusStyle}>{status}</p> : null}
-      <ul className={searchResultsStyle}>
+      <ul className={cls(
+        showcaseListStyle,
+        projectListStyle,
+        searchPageResultsStyle,
+      )}
+      >
         {results.map((document) => (
           <li key={document.id}>
-            <ThemedLink
-              decoration="none"
-              className={searchResultLinkStyle}
-              href={document.location}
-              locale={document.locale}
-              onClick={onNavigate}
-            >
-              <strong>{document.title}</strong>
-              <span
-                className={searchResultTypeStyle}
-                data-theme-family={searchDocumentThemeFamilies[document.type]}
-              >
-                {translate(`${document.type === 'tag' ? 'tagKinds' : 'types'}.${document.type === 'tag' ? document.kind ?? 'tag' : document.type}`)}
-              </span>
-            </ThemedLink>
-            {document.secondaryResults?.length
-              ? (
-                <div className={searchSecondaryResultsStyle}>
-                  <span>{translate('alsoIn')}</span>
-                  <ul className={searchSecondaryResultListStyle}>
-                    {document.secondaryResults.map((secondary) => (
-                      <li key={secondary.id}>
-                        <ThemedLink
-                          decoration="none"
-                          className={searchResultTypeStyle}
-                          href={secondary.location}
-                          locale={secondary.locale}
-                          onClick={onNavigate}
-                          data-theme-family={searchDocumentThemeFamilies[secondary.type]}
-                        >
-                          {translate(`types.${secondary.type}`)}
-                        </ThemedLink>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )
-              : null}
+            <SearchResultCard document={document} onNavigate={onNavigate} />
           </li>
         ))}
       </ul>
