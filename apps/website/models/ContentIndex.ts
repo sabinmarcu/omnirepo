@@ -12,6 +12,7 @@ import {
 } from './CVResource';
 import { compareModifiedAt } from './ContentResource';
 import { SnippetResource } from './SnippetResource';
+import { SlideDeckResource } from './SlideDeckResource';
 import { ProjectResource } from './ProjectResource';
 import {
   tagMatchesPrefix,
@@ -31,7 +32,7 @@ import {
 
 export type ContentType =
   | 'cv-project' | 'project' | 'experience' | 'degree' | 'publication'
-  | 'skill' | 'snippet' | 'tool' | 'article';
+  | 'skill' | 'snippet' | 'tool' | 'article' | 'slide-deck';
 
 export type ContentLocation =
   | { pathname: '/personal/cv', hash?: string }
@@ -39,6 +40,7 @@ export type ContentLocation =
   | { pathname: '/snippets/[slug]', params: { slug: string }, hash?: string }
   | { pathname: '/snippets/[slug]/[subpage]', params: { slug: string, subpage: string }, hash?: string }
   | { pathname: '/projects/[slug]', params: { slug: string }, hash?: string }
+  | { pathname: '/slides/[slug]', params: { slug: string }, hash?: string }
   | { pathname: '/tags/[...tag]', params: { tag: string[] } };
 
 export type IndexEntry = {
@@ -228,11 +230,29 @@ const projectProducer: IndexProducer = async (locale) => {
   })));
 };
 
+const slideDeckProducer: IndexProducer = async (locale) => {
+  const resources = await SlideDeckResource.getLocalizedList(locale);
+  return Promise.all(resources.map(async (resource) => ({
+    id: `slide-deck:${await resource.id}`,
+    type: 'slide-deck' as const,
+    title: await resource.title,
+    excerpt: await resource.description,
+    location: {
+      pathname: '/slides/[slug]' as const,
+      params: { slug: await resource.slug },
+    },
+    locale,
+    modifiedAt: await resource.modifiedAt,
+    authoredTags: await resource.tags,
+  })));
+};
+
 const producers: IndexProducer[] = [
   cvProducer,
   toolProducer,
   snippetProducer,
   projectProducer,
+  slideDeckProducer,
 ];
 
 function compareEntries(left: IndexEntry, right: IndexEntry) {

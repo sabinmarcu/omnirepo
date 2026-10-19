@@ -1,0 +1,161 @@
+export const title = 'Website slides: feature showcase'
+export const slug = 'website-slides-demo'
+export const description = 'One MDX deck, three server-rendered views, and an opt-in presentation runtime.'
+export const tags = ['topics:frontend', 'lang:typescript', 'tool:react']
+export const createdAt = '19.10.2026'
+export const modifiedAt = '19.10.2026'
+
+# !!slide Welcome to website slides
+
+A burgundy-native deck authored in MDX. **Read** is the canonical long-form view, **Present** adds navigation when requested, and **Print** is a static browser-print handout.
+
+| View | Best for |
+| --- | --- |
+| Read | Links and careful reading |
+| Present | A live talk |
+| Print | Browser Print or Save as PDF |
+
+## !notes
+
+Open in Read first: the same content is already useful before presentation JavaScript loads.
+
+# !!slide One source, three views
+
+<SlideDiagram chart={'graph LR\nA[MDX source] --> B[Server rendering]\nB --> C[Read]\nB --> D[Present]\nB --> E[Print]'} label='The website renders one MDX source into Read, Present, and Print views.' />
+
+The compiler, syntax highlighting, and diagrams stay on the server. Only Present opts into `reveal.js` behavior.
+
+## !notes
+
+Emphasize that Present enhances server-rendered sections; it does not compile markdown in the browser.
+
+# !!slide Markdown and MDX
+
+## Ordinary document structure
+
+[The website](/) uses normal headings and links, while this small table remains readable in every view.
+
+| Author | Result |
+| --- | --- |
+| Markdown | Structure and links |
+| MDX | Deliberate components |
+
+![Illustration of one MDX document branching to Read, Present, and Print cards](./website-slides-flow.svg)
+
+## !notes
+
+The image is a local authored SVG, not a generated presentation export.
+
+# !!slide CodeHike annotations
+
+Filename, line numbers, marks, diffs, and folds remain useful static evidence in Read and Print.
+
+```ts slide-policy.ts
+export function chooseView(requested: 'read' | 'present' | 'print') {
+  // !mark
+  const serverRendered = true
+  // !diff -
+  return { serverRendered, runtime: 'always' }
+  // !diff +
+  return { serverRendered, runtime: requested === 'present' ? 'reveal.js' : 'none' }
+  // !fold[/^\s*\/\/ Internal/]
+  // Internal implementation details stay expanded in static views.
+}
+```
+
+## !notes
+
+Point out that annotation semantics come from the existing CodeHike pipeline, not a second highlighter.
+
+# !!slide Multiple examples
+
+<CodeWithTabs>
+
+```ts !!tabs Policy
+export const views = ['read', 'present', 'print'] as const
+```
+
+```tsx !!tabs Component
+<SlideFragment>Visible immediately outside Present.</SlideFragment>
+```
+
+</CodeWithTabs>
+
+```sh !package install reveal.js
+```
+
+Static views label every tab and package-manager command variant instead of relying on an active control.
+
+## !notes
+
+Tabs are a compact authoring convenience; the static policy exposes all variants for printing.
+
+# !!slide Theme integration
+
+<SlideSwatches />
+
+The `slides` family supplies burgundy surfaces and accents through the existing light, dark, and system theme selection controls. CodeHike syntax colors remain CSS-driven light/dark palettes.
+
+## !notes
+
+Do not imply that syntax tokens are generated from the burgundy primary color.
+
+# !!slide Layouts and diagrams
+
+<SlideColumns>
+
+<SlideFragment>
+
+## Two columns
+
+Use columns for complementary ideas, not dense text. The reading view stacks them when space is limited.
+
+</SlideFragment>
+
+<SlideDiagram chart={'graph TD\nA[TOC heading ID] --> B[Slide anchor]\nB --> C[Read link]\nB --> D[Present link]\nB --> E[Print link]'} label='One TOC-derived heading ID becomes the anchor shared by all three views.' />
+
+</SlideColumns>
+
+## !notes
+
+The ID is emitted by the existing heading and TOC pipeline; authors do not write a per-slide slug.
+
+# !!slide Progressive enhancement
+
+<SlideFragment>
+
+**First idea:** every slide is visible in Read and Print.
+
+</SlideFragment>
+
+<SlideFragment>
+
+**Then:** Present reveals selected fragments in speaking order.
+
+</SlideFragment>
+
+No essential explanation is hidden behind a fragment: static visitors and printed handouts see both statements.
+
+## !notes
+
+Advance the fragments in Present, then switch back to Read to show the fully expanded version.
+
+# !!slide Interactive MDX
+
+<SlideInteractiveDemo label='Presentation counter' staticLabel='In Read and Print, this example is intentionally static: the current count starts at 0.' />
+
+The small counter accepts interaction only in Present. Its static label makes the state and purpose understandable without client-side demo code.
+
+## !notes
+
+Invite one increment in Present, then explain why interactive behavior is not required for the content to make sense.
+
+# !!slide Presenting and sharing
+
+Each slide keeps the anchor emitted by the MDX heading pipeline, so a Read URL with that fragment can identify a specific slide. Present includes speaker notes; Read and Print intentionally do not.
+
+For a handout, open **Print** and use the browser's **Print** or **Save as PDF** command. This deck does not create or download a PDF.
+
+## !notes
+
+Mention that notes are public presentation material, not a secret channel. Close by sharing the Read link and the static Print route.

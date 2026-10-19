@@ -1,5 +1,6 @@
 import { theme } from '@sabinmarcu/website-theme';
 import { style } from '@vanilla-extract/css';
+import { mobileMedia } from '@/utils/responsive';
 
 export const searchClientStyle = style({
   display: 'grid',
@@ -10,8 +11,10 @@ export const searchControlsStyle = style({
   display: 'grid',
   gridTemplateColumns: 'minmax(0, 1fr) auto',
   gap: theme.grid.s,
+  ...mobileMedia({
+    gridTemplateColumns: '1fr',
+  }),
 });
-
 export const searchInputStyle = style({
   minInlineSize: 0,
   padding: theme.grid.s,
@@ -35,39 +38,14 @@ export const searchSelectStyle = style({
   font: 'inherit',
 });
 
-export const searchResultsStyle = style({
-  display: 'grid',
-  gap: theme.grid.s,
-  padding: 0,
+export const searchPageResultsStyle = style({
+  gridColumn: '1 / -1',
+  margin: 0,
   listStyle: 'none',
-});
-
-export const searchResultLinkStyle = style({
-  display: 'grid',
-  gap: theme.grid.xs,
-  padding: theme.grid.s,
-  borderInlineStart: `2px solid ${theme.colors.primary.muted}`,
-  background: theme.colors.background.surface,
-  color: 'inherit',
-  textDecoration: 'none',
-  selectors: {
-    '&:hover': {
-      background: theme.colors.background.elevated,
-    },
-  },
 });
 
 export const searchResultTypeStyle = style({
   color: theme.colors.primary.muted,
-  fontSize: '0.8em',
-});
-
-export const searchSecondaryResultsStyle = style({
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: theme.grid.xs,
-  paddingInlineStart: theme.grid.xxl,
-  marginBlockEnd: theme.grid.xs,
   fontSize: '0.8em',
 });
 

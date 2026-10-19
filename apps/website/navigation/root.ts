@@ -34,4 +34,8 @@ export const getRootNavigation = (translate: (key: string) => string) => normali
     ...categoriesMap.snippets,
     text: translate('snippets'),
   },
+  {
+    ...categoriesMap.slides,
+    text: translate('slides'),
+  },
 ] as const);

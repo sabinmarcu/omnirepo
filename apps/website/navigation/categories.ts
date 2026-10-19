@@ -6,6 +6,7 @@ export const categories = [
   'articles',
   'ramblings',
   'snippets',
+  'slides',
 ] as const satisfies typeof families[number][];
 
 export const categoriesMap = Object.fromEntries(

@@ -30,6 +30,7 @@ const websiteFamilies = [
   'articles',
   'ramblings',
   'snippets',
+  'slides',
   'neutral',
 ] as const;
 
@@ -241,6 +242,38 @@ export const themeValues = {
         },
       },
     },
+    slides: {
+      colors: {
+        primary: {
+          light: 'oklch(0.49467 0.198401 28.7325)',
+          dark: 'oklch(0.658609 0.171984 23.0404)',
+        },
+        secondary: {
+          light: '#9B6A35',
+          dark: '#D6B079',
+        },
+        info: {
+          light: 'blue',
+          dark: 'blue',
+        },
+        success: {
+          light: 'green',
+          dark: 'green',
+        },
+        warning: {
+          light: 'yellow',
+          dark: 'yellow',
+        },
+        error: {
+          light: 'red',
+          dark: 'red',
+        },
+        background: {
+          light: 'oklch(0.82249 0.0521745 18.2716)',
+          dark: 'oklch(0.176867 0.0349902 21.2296)',
+        },
+      },
+    },
     neutral: {
       colors: {
         primary: {
@@ -274,7 +307,6 @@ export const themeValues = {
       },
     },
   },
-
 } satisfies Parameters<ReturnType<typeof createWebsiteTheme>>[0];
 
 // The views are token metadata for Vanilla Extract consumers. They do not initialize values.

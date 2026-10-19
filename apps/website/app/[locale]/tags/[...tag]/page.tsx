@@ -57,6 +57,7 @@ const contentTypeOrder: ContentType[] = [
   'tool',
   'snippet',
   'project',
+  'slide-deck',
   'cv-project',
   'experience',
   'publication',
@@ -74,6 +75,7 @@ const contentTypeThemeFamilies: Record<Exclude<ContentType, 'skill'>, typeof fam
   publication: 'personal',
   snippet: 'snippets',
   tool: 'projects',
+  'slide-deck': 'slides',
 };
 
 function canonicalSegments(segments: string[]): string[] | undefined {

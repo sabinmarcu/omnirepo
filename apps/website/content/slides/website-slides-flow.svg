@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 360" role="img" aria-labelledby="title description">
+  <title id="title">One MDX source rendered in three slide views</title>
+  <desc id="description">A burgundy document branches to Read, Present, and Print cards.</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" x2="1">
+      <stop stop-color="#fbf4f6"/>
+      <stop offset="1" stop-color="#f2dce3"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="360" rx="28" fill="#211218"/>
+  <rect x="70" y="86" width="190" height="188" rx="18" fill="url(#paper)"/>
+  <path d="M220 86v48h40" fill="#fff" stroke="#800020" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M112 172h104M112 204h104M112 236h66" stroke="#800020" stroke-width="12" stroke-linecap="round"/>
+  <text x="165" y="145" fill="#800020" font-family="system-ui, sans-serif" font-size="24" font-weight="700" text-anchor="middle">MDX</text>
+  <path d="M285 180h82M350 180l-18-14m18 14-18 14" fill="none" stroke="#d87892" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <g font-family="system-ui, sans-serif" font-weight="700" text-anchor="middle">
+    <rect x="400" y="42" width="260" height="70" rx="16" fill="#800020"/>
+    <text x="530" y="86" fill="#fff" font-size="28">Read</text>
+    <rect x="400" y="145" width="260" height="70" rx="16" fill="#9b6a35"/>
+    <text x="530" y="189" fill="#fff" font-size="28">Present</text>
+    <rect x="400" y="248" width="260" height="70" rx="16" fill="#d87892"/>
+    <text x="530" y="292" fill="#211218" font-size="28">Print</text>
+  </g>
+  <path d="M365 180h20V77h15M385 180h15M385 180v103h15" fill="none" stroke="#d87892" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

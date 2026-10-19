@@ -15,12 +15,13 @@ const inclusive: '(max-width: 700px)' = theme.breakpoint.lte.mobile;
 const range: '(700px < width < 1600px)' = theme.breakpoint.between['mobile-screen'];
 const originalPrimary: 'var(--theme-colors-primary-base)' = theme.colors.primary.base;
 const privatePersonal: 'var(--theme-family-website-families-personal-colors-background-page)' = themes.personal.colors.background.page;
+const privateSlides: 'var(--theme-family-website-families-slides-colors-background-page)' = themes.slides.colors.background.page;
 const setup = createWebsiteTheme();
 const returned: typeof theme = setup(themeValues);
 const values = setup.read();
 const sharedGrid: number = values.shared.grid;
-const contextualColor: string = values.families.personal.colors.secondary.light;
-const names: typeof families[number] = 'personal';
+const contextualColor: string = values.families.slides.colors.secondary.light;
+const names: typeof families[number] = 'slides';
 type Input = FamilyInput<typeof themeDefinition.definition.schema, typeof families[number]>;
 const invalid: Input = {
   shared: {
@@ -41,6 +42,7 @@ export const websiteAssertions = {
   range,
   originalPrimary,
   privatePersonal,
+  privateSlides,
   returned,
   sharedGrid,
   contextualColor,

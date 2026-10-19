@@ -6,7 +6,7 @@ import type { TagId } from './Tag';
 export type SearchDocumentType =
   | 'tag'
   | 'cv-project' | 'project' | 'experience' | 'degree' | 'publication'
-  | 'skill' | 'snippet' | 'tool' | 'article';
+  | 'skill' | 'snippet' | 'tool' | 'article' | 'slide-deck';
 
 export type SearchDocument = {
   id: string,

@@ -4,7 +4,9 @@ import {
   normalizeNavigationList,
 } from './utils';
 
-export const getHomepageNavigation = (translate: (key: string) => string) => normalizeNavigationList([
+export const getHomepageNavigation = (
+  translate: (key: string) => string,
+) => normalizeNavigationList([
   {
     ...categoriesMap.personal,
     text: translate('about'),
@@ -38,5 +40,9 @@ export const getHomepageNavigation = (translate: (key: string) => string) => nor
   {
     ...categoriesMap.snippets,
     text: translate('snippets'),
+  },
+  {
+    ...categoriesMap.slides,
+    text: translate('slides'),
   },
 ] as const);

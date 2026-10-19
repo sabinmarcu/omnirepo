@@ -1,21 +1,13 @@
 import { getTranslations } from 'next-intl/server';
-import { Card } from '@/components/Card';
+import { ContentCard } from '@/components/ContentCard';
 import { TagPill } from '@/components/TagPill';
 import { ThemedLink } from '@/components/primitives/ThemedLink';
 import { formatContentDate } from '@/models/ContentResource';
 import { tagLabel } from '@/models/TagRegistry';
 import { extendPathname } from '@/utils/routes';
 import type { ProjectResource } from '@/models/ProjectResource';
-import {
-  projectCardHeaderStyle,
-  projectCardKindStyle,
-  projectCardMetaStyle,
-  projectCardSectionStyle,
-  projectCardTitleStyle,
-  projectCardUpdatedStyle,
-  projectCardTagsListStyle,
-  projectCardStyle,
-} from './ProjectCard.css';
+import { contentCardUpdatedStyle } from './ContentCard.css';
+import { projectCardStyle } from './ProjectCard.css';
 import { StatusPill } from '@/components/StatusPill';
 
 export namespace ProjectCard {
@@ -57,35 +49,25 @@ export async function ProjectCard(
   const href = extendPathname(pathname, slug) as any;
 
   return (
-    <Card className={projectCardStyle({ status })}>
-      <div
-        className={projectCardHeaderStyle}
-        {...{ [ThemedLink.undecoratedDataAttribute]: true }}
-      >
-        <Card.Title className={projectCardTitleStyle}>
-          <ThemedLink href={href}>{title}</ThemedLink>
-          <span className={projectCardKindStyle}>{kind}</span>
-        </Card.Title>
-        <div className={projectCardSectionStyle}>
-          <p className={projectCardUpdatedStyle}>
-            {translate('lastUpdated', { date: formatContentDate(modifiedAt, locale) })}
-          </p>
-        </div>
-        <div className={projectCardSectionStyle}>
+    <ContentCard
+      className={projectCardStyle({ status })}
+      title={<ThemedLink href={href}>{title}</ThemedLink>}
+      kind={kind}
+      metadata={(
+        <p className={contentCardUpdatedStyle}>
+          {translate('lastUpdated', { date: formatContentDate(modifiedAt, locale) })}
+        </p>
+      )}
+      badges={(
+        <>
           <StatusPill status={status} />
           {deprecatedFor && <StatusPill status="deprecated" deprecatedFor={deprecatedFor} />}
-        </div>
-      </div>
-      {summary ? <div className={projectCardMetaStyle}>{summary}</div> : null}
-      <div className={projectCardTagsListStyle}>
-        {tags.filter((tag) => !tag.startsWith('project:status:')).map((tag) => (
-          <TagPill
-            key={tag}
-            id={tag}
-            label={tagLabel(tag, (id) => id)}
-          />
-        ))}
-      </div>
-    </Card>
+        </>
+      )}
+      summary={summary}
+      tags={tags.filter((tag) => !tag.startsWith('project:status:')).map((tag) => (
+        <TagPill key={tag} id={tag} label={tagLabel(tag, (id) => id)} />
+      ))}
+    />
   );
 }

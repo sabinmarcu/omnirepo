@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { headers } from 'next/headers';
 import { configuredLocaleDomain } from '@/i18n/domains';
+import { SlideDeckResource } from '@/models/SlideDeckResource';
 import { SnippetResource } from '@/models/SnippetResource';
 import { ToolResource } from '@/models/ToolResource';
 
@@ -10,6 +11,7 @@ const staticPathnames = [
   '/personal/cv',
   '/snippets',
   '/tools',
+  '/slides',
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -20,13 +22,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   const origin = `https://${domain.domain}`;
-  const [snippets, tools] = await Promise.all([
+  const [snippets, slideDecks, tools] = await Promise.all([
     SnippetResource.getLocalizedList(domain.defaultLocale),
+    SlideDeckResource.getLocalizedList(domain.defaultLocale),
     ToolResource.getLocalizedList(domain.defaultLocale),
   ]);
   const dynamicPathnames = await Promise.all([
     ...snippets.map(async (snippet) => `/snippets/${await snippet.slug}`),
     ...tools.map(async (tool) => `/tools/${await tool.slug}`),
+    ...slideDecks.map(async (slideDeck) => `/slides/${await slideDeck.slug}`),
   ]);
 
   return [
