@@ -1,6 +1,7 @@
 import {
   Children,
   isValidElement,
+  type ComponentProps,
   type ComponentType,
   type ReactNode,
 } from 'react';
@@ -12,6 +13,7 @@ import { CodehikeCode } from './components/CodehikeCode';
 import { CodehikeInlineCode } from './components/CodehikeInlineCode';
 import { CodeWithTabs } from './components/CodeWithTabs';
 import { Mermaid } from './components/Mermaid';
+import { ZoomFrame } from './components/ZoomFrame';
 import { PageLayout } from './layouts/PageLayout';
 import {
   mdxImage,
@@ -36,9 +38,11 @@ function getOnlyChildOfType<Props>(children: ReactNode, type: ComponentType<Prop
     : undefined;
 }
 
-function MdxImage({
+type MdxImageProps = Omit<ComponentProps<typeof Image>, 'alt'> & { alt?: string };
+
+function MdxImageContent({
   src, alt, className, ...rest
-}: any) {
+}: MdxImageProps) {
   const imageClassName = [mdxImage, className].filter(Boolean).join(' ');
 
   const image = typeof src === 'string'
@@ -47,9 +51,23 @@ function MdxImage({
     ? <img className={imageClassName} src={src} alt={alt ?? ''} {...rest} />
     : <Image className={imageClassName} src={src} alt={alt ?? ''} placeholder="blur" {...rest} />;
 
+  return image;
+}
+
+function MdxImage(props: MdxImageProps) {
   return (
     <PageLayout.Inset>
-      {image}
+      <MdxImageContent {...props} />
+    </PageLayout.Inset>
+  );
+}
+
+function MdxZoomableImage(props: MdxImageProps) {
+  return (
+    <PageLayout.Inset>
+      <ZoomFrame>
+        <MdxImageContent {...props} />
+      </ZoomFrame>
     </PageLayout.Inset>
   );
 }
@@ -75,6 +93,7 @@ export const mdxComponents: MDXComponents = {
     </div>
   ),
   img: MdxImage,
+  ZoomableImage: MdxZoomableImage,
   CodehikeCode,
   CodehikeInlineCode,
   CodeWithTabs,
