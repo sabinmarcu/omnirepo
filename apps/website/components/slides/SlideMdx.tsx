@@ -10,6 +10,7 @@ import z from 'zod';
 import { Code } from '@/components/Code';
 import { CodehikeInlineCode } from '@/components/CodehikeInlineCode';
 import { CodeTabs } from '@/components/CodeTabs';
+import { ZoomFrame } from '@/components/ZoomFrame';
 import {
   packageManagers,
   parsePackageCommand,
@@ -113,6 +114,9 @@ export function getSlideMdxComponents(view: SlideView): MDXComponents {
   return {
     p: SlideParagraph,
     img: SlideImage,
+    ZoomableImage: (props: ComponentProps<typeof SlideImage>) => (
+      <ZoomFrame><SlideImage {...props} /></ZoomFrame>
+    ),
     table: (props: ComponentProps<'table'>) => (
       <div className={tableWrapperStyle}><table {...props} className={tableStyle} /></div>
     ),
